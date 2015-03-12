@@ -91,16 +91,11 @@ Route::get('contact-us', function()
 # Index Page - Last route, no matches
 Route::get('/', array('before' => 'detectLang','uses' => 'UserController@getIndex'));
 
-#Requestor Form
-Route::get('request', function()
-{
-    return View::make('site/request');
-});
+#Requestor Controller
+// User reset routes
+Route::get('request', 'RequestController@getIndex');
 
 // route to process the request form
-Route::post('request', function()
-{
+Route::post('request/create', 'RequestController@store');
+Route::get('request/success', 'RequestController@success');
 
-    // process the form here
-
-});

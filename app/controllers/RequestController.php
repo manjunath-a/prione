@@ -1,0 +1,89 @@
+<?php
+
+class RequestController extends BaseController {
+
+  /**
+   * construct the models.
+   */
+  public function __construct()
+  {
+      parent::__construct();
+  }
+
+	/**
+	 * Returns Requesy Form.
+	 *
+	 * @return View
+	 */
+	public function getIndex()
+	{
+    // Get all the available city
+    $cities = City::all();
+    foreach ($cities as $key => $cityArray) {
+        $city[$cityArray['id']] = $cityArray['city_name'];
+    }
+    // Get all the available Sales Channel
+    $salesChannels = SalesChannel::all();
+    foreach ($salesChannels as $key => $channelArray) {
+        $salesChannel[$channelArray['id']] = $channelArray['channel_name'];
+    }
+
+    // Get all the available Category
+    $categorys = Category::all();
+    foreach ($categorys as $key => $categoryArray) {
+        $category[$categoryArray['id']] = $categoryArray['category_name'];
+    }
+
+		// Show the page
+		return View::make('request/index', compact('city', 'salesChannel', 'category'))
+          ->with('route', 'request')
+          ->with('request_id', null)
+          ->with('data',array());
+	}
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @return Response
+   */
+  public function store() {
+      // Validate the input values
+      $validator = Validator::make($data = Input::all(), SellerRequest::$rules);
+      // validation fails redirect to form with error
+      if ($validator->fails()) {
+          return Redirect::back()->withErrors($validator)->withInput();
+      }
+
+      try {
+          $requestData['seller_name'] =  $data['seller_name'];
+          $requestData['email'] = $data['email'];
+          $requestData['contact_number'] = $data['contact_number'];
+          $requestData['merchant_name'] = $data['merchant_name'];
+          $requestData['merchant_id'] = $data['merchant_id'];
+          $requestData['merchant_city_id'] = $data['merchant_city_id'];
+          $requestData['merchant_sales_channel_id'] = $data['merchant_sales_channel_id'];
+          $requestData['poc_name'] = $data['poc_name'];
+          $requestData['poc_email'] = $data['poc_email'];
+          $requestData['poc_number'] = $data['poc_number'];
+          $requestData['category_id'] = $data['category_id'];
+          $requestData['total_sku'] = $data['total_sku'];
+          $requestData['image_available'] = $data['image_available'];
+          $requestData['comment'] = $data['comment'];
+          SellerRequest::create($requestData);
+          $response = SellerRequest::feshDesk( $requestData );
+      } catch (Exception $e) {
+          return Redirect::back()->withErrors($e->getMessage())->withInput();
+      }
+      return Redirect::to('request/success');
+  }
+
+  /**
+   * Returns sucess Page.
+   *
+   * @return View
+   */
+  public function success()
+  {
+    // Show the page
+    return View::make('request/success');
+  }
+}

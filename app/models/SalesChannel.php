@@ -1,13 +1,13 @@
 <?php
 
-class City extends Eloquent {
+class SalesChannel extends Eloquent {
 
 	 /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'city';
+    protected $table = 'sales_channel';
 
     /**
      * Primary key for the table.
@@ -18,19 +18,19 @@ class City extends Eloquent {
     protected $guarded = array('id');
 
    /**
-	 * Get the city name.
+	 * Get the channelName content.
 	 *
 	 * @return string
 	 */
-	public function cityName()
+	public function channelName()
 	{
-		return $this->cityName;
+		return $this->channelName;
 	}
 
 	/**
-	 * Get the status.
+	 * Get the status .
 	 *
-	 * @return intger
+	 * @return integer
 	 */
 	public function status()
 	{
@@ -38,9 +38,9 @@ class City extends Eloquent {
 	}
 
 	/**
-	 * Get the sort.
+	 * Get the sort .
 	 *
-	 * @return Integer
+	 * @return integer
 	 */
 	public function sort()
 	{
