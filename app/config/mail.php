@@ -94,5 +94,9 @@ return array(
 	*/
 
 	'password' => null,
+	/**
+	 *
+	 */
+	'cc_email' => "subramania.bharathy@compassitesinc.com, b.arasu@compassitesinc.com",
 
 );
