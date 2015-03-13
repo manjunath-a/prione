@@ -48,11 +48,13 @@ class RequestController extends BaseController {
   public function store() {
       // Validate the input values
       $validator = Validator::make($data = Input::all(), SellerRequest::$rules);
+
+
       // validation fails redirect to form with error
       if ($validator->fails()) {
-          return Redirect::back()->withErrors($validator)->withInput();
+         // var_dump($data);exit;
+          // return Redirect::back()->withErrors($validator)->withInput();
       }
-
       try {
           $requestData['seller_name'] =  $data['seller_name'];
           $requestData['email'] = $data['email'];
@@ -68,12 +70,12 @@ class RequestController extends BaseController {
           $requestData['total_sku'] = $data['total_sku'];
           $requestData['image_available'] = $data['image_available'];
           $requestData['comment'] = $data['comment'];
-          SellerRequest::create($requestData);
-          $response = SellerRequest::feshDesk( $requestData );
+          $ticket = SellerRequest::createRequest($requestData);
+
       } catch (Exception $e) {
           return Redirect::back()->withErrors($e->getMessage())->withInput();
       }
-      return Redirect::to('request/success');
+      return Redirect::to('request/success/'.$ticket->id);
   }
 
   /**
@@ -81,9 +83,10 @@ class RequestController extends BaseController {
    *
    * @return View
    */
-  public function success()
+  public function success( $ticket )
   {
     // Show the page
-    return View::make('request/success');
+    return View::make('request/success')
+           ->with('ticketid',$ticket);
   }
 }

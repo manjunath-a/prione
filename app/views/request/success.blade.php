@@ -20,7 +20,7 @@
         </div>
         <div class="alert alert-success alert-block">
             <h4>Success</h4>
-                    Request created successfully.
+                 Ticket :: #{{ $ticketid }} Created successfully.
             </div>
 
     </div>

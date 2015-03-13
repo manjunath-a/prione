@@ -97,5 +97,6 @@ Route::get('request', 'RequestController@getIndex');
 
 // route to process the request form
 Route::post('request/create', 'RequestController@store');
-Route::get('request/success', 'RequestController@success');
+// request created success
+Route::get('request/success/{ticket}', 'RequestController@success');
 

@@ -17,34 +17,4 @@ class City extends Eloquent {
     protected $primaryKey = 'id';
     protected $guarded = array('id');
 
-   /**
-	 * Get the city name.
-	 *
-	 * @return string
-	 */
-	public function cityName()
-	{
-		return $this->cityName;
-	}
-
-	/**
-	 * Get the status.
-	 *
-	 * @return intger
-	 */
-	public function status()
-	{
-		return $this->status;
-	}
-
-	/**
-	 * Get the sort.
-	 *
-	 * @return Integer
-	 */
-	public function sort()
-	{
-		return $this->sort;
-	}
-
 }

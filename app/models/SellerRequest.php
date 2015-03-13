@@ -50,20 +50,52 @@ class SellerRequest extends Eloquent  {
         return $this->where('seller_name', '=', $sellerName)->first();
     }
 
-    public static function feshDesk($requestData) {
-        $fd_domain = "https://compassinc.freshdesk.com";
-        $token = "H3NALV2F2poFiOZRnt";
+    public static function freshDesk($requestData) {
+        $fd_domain = "https://compassnet.freshdesk.com";
+        $token = "k0FfSA2BHE9Yxw22ww";
         $password = "X";
-        $data = array(
+        $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
+        $merchantCategory = Category::find($requestData['category_id'])->toArray();
+
+        $subject = implode(' // ',array($requestData['seller_name'],
+                            $merchantCity['city_name'],
+                            $merchantCategory['category_name'],
+                            "SKU# ".$requestData['total_sku'],
+                        ));
+
+
+
+        $description = "Category :: ". $merchantCategory['category_name']."
+                        Number of Unique SKUs to be cataloged? :: ".$requestData['total_sku']."
+                        Additional information:Flat file sent and Images uploaded in the S3.
+
+                        Seller name:".$requestData['seller_name']."
+                        City in which service is required:".$merchantCity['city_name']."
+
+                        Contact person name:".$requestData['poc_name']."
+                        Complete address of seller:NA
+                        Contact number of seller:".$requestData['poc_number']."
+                        Alternate contact number of seller:".$requestData['poc_number']."
+                        Email ID of seller:".$requestData['poc_email']."
+                        Comment :".$requestData['comment']."
+
+                        Requester name:XXXXXX XXXX
+                        Requester e-mail ID:XXXXXX@prione.in
+                        Requester mobile number:XXXXXX
+                        Requester sales channel:PRIONE";
+
+
+        $data = array (
             "helpdesk_ticket" => array(
-                "description" => $requestData['comment'],
-                "subject" => "Seller Request Created",
+                "description" => $description,
+                "subject" => $subject,
                 "email" => $requestData['email'],
                 "priority" => 1,
                 "status" => 2
-            ),
-            "cc_emails" => "subramania.bharathy@compassitesinc.com, b.arasu@compassitesinc.com"
+                ),
+            "cc_emails" => Config::get('mail.cc_email'),
         );
+
         $json_body = json_encode($data, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
         $header[] = "Content-type: application/json";
         $connection = curl_init("$fd_domain/helpdesk/tickets.json");
@@ -74,7 +106,30 @@ class SellerRequest extends Eloquent  {
         curl_setopt($connection, CURLOPT_POST, true);
         curl_setopt($connection, CURLOPT_POSTFIELDS, $json_body);
         curl_setopt($connection, CURLOPT_VERBOSE, 1);
-        $response = curl_exec($connection);
-        return $response;
+        $ticketResponse = curl_exec($connection);
+        $ticketArray = json_decode(  $ticketResponse );
+
+        return $ticketArray->helpdesk_ticket;
     }
+
+    public static function createRequest( $requestData ) {
+
+        $request = SellerRequest::create($requestData);
+        $ticket = SellerRequest::freshDesk( $requestData );
+        if($ticket->display_id) {
+            $ticketData['request_id'] = $request->id;
+            $ticketData['freshdesk_ticket_id'] = $ticket->display_id;
+            $ticketData['email'] = $requestData['email'];
+            $ticketData['subject'] = $ticket->subject;
+            $ticketData['description'] = $ticket->description;
+            $ticketData['s3_url'] = 's3.prion.com';
+            $ticketData['assigned_to'] = 1;
+            $ticketData['priority'] = 1;
+            $ticketData['pending_reason'] = ' Just now  Ticket created ';
+            $ticketData['status_id'] = 1;
+            return Ticket::create($ticketData);
+        }
+
+    }
+
 }
