@@ -51,9 +51,11 @@ class SellerRequest extends Eloquent  {
     }
 
     public static function freshDesk($requestData) {
-        $fd_domain = "https://compassnet.freshdesk.com";
-        $token = "k0FfSA2BHE9Yxw22ww";
-        $password = "X";
+
+        $fd_domain = Config::get('freshdesk.domain');
+        $token = Config::get('freshdesk.token');
+        $password = Config::get('freshdesk.password');
+
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
         $merchantCategory = Category::find($requestData['category_id'])->toArray();
 
