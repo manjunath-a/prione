@@ -26,7 +26,32 @@
 		================================================== -->
         <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap-theme.min.css')}}">
-
+            {{ HTML::style('assets/bootstrap-v3.2.0/css/bootstrap.min.css'); }}
+            {{ HTML::style('assets/bootstrap-v3.2.0/css/bootstrap-theme.min.css'); }}
+            {{ HTML::style('assets/font-awesome-v4.1.0/css/font-awesome.min.css'); }}
+            {{ HTML::style('assets/jquery-ui-v1.10.3/css/smoothness/jquery-ui-1.10.3.custom.css'); }}
+            {{ HTML::style('assets/jquery-jqGrid-v4.6.0/css/ui.jqgrid.css'); }}
+            {{ HTML::style('assets/tutorial/css/main.css'); }}
+            {{ HTML::style('assets/tutorial/css/callouts.css'); }}
+            <!--[if lt IE 9]><script src="../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+            <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+            {{ HTML::script('assets/tutorial/js/ie10-viewport-bug-workaround.js'); }}
+            {{ HTML::script('assets/tutorial/js/ie-emulation-modes-warning.js'); }}
+            <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+            <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+            {{ HTML::script('assets/jquery-v2.0.3/jquery.js'); }}
+            {{ HTML::script('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect.min.js'); }}
+            {{ HTML::script('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect-shake.min.js'); }}
+            {{ HTML::script('assets/jquery-jqGrid-v4.6.0/js/i18n/grid.locale-en.js'); }}
+            {{ HTML::script('assets/jquery-jqGrid-v4.6.0/js/jquery.jqGrid.src.js'); }}
+            {{ HTML::script('assets/jquery-scrollto-v1.4.11/jquery.scrollTo.min.js'); }}
+            {{ HTML::script('assets/bootstrap-v3.2.0/js/bootstrap.min.js'); }}
+            {{ HTML::script('assets/jquery-jqMgVal-v0.1/jquery.jqMgVal.src.js'); }}
+            {{ HTML::script('assets/tutorial/js/helpers.js'); }}
+            {{ HTML::script('assets/tutorial/js/base.js'); }}
 		<style>
         body {
             padding: 60px 0;
@@ -73,6 +98,7 @@
                         @if (Auth::user()->hasRole('admin'))
                         <li><a href="{{{ URL::to('admin') }}}">Admin Panel</a></li>
                         @endif
+                        {{--<li><a href="{{{ URL::to('admin/locallead') }}}">Local Lead</a></li>--}}
                         <li><a href="{{{ URL::to('user') }}}">Logged in as {{{ Auth::user()->username }}}</a></li>
                         <li><a href="{{{ URL::to('user/logout') }}}">Logout</a></li>
                         @else
@@ -106,7 +132,7 @@
 
 	    <div id="footer">
 	      <div class="container">
-	        <p class="muted credit">Prion</p>
+	        {{--<p class="muted credit">Prion</p>--}}
 	      </div>
 	    </div>
 

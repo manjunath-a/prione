@@ -65,7 +65,7 @@ return array(
 	|
 	*/
 
-	'key' => 'V3FjMt62bTIQ3EdVId4UguXiawpgT1JE',
+	'key' => 'xDvLshzAuU00EFlAp25M2HLwkhTntdnK',
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
@@ -113,6 +113,7 @@ return array(
         'Zizaco\Confide\ServiceProvider', // Confide Provider
         'Zizaco\Entrust\EntrustServiceProvider', // Entrust Provider for roles
         'Bllim\Datatables\DatatablesServiceProvider', // Datatables
+        'Mgallegos\LaravelJqgrid\LaravelJqgridServiceProvider',
 
         /* Uncomment for use in development */
 //        'Way\Generators\GeneratorsServiceProvider', // Generators
@@ -192,8 +193,11 @@ return array(
         'Carbon'          => 'Carbon\Carbon', // Carbon
         'Datatables'      => 'Bllim\Datatables\Datatables', // DataTables
 
+        'GridRender'      => 'Mgallegos\LaravelJqgrid\Facades\GridRender',
+        'GridEncoder'     => 'Mgallegos\LaravelJqgrid\Facades\GridEncoder',
+
     ),
 
-    'available_language' => array('en', 'pt', 'es'),
+    'available_language' => array('en'),
 
 );

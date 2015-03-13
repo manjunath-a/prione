@@ -134,4 +134,10 @@ class SellerRequest extends Eloquent  {
 
     }
 
+//    public function tickect()
+//    {
+//        return $this->hasOne('Ticket');
+//    }
+//
+
 }
