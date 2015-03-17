@@ -8,6 +8,9 @@ class RequestController extends BaseController {
   public function __construct()
   {
       parent::__construct();
+      // echo Config::get('aws-sdk-php-laravel.bucketname');
+
+      // echo $s3->getCredentials()->getAccessKeyId();exit;
   }
 
 	/**
@@ -17,6 +20,7 @@ class RequestController extends BaseController {
 	 */
 	public function getIndex()
 	{
+
     // Get all the available city
     $cities = City::all();
     foreach ($cities as $key => $cityArray) {

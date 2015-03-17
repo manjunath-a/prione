@@ -17,4 +17,8 @@ class City extends Eloquent {
     protected $primaryKey = 'id';
     protected $guarded = array('id');
 
+    public function user()
+    {
+        return $this->hasMany('City');
+    }
 }

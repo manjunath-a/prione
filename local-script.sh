@@ -10,10 +10,10 @@ $MYSQL -uweb -pwebsa -e "create database prione;"
 
 echo ">>>> Running migrations and seeders"
 
-cd /vagrant
+#cd /vagrant
 
 php artisan migrate
 php artisan db:seed
 
-echo ">>>> Creating secret key"
-php artisan key:generate
+#echo ">>>> Creating secret key"
+#php artisan key:generate

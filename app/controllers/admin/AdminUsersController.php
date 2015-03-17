@@ -68,6 +68,12 @@ class AdminUsersController extends AdminController {
         // Selected groups
         $selectedRoles = Input::old('roles', array());
 
+        // Get all the available city
+        $cities = City::all();
+        foreach ($cities as $key => $cityArray) {
+            $city[$cityArray['id']] = $cityArray['city_name'];
+        }
+
         // Selected permissions
         $selectedPermissions = Input::old('permissions', array());
 
@@ -78,7 +84,9 @@ class AdminUsersController extends AdminController {
 		$mode = 'create';
 
 		// Show the page
-		return View::make('admin/users/create_edit', compact('roles', 'permissions', 'selectedRoles', 'selectedPermissions', 'title', 'mode'));
+		return View::make('admin/users/create_edit', compact('roles',
+            'permissions', 'city', 'selectedRoles', 'selectedPermissions',
+            'title', 'mode'));
     }
 
     /**
@@ -91,6 +99,7 @@ class AdminUsersController extends AdminController {
         $this->user->username = Input::get( 'username' );
         $this->user->email = Input::get( 'email' );
         $this->user->password = Input::get( 'password' );
+        $this->user->city_id = Input::get( 'city_id' );
 
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
@@ -166,13 +175,19 @@ class AdminUsersController extends AdminController {
         {
             $roles = $this->role->all();
             $permissions = $this->permission->all();
+            // Get all the available city
+            $cities = City::all();
+            foreach ($cities as $key => $cityArray) {
+                $city[$cityArray['id']] = $cityArray['city_name'];
+            }
 
             // Title
         	$title = Lang::get('admin/users/title.user_update');
         	// mode
         	$mode = 'edit';
 
-        	return View::make('admin/users/create_edit', compact('user', 'roles', 'permissions', 'title', 'mode'));
+        	return View::make('admin/users/create_edit', compact('user', 'roles',
+                'permissions', 'city', 'title', 'mode'));
         }
         else
         {
@@ -192,6 +207,7 @@ class AdminUsersController extends AdminController {
         $user->username = Input::get( 'username' );
         $user->email = Input::get( 'email' );
         $user->confirmed = Input::get( 'confirm' );
+        $user->city_id = Input::get( 'city_id' );
 
         $password = Input::get( 'password' );
         $passwordConfirmation = Input::get( 'password_confirmation' );
@@ -208,7 +224,7 @@ class AdminUsersController extends AdminController {
                 return Redirect::to('admin/users/' . $user->id . '/edit')->with('error', Lang::get('admin/users/messages.password_does_not_match'));
             }
         }
-            
+
         if($user->confirmed == null) {
             $user->confirmed = $oldUser->confirmed;
         }
@@ -290,7 +306,9 @@ class AdminUsersController extends AdminController {
     {
         $users = User::leftjoin('assigned_roles', 'assigned_roles.user_id', '=', 'users.id')
                     ->leftjoin('roles', 'roles.id', '=', 'assigned_roles.role_id')
-                    ->select(array('users.id', 'users.username','users.email', 'roles.name as rolename', 'users.confirmed', 'users.created_at'));
+                     ->leftjoin('city', 'city.id', '=', 'users.city_id')
+                    ->select(array('users.id', 'users.username','users.email', 'roles.name as rolename',
+                        'city.city_name as cityname', 'users.confirmed', 'users.created_at'));
 
         return Datatables::of($users)
         // ->edit_column('created_at','{{{ Carbon::now()->diffForHumans(Carbon::createFromFormat(\'Y-m-d H\', $test)) }}}')

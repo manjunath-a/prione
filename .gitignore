@@ -7,6 +7,7 @@
 /app/config/staging
 /app/config/production
 /app/database/migrations/.directory
+/app/config/packages/aws/
 # Composer
 composer.phar
 composer.lock

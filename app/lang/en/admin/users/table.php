@@ -9,6 +9,7 @@ return array(
 	'email'      => 'Email',
 	'groups'     => 'Groups',
 	'roles'     => 'Roles',
+  'city'     => 'City',
 	'activated'  => 'Activated',
 	'created_at' => 'Created at',
 

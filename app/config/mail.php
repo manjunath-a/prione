@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.postmarkapp.com',
+	'host' => 'smtp.sendgrid.net',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => null,
+	'username' => 'psbharathy',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => null,
+	'password' => 'getm3in@CO',
 	/**
 	 *
 	 */
