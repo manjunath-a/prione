@@ -49,16 +49,11 @@
             ->setGridOption('url', URL::to('/locallead'))
             ->setGridOption('rowNum', 25)
             ->setGridOption('shrinkToFit', false)
-           // ->setGridOption('autowidth', true)
-            // ->setGridOption('width', 750)
-            //->setGridOption('height', 115)
-            //->setGridOption('rowList', array(25,15,10))
-           // ->setGridOption('caption', 'LocalLead')
             ->setGridOption('viewrecords', false)
             ->setNavigatorOptions('navigator', array('view'=>false))
             ->addColumn(array('name'=>'id', 'index'=>'id', 'align'=>'center', 'hidden' => true))
-            ->addColumn(array('label'=>'Request Id', 'align'=>'center'))
-            ->addColumn(array('label'=>'Request Date', 'align'=>'center'))
+            ->addColumn(array('label'=>'Request Id', 'align'=>'center', 'index'=>'id'))
+            ->addColumn(array('label'=>'Request Date', 'align'=>'center', 'index'=>'created_at'))
             ->addColumn(array('label'=>'Seller Name', 'align'=>'center','index'=>'seller_name'))
             ->addColumn(array('label'=>'Seller Email ID', 'align'=>'center','index'=>'email' ))
             ->addColumn(array('label'=>'Contact Number', 'align'=>'right','index'=>'contact_number'))
@@ -70,4 +65,5 @@
             ->addColumn(array('label'=>'Comment', 'align'=>'right','index'=>'comment'))
              ->renderGrid();
 }}
+   <!-- -->
 @stop

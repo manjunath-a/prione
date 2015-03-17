@@ -3,20 +3,22 @@
 
 class SellerRequest extends Eloquent  {
 
-  /**
-   * The database table used by the model.
-   *
-   * @var string
-   */
-  protected $table = 'seller_request';
+    /**
+    * The database table used by the model.
+     *
+    * @var string
+    */
+    protected $table = 'seller_request';
 
-  /**
-   * Primary key for the table.
-   *
-   * @var string
-   */
-  protected $primaryKey = 'id';
-  protected $guarded = array('id');
+    /**
+    * Primary key for the table.
+    *
+    * @var string
+    */
+    protected $primaryKey = 'id';
+
+    protected $guarded = array('id');
+
 
     /**
      * Add your validation rules here
@@ -40,6 +42,11 @@ class SellerRequest extends Eloquent  {
         'comment' => 'required'
     ];
 
+    public function ticket()
+    {
+        return $this->hasOne('Ticket', 'request_id');
+    }
+
     /**
      * Get Seller request by Seller Name
      * @param $sellerName
@@ -50,11 +57,14 @@ class SellerRequest extends Eloquent  {
         return $this->where('seller_name', '=', $sellerName)->first();
     }
 
-    public static function freshDesk($requestData) {
 
-        $fd_domain = Config::get('freshdesk.domain');
-        $token = Config::get('freshdesk.token');
-        $password = Config::get('freshdesk.password');
+    /**
+     *
+     */
+    public static function buildTicket($requestData) {
+
+        $freshdesk = App::make('freshDesk');
+        // var_dump($freshdesk);
 
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
         $merchantCategory = Category::find($requestData['category_id'])->toArray();
@@ -64,7 +74,6 @@ class SellerRequest extends Eloquent  {
                             $merchantCategory['category_name'],
                             "SKU# ".$requestData['total_sku'],
                         ));
-
 
 
         $description = "Category :: ". $merchantCategory['category_name']."
@@ -97,47 +106,57 @@ class SellerRequest extends Eloquent  {
                 ),
             "cc_emails" => Config::get('mail.cc_email'),
         );
+        return $freshdesk->createTicket( $data );
 
-        $json_body = json_encode($data, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
-        $header[] = "Content-type: application/json";
-        $connection = curl_init("$fd_domain/helpdesk/tickets.json");
-        curl_setopt($connection, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($connection, CURLOPT_HTTPHEADER, $header);
-        curl_setopt($connection, CURLOPT_HEADER, false);
-        curl_setopt($connection, CURLOPT_USERPWD, "$token:$password");
-        curl_setopt($connection, CURLOPT_POST, true);
-        curl_setopt($connection, CURLOPT_POSTFIELDS, $json_body);
-        curl_setopt($connection, CURLOPT_VERBOSE, 1);
-        $ticketResponse = curl_exec($connection);
-        $ticketArray = json_decode(  $ticketResponse );
-
-        return $ticketArray->helpdesk_ticket;
     }
 
     public static function createRequest( $requestData ) {
 
-        $request = SellerRequest::create($requestData);
-        $ticket = SellerRequest::freshDesk( $requestData );
-        if($ticket->display_id) {
-            $ticketData['request_id'] = $request->id;
-            $ticketData['freshdesk_ticket_id'] = $ticket->display_id;
+        $sellerRequest = SellerRequest::create($requestData);
+
+        $fdTicket = SellerRequest::buildTicket($requestData);
+        var_dump($requestData);
+
+        $cityLead = User::where('city_id', '=', $requestData['merchant_city_id'])->first();
+        // $requestData['merchant_city_id']);
+        // var_dump($cityLead->id); exit;
+        if($fdTicket->display_id) {
+            $ticketData['request_id'] = $sellerRequest->id;
+            $ticketData['freshdesk_ticket_id'] = $fdTicket->display_id;
             $ticketData['email'] = $requestData['email'];
-            $ticketData['subject'] = $ticket->subject;
-            $ticketData['description'] = $ticket->description;
+            $ticketData['subject'] = $fdTicket->subject;
+            $ticketData['description'] = $fdTicket->description;
             $ticketData['s3_url'] = 's3.prion.com';
-            $ticketData['assigned_to'] = 1;
-            $ticketData['priority'] = 1;
+            $ticketData['assigned_to'] = $cityLead->id;
             $ticketData['pending_reason'] = ' Just now  Ticket created ';
-            $ticketData['status_id'] = 1;
-            return Ticket::create($ticketData);
+            $ticketData['status_id'] = Config::get('ticket.default_status');
+
+            // $group = Config::get('ticket.default_group');
+            $ticket= Ticket::create($ticketData);
+
+            // Ticket Transaction
+            $ticketTransactioData['ticket_id'] = $ticket->id;
+            $ticketTransactioData['assigned_to'] = $cityLead->id;
+            $ticketTransactioData['priority'] = Config::get('ticket.default_priority');
+            $ticketTransactioData['status_id'] = Config::get('ticket.default_status');
+            $ticketTransactioData['group_id'] = 1;
+            $ticketTransactioData['stage_id'] = Config::get('ticket.default_stage');
+            $ticketTransactioData['total_sku'] = $requestData['total_sku'];
+            $ticketTransactioData['total_images'] = 0;
+            $ticketTransaction = TicketTransaction::create($ticketTransactioData);
+
+            // $s3 = App::make('aws')->get('s3');
+            // // $s3 = AWS::get('s3');
+            $folderName = $fdTicket->display_id.'_'.$requestData['seller_name'];
+            // $result = $s3->putObject(array(
+            //     'Bucket' => 'prionecataloguing',
+            //     'Key'    => $folderName ,
+            //     'Body'   => "",
+            // ));
+            return $ticket;
+            // var_dump($result);exit;
         }
 
     }
-
-//    public function tickect()
-//    {
-//        return $this->hasOne('Ticket');
-//    }
-//
 
 }

@@ -114,7 +114,10 @@ return array(
         'Zizaco\Entrust\EntrustServiceProvider', // Entrust Provider for roles
         'Bllim\Datatables\DatatablesServiceProvider', // Datatables
         'Mgallegos\LaravelJqgrid\LaravelJqgridServiceProvider',
-
+        // Pirone Application service provider
+        'App\Services\ApplicationServiceProvider',
+        // Amazon service provider added
+        'Aws\Laravel\AwsServiceProvider',
         /* Uncomment for use in development */
 //        'Way\Generators\GeneratorsServiceProvider', // Generators
 //        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider', // IDE Helpers
@@ -195,7 +198,8 @@ return array(
 
         'GridRender'      => 'Mgallegos\LaravelJqgrid\Facades\GridRender',
         'GridEncoder'     => 'Mgallegos\LaravelJqgrid\Facades\GridEncoder',
-
+    /* Amazon Aliases  */
+    'AWS' => 'Aws\Laravel\AwsFacade',
     ),
 
     'available_language' => array('en'),

@@ -18,4 +18,8 @@ class Ticket extends Eloquent  {
   protected $primaryKey = 'id';
   protected $guarded = array('id');
 
+  public function request() {
+      return $this->belongsTo('SellerRequest');
+  }
+
 }

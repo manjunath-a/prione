@@ -23,6 +23,7 @@
 				<th class="col-md-2">{{{ Lang::get('admin/users/table.username') }}}</th>
 				<th class="col-md-2">{{{ Lang::get('admin/users/table.email') }}}</th>
 				<th class="col-md-2">{{{ Lang::get('admin/users/table.roles') }}}</th>
+				<th class="col-md-2">{{{ Lang::get('admin/users/table.city') }}}</th>
 				<th class="col-md-2">{{{ Lang::get('admin/users/table.activated') }}}</th>
 				<th class="col-md-2">{{{ Lang::get('admin/users/table.created_at') }}}</th>
 				<th class="col-md-2">{{{ Lang::get('table.actions') }}}</th>

@@ -110,5 +110,5 @@ Route::get('locallead', function()
 
 Route::post('/locallead', function()
 {
-    GridEncoder::encodeRequestedData(new LocalLeadRepository(new SellerRequest()), Input::all());
+    GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
 });

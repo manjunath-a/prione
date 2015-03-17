@@ -18,6 +18,20 @@ class User extends Eloquent implements ConfideUserInterface {
         return $this->where('username', '=', $username)->first();
     }
 
+    public function city() {
+      return $this->belongsTo('City');
+    }
+
+     /**
+     * Get user by username
+     * @param $username
+     * @return mixed
+     */
+    public static function findByCityId( $cityId )
+    {
+        return User::where('city_id', '=', $cityId)->first()->get();
+    }
+
     /**
      * Find the user and check whether they are confirmed
      *

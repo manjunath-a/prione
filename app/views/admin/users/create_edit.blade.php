@@ -77,7 +77,12 @@
 					</div>
 				</div>
 				<!-- ./ activation status -->
-
+			 <div class="form-group">
+              <label for="city_id" class="col-md-2 control-label">City</label>
+              <div class="col-md-6">
+                 {{Form::select('city_id', $city,  isset($user->city_id) ? $user->city_id : '', array('class' => 'form-control'))}}
+              </div>
+       </div>
 				<!-- Groups -->
 				<div class="form-group {{{ $errors->has('roles') ? 'error' : '' }}}">
 	                <label class="col-md-2 control-label" for="roles">Roles</label>

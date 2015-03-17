@@ -1,13 +1,13 @@
 <?php
 
-class City extends Eloquent {
+class Group extends Eloquent {
 
 	 /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'city';
+    protected $table = 'group';
 
     /**
      * Primary key for the table.
@@ -19,6 +19,6 @@ class City extends Eloquent {
 
     public function user()
     {
-        return $this->hasMany('City');
+        return $this->hasMany('Group');
     }
 }
