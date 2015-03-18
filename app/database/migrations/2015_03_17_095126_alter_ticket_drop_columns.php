@@ -17,7 +17,6 @@ class AlterTicketDropColumns extends Migration {
 
   	    $table->dropForeign('ticket_assigned_to_foreign');
   	    $table->dropForeign('users_assigned_to_foreign');
-  	    $table->dropForeign('ticket_assigned_to_foreign');
   	    $table->dropForeign('ticket_status_id_foreign');
   	    $table->dropColumn('priority');
   	    $table->dropColumn('assigned_to');
