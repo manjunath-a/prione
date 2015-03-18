@@ -41,7 +41,7 @@ class DashboardController extends BaseController {
     $group = '';
     if($groupArray) {
       foreach($groupArray as $key => $value) {
-        $group .= $value['id'].":".$value['stage_name'].';';
+        $group .= $value['id'].":".$value['group_name'].';';
       }
     }
     // Get all Stage

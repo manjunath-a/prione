@@ -125,9 +125,6 @@ class SellerRequest extends Eloquent  {
             $ticketData['subject'] = $fdTicket->subject;
             $ticketData['description'] = $fdTicket->description;
             $ticketData['s3_url'] = 's3.prion.com';
-            $ticketData['assigned_to'] = $cityLead->id;
-            $ticketData['pending_reason'] = ' Just now  Ticket created ';
-            $ticketData['status_id'] = Config::get('ticket.default_status');
 
             // $group = Config::get('ticket.default_group');
             $ticket= Ticket::create($ticketData);
