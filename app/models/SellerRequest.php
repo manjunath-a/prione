@@ -118,8 +118,6 @@ class SellerRequest extends Eloquent  {
         var_dump($requestData);
 
         $cityLead = User::where('city_id', '=', $requestData['merchant_city_id'])->first();
-        // $requestData['merchant_city_id']);
-        // var_dump($cityLead->id); exit;
         if($fdTicket->display_id) {
             $ticketData['request_id'] = $sellerRequest->id;
             $ticketData['freshdesk_ticket_id'] = $fdTicket->display_id;

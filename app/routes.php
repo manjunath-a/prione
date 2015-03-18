@@ -100,15 +100,13 @@ Route::post('request/create', 'RequestController@store');
 // request created success
 Route::get('request/success/{ticket}', 'RequestController@success');
 
-
-Route::get('locallead', function()
-{
-    // Return about us page
-    return View::make('site/dashboards/locallead');
+Route::get('info/', function() {
+    phpinfo();
 });
 
+Route::get('dashboard/', 'DashboardController@getIndex');
 
-Route::post('/locallead', function()
+Route::post('dashboard/locallead', function()
 {
     GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
 });
