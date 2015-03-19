@@ -17,18 +17,20 @@
 {{-- Content --}}
 @section('content')
     <div class="page-header">
-        <h3>Local Lead Dashboard</h3>
+        <h3>Dashboard : {{$user->username}}
+         City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
     </div>
-<!-- 'formatter' => 'select', -->
+    <!-- 'formatter' => 'select', -->
     {{
     GridRender::setGridId("sellerrequest")
             ->enableFilterToolbar()
-            ->setGridOption('url', URL::to('dashboard/locallead'))
+            ->setGridOption('url', URL::to('/dashboard/locallead'))
             ->setGridOption('rowNum', 25)
+            ->setGridOption('editurl',URL::to('/request/update'))
             ->setGridOption('shrinkToFit', false)
             ->setGridOption('viewrecords', false)
             ->setNavigatorOptions('navigator', array('view'=>false))
-            ->addColumn(array('name'=>'id', 'index'=>'id', 'align'=>'center', 'hidden' => true))
+            ->addColumn(array('name'=>'id', 'index'=>'id', 'align'=>'center', 'hidden' => false))
             ->addColumn(array('label'=>'Request Id', 'align'=>'center', 'index'=>'id'))
             ->addColumn(array('label'=>'Request Date', 'align'=>'center', 'index'=>'created_at'))
 
@@ -48,10 +50,15 @@
             'width' => 90, 'editable' => true, 'editoptions' => array('value' => $status),
             'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
 
-            ->addColumn(array('label'=>'Assigned ', 'align'=>'center','index'=>'username', 'editable'=>true))
-            ->addColumn(array('label'=>'PhotoGrapher ', 'align'=>'center','index'=>'username', 'editable'=>true))
-            ->addColumn(array('label'=>'MIF Collecter ', 'align'=>'center','index'=>'username', 'editable'=>true))
-            ->addColumn(array('label'=>'Seller Name', 'align'=>'center','index'=>'seller_name', 'editable'=>true))
+            ->addColumn(array('label' => 'PhotoGrapher','index' => 'photographer_id', 'align' => 'center',
+            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $photographer, 'defaultValue' =>-1),
+            'edittype' => 'select', 'formatter' => 'select'))
+
+            ->addColumn(array('label' => 'MIF','index' => 'mif_id', 'align' => 'center',
+            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $serviceassociates, 'defaultValue' =>'-1'),
+            'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
+
+            ->addColumn(array('label'=>'Seller Name', 'align'=>'center','index'=>'seller_name', ))
             ->addColumn(array('label'=>'Seller Email ID', 'align'=>'center','index'=>'email' ))
             ->addColumn(array('label'=>'Contact Number', 'align'=>'right','index'=>'contact_number'))
             ->addColumn(array('label'=>'POC Name', 'align'=>'center','index'=>'poc_name' ))

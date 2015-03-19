@@ -136,7 +136,7 @@ class UserController extends BaseController {
     {
         $user = Auth::user();
         if(!empty($user->id)){
-            return Redirect::to('/');
+            return Redirect::to('/dashboard');
         }
 
         return View::make('site/user/login');
@@ -152,7 +152,7 @@ class UserController extends BaseController {
         $input = Input::all();
 
         if ($this->userRepo->login($input)) {
-            return Redirect::intended('/');
+            return Redirect::intended('/dashboard');
         } else {
             if ($this->userRepo->isThrottled($input)) {
                 $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');

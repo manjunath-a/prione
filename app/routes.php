@@ -104,9 +104,18 @@ Route::get('info/', function() {
     phpinfo();
 });
 
+// Before CSRF checks : FIXME
+Route::post('request/update/', 'RequestController@updateRequest');
+
 Route::get('dashboard/', 'DashboardController@getIndex');
 
-Route::post('dashboard/locallead', function()
+Route::post('/dashboard/locallead', function()
 {
     GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
+});
+
+App::missing(function($e) {
+    $url = Request::fullUrl();
+    Log::warning("404 for URL: $url");
+    return Response::view('errors.404', array(), 404);
 });

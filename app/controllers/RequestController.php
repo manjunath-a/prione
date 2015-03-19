@@ -82,6 +82,17 @@ class RequestController extends BaseController {
       return Redirect::to('request/success/'.$ticket->id);
   }
 
+  public function updateRequest() {
+    $ticketData = Input::all();
+    $id = $ticketData['id'];
+    if($id) {
+      $ticketTransaction = Ticket::assignTicket($id, $ticketData);
+    }
+
+    return $ticketTransaction;
+  }
+
+
   /**
    * Returns sucess Page.
    *

@@ -27,10 +27,32 @@ class DashboardController extends BaseController {
 	public function getIndex()
 	{
 
-    $priority = '1:Low;2:Medium;3:High';
+    list($user, $redirect) = User::checkAuthAndRedirect('user');
+    if($redirect){return $redirect;}
+
+    $photoGrapherArray = $this->user->findAllByRoleAndCity(3, $user->city_id);
+    // var_dump($photoGrapherArray);exit;
+
+    $photographer = '-1:select;';
+    if($photoGrapherArray) {
+      foreach($photoGrapherArray as $value) {
+        $photographer .= $value->id.":".$value->username.';';
+      }
+    }
+
+    $serviceAssociateArray = $this->user->findAllByRoleAndCity(4, $user->city_id);
+
+    $serviceassociates = '-1:select;';
+    if($serviceAssociateArray) {
+      foreach($serviceAssociateArray as $value) {
+        $serviceassociates .= $value->id.":".$value->username.';';
+      }
+    }
+
+    $priority = '-1:select;1:Low;2:Medium;3:High';
     // Get all Status
     $statusArray = Status::all();
-    $status = '';
+    $status = '-1:select;';
     if($statusArray) {
       foreach($statusArray as $key => $value) {
         $status .= $value['id'].":".$value['status_name'].';';
@@ -38,7 +60,7 @@ class DashboardController extends BaseController {
     }
     // Get all Group
     $groupArray = Group::all();
-    $group = '';
+    $group = '-1:select;';
     if($groupArray) {
       foreach($groupArray as $key => $value) {
         $group .= $value['id'].":".$value['group_name'].';';
@@ -46,26 +68,20 @@ class DashboardController extends BaseController {
     }
     // Get all Stage
     $stageArray = Stage::all();
-    $stage = '';
+    $stage = '-1:select;';
     if($stageArray) {
       foreach($stageArray as $key => $value) {
         $stage .= $value['id'].":".$value['stage_name'].';';
       }
     }
-    // 'E:English;S:Spanish;G:German'
 		// Show the page
-    // View::make('site/dashboards/locallead');
-		return View::make('site/dashboards/locallead', compact('posts', 'priority', 'group', 'stage', 'status'));
+		return View::make('site/dashboards/locallead', compact('user', 'photographer',
+          'serviceassociates', 'priority', 'group', 'stage', 'status'));
 	}
 
-
-	public function getLead()
+	public function locallead()
 	{
-			var_dump(Input::all());exit;
-      // if (Request::wantsJson()) {
-          return GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
-      // }
+      GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
 	}
-
 
 }
