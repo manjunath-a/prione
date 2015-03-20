@@ -30,7 +30,7 @@ class DashboardController extends BaseController {
     list($user, $redirect) = User::checkAuthAndRedirect('user');
     if($redirect){return $redirect;}
 
-    $photoGrapherArray = $this->user->findAllByRoleAndCity(3, $user->city_id);
+    $photoGrapherArray = $this->user->findAllByRoleAndCity('Photographer', $user->city_id);
     // var_dump($photoGrapherArray);exit;
 
     $photographer = '-1:select;';
@@ -40,7 +40,7 @@ class DashboardController extends BaseController {
       }
     }
 
-    $serviceAssociateArray = $this->user->findAllByRoleAndCity(4, $user->city_id);
+    $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
 
     $serviceassociates = '-1:select;';
     if($serviceAssociateArray) {

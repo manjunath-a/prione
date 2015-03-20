@@ -128,7 +128,7 @@ class User extends Eloquent implements ConfideUserInterface {
     /**
      * function  findAllByRoleAndCity
      */
-    public function findAllByRoleAndCity($roleId, $cityId) {
+    public function findAllByRoleAndCity($rolename, $cityId) {
 
         // 'SELECT `dcst_users`.`id`, `dcst_users`.`username` FROM `dcst_roles`
         //     inner join `dcst_assigned_roles` on `dcst_roles`.`id` = `dcst_assigned_roles`.`role_id`
@@ -138,7 +138,7 @@ class User extends Eloquent implements ConfideUserInterface {
                   ->join('assigned_roles', 'roles.id', '=', 'assigned_roles.role_id')
                   ->join('users', 'users.id', '=', 'assigned_roles.user_id')
                   ->where('users.city_id', $cityId)
-                  ->where('roles.id', $roleId)
+                  ->where('roles.name', $rolename)
                   ->select('users.id', 'users.username')
                   ->get();
 
