@@ -31,6 +31,10 @@
             ->setGridOption('viewrecords', false)
             ->setNavigatorOptions('navigator', array('view'=>false))
             ->addColumn(array('name'=>'id', 'index'=>'id', 'align'=>'center', 'hidden' => false))
+            ->addColumn(array('name'=>'seller_request_id', 'index'=>'seller_request_id',
+            'align'=>'center', 'hidden' => false))
+            ->addColumn(array('name'=>'ticket_id', 'index'=>'ticket_id', 'align'=>'center', 'hidden' => false))
+
             ->addColumn(array('label'=>'Request Id', 'align'=>'center', 'index'=>'id'))
             ->addColumn(array('label'=>'Request Date', 'align'=>'center', 'index'=>'created_at'))
 
@@ -55,7 +59,7 @@
             'edittype' => 'select', 'formatter' => 'select'))
 
             ->addColumn(array('label' => 'PhotoSuiteDate','index' => 'photosuite_date', 'align' => 'center',
-            'width' => 90, 'editable' => true))
+            'width' => 90, 'editable' => true, 'editoptions' => array('formatter' => 'date','edittype' => 'date')))
 
             ->addColumn(array('label' => 'PhotoSuiteLocation','index' => 'photosuite_location', 'align' => 'center',
             'width' => 90, 'editable' => true))
@@ -69,8 +73,6 @@
 
             ->addColumn(array('label' => 'ServiceAssociate Variation','index' => 'sa_variation', 'align' => 'center',
             'width' => 90, 'editable' => true))
-
-
 
             ->addColumn(array('label'=>'Seller Name', 'align'=>'center','index'=>'seller_name', ))
             ->addColumn(array('label'=>'Seller Email ID', 'align'=>'center','index'=>'email' ))

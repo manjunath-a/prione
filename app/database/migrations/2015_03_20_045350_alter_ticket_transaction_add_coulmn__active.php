@@ -17,7 +17,7 @@ class AlterTicketTransactionAddCoulmnActive extends Migration {
 			$table->integer('photgrapher_id')->unsigned()->after('active');
 			$table->integer('mif_id')->unsigned()->after('photgrapher_id');
 			$table->dateTime('photosuite_date')->after('mif_id');
-			$table->dateTime('photosuite_location')->after('photosuite_date');
+			$table->string('photosuite_location')->after('photosuite_date');
 			$table->integer('sa_variation')->unsigned()->after('photosuite_location');
 			$table->integer('sa_sku')->unsigned()->after('sa_variation');
 			$table->text('notes')->after('sa_sku');
