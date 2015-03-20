@@ -22,7 +22,7 @@ class PermissionsTableSeeder extends Seeder {
         DB::table('permission_role')->delete();
 
         $role_id_admin = Role::where('name', '=', 'admin')->first()->id;
-        $role_id_comment = Role::where('name', '=', 'citylead')->first()->id;
+        $role_id_comment = Role::where('name', '=', 'Local Team Lead')->first()->id;
         $permission_base = (int)DB::table('permissions')->first()->id - 1;
 
         $permissions = array(

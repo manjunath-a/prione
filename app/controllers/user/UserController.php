@@ -35,8 +35,14 @@ class UserController extends BaseController {
         list($user,$redirect) = $this->user->checkAuthAndRedirect('user');
         if($redirect){return $redirect;}
 
+        // Get all the available city
+        $cities = City::all();
+        foreach ($cities as $key => $cityArray) {
+            $city[$cityArray['id']] = $cityArray['city_name'];
+        }
+
         // Show the page
-        return View::make('site/user/index', compact('user'));
+        return View::make('site/user/index', compact('user', 'city'));
     }
 
     /**
@@ -130,7 +136,7 @@ class UserController extends BaseController {
     {
         $user = Auth::user();
         if(!empty($user->id)){
-            return Redirect::to('/');
+            return Redirect::to('/dashboard');
         }
 
         return View::make('site/user/login');
@@ -146,7 +152,7 @@ class UserController extends BaseController {
         $input = Input::all();
 
         if ($this->userRepo->login($input)) {
-            return Redirect::intended('/');
+            return Redirect::intended('/dashboard');
         } else {
             if ($this->userRepo->isThrottled($input)) {
                 $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');

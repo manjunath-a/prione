@@ -19,7 +19,6 @@ class SellerRequest extends Eloquent  {
 
     protected $guarded = array('id');
 
-
     /**
      * Add your validation rules here
      *
@@ -115,11 +114,21 @@ class SellerRequest extends Eloquent  {
         $sellerRequest = SellerRequest::create($requestData);
 
         $fdTicket = SellerRequest::buildTicket($requestData);
-        var_dump($requestData);
 
-        $cityLead = User::where('city_id', '=', $requestData['merchant_city_id'])->first();
-        // $requestData['merchant_city_id']);
-        // var_dump($cityLead->id); exit;
+        $cityLead = Role::Join('assigned_roles', 'assigned_roles.role_id', '=', 'roles.id')
+                         ->join('users', 'users.id', '=', 'assigned_roles.user_id')
+                         ->where('roles.name', 'Local Team Lead')
+                         ->where('users.city_id', 1)
+                         ->select('users.id', 'users.username')->first();
+
+        // $cityLead = DB::table('roles')
+        //         ->join('assigned_roles', 'assigned_roles.role_id', '=', 'roles.id')
+        //         ->join('users', 'users.id', '=', 'assigned_roles.user_id')
+        //         ->where('roles.name', 'Local Team Lead')
+        //         ->where('users.city_id', 1)
+        //         ->select('users.id', 'users.username');
+        // print_r($cityLead);exit;
+
         if($fdTicket->display_id) {
             $ticketData['request_id'] = $sellerRequest->id;
             $ticketData['freshdesk_ticket_id'] = $fdTicket->display_id;
@@ -127,9 +136,6 @@ class SellerRequest extends Eloquent  {
             $ticketData['subject'] = $fdTicket->subject;
             $ticketData['description'] = $fdTicket->description;
             $ticketData['s3_url'] = 's3.prion.com';
-            $ticketData['assigned_to'] = $cityLead->id;
-            $ticketData['pending_reason'] = ' Just now  Ticket created ';
-            $ticketData['status_id'] = Config::get('ticket.default_status');
 
             // $group = Config::get('ticket.default_group');
             $ticket= Ticket::create($ticketData);
@@ -139,6 +145,7 @@ class SellerRequest extends Eloquent  {
             $ticketTransactioData['assigned_to'] = $cityLead->id;
             $ticketTransactioData['priority'] = Config::get('ticket.default_priority');
             $ticketTransactioData['status_id'] = Config::get('ticket.default_status');
+            $ticketTransactioData['active'] = 1;
             $ticketTransactioData['group_id'] = 1;
             $ticketTransactioData['stage_id'] = Config::get('ticket.default_stage');
             $ticketTransactioData['total_sku'] = $requestData['total_sku'];
@@ -154,9 +161,6 @@ class SellerRequest extends Eloquent  {
             //     'Body'   => "",
             // ));
             return $ticket;
-            // var_dump($result);exit;
         }
-
     }
-
 }

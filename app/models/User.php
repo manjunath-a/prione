@@ -125,5 +125,23 @@ class User extends Eloquent implements ConfideUserInterface {
     {
         return $this->email;
     }
+    /**
+     * function  findAllByRoleAndCity
+     */
+    public function findAllByRoleAndCity($rolename, $cityId) {
+
+        // 'SELECT `dcst_users`.`id`, `dcst_users`.`username` FROM `dcst_roles`
+        //     inner join `dcst_assigned_roles` on `dcst_roles`.`id` = `dcst_assigned_roles`.`role_id`
+        //     inner join `dcst_users` on `dcst_users`.`id` = `dcst_assigned_roles`.`user_id`
+        //     where `dcst_users`.`city_id` = 1 and `dcst_roles`.`id` = 3';
+        return $photoGraphers = DB::table('roles')
+                  ->join('assigned_roles', 'roles.id', '=', 'assigned_roles.role_id')
+                  ->join('users', 'users.id', '=', 'assigned_roles.user_id')
+                  ->where('users.city_id', $cityId)
+                  ->where('roles.name', $rolename)
+                  ->select('users.id', 'users.username')
+                  ->get();
+
+    }
 
 }

@@ -59,6 +59,7 @@ class RequestController extends BaseController {
          // var_dump($data);exit;
           // return Redirect::back()->withErrors($validator)->withInput();
       }
+
       try {
           $requestData['seller_name'] =  $data['seller_name'];
           $requestData['email'] = $data['email'];
@@ -81,6 +82,17 @@ class RequestController extends BaseController {
       }
       return Redirect::to('request/success/'.$ticket->id);
   }
+
+  public function updateRequest() {
+    $ticketData = Input::all();
+    $id = $ticketData['id'];
+    if($id) {
+      $ticketTransaction = Ticket::assignTicket($id, $ticketData);
+    }
+
+    return $ticketTransaction;
+  }
+
 
   /**
    * Returns sucess Page.

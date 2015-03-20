@@ -64,6 +64,16 @@ body {
             </div>
         </div>
         <!-- ./ password confirm -->
+
+         <!-- City  -->
+        <div class="form-group {{{ $errors->has('city_id') ? 'error' : '' }}}">
+            <label class="col-md-2 control-label" for="city_id">City </label>
+            <div class="col-md-10">
+                {{Form::select('city_id', $city,  isset($user->city_id) ? $user->city_id : '', array( 'readonly'=>'readonly', 'class' => 'form-control'))}}
+                {{ $errors->first('city_id', '<span class="help-inline">:message</span>') }}
+            </div>
+        </div>
+        <!-- ./ City -->
     </div>
     <!-- ./ general tab -->
 

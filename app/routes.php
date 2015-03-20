@@ -100,15 +100,22 @@ Route::post('request/create', 'RequestController@store');
 // request created success
 Route::get('request/success/{ticket}', 'RequestController@success');
 
-
-Route::get('locallead', function()
-{
-    // Return about us page
-    return View::make('site/dashboards/locallead');
+Route::get('info/', function() {
+    phpinfo();
 });
 
+// Before CSRF checks : FIXME
+Route::post('request/update/', 'RequestController@updateRequest');
 
-Route::post('/locallead', function()
+Route::get('dashboard/', 'DashboardController@getIndex');
+
+Route::post('/dashboard/locallead', function()
 {
     GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
+});
+
+App::missing(function($e) {
+    $url = Request::fullUrl();
+    Log::warning("404 for URL: $url");
+    return Response::view('error/404', array(), 404);
 });

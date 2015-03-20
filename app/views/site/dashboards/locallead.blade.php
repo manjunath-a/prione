@@ -17,44 +17,64 @@
 {{-- Content --}}
 @section('content')
     <div class="page-header">
-        <h3>Local Lead Dashboard</h3>
+        <h3>Dashboard : {{$user->username}}
+         City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
     </div>
-    {{--{{--}}
-        {{--GridRender::setGridId("sellerrequest")--}}
-                    {{--->enableFilterToolbar()--}}
-                    {{--->setGridOption('url',URL::to('/locallead'))--}}
-                    {{--->setGridOption('rowNum', 5)--}}
-                    {{--->setGridOption('shrinkToFit',false)--}}
-                    {{--->setGridOption('sortname','id')--}}
-                    {{--->setGridOption('caption','locallead')--}}
-                    {{--->setGridOption('useColSpanStyle', true)--}}
-                    {{--->setNavigatorOptions('navigator', array('viewtext'=>'view'))--}}
-                    {{--->setNavigatorOptions('view',array('closeOnEscape'=>false))--}}
-                    {{--->setFilterToolbarOptions(array('autosearch'=>true))--}}
-                    {{--//->setGridEvent('gridComplete', 'gridCompleteEvent') //gridCompleteEvent must be previously declared as a javascript function.--}}
-                {{--//    ->setNavigatorEvent('view', 'beforeShowForm', 'function(){alert("Before show form");}')--}}
-                 {{--//   ->setFilterToolbarEvent('beforeSearch', 'function(){alert("Before search event");}')--}}
-                  {{--//  ->addGroupHeader(array('startColumnName' => 'amount', 'numberOfColumns' => 3, 'titleText' => 'Price'))--}}
-                    {{--->addColumn(array('index'=>'id', 'width'=>55))--}}
-                    {{--->addColumn(array('label'=>'Name','index'=>'product','width'=>100))--}}
-                    {{--->addColumn(array('label'=>'email','index'=>'amount','index'=>'amount', 'width'=>80, 'align'=>'right'))--}}
-                {{--//    ->addColumn(array('label'=>'Total','index'=>'total','index'=>'total', 'width'=>80))--}}
-                  {{--//  ->addColumn(array('label'=>'Note','index'=>'note','index'=>'note', 'width'=>55,'searchoptions'=>array('attr'=>array('title'=>'Note title'))))--}}
-                    {{--->renderGrid();--}}
-    {{--}}--}}
-
+    <!-- 'formatter' => 'select', -->
     {{
     GridRender::setGridId("sellerrequest")
             ->enableFilterToolbar()
-            ->setGridOption('url', URL::to('/locallead'))
+            ->setGridOption('url', URL::to('/dashboard/locallead'))
             ->setGridOption('rowNum', 25)
+            ->setGridOption('editurl',URL::to('/request/update'))
             ->setGridOption('shrinkToFit', false)
             ->setGridOption('viewrecords', false)
             ->setNavigatorOptions('navigator', array('view'=>false))
-            ->addColumn(array('name'=>'id', 'index'=>'id', 'align'=>'center', 'hidden' => true))
+            ->addColumn(array('name'=>'id', 'index'=>'id', 'align'=>'center', 'hidden' => false))
+            ->addColumn(array('name'=>'seller_request_id', 'index'=>'seller_request_id',
+            'align'=>'center', 'hidden' => false))
+            ->addColumn(array('name'=>'ticket_id', 'index'=>'ticket_id', 'align'=>'center', 'hidden' => false))
+
             ->addColumn(array('label'=>'Request Id', 'align'=>'center', 'index'=>'id'))
             ->addColumn(array('label'=>'Request Date', 'align'=>'center', 'index'=>'created_at'))
-            ->addColumn(array('label'=>'Seller Name', 'align'=>'center','index'=>'seller_name'))
+
+            ->addColumn(array('label' => 'Priority','index' => 'priority', 'align' => 'center',
+            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $status),
+            'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
+
+            ->addColumn(array('label' => 'Group','index' => 'group_id', 'align' => 'center',
+            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $group),
+            'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
+
+            ->addColumn(array('label' => 'Stage','index' => 'stage_id', 'align' => 'center',
+            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $stage),
+            'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
+
+            ->addColumn(array('label' => 'Status','index' => 'status_id', 'align' => 'center',
+            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $status),
+            'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
+
+            ->addColumn(array('label' => 'PhotoGrapher','index' => 'photographer_id', 'align' => 'center',
+            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $photographer, 'defaultValue' =>-1),
+            'edittype' => 'select', 'formatter' => 'select'))
+
+            ->addColumn(array('label' => 'PhotoSuiteDate','index' => 'photosuite_date', 'align' => 'center',
+            'width' => 90, 'editable' => true, 'editoptions' => array('formatter' => 'date','edittype' => 'date')))
+
+            ->addColumn(array('label' => 'PhotoSuiteLocation','index' => 'photosuite_location', 'align' => 'center',
+            'width' => 90, 'editable' => true))
+
+            ->addColumn(array('label' => 'MIF','index' => 'mif_id', 'align' => 'center',
+            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $serviceassociates, 'defaultValue' =>'-1'),
+            'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
+
+            ->addColumn(array('label' => 'ServiceAssociate SKU','index' => 'sa_sku', 'align' => 'center',
+            'width' => 90, 'editable' => true))
+
+            ->addColumn(array('label' => 'ServiceAssociate Variation','index' => 'sa_variation', 'align' => 'center',
+            'width' => 90, 'editable' => true))
+
+            ->addColumn(array('label'=>'Seller Name', 'align'=>'center','index'=>'seller_name', ))
             ->addColumn(array('label'=>'Seller Email ID', 'align'=>'center','index'=>'email' ))
             ->addColumn(array('label'=>'Contact Number', 'align'=>'right','index'=>'contact_number'))
             ->addColumn(array('label'=>'POC Name', 'align'=>'center','index'=>'poc_name' ))
@@ -63,7 +83,6 @@
             ->addColumn(array('label'=>'No. of SKUs', 'align'=>'center','index'=>'total_sku'))
             ->addColumn(array('label'=>'Image Available', 'align'=>'center','index'=>'image_available' ))
             ->addColumn(array('label'=>'Comment', 'align'=>'right','index'=>'comment'))
-             ->renderGrid();
+            ->renderGrid();
 }}
-   <!-- -->
 @stop
