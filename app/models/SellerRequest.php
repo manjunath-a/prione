@@ -149,9 +149,6 @@ class SellerRequest extends Eloquent  {
             //     'Body'   => "",
             // ));
             return $ticket;
-            // var_dump($result);exit;
         }
-
     }
-
 }

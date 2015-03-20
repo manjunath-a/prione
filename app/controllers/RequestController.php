@@ -59,6 +59,7 @@ class RequestController extends BaseController {
          // var_dump($data);exit;
           // return Redirect::back()->withErrors($validator)->withInput();
       }
+
       try {
           $requestData['seller_name'] =  $data['seller_name'];
           $requestData['email'] = $data['email'];
