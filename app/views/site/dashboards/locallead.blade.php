@@ -54,9 +54,23 @@
             'width' => 90, 'editable' => true, 'editoptions' => array('value' => $photographer, 'defaultValue' =>-1),
             'edittype' => 'select', 'formatter' => 'select'))
 
+            ->addColumn(array('label' => 'PhotoSuiteDate','index' => 'photosuite_date', 'align' => 'center',
+            'width' => 90, 'editable' => true))
+
+            ->addColumn(array('label' => 'PhotoSuiteLocation','index' => 'photosuite_location', 'align' => 'center',
+            'width' => 90, 'editable' => true))
+
             ->addColumn(array('label' => 'MIF','index' => 'mif_id', 'align' => 'center',
             'width' => 90, 'editable' => true, 'editoptions' => array('value' => $serviceassociates, 'defaultValue' =>'-1'),
             'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
+
+            ->addColumn(array('label' => 'ServiceAssociate SKU','index' => 'sa_sku', 'align' => 'center',
+            'width' => 90, 'editable' => true))
+
+            ->addColumn(array('label' => 'ServiceAssociate Variation','index' => 'sa_variation', 'align' => 'center',
+            'width' => 90, 'editable' => true))
+
+
 
             ->addColumn(array('label'=>'Seller Name', 'align'=>'center','index'=>'seller_name', ))
             ->addColumn(array('label'=>'Seller Email ID', 'align'=>'center','index'=>'email' ))

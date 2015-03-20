@@ -26,14 +26,7 @@ class Ticket extends Eloquent  {
 
     //  'Model Ticket';
 
-    $leadData['ticket_id'] = $data['id'];
-    $leadData['status_id'] = $data['status_id'];
-    $leadData['priority'] = $data['priority'];
-    $leadData['group_id'] = $data['group_id'];
-    $leadData['stage_id'] =  Stage::where('stage_name', '(Local) Associates Assigned');
-    $leadData['active'] = 1;
-    $leadData['assigned_to'] = $user->id;
-    $leadTransaction = TicketTransaction::updateTicket($leadData);
+
 
     if($data['photographer_id']) {
       $photographerData['ticket_id'] = $data['id'];
@@ -42,7 +35,12 @@ class Ticket extends Eloquent  {
       $photographerData['group_id'] = $data['group_id'];
       $photographerData['stage_id'] = Stage::where('stage_name', '(Local) Associates Assigned');
       $photographerData['active'] = 1;
+      $photographerData['photgrapher_id'] =  $data['photographer_id'];
+      $photographerData['mif_id'] = $data['mif_id'];
+      $photographerData['photosuite_date'] = $data['photosuite_date'];
+      $photographerData['photosuite_location'] = $data['photosuite_location'];
       $photographerData['assigned_to'] = $data['photographer_id'];
+
       $photographerTransaction = TicketTransaction::updateTicket($photographerData);
     }
 
@@ -52,8 +50,27 @@ class Ticket extends Eloquent  {
     $serviceAssociateData['group_id'] = $data['group_id'];
     $serviceAssociateData['stage_id'] =  Stage::where('stage_name', '(Local) Associates Assigned');
     $serviceAssociateData['active'] = 1;
+    $serviceAssociateData['photgrapher_id'] =  $data['photographer_id'];
+    $serviceAssociateData['mif_id'] = $data['mif_id'];
+    $serviceAssociateData['photosuite_date'] = $data['photosuite_date'];
+    $serviceAssociateData['photosuite_location'] = $data['photosuite_location'];
     $serviceAssociateData['assigned_to'] = $data['mif_id'];
     $serviceAssociateTransaction = TicketTransaction::updateTicket($serviceAssociateData);
+
+
+    $leadData['ticket_id'] = $data['id'];
+    $leadData['status_id'] = $data['status_id'];
+    $leadData['priority'] = $data['priority'];
+    $leadData['group_id'] = $data['group_id'];
+    $leadData['stage_id'] =  Stage::where('stage_name', '(Local) Associates Assigned');
+    $leadData['active'] = 1;
+    $leadData['photgrapher_id'] =  $data['photographer_id'];
+    $leadData['mif_id'] = $data['mif_id'];
+    $leadData['photosuite_date'] = $data['photosuite_date'];
+    $leadData['photosuite_location'] = $data['photosuite_location'];
+    $leadData['assigned_to'] = $user->id;
+    $leadTransaction = TicketTransaction::updateTicket($leadData);
+
 
     // Update Team Lead
     $ticketTransaction = TicketTransaction::find($id);
