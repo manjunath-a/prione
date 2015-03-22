@@ -14,7 +14,7 @@ class RequestController extends BaseController {
   }
 
 	/**
-	 * Returns Requesy Form.
+	 * Returns Request Form.
 	 *
 	 * @return View
 	 */

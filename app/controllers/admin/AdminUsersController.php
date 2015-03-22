@@ -49,7 +49,7 @@ class AdminUsersController extends AdminController {
         $users = $this->user;
 
         // Show the page
-        return View::make('admin/users/index', compact('users', 'title'));
+        return View::make('/admin/users/index', compact('users', 'title'));
     }
 
     /**

@@ -152,7 +152,7 @@ class UserController extends BaseController {
         $input = Input::all();
 
         if ($this->userRepo->login($input)) {
-            return Redirect::intended('/dashboard');
+            return Redirect::intended('admin/users/index');
         } else {
             if ($this->userRepo->isThrottled($input)) {
                 $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');

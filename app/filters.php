@@ -122,3 +122,12 @@ Route::filter('detectLang',  function($route, $request, $lang = 'auto')
         App::setLocale($userLang);
     }
 });
+
+
+// filters.php
+Route::filter('admin', function($route, $request)
+{
+    if ( ! Auth::user()->isAdmin()) {
+        return App::abort(401, 'You are not authorized.');
+    }
+});

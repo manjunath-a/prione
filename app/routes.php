@@ -107,15 +107,25 @@ Route::get('info/', function() {
 // Before CSRF checks : FIXME
 Route::post('request/update/', 'RequestController@updateRequest');
 
-Route::get('dashboard/', 'DashboardController@getIndex');
+Route::get('dashboard/locallead/', 'DashboardController@getLocalLead');
+Route::get('dashboard/photographer/', 'DashboardController@getPhotographer');
 
 Route::post('/dashboard/locallead', function()
 {
     GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
 });
 
+//Route::post('/dashboard/seller', function()
+//{
+//   // return Response::json(array("rows" => [array( "cell" => array("Arasu","admin@example.org",'8388607',"testing","arasub@gmail.com","1234567890"))]));
+//
+//});
+
+Route::post('/dashboard/seller', 'DashboardController@postSeller');
+
 App::missing(function($e) {
     $url = Request::fullUrl();
     Log::warning("404 for URL: $url");
     return Response::view('error/404', array(), 404);
 });
+

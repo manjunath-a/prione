@@ -18,7 +18,7 @@
 @section('content')
     <div class="page-header">
         <h3>Dashboard : {{$user->username}}
-         City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
+            City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
     </div>
 
     <form method="POST" action="http://prione.app/dashboard/locallead" accept-charset="UTF-8" id="sellerrequestExportForm">
@@ -39,17 +39,17 @@
 
     </div>
     <script type="text/javascript">
-       // $.jgrid.no_legacy_api = false;
-//        $.jgrid.useJSON = true;
+        // $.jgrid.no_legacy_api = false;
+        //        $.jgrid.useJSON = true;
         var lastsel3;
-       // var $ =jQuery.noConflict();
+        // var $ =jQuery.noConflict();
         jQuery("#locallead").jqGrid({
                     "datatype":"json",
                     "mtype":"POST",
                     "url":"locallead",
                     "editurl":'/request/update',
                     "rowNum":25,
-                   // "autowidth":true,
+                    // "autowidth":true,
                     //"shrinkToFit":false,
                     "viewrecords":true,
                     "colModel":[
@@ -60,13 +60,13 @@
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,"editoptions":{"value":"1:Low;2:Medium;3:Urgent;4:high"},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
                         {"label":"Group","index":"group_id","align":"center","width":110,"editable":true,"editoptions":{"value":"1:Local;2:Editing;3:Cataloging"},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"group_id"},
                         {"label":"Stage","index":"stage_id","align":"center","width":320,"editable":true,"editoptions":{"value":"1:(Local) Associates Not Assigned;2:(Local) Associates Assigned;3:(Local) Photoshoot Completed \/ Seller Images Provided;4:(Local) MIF Completed;5:(Central) Editing Completed;6:(Central) Cataloging Completed;7:(Central) ASIN Created"},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"stage_id"},
-                       // {"label":"Status","index":"status_id","align":"center","width":90,"editable":true,"editoptions": "<?php //echo '{value:'.$status .'}'?>" ,"edittype":"select","formatter":"select","editrules":{"required":true},"name":"status_id"},
+                        // {"label":"Status","index":"status_id","align":"center","width":90,"editable":true,"editoptions": "<?php //echo '{value:'.$status .'}'?>" ,"edittype":"select","formatter":"select","editrules":{"required":true},"name":"status_id"},
                         {"label":"Status","index":"status_id","align":"center","width":110,"editable":true,"editoptions":{"value":"1:Open;2:Pending;3:Resolved;4:Closed;5:Rejectd"},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"status_id"},
                         {"label":"PhotoGrapher","index":"photographer_id","align":"center","width":130,"editable":true,"editoptions":{"value":"-1:select;9:Photographer","defaultValue":-1},"edittype":"select","formatter":"select","name":"photographer_id"},
                         {"label":"PhotoSuiteDate","index":"photosuite_date","align":"center","width":150,"editable":true,"name":"photosuite_date",formatter: "date", "editrules":{"date":true},editoptions: { dataInit : function (elem) {jQuery(elem).datepicker({dateFormat:"yy-mm-dd"});}} },
                         {"label":"PhotoSuiteLocation","index":"photosuite_location","align":"center","width":150,"editable":true,"name":"photosuite_location"},
                         //{"label":"Assigned ","align":"center","index":"username","editable":true,"name":"username"},
-                       // {"label":"PhotoGrapher ","align":"center","index":"username","editable":true,"name":"username"},
+                        // {"label":"PhotoGrapher ","align":"center","index":"username","editable":true,"name":"username"},
                         //{"label":"MIF Collecter ","align":"center","index":"username","editable":true,"name":"username"},
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","editable":true,"width":90},
                         {"label":"No. of Images","align":"center","index":"image_available","name":"image_available","editable":true,"width":100},
@@ -119,14 +119,14 @@
                     //'cellEdit': true
                 }
         );
-////jQuery("#locallead").jqGrid('navGrid',"#localleadPager",{edit:false,add:false,del:false});
-////.navGrid("#localleadPager",{"add":false,"edit":fasle,"del":false,"search":false,"view":false,"refresh":false}, {}, {}, {}, {}, {} );
-//
-//        function pickdates(id)
-//        {
-//            alert(2);
-//            jQuery("#"+id+"_photosuite_date","#locallead").datepicker({dateFormat:"yy-mm-dd"});
-//        }
+        ////jQuery("#locallead").jqGrid('navGrid',"#localleadPager",{edit:false,add:false,del:false});
+        ////.navGrid("#localleadPager",{"add":false,"edit":fasle,"del":false,"search":false,"view":false,"refresh":false}, {}, {}, {}, {}, {} );
+        //
+        //        function pickdates(id)
+        //        {
+        //            alert(2);
+        //            jQuery("#"+id+"_photosuite_date","#locallead").datepicker({dateFormat:"yy-mm-dd"});
+        //        }
     </script>
     <!-- ./ content -->
     </div>
@@ -134,66 +134,66 @@
     {{--<!-- 'formatter' => 'select', -->--}}
     {{--{{--}}
     {{--GridRender::setGridId("sellerrequest")--}}
-            {{--->enableFilterToolbar()--}}
-            {{--->setGridOption('url', URL::to('/dashboard/locallead'))--}}
-            {{--->setGridOption('rowNum', 25)--}}
-            {{--->setGridOption('editurl',URL::to('/request/update'))--}}
-            {{--->setGridOption('shrinkToFit', false)--}}
-            {{--->setGridOption('viewrecords', false)--}}
-            {{--->setNavigatorOptions('navigator', array('view'=>false))--}}
-            {{--->addColumn(array('name'=>'id', 'index'=>'id', 'align'=>'center', 'hidden' => false))--}}
-            {{--->addColumn(array('name'=>'seller_request_id', 'index'=>'seller_request_id',--}}
-            {{--'align'=>'center', 'hidden' => false))--}}
-            {{--->addColumn(array('name'=>'ticket_id', 'index'=>'ticket_id', 'align'=>'center', 'hidden' => false))--}}
+    {{--->enableFilterToolbar()--}}
+    {{--->setGridOption('url', URL::to('/dashboard/locallead'))--}}
+    {{--->setGridOption('rowNum', 25)--}}
+    {{--->setGridOption('editurl',URL::to('/request/update'))--}}
+    {{--->setGridOption('shrinkToFit', false)--}}
+    {{--->setGridOption('viewrecords', false)--}}
+    {{--->setNavigatorOptions('navigator', array('view'=>false))--}}
+    {{--->addColumn(array('name'=>'id', 'index'=>'id', 'align'=>'center', 'hidden' => false))--}}
+    {{--->addColumn(array('name'=>'seller_request_id', 'index'=>'seller_request_id',--}}
+    {{--'align'=>'center', 'hidden' => false))--}}
+    {{--->addColumn(array('name'=>'ticket_id', 'index'=>'ticket_id', 'align'=>'center', 'hidden' => false))--}}
 
-            {{--->addColumn(array('label'=>'Request Id', 'align'=>'center', 'index'=>'id'))--}}
-            {{--->addColumn(array('label'=>'Request Date', 'align'=>'center', 'index'=>'created_at'))--}}
+    {{--->addColumn(array('label'=>'Request Id', 'align'=>'center', 'index'=>'id'))--}}
+    {{--->addColumn(array('label'=>'Request Date', 'align'=>'center', 'index'=>'created_at'))--}}
 
-            {{--->addColumn(array('label' => 'Priority','index' => 'priority', 'align' => 'center',--}}
-            {{--'width' => 90, 'editable' => true, 'editoptions' => array('value' => $status),--}}
-            {{--'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))--}}
+    {{--->addColumn(array('label' => 'Priority','index' => 'priority', 'align' => 'center',--}}
+    {{--'width' => 90, 'editable' => true, 'editoptions' => array('value' => $status),--}}
+    {{--'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))--}}
 
-            {{--->addColumn(array('label' => 'Group','index' => 'group_id', 'align' => 'center',--}}
-            {{--'width' => 90, 'editable' => true, 'editoptions' => array('value' => $group),--}}
-            {{--'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))--}}
+    {{--->addColumn(array('label' => 'Group','index' => 'group_id', 'align' => 'center',--}}
+    {{--'width' => 90, 'editable' => true, 'editoptions' => array('value' => $group),--}}
+    {{--'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))--}}
 
-            {{--->addColumn(array('label' => 'Stage','index' => 'stage_id', 'align' => 'center',--}}
-            {{--'width' => 90, 'editable' => true, 'editoptions' => array('value' => $stage),--}}
-            {{--'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))--}}
+    {{--->addColumn(array('label' => 'Stage','index' => 'stage_id', 'align' => 'center',--}}
+    {{--'width' => 90, 'editable' => true, 'editoptions' => array('value' => $stage),--}}
+    {{--'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))--}}
 
-            {{--->addColumn(array('label' => 'Status','index' => 'status_id', 'align' => 'center',--}}
-            {{--'width' => 90, 'editable' => true, 'editoptions' => array('value' => $status),--}}
-            {{--'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))--}}
+    {{--->addColumn(array('label' => 'Status','index' => 'status_id', 'align' => 'center',--}}
+    {{--'width' => 90, 'editable' => true, 'editoptions' => array('value' => $status),--}}
+    {{--'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))--}}
 
-            {{--->addColumn(array('label' => 'PhotoGrapher','index' => 'photographer_id', 'align' => 'center',--}}
-            {{--'width' => 90, 'editable' => true, 'editoptions' => array('value' => $photographer, 'defaultValue' =>-1),--}}
-            {{--'edittype' => 'select', 'formatter' => 'select'))--}}
+    {{--->addColumn(array('label' => 'PhotoGrapher','index' => 'photographer_id', 'align' => 'center',--}}
+    {{--'width' => 90, 'editable' => true, 'editoptions' => array('value' => $photographer, 'defaultValue' =>-1),--}}
+    {{--'edittype' => 'select', 'formatter' => 'select'))--}}
 
-            {{--->addColumn(array('label' => 'PhotoSuiteDate','index' => 'photosuite_date', 'align' => 'center',--}}
-            {{--'width' => 90, 'editable' => true, 'editoptions' => array('formatter' => 'date','edittype' => 'date')))--}}
+    {{--->addColumn(array('label' => 'PhotoSuiteDate','index' => 'photosuite_date', 'align' => 'center',--}}
+    {{--'width' => 90, 'editable' => true, 'editoptions' => array('formatter' => 'date','edittype' => 'date')))--}}
 
-            {{--->addColumn(array('label' => 'PhotoSuiteLocation','index' => 'photosuite_location', 'align' => 'center',--}}
-            {{--'width' => 90, 'editable' => true))--}}
+    {{--->addColumn(array('label' => 'PhotoSuiteLocation','index' => 'photosuite_location', 'align' => 'center',--}}
+    {{--'width' => 90, 'editable' => true))--}}
 
-            {{--->addColumn(array('label' => 'MIF','index' => 'mif_id', 'align' => 'center',--}}
-            {{--'width' => 90, 'editable' => true, 'editoptions' => array('value' => $serviceassociates, 'defaultValue' =>'-1'),--}}
-            {{--'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))--}}
+    {{--->addColumn(array('label' => 'MIF','index' => 'mif_id', 'align' => 'center',--}}
+    {{--'width' => 90, 'editable' => true, 'editoptions' => array('value' => $serviceassociates, 'defaultValue' =>'-1'),--}}
+    {{--'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))--}}
 
-            {{--->addColumn(array('label' => 'ServiceAssociate SKU','index' => 'sa_sku', 'align' => 'center',--}}
-            {{--'width' => 90, 'editable' => true))--}}
+    {{--->addColumn(array('label' => 'ServiceAssociate SKU','index' => 'sa_sku', 'align' => 'center',--}}
+    {{--'width' => 90, 'editable' => true))--}}
 
-            {{--->addColumn(array('label' => 'ServiceAssociate Variation','index' => 'sa_variation', 'align' => 'center',--}}
-            {{--'width' => 90, 'editable' => true))--}}
+    {{--->addColumn(array('label' => 'ServiceAssociate Variation','index' => 'sa_variation', 'align' => 'center',--}}
+    {{--'width' => 90, 'editable' => true))--}}
 
-            {{--->addColumn(array('label'=>'Seller Name', 'align'=>'center','index'=>'seller_name', ))--}}
-            {{--->addColumn(array('label'=>'Seller Email ID', 'align'=>'center','index'=>'email' ))--}}
-            {{--->addColumn(array('label'=>'Contact Number', 'align'=>'right','index'=>'contact_number'))--}}
-            {{--->addColumn(array('label'=>'POC Name', 'align'=>'center','index'=>'poc_name' ))--}}
-            {{--->addColumn(array('label'=>'POC Email ID', 'align'=>'center','index'=>'poc_email' ))--}}
-            {{--->addColumn(array('label'=>'POC Contact Number','index'=>'poc_number'))--}}
-            {{--->addColumn(array('label'=>'No. of SKUs', 'align'=>'center','index'=>'total_sku'))--}}
-            {{--->addColumn(array('label'=>'Image Available', 'align'=>'center','index'=>'image_available' ))--}}
-            {{--->addColumn(array('label'=>'Comment', 'align'=>'right','index'=>'comment'))--}}
-            {{--->renderGrid();--}}
-{{--}}--}}
+    {{--->addColumn(array('label'=>'Seller Name', 'align'=>'center','index'=>'seller_name', ))--}}
+    {{--->addColumn(array('label'=>'Seller Email ID', 'align'=>'center','index'=>'email' ))--}}
+    {{--->addColumn(array('label'=>'Contact Number', 'align'=>'right','index'=>'contact_number'))--}}
+    {{--->addColumn(array('label'=>'POC Name', 'align'=>'center','index'=>'poc_name' ))--}}
+    {{--->addColumn(array('label'=>'POC Email ID', 'align'=>'center','index'=>'poc_email' ))--}}
+    {{--->addColumn(array('label'=>'POC Contact Number','index'=>'poc_number'))--}}
+    {{--->addColumn(array('label'=>'No. of SKUs', 'align'=>'center','index'=>'total_sku'))--}}
+    {{--->addColumn(array('label'=>'Image Available', 'align'=>'center','index'=>'image_available' ))--}}
+    {{--->addColumn(array('label'=>'Comment', 'align'=>'right','index'=>'comment'))--}}
+    {{--->renderGrid();--}}
+    {{--}}--}}
 @stop
