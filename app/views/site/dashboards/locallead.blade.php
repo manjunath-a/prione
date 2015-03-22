@@ -20,18 +20,19 @@
         <h3>Dashboard : {{$user->username}}
          City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
     </div>
-
-    <form method="POST" action="http://prione.app/dashboard/locallead" accept-charset="UTF-8" id="sellerrequestExportForm">
-        <input name="_token" type="hidden" value="NRpSJe8P8nLMhPcW1XxuDCenBuME47Y1dptcjznF">
+    {{ Form::open(array('url' => 'dashboard/locallead', 'method' => 'post', 'id'=> "sellerrequestExportForm")) }}
+    <!-- <form method="POST" action="http://prione.app/dashboard/locallead"
+    accept-charset="UTF-8" id="sellerrequestExportForm"> -->
+<!--         <input name="_token" type="hidden" value="NRpSJe8P8nLMhPcW1XxuDCenBuME47Y1dptcjznF">
         <input id="sellerrequestName" name="name" type="hidden" value="sellerrequest">
         <input id="sellerrequestModel" name="model" type="hidden">
         <input id="sellerrequestExportFormat" name="exportFormat" type="hidden" value="xls">
         <input id="sellerrequestFilters" name="filters" type="hidden">
         <input id="sellerrequestPivotFlag" name="pivot" type="hidden" value="">
-        <input id="sellerrequestRows" name="pivotRows" type="hidden">
+        <input id="sellerrequestRows" name="pivotRows" type="hidden"> -->
         <input name="fileProperties" type="hidden" value='[]'>
         <input name="sheetProperties" type="hidden" value='[]'>
-    </form>
+    {{ Form::close() }}
     <table id="locallead">
 
     </table>
