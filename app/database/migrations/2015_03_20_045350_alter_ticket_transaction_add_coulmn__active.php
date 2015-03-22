@@ -14,8 +14,8 @@ class AlterTicketTransactionAddCoulmnActive extends Migration {
 	{
 		Schema::table('ticket_transaction', function(Blueprint $table) 	{
 			$table->tinyInteger('active')->unsigned()->after('stage_id');
-			$table->integer('photgrapher_id')->unsigned()->after('active');
-			$table->integer('mif_id')->unsigned()->after('photgrapher_id');
+			$table->integer('photographer_id')->unsigned()->after('active');
+			$table->integer('mif_id')->unsigned()->after('photographer_id');
 			$table->dateTime('photosuite_date')->after('mif_id');
 			$table->string('photosuite_location')->after('photosuite_date');
 			$table->integer('sa_variation')->unsigned()->after('photosuite_location');

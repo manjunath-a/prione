@@ -42,8 +42,7 @@ class TicketTransaction extends Eloquent  {
   }
 
   public static function updateTicket($transactionData) {
-    // echo 'Model Ticket';
-    // var_dump($data);exit;
+    // var_dump($transactionData);exit;
     return TicketTransaction::create($transactionData);
   }
 

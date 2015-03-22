@@ -31,7 +31,12 @@ class LocalLeadRepository extends EloquentRepositoryAbstract  {
             'seller_request.contact_number','seller_request.poc_name',
             'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',
             'seller_request.image_available', 'seller_request.comment',
-            'seller_request.id as seller_request_id', 'ticket.id as ticket_id')
+            'seller_request.id as seller_request_id', 'ticket.id as ticket_id',
+            'ticket_transaction.photosuite_date','ticket_transaction.photosuite_location',
+            'ticket_transaction.photographer_id','ticket_transaction.mif_id',
+            'ticket_transaction.sa_variation', 'ticket_transaction.sa_sku',
+            'ticket_transaction.total_sku', 'ticket_transaction.total_images',
+             'ticket_transaction.id as transaction_id')
                             ->groupBy('ticket_transaction.id');
 
 
@@ -41,7 +46,12 @@ class LocalLeadRepository extends EloquentRepositoryAbstract  {
             'seller_request.contact_number','seller_request.poc_name',
             'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',
             'seller_request.image_available', 'seller_request.comment',
-            'seller_request.id as seller_request_id', 'ticket.id as ticket_id');
+            'ticket_transaction.photosuite_date','ticket_transaction.photosuite_location',
+            'ticket_transaction.photographer_id','ticket_transaction.mif_id',
+            'ticket_transaction.sa_variation', 'ticket_transaction.sa_sku',
+            'ticket_transaction.total_sku', 'ticket_transaction.total_images',
+            'seller_request.id as seller_request_id', 'ticket.id as ticket_id',
+            'ticket_transaction.id as transaction_id');
 
         $this->orderBy = array(array('id', 'asc'));
     }

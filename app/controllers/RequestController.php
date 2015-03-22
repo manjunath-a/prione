@@ -85,9 +85,10 @@ class RequestController extends BaseController {
 
   public function updateRequest() {
     $ticketData = Input::all();
-    $id = $ticketData['id'];
-    if($id) {
-      $ticketTransaction = Ticket::assignTicket($id, $ticketData);
+    $ticketTransactionId = $ticketData['transaction_id'];
+    $ticketId = $ticketData['ticket_id'];
+    if($ticketTransactionId) {
+      $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
     }
 
     return $ticketTransaction;

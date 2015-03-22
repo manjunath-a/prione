@@ -114,6 +114,10 @@ Route::post('/dashboard/locallead', function()
 {
     GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
 });
+Route::post('/dashboard/photographer', function()
+{
+    GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
+});
 
 //Route::post('/dashboard/seller', function()
 //{
