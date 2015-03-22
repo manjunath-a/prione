@@ -106,6 +106,7 @@ Route::get('info/', function() {
 
 // Before CSRF checks : FIXME
 Route::post('request/update/', 'RequestController@updateRequest');
+Route::post('request/updatePhotographer/', 'RequestController@updatePhotographer');
 
 Route::get('dashboard/locallead/', 'DashboardController@getLocalLead');
 Route::get('dashboard/photographer/', 'DashboardController@getPhotographer');

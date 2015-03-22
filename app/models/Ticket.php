@@ -70,4 +70,54 @@ class Ticket extends Eloquent  {
 
     return $leadTransaction->id;
   }
+
+  public static function updatePhotographer($ticketTransactionId, $ticketId, $data) {
+
+
+        // Update Team Lead
+    $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
+
+    //  'Model Ticket';
+    if($data['mif_id'] == 0) {
+      throw new Exception("Service Associates is reuired ");
+    }
+    $photoCompleted = Stage::where('stage_name',
+      '(Local) Photoshoot Completed / Seller Images Provided')->first();
+
+    $ticketData['ticket_id'] = $data['ticket_id'];
+    $ticketData['status_id'] = $data['status_id'];
+    $ticketData['stage_id'] = $photoCompleted->id;
+    $ticketData['priority'] = $data['priority'];
+    $ticketData['group_id'] = $data['group_id'];
+    $ticketData['active'] = 1;
+
+    $ticketData['notes'] = $data['comment'];
+
+    if($data['total_sku'])
+      $ticketData['total_sku'] = $data['total_sku'];
+    if($data['total_images'])
+      $ticketData['total_images'] = $data['total_images'];
+
+    if(Auth::user()->id) {
+      $ticketData['photographer_id'] =  Auth::user()->id;
+
+      $ticketData['assigned_to'] = Auth::user()->id;
+      $photographerTransaction = TicketTransaction::updateTicket($ticketData);
+    }
+
+    $ticketData['assigned_to'] = $data['mif_id'];
+    $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
+
+    $ticketData['assigned_to'] = Ticket::findUserByRoleAndCity();
+    $leadTransaction = TicketTransaction::updateTicket($ticketData);
+
+      return $leadTransaction->id;
+  }
+
+  public static function findUserByRoleAndCity() {
+    $user = new User;
+    $loalLead =  $user->findAllByRoleAndCity('Local Team Lead', Auth::user()->city_id);
+    return $loalLead[0]->id;
+  }
+
 }

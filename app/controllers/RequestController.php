@@ -90,7 +90,16 @@ class RequestController extends BaseController {
     if($ticketTransactionId) {
       $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
     }
+    return $ticketTransaction;
+  }
 
+   public function updatePhotographer() {
+    $ticketData = Input::all();
+    $ticketTransactionId = $ticketData['transaction_id'];
+    $ticketId = $ticketData['ticket_id'];
+    if($ticketTransactionId) {
+      $ticketTransaction = Ticket::updatePhotographer($ticketTransactionId, $ticketId, $ticketData);
+    }
     return $ticketTransaction;
   }
 
