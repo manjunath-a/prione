@@ -88,15 +88,11 @@ class RequestController extends BaseController {
       $ticketData = Input::all();
       $ticketTransactionId = $ticketData['transaction_id'];
       $ticketId = $ticketData['ticket_id'];
-
-        if($ticketData['group_id'] == 2){
-            if($ticketTransactionId) {
-                $ticketTransaction = Ticket::updateEditingManager($ticketTransactionId, $ticketId, $ticketData);
-            }
-        }else {
-            if($ticketTransactionId) {
-                $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
-            }
+        if($ticketTransactionId) {
+          if($ticketData['group_id'] == 2)
+              $ticketTransaction = Ticket::updateEditingManager($ticketTransactionId, $ticketId, $ticketData);
+          else
+              $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
         }
 
       return $ticketTransaction;

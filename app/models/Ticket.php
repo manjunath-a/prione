@@ -28,13 +28,19 @@ class Ticket extends Eloquent  {
     if($data['mif_id'] == 0) {
       throw new Exception("Service Associates is reuired ");
     }
-    $associatAssigned = Stage::where('stage_name', '(Local) Associates Assigned')->first();
+
+    if($data['image_available'] !=2 ) {
+      $assignStage = Stage::where('stage_name', '(Local) Associates Assigned')->first();
+    } else {
+      $assignStage = Stage::where('stage_name',
+      '(Local) Photoshoot Completed / Seller Images Provided')->first();
+    }
 
     $ticketData['ticket_id'] = $data['ticket_id'];
     $ticketData['status_id'] = $data['status_id'];
     $ticketData['priority'] = $data['priority'];
     $ticketData['group_id'] = $data['group_id'];
-    $ticketData['stage_id'] = $associatAssigned->id;
+    $ticketData['stage_id'] = $assignStage->id;
     $ticketData['active'] = 1;
 
     $ticketData['mif_id'] = $data['mif_id'];
@@ -51,7 +57,7 @@ class Ticket extends Eloquent  {
     if($data['sa_variation'])
       $ticketData['sa_variation'] = $data['sa_variation'];
 
-    if($data['photographer_id']) {
+    if($data['photographer_id'] && $data['image_available'] !=2 ) {
       $ticketData['photographer_id'] =  $data['photographer_id'];
       $ticketData['assigned_to'] = $data['photographer_id'];
       $photographerTransaction = TicketTransaction::updateTicket($ticketData);
@@ -121,28 +127,27 @@ class Ticket extends Eloquent  {
 
 
     public static function updateMIF($ticketTransactionId, $ticketId, $data) {
-      //  var_dump($data);exit;
         // Update Team Lead
-        $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
+        $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)
+          ->update(array('active' => 0));
 
         //  'Model Ticket';
         if($data['mif_id'] == 0) {
             throw new Exception("Service Associates is required ");
         }
-        $mifCompleted = Stage::where('stage_name',
-            '(Local) MIF Completed')->first();
+        $mifCompleted = Stage::where('stage_name', '(Local) MIF Completed')->first();
 
-        $ticketData['ticket_id']    = $data['ticket_id'];
-        $ticketData['status_id']    = $data['status_id'];
-        $ticketData['stage_id']     = $mifCompleted->id;
-        $ticketData['priority']     = $data['priority'];
-        $ticketData['group_id']     = $data['group_id'];
-        $ticketData['active']       = 1;
-        $ticketData['notes']        = $data['comment'];
-        $ticketData['mif_id']       = $data['mif_id'];
-        $ticketData['sa_sku']       = $data['sa_sku'];
+        $ticketData['ticket_id'] = $data['ticket_id'];
+        $ticketData['status_id'] = $data['status_id'];
+        $ticketData['stage_id'] = $mifCompleted->id;
+        $ticketData['priority'] = $data['priority'];
+        $ticketData['group_id'] = $data['group_id'];
+        $ticketData['active'] = 1;
+        $ticketData['notes'] = $data['comment'];
+        $ticketData['mif_id'] = $data['mif_id'];
+        $ticketData['sa_sku'] = $data['sa_sku'];
         $ticketData['sa_variation'] = $data['sa_variation'];
-        $ticketData['photosuite_date']       = $data['photosuite_date'];
+        $ticketData['photosuite_date'] = $data['photosuite_date'];
         $ticketData['photosuite_location'] = $data['photosuite_location'];
 
 
@@ -152,12 +157,11 @@ class Ticket extends Eloquent  {
             $ticketData['total_images'] = $data['total_images'];
 
         $ticketData['photographer_id'] = $data['photographer_id'];
-        $ticketData['assigned_to']     = $data['photographer_id'];
+        $ticketData['assigned_to'] = $data['photographer_id'];
         $photographerTransaction = TicketTransaction::updateTicket($ticketData);
 
         if(Auth::user()->id) {
             $ticketData['mif_id'] =  Auth::user()->id;
-
             $ticketData['assigned_to'] = Auth::user()->id;
             $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
         }
@@ -178,8 +182,7 @@ class Ticket extends Eloquent  {
         if($data['mif_id'] == 0) {
             throw new Exception("Service Associates is required ");
         }
-        $localCompleted = Stage::where('stage_name',
-            '(Local) MIF Completed')->first();
+        $localCompleted = Stage::where('stage_name', '(Local) MIF Completed')->first();
 
         $ticketData['ticket_id']    = $data['ticket_id'];
         $ticketData['status_id']    = $data['status_id'];
@@ -224,9 +227,10 @@ class Ticket extends Eloquent  {
     return $loalLead[0]->id;
   }
 
-    public static function findEditingManage() {
-        $user = new User;
-        $editingManager =  $user->findAllByRoleAndCity('Editing Manager', Auth::user()->city_id);
-        return $editingManager[0]->id;
-    }
+  public static function findEditingManage() {
+      $user = new User;
+      $editingManager =  $user->findAllByRoleAndCity('Editing Manager', Auth::user()->city_id);
+      return $editingManager[0]->id;
+  }
+
 }
