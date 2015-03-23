@@ -84,13 +84,22 @@ class RequestController extends BaseController {
   }
 
   public function updateRequest() {
-    $ticketData = Input::all();
-    $ticketTransactionId = $ticketData['transaction_id'];
-    $ticketId = $ticketData['ticket_id'];
-    if($ticketTransactionId) {
-      $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
-    }
-    return $ticketTransaction;
+
+      $ticketData = Input::all();
+      $ticketTransactionId = $ticketData['transaction_id'];
+      $ticketId = $ticketData['ticket_id'];
+
+        if($ticketData['group_id'] == 2){
+            if($ticketTransactionId) {
+                $ticketTransaction = Ticket::updateEditingManager($ticketTransactionId, $ticketId, $ticketData);
+            }
+        }else {
+            if($ticketTransactionId) {
+                $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
+            }
+        }
+
+      return $ticketTransaction;
   }
 
    public function updatePhotographer() {
@@ -103,6 +112,16 @@ class RequestController extends BaseController {
     return $ticketTransaction;
   }
 
+    public function updateMIF() {
+        $ticketData = Input::all();
+        $ticketTransactionId = $ticketData['transaction_id'];
+        $ticketId = $ticketData['ticket_id'];
+
+        if($ticketTransactionId) {
+            $ticketTransaction = Ticket::updateMIF($ticketTransactionId, $ticketId, $ticketData);
+        }
+        return $ticketTransaction;
+    }
 
   /**
    * Returns sucess Page.

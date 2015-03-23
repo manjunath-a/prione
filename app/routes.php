@@ -107,15 +107,28 @@ Route::get('info/', function() {
 // Before CSRF checks : FIXME
 Route::post('request/update/', 'RequestController@updateRequest');
 Route::post('request/updatePhotographer/', 'RequestController@updatePhotographer');
+Route::post('request/updateMIF/', 'RequestController@updateMIF');
 
 Route::get('dashboard/locallead/', 'DashboardController@getLocalLead');
 Route::get('dashboard/photographer/', 'DashboardController@getPhotographer');
+Route::get('dashboard/mif/', 'DashboardController@getMIF');
+Route::get('dashboard/editingmanager/', 'DashboardController@getEditingManager');
 
 Route::post('/dashboard/locallead', function()
 {
     GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
 });
 Route::post('/dashboard/photographer', function()
+{
+    GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
+});
+
+Route::post('/dashboard/mif', function()
+{
+    GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
+});
+
+Route::post('/dashboard/editingmanager', function()
 {
     GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
 });

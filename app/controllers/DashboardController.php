@@ -141,6 +141,116 @@ class DashboardController extends BaseController {
 
     }
 
+    public function getMIF()
+    {
+        list($user, $redirect) = User::checkAuthAndRedirect('user');
+        if($redirect){return $redirect;}
+
+        $photoGrapherArray = $this->user->findAllByRoleAndCity('Photographer', $user->city_id);
+        // var_dump($photoGrapherArray);exit;
+
+        $photographer = '0:select;';
+        if($photoGrapherArray) {
+            foreach($photoGrapherArray as $value) {
+                $photographer .= $value->id.":".$value->username.';';
+            }
+        }
+
+        $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
+
+        $serviceassociates = '0:select;';
+        if($serviceAssociateArray) {
+            foreach($serviceAssociateArray as $value) {
+                $serviceassociates .= $value->id.":".$value->username.';';
+            }
+        }
+
+        $priority = '0:select;1:Low;2:Medium;3:High';
+        // Get all Status
+        $statusArray = Status::all();
+        $status = '0:select;';
+        if($statusArray) {
+            foreach($statusArray as $key => $value) {
+                $status .= $value['id'].":".$value['status_name'].';';
+            }
+        }
+        // Get all Group
+        $groupArray = Group::all();
+        $group = '0:select;';
+        if($groupArray) {
+            foreach($groupArray as $key => $value) {
+                $group .= $value['id'].":".$value['group_name'].';';
+            }
+        }
+        // Get all Stage
+        $stageArray = Stage::all();
+        $stage = '0:select;';
+        if($stageArray) {
+            foreach($stageArray as $key => $value) {
+                $stage .= $value['id'].":".$value['stage_name'].';';
+            }
+        }
+        // Show the page
+        return View::make('site/dashboards/mif', compact('user', 'photographer',
+            'serviceassociates', 'priority', 'group', 'stage', 'status'));
+
+    }
+
+    public function getEditingManager()
+    {
+        list($user, $redirect) = User::checkAuthAndRedirect('user');
+        if($redirect){return $redirect;}
+
+        $photoGrapherArray = $this->user->findAllByRoleAndCity('Photographer', $user->city_id);
+        // var_dump($photoGrapherArray);exit;
+
+        $photographer = '0:select;';
+        if($photoGrapherArray) {
+            foreach($photoGrapherArray as $value) {
+                $photographer .= $value->id.":".$value->username.';';
+            }
+        }
+
+        $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
+
+        $serviceassociates = '0:select;';
+        if($serviceAssociateArray) {
+            foreach($serviceAssociateArray as $value) {
+                $serviceassociates .= $value->id.":".$value->username.';';
+            }
+        }
+
+        $priority = '0:select;1:Low;2:Medium;3:High';
+        // Get all Status
+        $statusArray = Status::all();
+        $status = '0:select;';
+        if($statusArray) {
+            foreach($statusArray as $key => $value) {
+                $status .= $value['id'].":".$value['status_name'].';';
+            }
+        }
+        // Get all Group
+        $groupArray = Group::all();
+        $group = '0:select;';
+        if($groupArray) {
+            foreach($groupArray as $key => $value) {
+                $group .= $value['id'].":".$value['group_name'].';';
+            }
+        }
+        // Get all Stage
+        $stageArray = Stage::all();
+        $stage = '0:select;';
+        if($stageArray) {
+            foreach($stageArray as $key => $value) {
+                $stage .= $value['id'].":".$value['stage_name'].';';
+            }
+        }
+        // Show the page
+        return View::make('site/dashboards/editingmanager', compact('user', 'photographer',
+            'serviceassociates', 'priority', 'group', 'stage', 'status'));
+
+    }
+
     public function postSeller()
     {
         $seller  = SellerRequest::find($_POST['id'])->toArray();

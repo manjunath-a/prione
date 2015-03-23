@@ -21,23 +21,23 @@
             City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
     </div>
 
-    {{ Form::open(array('url' => 'dashboard/photographer', 'method' => 'post', 'id'=> "photographerForm")) }}
+    {{ Form::open(array('url' => 'dashboard/photographer', 'method' => 'post', 'id'=> "editingmanagerForm")) }}
     <input name="fileProperties" type="hidden" value='[]'>
     <input name="sheetProperties" type="hidden" value='[]'>
     {{ Form::close() }}
-    <table id="photographer">
+    <table id="editingmanager">
 
     </table>
-    <div id="photographerPager">
+    <div id="editingmanagerPager">
 
     </div>
     <script type="text/javascript">
         var lastsel3;
-        jQuery("#photographer").jqGrid({
+        jQuery("#editingmanager").jqGrid({
                     "datatype":"json",
                     "mtype":"POST",
-                    "url":"photographer",
-                    "editurl":'/request/updatePhotographer',
+                    "url":"editingmanager",
+                    "editurl":'/request/updateEditingManager',
                     "rowNum":25,
                     "viewrecords":false,
                     "colModel":[
@@ -51,8 +51,8 @@
                         {'name':'priority', 'index':'priority', 'editable': true, 'align':'center', 'key':true, 'hidden' : true},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},
                         {"label":"Status","index":"status_id","align":"center","width":110,"editable":true, "editoptions":{'value':'{{rtrim($status, ";")}}'},"edittype":"select", "formatter":"select","editrules":{"required":true},"name":"status_id"},
-                        {"label":"PhotoSuiteDate","index":"photosuite_date","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },"width":150,"name":"photosuite_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"}},
-                        {"label":"PhotoSuiteLocation","index":"photosuite_location","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },"width":150,"name":"photosuite_location"},
+                        {"label":"PhotoSuiteDate","index":"photosuite_date","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },"width":150,"name":"photosuite_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"},"hidden":true},
+                        {"label":"PhotoSuiteLocation","index":"photosuite_location","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },"width":150,"name":"photosuite_location","hidden":true},
                         {"label":"S3 Path","align":"center","index":"s3_path","name":"s3_path","width":90},
                         {"label":"Seller Name","align":"center","index":"seller_name","name":"seller_name"},
                         {"label":"Category","align":"center","index":"category","name":"category"},
@@ -66,14 +66,14 @@
                     jsonReader: { repeatitems : false, id: 'id' },
                     sortname: 'id',
                     gridComplete: function(){
-                        var ids = jQuery("#photographer").jqGrid('getDataIDs');
+                        var ids = jQuery("#editingmanager").jqGrid('getDataIDs');
                         for(var i=0;i < ids.length;i++)
                         {
                             var cl = ids[i];
-                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#photographer').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#photographer').saveRow('"+cl+"');\" />";
-                            ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#photographer').restoreRow('"+cl+"');\" />";
-                            jQuery("#photographer").jqGrid('setRowData',ids[i],{act:be+se+ce});
+                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#editingmanager').editRow('"+cl+"');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#editingmanager').saveRow('"+cl+"');\" />";
+                            ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#editingmanager').restoreRow('"+cl+"');\" />";
+                            jQuery("#editingmanager").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }
                     },
                     "subGrid":true,
@@ -93,7 +93,7 @@
                             ]
                         }
                     ],
-                    "pager":"photographerPager"
+                    "pager":"editingmanagerPager"
                 }
         );
     </script>
