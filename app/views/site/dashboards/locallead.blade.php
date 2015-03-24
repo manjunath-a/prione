@@ -20,69 +20,104 @@
         <h3>Dashboard : {{$user->username}}
          City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
     </div>
-    <!-- 'formatter' => 'select', -->
-    {{
-    GridRender::setGridId("sellerrequest")
-            ->enableFilterToolbar()
-            ->setGridOption('url', URL::to('/dashboard/locallead'))
-            ->setGridOption('rowNum', 25)
-            ->setGridOption('editurl',URL::to('/request/update'))
-            ->setGridOption('shrinkToFit', false)
-            ->setGridOption('viewrecords', false)
-            ->setNavigatorOptions('navigator', array('view'=>false))
-            ->addColumn(array('name'=>'id', 'index'=>'id', 'align'=>'center', 'hidden' => false))
-            ->addColumn(array('name'=>'seller_request_id', 'index'=>'seller_request_id',
-            'align'=>'center', 'hidden' => false))
-            ->addColumn(array('name'=>'ticket_id', 'index'=>'ticket_id', 'align'=>'center', 'hidden' => false))
+    {{ Form::open(array('url' => 'dashboard/locallead', 'method' => 'post',
+        'id'=> "sellerrequestExportForm")) }}
+        <input name="fileProperties" type="hidden" value='[]'>
+        <input name="sheetProperties" type="hidden" value='[]'>
+    {{ Form::close() }}
+    <table id="locallead">
 
-            ->addColumn(array('label'=>'Request Id', 'align'=>'center', 'index'=>'id'))
-            ->addColumn(array('label'=>'Request Date', 'align'=>'center', 'index'=>'created_at'))
+    </table>
+    <div id="localleadPager">
 
-            ->addColumn(array('label' => 'Priority','index' => 'priority', 'align' => 'center',
-            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $status),
-            'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
+    </div>
+    <script type="text/javascript">
+       // $.jgrid.no_legacy_api = false;
+       // $.jgrid.useJSON = true;
+       // var $ =jQuery.noConflict();
+        var lastsel3;
+        jQuery("#locallead").jqGrid({
+                    "datatype":"json",
+                    "mtype":"POST",
+                    "url":"locallead",
+                    "editurl":'/request/update',
+                    "rowNum":25,
+                    "viewrecords":true,
+                    "colModel":[
+                        {"label":"Action",'name':'act','index':'act', 'width':75,'sortable':false},
+                        {"name":"id", "index":"id", "align":"center", "hidden":true},
+                        {"name":"transaction_id", "index":"transaction_id", "align":"center", 'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
+                        {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
+                        {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, 'hidden' : true},
+                        {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
 
-            ->addColumn(array('label' => 'Group','index' => 'group_id', 'align' => 'center',
-            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $group),
-            'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
+                        {"label":"Request Date","align":"center","index":"created_at","name":"created_at"},
+                        {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
+                        "editoptions":{'value':'{{rtrim($priority, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
 
-            ->addColumn(array('label' => 'Stage','index' => 'stage_id', 'align' => 'center',
-            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $stage),
-            'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
+                        {"label":"Group","index":"group_id","align":"center","width":110,"editable":true,
+                        "editoptions":{'value':'{{rtrim($group, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"group_id"},
 
-            ->addColumn(array('label' => 'Status','index' => 'status_id', 'align' => 'center',
-            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $status),
-            'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
+                        {"label":"Stage","index":"stage_id","align":"center","width":350,"editable":true,
+                        "editoptions":{'value':'{{rtrim($stage, ";")}}'}, "edittype":"select","formatter":"select","editrules":{"required":true},"name":"stage_id"},
 
-            ->addColumn(array('label' => 'PhotoGrapher','index' => 'photographer_id', 'align' => 'center',
-            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $photographer, 'defaultValue' =>-1),
-            'edittype' => 'select', 'formatter' => 'select'))
+                        {"label":"Status","index":"status_id","align":"center","width":110,"editable":true,
+                        "editoptions":{'value':'{{rtrim($status, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"status_id"},
 
-            ->addColumn(array('label' => 'PhotoSuiteDate','index' => 'photosuite_date', 'align' => 'center',
-            'width' => 90, 'editable' => true, 'editoptions' => array('formatter' => 'date','edittype' => 'date')))
+                        {"label":"PhotoGrapher","index":"photographer_id","align":"center","width":130,
+                        "editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select","name":"photographer_id"},
 
-            ->addColumn(array('label' => 'PhotoSuiteLocation','index' => 'photosuite_location', 'align' => 'center',
-            'width' => 90, 'editable' => true))
+                        {"label":"PhotoSuiteDate","index":"photosuite_date","align":"center","width":150,"editable":true,"name":"photosuite_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"}, "editrules":{"date":true},
+                        'editoptions': { 'dataInit' : function (elem) {
+                            jQuery(elem).datepicker({dateFormat:"yy-mm-dd"});}} },
+                        {"label":"PhotoSuiteLocation","index":"photosuite_location","align":"center","width":150,"editable":true,"name":"photosuite_location"},
 
-            ->addColumn(array('label' => 'MIF','index' => 'mif_id', 'align' => 'center',
-            'width' => 90, 'editable' => true, 'editoptions' => array('value' => $serviceassociates, 'defaultValue' =>'-1'),
-            'edittype' => 'select', 'formatter' => 'select', 'editrules' => array('required' => true)))
+                        {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","editable":true,"width":90},
+                        {"label":"No. of Images","align":"center","index":"total_images","name":"total_images","editable":true,"width":100},
+                        {"label":"MIF","index":"mif_id","align":"center","width":150,"editable":true,
+                        "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"mif_id"},
+                        {"label":"No. of parent SKUs","index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku"},
+                        {"label":"No. of variations","index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation"},
+                        {"label":"Comment","align":"right","index":"comment","name":"comment","editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
+                    ],
+                    jsonReader: { repeatitems : false, id: 'id' },
+                    sortname: 'id',
+                    gridComplete: function(){
+                        var ids = jQuery("#locallead").jqGrid('getDataIDs');
+                        for(var i=0;i < ids.length;i++)
+                        {
+                            var cl = ids[i];
+                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#locallead').editRow('"+cl+"');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"');jQuery('#locallead').trigger('reloadGrid');\" />";
+                            ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
+                            jQuery("#locallead").jqGrid('setRowData',ids[i],{act:be+se+ce});
+                        }
+                    },
 
-            ->addColumn(array('label' => 'ServiceAssociate SKU','index' => 'sa_sku', 'align' => 'center',
-            'width' => 90, 'editable' => true))
+                    "subGrid":true,
+                    "subGridUrl":"seller",
+                    "subGridModel" :[
+                        {
+                            name  : ['seller_name','Seller Email ID','Contact Number','POC Name','POC Email ID','POC Contact Number'],
+                            width : [120,120,120,120,120,120],
+                            colModel: [
+                                {"align":"center","index":"seller_name","editable":true,"name":"seller_name"},
+                                {"label":"Seller Email ID","align":"center","index":"email","name":"email"},
+                                {"label":"Contact Number","align":"right","index":"contact_number","name":"contact_number"},
+                                {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
+                                {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
+                                {"label":"POC Contact Number","index":"poc_number","name":"poc_number"}
+                            ]
+                        }
+                    ],
+                    "pager":"localleadPager"
+                    //'cellEdit': true
+                }
+        );
 
-            ->addColumn(array('label' => 'ServiceAssociate Variation','index' => 'sa_variation', 'align' => 'center',
-            'width' => 90, 'editable' => true))
+    </script>
+    <!-- ./ content -->
+    </div>
 
-            ->addColumn(array('label'=>'Seller Name', 'align'=>'center','index'=>'seller_name', ))
-            ->addColumn(array('label'=>'Seller Email ID', 'align'=>'center','index'=>'email' ))
-            ->addColumn(array('label'=>'Contact Number', 'align'=>'right','index'=>'contact_number'))
-            ->addColumn(array('label'=>'POC Name', 'align'=>'center','index'=>'poc_name' ))
-            ->addColumn(array('label'=>'POC Email ID', 'align'=>'center','index'=>'poc_email' ))
-            ->addColumn(array('label'=>'POC Contact Number','index'=>'poc_number'))
-            ->addColumn(array('label'=>'No. of SKUs', 'align'=>'center','index'=>'total_sku'))
-            ->addColumn(array('label'=>'Image Available', 'align'=>'center','index'=>'image_available' ))
-            ->addColumn(array('label'=>'Comment', 'align'=>'right','index'=>'comment'))
-            ->renderGrid();
-}}
 @stop

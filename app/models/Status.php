@@ -21,4 +21,6 @@ class Status extends Eloquent {
     {
         return $this->hasMany('Status');
     }
+
+
 }

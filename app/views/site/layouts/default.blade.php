@@ -44,14 +44,17 @@
             <![endif]-->
             {{ HTML::script('assets/jquery-v2.0.3/jquery.js'); }}
             {{ HTML::script('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect.min.js'); }}
+            {{ HTML::script('assets/jquery-ui-v1.10.3/js/jquery-ui.js'); }}
             {{ HTML::script('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect-shake.min.js'); }}
-            {{ HTML::script('assets/jquery-jqGrid-v4.6.0/js/i18n/grid.locale-en.js'); }}
-            {{ HTML::script('assets/jquery-jqGrid-v4.6.0/js/jquery.jqGrid.src.js'); }}
             {{ HTML::script('assets/jquery-scrollto-v1.4.11/jquery.scrollTo.min.js'); }}
             {{ HTML::script('assets/bootstrap-v3.2.0/js/bootstrap.min.js'); }}
             {{ HTML::script('assets/jquery-jqMgVal-v0.1/jquery.jqMgVal.src.js'); }}
             {{ HTML::script('assets/tutorial/js/helpers.js'); }}
             {{ HTML::script('assets/tutorial/js/base.js'); }}
+            {{ HTML::script('assets/jquery-jqGrid-v4.6.0/js/i18n/grid.locale-en.js'); }}
+            {{--            {{ HTML::script('assets/jquery-jqGrid-v4.6.0/js/jquery.jqGrid.src.js'); }}--}}
+            {{--{{ HTML::script('assets/jquery-jqGrid-v4.6.0/js/jquery.jqGrid.min.js'); }}--}}
+            {{ HTML::script('assets/jquery-jqGrid-v4.6.0/src/jquery.jqGrid.js'); }}
 		<style>
         body {
             padding: 60px 0;
@@ -140,7 +143,7 @@
 
 		<!-- Javascripts
 		================================================== -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        {{--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>--}}
         <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
 
         @yield('scripts')

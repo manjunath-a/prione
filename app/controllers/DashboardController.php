@@ -24,64 +24,252 @@ class DashboardController extends BaseController {
 	 *
 	 * @return View
 	 */
-	public function getIndex()
+	public function getLocalLead()
 	{
 
-    list($user, $redirect) = User::checkAuthAndRedirect('user');
-    if($redirect){return $redirect;}
+        list($user, $redirect) = User::checkAuthAndRedirect('user');
+        if($redirect){return $redirect;}
 
-    $photoGrapherArray = $this->user->findAllByRoleAndCity('Photographer', $user->city_id);
-    // var_dump($photoGrapherArray);exit;
+        $photoGrapherArray = $this->user->findAllByRoleAndCity('Photographer', $user->city_id);
+        // var_dump($photoGrapherArray);exit;
 
-    $photographer = '-1:select;';
-    if($photoGrapherArray) {
-      foreach($photoGrapherArray as $value) {
-        $photographer .= $value->id.":".$value->username.';';
-      }
+        $photographer = '-1:select;';
+        if($photoGrapherArray) {
+          foreach($photoGrapherArray as $value) {
+            $photographer .= $value->id.":".$value->username.';';
+          }
+        }
+
+        $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
+
+        $serviceassociates = '-1:select;';
+        if($serviceAssociateArray) {
+          foreach($serviceAssociateArray as $value) {
+            $serviceassociates .= $value->id.":".$value->username.';';
+          }
+        }
+
+        $priority = '-1:select;1:Low;2:Medium;3:High';
+        // Get all Status
+        $statusArray = Status::all();
+        $status = '-1:select;';
+        if($statusArray) {
+          foreach($statusArray as $key => $value) {
+            $status .= $value['id'].":".$value['status_name'].';';
+          }
+        }
+        // Get all Group
+        $groupArray = Group::all();
+        $group = '-1:select;';
+        if($groupArray) {
+          foreach($groupArray as $key => $value) {
+            $group .= $value['id'].":".$value['group_name'].';';
+          }
+        }
+        // Get all Stage
+        $stageArray = Stage::all();
+        $stage = '-1:select;';
+        if($stageArray) {
+          foreach($stageArray as $key => $value) {
+            $stage .= $value['id'].":".$value['stage_name'].';';
+          }
+        }
+
+        // Show the page
+        return View::make('site/dashboards/locallead', compact('user', 'photographer', 'serviceassociates', 'priority', 'group', 'stage', 'status'));
     }
 
-    $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
+//	public function locallead()
+//	{
+//      GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
+//	}
 
-    $serviceassociates = '-1:select;';
-    if($serviceAssociateArray) {
-      foreach($serviceAssociateArray as $value) {
-        $serviceassociates .= $value->id.":".$value->username.';';
-      }
+    public function getPhotographer()
+    {
+
+
+        list($user, $redirect) = User::checkAuthAndRedirect('user');
+        if($redirect){return $redirect;}
+
+        $photoGrapherArray = $this->user->findAllByRoleAndCity('Photographer', $user->city_id);
+        // var_dump($photoGrapherArray);exit;
+
+        $photographer = '0:select;';
+        if($photoGrapherArray) {
+            foreach($photoGrapherArray as $value) {
+                $photographer .= $value->id.":".$value->username.';';
+            }
+        }
+
+        $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
+
+        $serviceassociates = '0:select;';
+        if($serviceAssociateArray) {
+            foreach($serviceAssociateArray as $value) {
+                $serviceassociates .= $value->id.":".$value->username.';';
+            }
+        }
+
+        $priority = '0:select;1:Low;2:Medium;3:High';
+        // Get all Status
+        $statusArray = Status::all();
+        $status = '0:select;';
+        if($statusArray) {
+            foreach($statusArray as $key => $value) {
+                $status .= $value['id'].":".$value['status_name'].';';
+            }
+        }
+        // Get all Group
+        $groupArray = Group::all();
+        $group = '0:select;';
+        if($groupArray) {
+            foreach($groupArray as $key => $value) {
+                $group .= $value['id'].":".$value['group_name'].';';
+            }
+        }
+        // Get all Stage
+        $stageArray = Stage::all();
+        $stage = '0:select;';
+        if($stageArray) {
+            foreach($stageArray as $key => $value) {
+                $stage .= $value['id'].":".$value['stage_name'].';';
+            }
+        }
+        // Show the page
+        return View::make('site/dashboards/photographer', compact('user', 'photographer',
+            'serviceassociates', 'priority', 'group', 'stage', 'status'));
+
     }
 
-    $priority = '-1:select;1:Low;2:Medium;3:High';
-    // Get all Status
-    $statusArray = Status::all();
-    $status = '-1:select;';
-    if($statusArray) {
-      foreach($statusArray as $key => $value) {
-        $status .= $value['id'].":".$value['status_name'].';';
-      }
-    }
-    // Get all Group
-    $groupArray = Group::all();
-    $group = '-1:select;';
-    if($groupArray) {
-      foreach($groupArray as $key => $value) {
-        $group .= $value['id'].":".$value['group_name'].';';
-      }
-    }
-    // Get all Stage
-    $stageArray = Stage::all();
-    $stage = '-1:select;';
-    if($stageArray) {
-      foreach($stageArray as $key => $value) {
-        $stage .= $value['id'].":".$value['stage_name'].';';
-      }
-    }
-		// Show the page
-		return View::make('site/dashboards/locallead', compact('user', 'photographer',
-          'serviceassociates', 'priority', 'group', 'stage', 'status'));
-	}
+    public function getMIF()
+    {
+        list($user, $redirect) = User::checkAuthAndRedirect('user');
+        if($redirect){return $redirect;}
 
-	public function locallead()
-	{
-      GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
-	}
+        $photoGrapherArray = $this->user->findAllByRoleAndCity('Photographer', $user->city_id);
+        // var_dump($photoGrapherArray);exit;
+
+        $photographer = '0:select;';
+        if($photoGrapherArray) {
+            foreach($photoGrapherArray as $value) {
+                $photographer .= $value->id.":".$value->username.';';
+            }
+        }
+
+        $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
+
+        $serviceassociates = '0:select;';
+        if($serviceAssociateArray) {
+            foreach($serviceAssociateArray as $value) {
+                $serviceassociates .= $value->id.":".$value->username.';';
+            }
+        }
+
+        $priority = '0:select;1:Low;2:Medium;3:High';
+        // Get all Status
+        $statusArray = Status::all();
+        $status = '0:select;';
+        if($statusArray) {
+            foreach($statusArray as $key => $value) {
+                $status .= $value['id'].":".$value['status_name'].';';
+            }
+        }
+        // Get all Group
+        $groupArray = Group::all();
+        $group = '0:select;';
+        if($groupArray) {
+            foreach($groupArray as $key => $value) {
+                $group .= $value['id'].":".$value['group_name'].';';
+            }
+        }
+        // Get all Stage
+        $stageArray = Stage::all();
+        $stage = '0:select;';
+        if($stageArray) {
+            foreach($stageArray as $key => $value) {
+                $stage .= $value['id'].":".$value['stage_name'].';';
+            }
+        }
+        // Show the page
+        return View::make('site/dashboards/mif', compact('user', 'photographer',
+            'serviceassociates', 'priority', 'group', 'stage', 'status'));
+
+    }
+
+    public function getEditingManager()
+    {
+        list($user, $redirect) = User::checkAuthAndRedirect('user');
+        if($redirect){return $redirect;}
+
+        $photoGrapherArray = $this->user->findAllByRoleAndCity('Photographer', $user->city_id);
+        // var_dump($photoGrapherArray);exit;
+
+        $photographer = '0:select;';
+        if($photoGrapherArray) {
+            foreach($photoGrapherArray as $value) {
+                $photographer .= $value->id.":".$value->username.';';
+            }
+        }
+
+        $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
+
+        $serviceassociates = '0:select;';
+        if($serviceAssociateArray) {
+            foreach($serviceAssociateArray as $value) {
+                $serviceassociates .= $value->id.":".$value->username.';';
+            }
+        }
+
+        $priority = '0:select;1:Low;2:Medium;3:High';
+        // Get all Status
+        $statusArray = Status::all();
+        $status = '0:select;';
+        if($statusArray) {
+            foreach($statusArray as $key => $value) {
+                $status .= $value['id'].":".$value['status_name'].';';
+            }
+        }
+        // Get all Group
+        $groupArray = Group::all();
+        $group = '0:select;';
+        if($groupArray) {
+            foreach($groupArray as $key => $value) {
+                $group .= $value['id'].":".$value['group_name'].';';
+            }
+        }
+        // Get all Stage
+        $stageArray = Stage::all();
+        $stage = '0:select;';
+        if($stageArray) {
+            foreach($stageArray as $key => $value) {
+                $stage .= $value['id'].":".$value['stage_name'].';';
+            }
+        }
+        // Show the page
+        return View::make('site/dashboards/editingmanager', compact('user', 'photographer',
+            'serviceassociates', 'priority', 'group', 'stage', 'status'));
+
+    }
+
+    public function postSeller()
+    {
+        $seller  = SellerRequest::find($_POST['id'])->toArray();
+        return Response::json(array(
+                    "rows" => [
+                                array(
+                                    "cell" =>
+                                            array(
+                                                $seller['seller_name'],
+                                                $seller['email'],
+                                                $seller['contact_number'],
+                                                $seller['poc_name'],
+                                                $seller['poc_number'],
+                                                $seller['poc_email']
+                                            )
+                                    )
+                                ]
+                            )
+                    );
+    }
 
 }

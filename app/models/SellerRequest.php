@@ -32,11 +32,11 @@ class SellerRequest extends Eloquent  {
         'merchant_id' => 'required',
         'merchant_city_id' => 'required',
         'merchant_sales_channel_id' => 'required',
-        'poc_name' => 'required|alpha|min:5',
+        'poc_name' => 'required|string|min:3',
         'poc_email' => 'required|email',
         'poc_number' => 'required',
         'category_id' => 'required',
-        'total_sku' => 'required',
+        'total_sku' => 'required|Integer',
         'image_available' => 'required',
         'comment' => 'required'
     ];
@@ -115,19 +115,9 @@ class SellerRequest extends Eloquent  {
 
         $fdTicket = SellerRequest::buildTicket($requestData);
 
-        $cityLead = Role::Join('assigned_roles', 'assigned_roles.role_id', '=', 'roles.id')
-                         ->join('users', 'users.id', '=', 'assigned_roles.user_id')
-                         ->where('roles.name', 'Local Team Lead')
-                         ->where('users.city_id', 1)
-                         ->select('users.id', 'users.username')->first();
+        $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
 
-        // $cityLead = DB::table('roles')
-        //         ->join('assigned_roles', 'assigned_roles.role_id', '=', 'roles.id')
-        //         ->join('users', 'users.id', '=', 'assigned_roles.user_id')
-        //         ->where('roles.name', 'Local Team Lead')
-        //         ->where('users.city_id', 1)
-        //         ->select('users.id', 'users.username');
-        // print_r($cityLead);exit;
+        $cityLead = User::findAllByRoleAndCity('Local Team Lead', $merchantCity['city_id']);
 
         if($fdTicket->display_id) {
             $ticketData['request_id'] = $sellerRequest->id;
@@ -137,7 +127,6 @@ class SellerRequest extends Eloquent  {
             $ticketData['description'] = $fdTicket->description;
             $ticketData['s3_url'] = 's3.prion.com';
 
-            // $group = Config::get('ticket.default_group');
             $ticket= Ticket::create($ticketData);
 
             // Ticket Transaction
@@ -146,8 +135,17 @@ class SellerRequest extends Eloquent  {
             $ticketTransactioData['priority'] = Config::get('ticket.default_priority');
             $ticketTransactioData['status_id'] = Config::get('ticket.default_status');
             $ticketTransactioData['active'] = 1;
-            $ticketTransactioData['group_id'] = 1;
-            $ticketTransactioData['stage_id'] = Config::get('ticket.default_stage');
+            $ticketTransactioData['group_id'] = Config::get('ticket.default_group');
+
+            // Default as (Local) Associates Not Assigned
+            $stageId = Config::get('ticket.default_stage');
+            if($requestData['image_available'] == 2) {
+                $assignStage = Stage::where('stage_name',
+                      '(Local) Photoshoot Completed / Seller Images Provided')->first();
+                $stageId = $assignStage->id;
+            }
+
+            $ticketTransactioData['stage_id'] = $stageId;
             $ticketTransactioData['total_sku'] = $requestData['total_sku'];
             $ticketTransactioData['total_images'] = 0;
             $ticketTransaction = TicketTransaction::create($ticketTransactioData);
@@ -155,11 +153,6 @@ class SellerRequest extends Eloquent  {
             // $s3 = App::make('aws')->get('s3');
             // // $s3 = AWS::get('s3');
             $folderName = $fdTicket->display_id.'_'.$requestData['seller_name'];
-            // $result = $s3->putObject(array(
-            //     'Bucket' => 'prionecataloguing',
-            //     'Key'    => $folderName ,
-            //     'Body'   => "",
-            // ));
             return $ticket;
         }
     }

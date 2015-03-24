@@ -14,7 +14,7 @@ class RequestController extends BaseController {
   }
 
 	/**
-	 * Returns Requesy Form.
+	 * Returns Request Form.
 	 *
 	 * @return View
 	 */
@@ -56,8 +56,7 @@ class RequestController extends BaseController {
 
       // validation fails redirect to form with error
       if ($validator->fails()) {
-         // var_dump($data);exit;
-          // return Redirect::back()->withErrors($validator)->withInput();
+          return Redirect::back()->withErrors($validator)->withInput();
       }
 
       try {
@@ -84,15 +83,40 @@ class RequestController extends BaseController {
   }
 
   public function updateRequest() {
-    $ticketData = Input::all();
-    $id = $ticketData['id'];
-    if($id) {
-      $ticketTransaction = Ticket::assignTicket($id, $ticketData);
-    }
 
+      $ticketData = Input::all();
+      $ticketTransactionId = $ticketData['transaction_id'];
+      $ticketId = $ticketData['ticket_id'];
+        if($ticketTransactionId) {
+          if($ticketData['group_id'] == 2)
+              $ticketTransaction = Ticket::updateEditingManager($ticketTransactionId, $ticketId, $ticketData);
+          else
+              $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
+        }
+
+      return $ticketTransaction;
+  }
+
+   public function updatePhotographer() {
+    $ticketData = Input::all();
+    $ticketTransactionId = $ticketData['transaction_id'];
+    $ticketId = $ticketData['ticket_id'];
+    if($ticketTransactionId) {
+      $ticketTransaction = Ticket::updatePhotographer($ticketTransactionId, $ticketId, $ticketData);
+    }
     return $ticketTransaction;
   }
 
+    public function updateMIF() {
+        $ticketData = Input::all();
+        $ticketTransactionId = $ticketData['transaction_id'];
+        $ticketId = $ticketData['ticket_id'];
+
+        if($ticketTransactionId) {
+            $ticketTransaction = Ticket::updateMIF($ticketTransactionId, $ticketId, $ticketData);
+        }
+        return $ticketTransaction;
+    }
 
   /**
    * Returns sucess Page.

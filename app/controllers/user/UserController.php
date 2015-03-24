@@ -32,7 +32,7 @@ class UserController extends BaseController {
      */
     public function getIndex()
     {
-        list($user,$redirect) = $this->user->checkAuthAndRedirect('user');
+        list($user, $redirect) = $this->user->checkAuthAndRedirect('user');
         if($redirect){return $redirect;}
 
         // Get all the available city
@@ -40,9 +40,30 @@ class UserController extends BaseController {
         foreach ($cities as $key => $cityArray) {
             $city[$cityArray['id']] = $cityArray['city_name'];
         }
-
+        $roles = $this->user->findUserRoleById($user->id);
+        $dashboard = $this->findDashboard($roles);
         // Show the page
-        return View::make('site/user/index', compact('user', 'city'));
+        return Redirect::to('dashboard/'.$dashboard);
+    }
+
+    public function findDashboard($roles) {
+
+        switch($roles->rolename) {
+            case 'Local Team Lead' :
+                $dashboard = 'locallead/';
+                break;
+            case 'Photographer' :
+                $dashboard = 'photographer/';
+                break;
+            case 'Services Associate' :
+                $dashboard = 'mif/';
+                break;
+             case 'Editing Manager' :
+                $dashboard = 'editingmanager/';
+                break;
+
+        }
+        return  $dashboard;
     }
 
     /**
@@ -152,7 +173,7 @@ class UserController extends BaseController {
         $input = Input::all();
 
         if ($this->userRepo->login($input)) {
-            return Redirect::intended('/dashboard');
+            return Redirect::intended('admin/users/index');
         } else {
             if ($this->userRepo->isThrottled($input)) {
                 $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');

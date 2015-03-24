@@ -11,6 +11,19 @@ class TicketTransaction extends Eloquent  {
   protected $table = 'ticket_transaction';
 
   /**
+     * Add your validation rules here
+     *
+     * @var string
+     */
+    public static $rules = [
+        'ticket_id' => 'required',
+        'status_id' => 'required',
+        'stage_id' => 'required',
+        'priority' => 'required',
+        'group_id' => 'required',
+    ];
+
+  /**
    * Primary key for the table.
    *
    * @var string
@@ -42,8 +55,7 @@ class TicketTransaction extends Eloquent  {
   }
 
   public static function updateTicket($transactionData) {
-    // echo 'Model Ticket';
-    // var_dump($data);exit;
+     //var_dump($transactionData);exit;
     return TicketTransaction::create($transactionData);
   }
 
