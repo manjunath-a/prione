@@ -115,11 +115,9 @@ class SellerRequest extends Eloquent  {
 
         $fdTicket = SellerRequest::buildTicket($requestData);
 
-        $cityLead = Role::Join('assigned_roles', 'assigned_roles.role_id', '=', 'roles.id')
-                         ->join('users', 'users.id', '=', 'assigned_roles.user_id')
-                         ->where('roles.name', 'Local Team Lead')
-                         ->where('users.city_id', 1)
-                         ->select('users.id', 'users.username')->first();
+        $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
+
+        $cityLead = User::findAllByRoleAndCity('Local Team Lead', $merchantCity['city_id']);
 
         if($fdTicket->display_id) {
             $ticketData['request_id'] = $sellerRequest->id;
@@ -129,7 +127,6 @@ class SellerRequest extends Eloquent  {
             $ticketData['description'] = $fdTicket->description;
             $ticketData['s3_url'] = 's3.prion.com';
 
-            // $group = Config::get('ticket.default_group');
             $ticket= Ticket::create($ticketData);
 
             // Ticket Transaction
@@ -139,9 +136,9 @@ class SellerRequest extends Eloquent  {
             $ticketTransactioData['status_id'] = Config::get('ticket.default_status');
             $ticketTransactioData['active'] = 1;
             $ticketTransactioData['group_id'] = Config::get('ticket.default_group');
+
             // Default as (Local) Associates Not Assigned
             $stageId = Config::get('ticket.default_stage');
-
             if($requestData['image_available'] == 2) {
                 $assignStage = Stage::where('stage_name',
                       '(Local) Photoshoot Completed / Seller Images Provided')->first();
@@ -156,11 +153,6 @@ class SellerRequest extends Eloquent  {
             // $s3 = App::make('aws')->get('s3');
             // // $s3 = AWS::get('s3');
             $folderName = $fdTicket->display_id.'_'.$requestData['seller_name'];
-            // $result = $s3->putObject(array(
-            //     'Bucket' => 'prionecataloguing',
-            //     'Key'    => $folderName ,
-            //     'Body'   => "",
-            // ));
             return $ticket;
         }
     }

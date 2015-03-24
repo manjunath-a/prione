@@ -50,7 +50,7 @@
                         {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, 'hidden' : true},
-                        {"index":"image_available","name":"image_available",key:true, 'hidden' : true, 'editrules': { 'edithidden': true }},
+                        {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
 
                         {"label":"Request Date","align":"center","index":"created_at","name":"created_at"},
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,

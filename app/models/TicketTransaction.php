@@ -21,8 +21,6 @@ class TicketTransaction extends Eloquent  {
         'stage_id' => 'required',
         'priority' => 'required',
         'group_id' => 'required',
-        'active' => 'required',
-
     ];
 
   /**

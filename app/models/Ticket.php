@@ -33,9 +33,9 @@ class Ticket extends Eloquent  {
                       '(Local) Photoshoot Completed / Seller Images Provided')->first();
     }
 
-    $ticketData = $this->ticketData($assignStage->id, 1, $data);
+    $ticketData = Ticket::ticketData($assignStage->id, 1, $data);
 
-    if($ticketData['photographer_id'] && $data['image_available'] !=2 ) {
+    if(isset($ticketData['photographer_id']) && $data['image_available'] !=2 ) {
       $ticketData['photographer_id'] =  $data['photographer_id'];
       $ticketData['assigned_to'] = $data['photographer_id'];
       $photographerTransaction = TicketTransaction::updateTicket($ticketData);
@@ -68,7 +68,7 @@ class Ticket extends Eloquent  {
     $photoCompleted = Stage::where('stage_name',
       '(Local) Photoshoot Completed / Seller Images Provided')->first();
 
-    $ticketData = $this->TicketData($photoCompleted->id, 1, $data);
+    $ticketData = Ticket::TicketData($photoCompleted->id, 1, $data);
 
     // Check for Poto Grapher assigned
     if(Auth::user()->id) {
@@ -99,7 +99,7 @@ class Ticket extends Eloquent  {
       }
       $mifCompleted = Stage::where('stage_name', '(Local) MIF Completed')->first();
 
-      $ticketData = $this->ticketData($mifCompleted->id, 1, $data);
+      $ticketData = Ticket::ticketData($mifCompleted->id, 1, $data);
 
       // Check for Poto Grapher assigned
       if($data['photographer_id']) {
@@ -131,7 +131,7 @@ class Ticket extends Eloquent  {
             throw new Exception("Service Associates is required ");
         }
 
-        $ticketData = $this->ticketData($localCompleted->id, 1, $data);
+        $ticketData = Ticket::ticketData($localCompleted->id, 1, $data);
 
         if($data['photographer_id']) {
             $ticketData['photographer_id'] =  $data['photographer_id'];
@@ -161,7 +161,7 @@ class Ticket extends Eloquent  {
    * ticketData()
    *
    */
-  public function ticketData($stageId, $status, $data) {
+  public static function ticketData($stageId, $status, $data) {
 
       $ticketTransactionRule = TicketTransaction::$rules;
       // Add custom validation for date
@@ -176,7 +176,13 @@ class Ticket extends Eloquent  {
       $validator = Validator::make($data, $ticketTransactionRule);
       // validation fails redirect to form with error
       if ($validator->fails()) {
-         throw new Exception($errors->all());
+        $errors = '';
+        $messages = $validator->messages();
+        foreach ($messages->all('<li>:message</li>') as $message)
+        {
+           $errors .= $message;
+        }
+        throw new Exception($errors);
       }
 
       $ticketData['ticket_id']    = $data['ticket_id'];
