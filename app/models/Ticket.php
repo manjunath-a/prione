@@ -26,17 +26,18 @@ class Ticket extends Eloquent  {
   public static function assignTicket($ticketTransactionId, $ticketId, $data) {
 
     // Checking Image Provideed by seller
-    if($data['image_available'] !=2 ) {
-      $assignStage = Stage::where('stage_name', '(Local) Associates Assigned')->first();
-    } else {
-      $assignStage = Stage::where('stage_name',
-                      '(Local) Photoshoot Completed / Seller Images Provided')->first();
-    }
+    // if($data['image_available'] !=2 ) {
+    //   $assignStage = Stage::where('stage_name', '(Local) Associates Assigned')->first();
+    // } else {
+    //   $assignStage = Stage::where('stage_name',
+    //                   '(Local) Photoshoot Completed / Seller Images Provided')->first();
+    // }
 
-    $ticketData = Ticket::ticketData($assignStage->id, 1, $data);
+    $ticketData = Ticket::ticketData($data['stage_id'], 1, $data);
 
-    if(isset($ticketData['photographer_id']) && $data['image_available'] !=2 ) {
+    if(isset($data['photographer_id'])) {
       $ticketData['photographer_id'] =  $data['photographer_id'];
+      $ticketData['photosuite_location'] =  $data['photosuite_location'];
       $ticketData['assigned_to'] = $data['photographer_id'];
       $photographerTransaction = TicketTransaction::updateTicket($ticketData);
     }
@@ -73,6 +74,7 @@ class Ticket extends Eloquent  {
     // Check for Poto Grapher assigned
     if(Auth::user()->id) {
       $ticketData['photographer_id'] =  Auth::user()->id;
+      $ticketData['photosuite_location'] =  $data['photosuite_location'];
       $ticketData['assigned_to'] = Auth::user()->id;
       $photographerTransaction = TicketTransaction::updateTicket($ticketData);
     }
@@ -104,6 +106,7 @@ class Ticket extends Eloquent  {
       // Check for Poto Grapher assigned
       if($data['photographer_id']) {
         $ticketData['photographer_id'] = $data['photographer_id'];
+        $ticketData['photosuite_location'] =  $data['photosuite_location'];
         $ticketData['assigned_to'] = $data['photographer_id'];
         $photographerTransaction = TicketTransaction::updateTicket($ticketData);
       }
@@ -124,7 +127,8 @@ class Ticket extends Eloquent  {
         $cityId =  Auth::user()->city_id;
         $localCompleted = Stage::where('stage_name', '(Local) MIF Completed')->first();
         // Update Team Lead
-        $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
+        $ticketTransaction = TicketTransaction::where('ticket_id', '=' , $ticketId)
+        ->update(array('active' => 0));
 
         //  'Model Ticket';
         if($data['mif_id'] == 0) {
@@ -135,6 +139,7 @@ class Ticket extends Eloquent  {
 
         if($data['photographer_id']) {
             $ticketData['photographer_id'] =  $data['photographer_id'];
+            $ticketData['photosuite_location'] =  $data['photosuite_location'];
             $ticketData['assigned_to'] = $data['photographer_id'];
             $photographerTransaction = TicketTransaction::updateTicket($ticketData);
         }
@@ -195,8 +200,6 @@ class Ticket extends Eloquent  {
       $ticketData['mif_id']       = $data['mif_id'];
       $ticketData['sa_sku']       = $data['sa_sku'];
       $ticketData['sa_variation'] = $data['sa_variation'];
-      $ticketData['photosuite_date'] = ($data['photosuite_date'])?$data['photosuite_date']:NULL;
-      $ticketData['photosuite_location'] = (!$data['photosuite_location'])?$data['photosuite_location']:NULL;
       $ticketData['total_sku'] = ($data['total_sku'])?$data['total_sku']:NULL;
       $ticketData['total_images'] = ($data['total_images'])?$data['total_images']:NULL;
       $ticketData['notes'] = ($data['comment'])?$data['comment']:NULL;

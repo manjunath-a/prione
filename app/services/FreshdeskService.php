@@ -8,13 +8,6 @@ class FreshdeskService {
 
     private $password = 'X';
 
-
-    public function checkMe() {
-      echo " I am initated";
-      // FOr Package or Srevice inlcude \Config
-      // echo \Config::get('freshdesk.url');
-    }
-
     public function createTicket($data) {
 
       $this->freshdeskUrl = \Config::get('freshdesk.url');
