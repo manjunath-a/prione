@@ -17,7 +17,7 @@
 {{-- Content --}}
 @section('content')
     <div class="page-header">
-        <h3>Dashboard : {{$user->username}}
+        <h3>Dashboard : {{$user->username}} ID : #{{$user->id}}
             City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
     </div>
 

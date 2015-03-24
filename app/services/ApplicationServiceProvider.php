@@ -9,5 +9,9 @@ class ApplicationServiceProvider extends ServiceProvider
     $this->app->bind('freshDesk', function()  {
         return new FreshdeskService();
     });
+
+    $this->app->bind('util', function()  {
+        return new UtilService();
+    });
   }
 }

@@ -65,8 +65,8 @@
                         {"label":"Status","index":"status_id","align":"center","width":110,"editable":true,
                         "editoptions":{'value':'{{rtrim($status, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"status_id"},
 
-                        {"label":"PhotoGrapher","index":"photographer_id","align":"center","width":130,
-                        "editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select","name":"photographer_id"},
+                        {"label":"PhotoGrapher", "name":"photographer_id", "index":"photographer_id","align":"center","width":130,
+                        "editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select", "id":"photographer_id"},
 
                         {"label":"PhotoSuiteDate","index":"photosuite_date","align":"center","width":150,"editable":true,"name":"photosuite_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"}, "editrules":{"date":true},
                         'editoptions': { 'dataInit' : function (elem) {

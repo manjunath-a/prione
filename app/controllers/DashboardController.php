@@ -8,6 +8,12 @@ class DashboardController extends BaseController {
      */
     protected $user;
 
+     /**
+     * Util Service
+     * @var User
+     */
+    protected $util;
+
     /**
      * Inject the models.
      * @param User $user
@@ -17,6 +23,7 @@ class DashboardController extends BaseController {
         parent::__construct();
 
         $this->user = $user;
+        $this->util = App::make('util');
     }
 
 	/**
@@ -31,52 +38,25 @@ class DashboardController extends BaseController {
         if($redirect){return $redirect;}
 
         $photoGrapherArray = $this->user->findAllByRoleAndCity('Photographer', $user->city_id);
-        // var_dump($photoGrapherArray);exit;
-
-        $photographer = '-1:select;';
-        if($photoGrapherArray) {
-          foreach($photoGrapherArray as $value) {
-            $photographer .= $value->id.":".$value->username.';';
-          }
-        }
+        $photographer = $this->util->arrayToJQString($photoGrapherArray,'username','id');
 
         $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
-
-        $serviceassociates = '-1:select;';
-        if($serviceAssociateArray) {
-          foreach($serviceAssociateArray as $value) {
-            $serviceassociates .= $value->id.":".$value->username.';';
-          }
-        }
+        $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
         $priority = '-1:select;1:Low;2:Medium;3:High';
-        // Get all Status
+
         $statusArray = Status::all();
-        $status = '-1:select;';
-        if($statusArray) {
-          foreach($statusArray as $key => $value) {
-            $status .= $value['id'].":".$value['status_name'].';';
-          }
-        }
-        // Get all Group
+        $status = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
+
         $groupArray = Group::all();
-        $group = '-1:select;';
-        if($groupArray) {
-          foreach($groupArray as $key => $value) {
-            $group .= $value['id'].":".$value['group_name'].';';
-          }
-        }
-        // Get all Stage
+        $group = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
+
         $stageArray = Stage::all();
-        $stage = '-1:select;';
-        if($stageArray) {
-          foreach($stageArray as $key => $value) {
-            $stage .= $value['id'].":".$value['stage_name'].';';
-          }
-        }
+        $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         // Show the page
-        return View::make('site/dashboards/locallead', compact('user', 'photographer', 'serviceassociates', 'priority', 'group', 'stage', 'status'));
+        return View::make('site/dashboards/locallead', compact('user', 'photographer',
+            'serviceassociates', 'priority', 'group', 'stage', 'status'));
     }
 
 //	public function locallead()
@@ -92,49 +72,23 @@ class DashboardController extends BaseController {
         if($redirect){return $redirect;}
 
         $photoGrapherArray = $this->user->findAllByRoleAndCity('Photographer', $user->city_id);
-        // var_dump($photoGrapherArray);exit;
-
-        $photographer = '0:select;';
-        if($photoGrapherArray) {
-            foreach($photoGrapherArray as $value) {
-                $photographer .= $value->id.":".$value->username.';';
-            }
-        }
+        $photographer = $this->util->arrayToJQString($photoGrapherArray,'username','id');
 
         $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
-
-        $serviceassociates = '0:select;';
-        if($serviceAssociateArray) {
-            foreach($serviceAssociateArray as $value) {
-                $serviceassociates .= $value->id.":".$value->username.';';
-            }
-        }
+        $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
         $priority = '0:select;1:Low;2:Medium;3:High';
-        // Get all Status
+
         $statusArray = Status::all();
-        $status = '0:select;';
-        if($statusArray) {
-            foreach($statusArray as $key => $value) {
-                $status .= $value['id'].":".$value['status_name'].';';
-            }
-        }
-        // Get all Group
+        $status = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
+
         $groupArray = Group::all();
-        $group = '0:select;';
-        if($groupArray) {
-            foreach($groupArray as $key => $value) {
-                $group .= $value['id'].":".$value['group_name'].';';
-            }
-        }
-        // Get all Stage
+        $group = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
+
+        $rules  = arraY('only' =>array('(Local) Associates Assigned',
+                     '(Local) Photoshoot Completed / Seller Images Provided'));
         $stageArray = Stage::all();
-        $stage = '0:select;';
-        if($stageArray) {
-            foreach($stageArray as $key => $value) {
-                $stage .= $value['id'].":".$value['stage_name'].';';
-            }
-        }
+        $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
         // Show the page
         return View::make('site/dashboards/photographer', compact('user', 'photographer',
             'serviceassociates', 'priority', 'group', 'stage', 'status'));
@@ -147,49 +101,23 @@ class DashboardController extends BaseController {
         if($redirect){return $redirect;}
 
         $photoGrapherArray = $this->user->findAllByRoleAndCity('Photographer', $user->city_id);
-        // var_dump($photoGrapherArray);exit;
-
-        $photographer = '0:select;';
-        if($photoGrapherArray) {
-            foreach($photoGrapherArray as $value) {
-                $photographer .= $value->id.":".$value->username.';';
-            }
-        }
+        $photographer = $this->util->arrayToJQString($photoGrapherArray,'username','id');
 
         $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
-
-        $serviceassociates = '0:select;';
-        if($serviceAssociateArray) {
-            foreach($serviceAssociateArray as $value) {
-                $serviceassociates .= $value->id.":".$value->username.';';
-            }
-        }
+        $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
         $priority = '0:select;1:Low;2:Medium;3:High';
-        // Get all Status
+
         $statusArray = Status::all();
-        $status = '0:select;';
-        if($statusArray) {
-            foreach($statusArray as $key => $value) {
-                $status .= $value['id'].":".$value['status_name'].';';
-            }
-        }
-        // Get all Group
+        $status = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
+
         $groupArray = Group::all();
-        $group = '0:select;';
-        if($groupArray) {
-            foreach($groupArray as $key => $value) {
-                $group .= $value['id'].":".$value['group_name'].';';
-            }
-        }
-        // Get all Stage
+        $group = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
+
+        $rules  = arraY('only' =>array('(Local) Associates Assigned', '(Local) MIF Completed'));
         $stageArray = Stage::all();
-        $stage = '0:select;';
-        if($stageArray) {
-            foreach($stageArray as $key => $value) {
-                $stage .= $value['id'].":".$value['stage_name'].';';
-            }
-        }
+        $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
+
         // Show the page
         return View::make('site/dashboards/mif', compact('user', 'photographer',
             'serviceassociates', 'priority', 'group', 'stage', 'status'));
@@ -202,49 +130,22 @@ class DashboardController extends BaseController {
         if($redirect){return $redirect;}
 
         $photoGrapherArray = $this->user->findAllByRoleAndCity('Photographer', $user->city_id);
-        // var_dump($photoGrapherArray);exit;
-
-        $photographer = '0:select;';
-        if($photoGrapherArray) {
-            foreach($photoGrapherArray as $value) {
-                $photographer .= $value->id.":".$value->username.';';
-            }
-        }
+        $photographer = $this->util->arrayToJQString($photoGrapherArray,'username','id');
 
         $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
-
-        $serviceassociates = '0:select;';
-        if($serviceAssociateArray) {
-            foreach($serviceAssociateArray as $value) {
-                $serviceassociates .= $value->id.":".$value->username.';';
-            }
-        }
+        $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
         $priority = '0:select;1:Low;2:Medium;3:High';
-        // Get all Status
+
         $statusArray = Status::all();
-        $status = '0:select;';
-        if($statusArray) {
-            foreach($statusArray as $key => $value) {
-                $status .= $value['id'].":".$value['status_name'].';';
-            }
-        }
-        // Get all Group
+        $status = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
+
         $groupArray = Group::all();
-        $group = '0:select;';
-        if($groupArray) {
-            foreach($groupArray as $key => $value) {
-                $group .= $value['id'].":".$value['group_name'].';';
-            }
-        }
-        // Get all Stage
+        $group = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
+
         $stageArray = Stage::all();
-        $stage = '0:select;';
-        if($stageArray) {
-            foreach($stageArray as $key => $value) {
-                $stage .= $value['id'].":".$value['stage_name'].';';
-            }
-        }
+        $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
+
         // Show the page
         return View::make('site/dashboards/editingmanager', compact('user', 'photographer',
             'serviceassociates', 'priority', 'group', 'stage', 'status'));
