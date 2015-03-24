@@ -11,6 +11,21 @@ class TicketTransaction extends Eloquent  {
   protected $table = 'ticket_transaction';
 
   /**
+     * Add your validation rules here
+     *
+     * @var string
+     */
+    public static $rules = [
+        'ticket_id' => 'required',
+        'status_id' => 'required',
+        'stage_id' => 'required',
+        'priority' => 'required',
+        'group_id' => 'required',
+        'active' => 'required',
+
+    ];
+
+  /**
    * Primary key for the table.
    *
    * @var string

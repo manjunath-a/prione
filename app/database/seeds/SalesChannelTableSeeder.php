@@ -9,51 +9,25 @@ class SalesChannelTableSeeder extends Seeder {
 
         $salesChannel= array(
             array(
-                'channel_name'      => 'Email',
+                'channel_name'      => 'DS',
                 'status'      => 1,
                 'sort'  => 1
             ),
             array(
-                'channel_name'      => 'Portal',
+                'channel_name'      => 'SSR',
                 'status'      => 1,
                 'sort'  => 2
             ),
             array(
-                'channel_name'      => 'Phone',
+                'channel_name'      => 'RA',
                 'status'      => 1,
                 'sort'  => 3
             ),
             array(
-                'channel_name'      => 'Forum',
+                'channel_name'      => 'Prione',
                 'status'      => 1,
                 'sort'  => 4
             ),
-            array(
-                'channel_name'      => 'Twitter',
-                'status'      => 1,
-                'sort'  => 5
-            ),
-            array(
-                'channel_name'      => 'Facebook',
-                'status'      => 1,
-                'sort'  => 6
-            ),
-            array(
-                'channel_name'      => 'Chat',
-                'status'      => 1,
-                'sort'  => 7
-            ),
-            array(
-                'channel_name'      => 'MobiHelp',
-                'status'      => 1,
-                'sort'  => 8
-            ),
-            array(
-                'channel_name'      => 'Facebookwidget',
-                'status'      => 1,
-                'sort'  => 9
-            ),
-
         );
 
         DB::table('sales_channel')->insert( $salesChannel );

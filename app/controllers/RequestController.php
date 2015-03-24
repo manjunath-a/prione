@@ -56,8 +56,7 @@ class RequestController extends BaseController {
 
       // validation fails redirect to form with error
       if ($validator->fails()) {
-         // var_dump($data);exit;
-          // return Redirect::back()->withErrors($validator)->withInput();
+          return Redirect::back()->withErrors($validator)->withInput();
       }
 
       try {

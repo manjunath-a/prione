@@ -116,28 +116,23 @@ Route::get('dashboard/editingmanager/', 'DashboardController@getEditingManager')
 
 Route::post('/dashboard/locallead', function()
 {
-    GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
+    GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
 });
 Route::post('/dashboard/photographer', function()
 {
-    GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
+    GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
 });
 
 Route::post('/dashboard/mif', function()
 {
-    GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
+    GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
 });
 
 Route::post('/dashboard/editingmanager', function()
 {
-    GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
+    GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
 });
 
-//Route::post('/dashboard/seller', function()
-//{
-//   // return Response::json(array("rows" => [array( "cell" => array("Arasu","admin@example.org",'8388607',"testing","arasub@gmail.com","1234567890"))]));
-//
-//});
 
 Route::post('/dashboard/seller', 'DashboardController@postSeller');
 
