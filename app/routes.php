@@ -117,6 +117,7 @@ Route::get('info/', function() {
 Route::post('request/update/', 'RequestController@updateRequest');
 Route::post('request/updatePhotographer/', 'RequestController@updatePhotographer');
 Route::post('request/updateMIF/', 'RequestController@updateMIF');
+Route::post('request/updateEditingManager/', 'RequestController@updateEditingManager');
 
 Route::get('dashboard/locallead/', 'DashboardController@getLocalLead');
 Route::get('dashboard/photographer/', 'DashboardController@getPhotographer');
