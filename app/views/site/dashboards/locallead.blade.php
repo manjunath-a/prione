@@ -81,7 +81,7 @@
                         {"label":"No. of variations","index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation"},
                         {"label":"Comment","align":"right","index":"comment","name":"comment","editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
                     ],
-                    jsonReader: { repeatitems : false, id: 'id' },
+                    jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
                     gridComplete: function(){
                         var ids = jQuery("#locallead").jqGrid('getDataIDs');

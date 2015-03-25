@@ -64,7 +64,7 @@
                             "editoptions":{'value':'{{rtrim($stage, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"stage_id"},
                         {"label":"Comment","align":"right","index":"comment","name":"comment","editable":true,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
                     ],
-                    jsonReader: { repeatitems : false, id: 'id' },
+                    jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
                     gridComplete: function(){
                         var ids = jQuery("#mif").jqGrid('getDataIDs');

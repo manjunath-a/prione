@@ -5,6 +5,13 @@
 {{{ Lang::get('user/user.login') }}} ::
 @parent
 @stop
+@section('styles')
+    @parent
+    .checkbox input[type=checkbox] {
+      position: relative;
+    }
+@stop
+
 
 {{-- Content --}}
 @section('content')
