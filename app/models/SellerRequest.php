@@ -95,17 +95,14 @@ class SellerRequest extends Eloquent  {
                         Requester mobile number:XXXXXX
                         Requester sales channel:PRIONE";
 
-
-        $data = array (
-            "helpdesk_ticket" => array(
+        $data = array(
                 "description" => $description,
                 "subject" => $subject,
                 "email" => $requestData['email'],
                 "priority" => 1,
                 "status" => 2
-                ),
-            "cc_emails" => Config::get('mail.cc_email'),
-        );
+                );
+
         return $freshdesk->createTicket( $data );
     }
 
@@ -133,11 +130,9 @@ class SellerRequest extends Eloquent  {
             $ticketData['description'] = $fdTicket->description;
             $ticketData['s3_url'] = 's3.prion.com';
 
-            // $ticket = DB::table('ticket')->insert( $ticketData );
             $ticket= Ticket::create($ticketData);
             // Ticket Transaction
             $ticketTransactioData['ticket_id'] = $ticket->id;
-
             $ticketTransactioData['assigned_to'] = $cityLead[0]->id;
             $ticketTransactioData['priority'] = Config::get('ticket.default_priority');
             $ticketTransactioData['status_id'] = Config::get('ticket.default_status');
@@ -157,9 +152,15 @@ class SellerRequest extends Eloquent  {
             $ticketTransactioData['total_images'] = 0;
             $ticketTransaction = TicketTransaction::create($ticketTransactioData);
 
-            // $s3 = App::make('aws')->get('s3');
-            // // $s3 = AWS::get('s3');
-            $folderName = $fdTicket->display_id.'_'.$requestData['seller_name'];
+            $folderName = $fdTicket->display_id.'_'.$requestData['seller_name'].'/';
+            $s3 = App::make('aws')->get('s3');
+            $s3 = AWS::get('s3');
+            $result = $s3->putObject(array(
+                'Bucket' => 'prionecataloguing',
+                'Key'    => $folderName ,
+                'Body' => ''
+            ));
+
             return $ticket;
         }
         return false;
