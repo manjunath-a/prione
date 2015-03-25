@@ -153,11 +153,30 @@ class SellerRequest extends Eloquent  {
             $ticketTransaction = TicketTransaction::create($ticketTransactioData);
 
             $folderName = $fdTicket->display_id.'_'.$requestData['seller_name'].'/';
+            $local = $fdTicket->display_id.'_'.$requestData['seller_name'].'/local/';
+            $editing = $fdTicket->display_id.'_'.$requestData['seller_name'].'/editing/';
+            $cataloging = $fdTicket->display_id.'_'.$requestData['seller_name'].'/cataloging/';
             $s3 = App::make('aws')->get('s3');
             $s3 = AWS::get('s3');
             $result = $s3->putObject(array(
                 'Bucket' => 'prionecataloguing',
                 'Key'    => $folderName ,
+                'Body' => ''
+            ));
+
+            $result = $s3->putObject(array(
+                'Bucket' => 'prionecataloguing',
+                'Key'    => $local ,
+                'Body' => ''
+            ));
+            $result = $s3->putObject(array(
+                'Bucket' => 'prionecataloguing',
+                'Key'    => $editing ,
+                'Body' => ''
+            ));
+            $result = $s3->putObject(array(
+                'Bucket' => 'prionecataloguing',
+                'Key'    => $cataloging ,
                 'Body' => ''
             ));
 
