@@ -45,6 +45,15 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     Route::post('users/{user}/delete', 'AdminUsersController@postDelete');
     Route::controller('users', 'AdminUsersController');
 
+    // # Request Management
+    // Route::get('sellerrequest/{request}/show', 'AdminRequestController@getShow');
+    // Route::get('sellerrequest/{request}/edit', 'AdminRequestController@getEdit');
+    // Route::post('sellerrequest/{request}/edit', 'AdminRequestController@postEdit');
+    // Route::get('sellerrequest/{request}/delete', 'AdminRequestController@getDelete');
+    // Route::post('sellerrequest/{request}/delete', 'AdminRequestController@postDelete');
+    // Route::controller('sellerrequest', 'AdminRequestController');
+
+
     # User Role Management
     Route::get('roles/{role}/show', 'AdminRolesController@getShow');
     Route::get('roles/{role}/edit', 'AdminRolesController@getEdit');

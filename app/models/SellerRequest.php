@@ -19,6 +19,7 @@ class SellerRequest extends Eloquent  {
 
     protected $guarded = array('id');
 
+
     /**
      * Add your validation rules here
      *
@@ -63,12 +64,12 @@ class SellerRequest extends Eloquent  {
     public static function buildTicket($requestData) {
 
         $freshdesk = App::make('freshDesk');
-        // var_dump($freshdesk);
 
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
+
         $merchantCategory = Category::find($requestData['category_id'])->toArray();
 
-        $subject = implode(' // ',array($requestData['seller_name'],
+        $subject = implode(' // ', array($requestData['seller_name'],
                             $merchantCity['city_name'],
                             $merchantCategory['category_name'],
                             "SKU# ".$requestData['total_sku'],
@@ -106,32 +107,38 @@ class SellerRequest extends Eloquent  {
             "cc_emails" => Config::get('mail.cc_email'),
         );
         return $freshdesk->createTicket( $data );
-
     }
 
     public static function createRequest( $requestData ) {
 
+        $user = new User;
+
+         // $sellerRequest = DB::table('seller_request')->insert(
+         //        $requestData
+         //    );
         $sellerRequest = SellerRequest::create($requestData);
 
         $fdTicket = SellerRequest::buildTicket($requestData);
 
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
-
-        $cityLead = User::findAllByRoleAndCity('Local Team Lead', $merchantCity['city_id']);
+        $cityLead = $user->findAllByRoleAndCity('Local Team Lead', $merchantCity['id']);
 
         if($fdTicket->display_id) {
+
             $ticketData['request_id'] = $sellerRequest->id;
+
             $ticketData['freshdesk_ticket_id'] = $fdTicket->display_id;
             $ticketData['email'] = $requestData['email'];
             $ticketData['subject'] = $fdTicket->subject;
             $ticketData['description'] = $fdTicket->description;
             $ticketData['s3_url'] = 's3.prion.com';
 
+            // $ticket = DB::table('ticket')->insert( $ticketData );
             $ticket= Ticket::create($ticketData);
-
             // Ticket Transaction
             $ticketTransactioData['ticket_id'] = $ticket->id;
-            $ticketTransactioData['assigned_to'] = $cityLead->id;
+
+            $ticketTransactioData['assigned_to'] = $cityLead[0]->id;
             $ticketTransactioData['priority'] = Config::get('ticket.default_priority');
             $ticketTransactioData['status_id'] = Config::get('ticket.default_status');
             $ticketTransactioData['active'] = 1;
@@ -155,5 +162,6 @@ class SellerRequest extends Eloquent  {
             $folderName = $fdTicket->display_id.'_'.$requestData['seller_name'];
             return $ticket;
         }
+        return false;
     }
 }
