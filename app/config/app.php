@@ -121,6 +121,7 @@ return array(
         /* Uncomment for use in development */
 //        'Way\Generators\GeneratorsServiceProvider', // Generators
 //        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider', // IDE Helpers
+        'Barryvdh\Debugbar\ServiceProvider', //Laravel Debugger
 
     ),
 
@@ -198,8 +199,9 @@ return array(
 
         'GridRender'      => 'Mgallegos\LaravelJqgrid\Facades\GridRender',
         'GridEncoder'     => 'Mgallegos\LaravelJqgrid\Facades\GridEncoder',
-    /* Amazon Aliases  */
-    'AWS' => 'Aws\Laravel\AwsFacade',
+        /* Amazon Aliases  */
+        'AWS'             => 'Aws\Laravel\AwsFacade',
+        'Debugbar'        => 'Barryvdh\Debugbar\Facade',
     ),
 
     'available_language' => array('en'),

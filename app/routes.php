@@ -139,7 +139,7 @@ Route::post('/dashboard/mif', function()
 
 Route::post('/dashboard/editingmanager', function()
 {
-    GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
+    GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
 });
 
 

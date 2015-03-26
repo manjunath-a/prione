@@ -17,7 +17,8 @@
         "auth0/auth0-php": "0.6.*",
         "adoy/oauth2": "dev-master",
         "mgallegos/laravel-jqgrid": "1.*",
-        "aws/aws-sdk-php-laravel": "1.*"
+        "aws/aws-sdk-php-laravel": "1.*",
+        "barryvdh/laravel-debugbar": "~1.8"
     },
     "require-dev": {
         "way/generators": "~2.6",
