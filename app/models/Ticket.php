@@ -25,15 +25,9 @@ class Ticket extends Eloquent  {
 
   public static function assignTicket($ticketTransactionId, $ticketId, $data) {
 
-    // Checking Image Provideed by seller
-    // if($data['image_available'] !=2 ) {
-    //   $assignStage = Stage::where('stage_name', '(Local) Associates Assigned')->first();
-    // } else {
-    //   $assignStage = Stage::where('stage_name',
-    //                   '(Local) Photoshoot Completed / Seller Images Provided')->first();
-    // }
 
     $ticketData = Ticket::ticketData($data['stage_id'], 1, $data);
+    $freshdesk = App::make('freshDesk');
 
     if(isset($data['photographer_id'])) {
       $ticketData['photographer_id']    =  $data['photographer_id'];
