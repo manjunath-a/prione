@@ -60,20 +60,20 @@ class RequestController extends BaseController {
       }
 
       try {
-          $requestData['seller_name'] =  $data['seller_name'];
-          $requestData['email'] = $data['email'];
+          $requestData['seller_name']   =  $data['seller_name'];
+          $requestData['email']         = $data['email'];
           $requestData['contact_number'] = $data['contact_number'];
           $requestData['merchant_name'] = $data['merchant_name'];
-          $requestData['merchant_id'] = (int)$data['merchant_id'];
+          $requestData['merchant_id']   = (int)$data['merchant_id'];
           $requestData['merchant_city_id'] = (int)$data['merchant_city_id'];
           $requestData['merchant_sales_channel_id'] = (int)$data['merchant_sales_channel_id'];
-          $requestData['poc_name'] = $data['poc_name'];
-          $requestData['poc_email'] = $data['poc_email'];
-          $requestData['poc_number'] = $data['poc_number'];
-          $requestData['category_id'] = (int)$data['category_id'];
-          $requestData['total_sku'] = (int)$data['total_sku'];
+          $requestData['poc_name']      = $data['poc_name'];
+          $requestData['poc_email']     = $data['poc_email'];
+          $requestData['poc_number']    = $data['poc_number'];
+          $requestData['category_id']   = (int)$data['category_id'];
+          $requestData['total_sku']     = (int)$data['total_sku'];
           $requestData['image_available'] = (int)$data['image_available'];
-          $requestData['comment'] = $data['comment'];
+          $requestData['comment']       = $data['comment'];
           $ticket = SellerRequest::createRequest($requestData);
 
       } catch (Exception $e) {

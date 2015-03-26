@@ -30,54 +30,61 @@ class Ticket extends Eloquent  {
     $freshdesk = App::make('freshDesk');
 
     if(isset($data['photographer_id'])) {
-      $ticketData['photographer_id'] =  $data['photographer_id'];
+      $ticketData['photographer_id']    =  $data['photographer_id'];
       $ticketData['photosuite_location'] =  $data['photosuite_location'];
-      $ticketData['assigned_to'] = $data['photographer_id'];
+      $ticketData['assigned_to']        = $data['photographer_id'];
+      $ticketData['photosuite_date']    = $data['photosuite_date'];
+
       $photographerTransaction = TicketTransaction::updateTicket($ticketData);
     }
     // Assgining to Service Assiocate
-    $ticketData['assigned_to'] = $data['mif_id'];
-    $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
+    $ticketData['assigned_to']      = $data['mif_id'];
+    $serviceAssociateTransaction    = TicketTransaction::updateTicket($ticketData);
+
     // Assgining to Local Team Lead from Session user
     $ticketData['assigned_to'] = Auth::user()->id;
     $leadTransaction = TicketTransaction::updateTicket($ticketData);
 
     // Update Team Lead
-    $ticketTransaction = TicketTransaction::find($ticketTransactionId);
-    $ticketTransaction->active = 0;
+    $ticketTransaction          = TicketTransaction::find($ticketTransactionId);
+    $ticketTransaction->active  = 0;
     $ticketTransaction->save();
 
     return $leadTransaction->id;
   }
 
   public static function updatePhotographer($ticketTransactionId, $ticketId, $data) {
-    $cityId =  Auth::user()->city_id;
 
-        // Update Team Lead
-    $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
+        $cityId =  Auth::user()->city_id;
 
-    //  'Model Ticket';
-    if($data['mif_id'] == 0) {
-      throw new Exception("Service Associates is reuired ");
-    }
-    $photoCompleted = Stage::where('stage_name',
-      '(Local) Photoshoot Completed / Seller Images Provided')->first();
+            // Update Team Lead
+        $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
 
-    $ticketData = Ticket::TicketData($photoCompleted->id, 1, $data);
+        //  'Model Ticket';
+        if($data['mif_id'] == 0) {
+          throw new Exception("Service Associates is reuired ");
+        }
 
-    // Check for Poto Grapher assigned
-    if(Auth::user()->id) {
-      $ticketData['photographer_id'] =  Auth::user()->id;
-      $ticketData['photosuite_location'] =  $data['photosuite_location'];
-      $ticketData['assigned_to'] = Auth::user()->id;
-      $photographerTransaction = TicketTransaction::updateTicket($ticketData);
-    }
-     // Assgining to service Assiocate
-    $ticketData['assigned_to'] = $data['mif_id'];
-    $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
-     // Assgining to Local Team Lead
-    $ticketData['assigned_to'] = Ticket::findUserByRoleAndCity('Local Team Lead', $cityId);;
-    $leadTransaction = TicketTransaction::updateTicket($ticketData);
+        $photoCompleted = Stage::where('stage_name',
+          '(Local) Photoshoot Completed / Seller Images Provided')->first();
+
+        $ticketData = Ticket::TicketData($photoCompleted->id, 1, $data);
+
+        // Check for Poto Grapher assigned
+        if(Auth::user()->id) {
+          $ticketData['photographer_id']    =  Auth::user()->id;
+          $ticketData['photosuite_location']=  $data['photosuite_location'];
+          $ticketData['assigned_to']        = Auth::user()->id;
+          $ticketData['photosuite_date']    = $data['photosuite_date'];
+          $photographerTransaction          = TicketTransaction::updateTicket($ticketData);
+        }
+         // Assgining to service Assiocate
+        $ticketData['assigned_to']   = $data['mif_id'];
+        $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
+
+         // Assgining to Local Team Lead
+        $ticketData['assigned_to']  = Ticket::findUserByRoleAndCity('Local Team Lead', $cityId);;
+        $leadTransaction            = TicketTransaction::updateTicket($ticketData);
 
       return $leadTransaction->id;
   }
@@ -99,17 +106,20 @@ class Ticket extends Eloquent  {
 
       // Check for Poto Grapher assigned
       if($data['photographer_id']) {
-        $ticketData['photographer_id'] = $data['photographer_id'];
-        $ticketData['photosuite_location'] =  $data['photosuite_location'];
-        $ticketData['assigned_to'] = $data['photographer_id'];
-        $photographerTransaction = TicketTransaction::updateTicket($ticketData);
+        $ticketData['photographer_id']      = $data['photographer_id'];
+        $ticketData['photosuite_location']  =  $data['photosuite_location'];
+        $ticketData['assigned_to']          = $data['photographer_id'];
+        $ticketData['photosuite_date']      = $data['photosuite_date'];
+        $photographerTransaction            = TicketTransaction::updateTicket($ticketData);
       }
+
        // Assgining to Service Assiocate as current Session user
       if(Auth::user()->id) {
-          $ticketData['mif_id'] =  Auth::user()->id;
-          $ticketData['assigned_to'] = Auth::user()->id;
-          $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
+          $ticketData['mif_id']         =  Auth::user()->id;
+          $ticketData['assigned_to']    = Auth::user()->id;
+          $serviceAssociateTransaction  = TicketTransaction::updateTicket($ticketData);
       }
+
       // Assgining to Local Team Lead
       $ticketData['assigned_to'] = Ticket::findUserByRoleAndCity('Local Team Lead', $cityId);
       $leadTransaction = TicketTransaction::updateTicket($ticketData);
@@ -132,26 +142,27 @@ class Ticket extends Eloquent  {
         $ticketData = Ticket::ticketData($localCompleted->id, 1, $data);
 
         if($data['photographer_id']) {
-            $ticketData['photographer_id'] =  $data['photographer_id'];
-            $ticketData['photosuite_location'] =  $data['photosuite_location'];
-            $ticketData['assigned_to'] = $data['photographer_id'];
+            $ticketData['photographer_id']      =  $data['photographer_id'];
+            $ticketData['photosuite_location']  =  $data['photosuite_location'];
+            $ticketData['assigned_to']          = $data['photographer_id'];
+            $ticketData['photosuite_date']      = $data['photosuite_date'];
             $photographerTransaction = TicketTransaction::updateTicket($ticketData);
         }
         // Assgining to service Assiocate
-        $ticketData['assigned_to'] = $data['mif_id'];
+        $ticketData['assigned_to']   = $data['mif_id'];
         $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
         // Assgining Local Team lead
-        $ticketData['assigned_to'] = Ticket::findUserByRoleAndCity('Local Team Lead', $cityId);
-        $leadTransaction = TicketTransaction::updateTicket($ticketData);
+        $ticketData['assigned_to']  = Ticket::findUserByRoleAndCity('Local Team Lead', $cityId);
+        $leadTransaction            = TicketTransaction::updateTicket($ticketData);
         // Assgining Editing Manager
         $ticketData['assigned_to'] = Ticket::findUserByRoleAndCity('Editing Manager', $cityId);
-        $leadTransaction = TicketTransaction::updateTicket($ticketData);
+        $leadTransaction           = TicketTransaction::updateTicket($ticketData);
 
         return $leadTransaction->id;
   }
 
   public static function findUserByRoleAndCity($role = 'Local Team Lead', $cityId) {
-    $user = new User;
+    $user = new User;//echo $cityId; exit;
     $loalLead =  $user->findAllByRoleAndCity($role, $cityId);
     return $loalLead[0]->id;
   }

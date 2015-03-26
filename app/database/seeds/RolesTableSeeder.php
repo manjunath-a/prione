@@ -67,7 +67,58 @@ class RolesTableSeeder extends Seeder {
         $user = User::where('username','=','Editor')->first();
         $user->attachRole( $Editor );
 
-        $user = User::where('username','=','LocalTeamLead')->first();
+        $user = User::where('username','=','LocalTeamLeadBangalore')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadChennai')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadMumbai')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadDelhi')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+
+        $user = User::where('username','=','LocalTeamLeadAhmedabad')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadCoimbatore')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadHyderabad')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadJaipur')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+
+        $user = User::where('username','=','LocalTeamLeadVijayawada')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadKochi')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadKolkata')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadLucknow')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+
+        $user = User::where('username','=','LocalTeamLeadLudhiana')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadPanipat')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadPune')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadSurat')->first();
+        $user->attachRole( $localTeamLeadRole );
+
+        $user = User::where('username','=','LocalTeamLeadJodhpur')->first();
         $user->attachRole( $localTeamLeadRole );
 
         $user = User::where('username','=','Photographer')->first();
