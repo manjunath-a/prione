@@ -64,8 +64,6 @@ class SellerRequest extends Eloquent  {
     public static function buildTicket($requestData) {
 
         $freshdesk = App::make('freshDesk');
-        $fresDeskFields = $freshdesk->getAllCustomFields();
-
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
         $merchantCategory = Category::find($requestData['category_id'])->toArray();
 
@@ -153,7 +151,7 @@ class SellerRequest extends Eloquent  {
             $ticketTransactioData['total_images'] = 0;
             $ticketTransaction = TicketTransaction::create($ticketTransactioData);
 
-            SellerRequest::createFolderInAWS();
+            SellerRequest::createFolderInAWS($fdTicket->display_id, $requestData['seller_name'] );
             return $ticket;
         }
         return false;
