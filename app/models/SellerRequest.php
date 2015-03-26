@@ -65,7 +65,6 @@ class SellerRequest extends Eloquent  {
 
         $freshdesk = App::make('freshDesk');
         $fresDeskFields = $freshdesk->getAllCustomFields();
-        var_dump($fresDeskFields);exit;
 
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
         $merchantCategory = Category::find($requestData['category_id'])->toArray();
@@ -113,6 +112,7 @@ class SellerRequest extends Eloquent  {
          // $sellerRequest = DB::table('seller_request')->insert(
          //        $requestData
          //    );
+
         $sellerRequest = SellerRequest::create($requestData);
 
         $fdTicket = SellerRequest::buildTicket($requestData);
