@@ -64,9 +64,10 @@ class SellerRequest extends Eloquent  {
     public static function buildTicket($requestData) {
 
         $freshdesk = App::make('freshDesk');
+        $fresDeskFields = $freshdesk->getAllCustomFields();
+        var_dump($fresDeskFields);exit;
 
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
-
         $merchantCategory = Category::find($requestData['category_id'])->toArray();
 
         $subject = implode(' // ', array($requestData['seller_name'],
@@ -74,7 +75,6 @@ class SellerRequest extends Eloquent  {
                             $merchantCategory['category_name'],
                             "SKU# ".$requestData['total_sku'],
                         ));
-
 
         $description = "Category :: ". $merchantCategory['category_name']."
                         Number of Unique SKUs to be cataloged? :: ".$requestData['total_sku']."
@@ -117,20 +117,21 @@ class SellerRequest extends Eloquent  {
 
         $fdTicket = SellerRequest::buildTicket($requestData);
 
+        $folder = SellerRequest::createFolderInAWS($fdTicket->display_id, $requestData['seller_name']);
+
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
         $cityLead = $user->findAllByRoleAndCity('Local Team Lead', $merchantCity['id']);
 
         if($fdTicket->display_id) {
 
             $ticketData['request_id'] = $sellerRequest->id;
-
             $ticketData['freshdesk_ticket_id'] = $fdTicket->display_id;
             $ticketData['email'] = $requestData['email'];
             $ticketData['subject'] = $fdTicket->subject;
             $ticketData['description'] = $fdTicket->description;
-            $ticketData['s3_url'] = 's3.prion.com';
+            $ticketData['s3_url'] = $folder;
 
-            $ticket= Ticket::create($ticketData);
+            $ticket = Ticket::create($ticketData);
             // Ticket Transaction
             $ticketTransactioData['ticket_id'] = $ticket->id;
             $ticketTransactioData['assigned_to'] = $cityLead[0]->id;
@@ -152,36 +153,39 @@ class SellerRequest extends Eloquent  {
             $ticketTransactioData['total_images'] = 0;
             $ticketTransaction = TicketTransaction::create($ticketTransactioData);
 
-            $folderName = $fdTicket->display_id.'_'.$requestData['seller_name'].'/';
-            $local = $fdTicket->display_id.'_'.$requestData['seller_name'].'/local/';
-            $editing = $fdTicket->display_id.'_'.$requestData['seller_name'].'/editing/';
-            $cataloging = $fdTicket->display_id.'_'.$requestData['seller_name'].'/cataloging/';
-            $s3 = App::make('aws')->get('s3');
-            $s3 = AWS::get('s3');
-            $result = $s3->putObject(array(
-                'Bucket' => 'prionecataloguing',
-                'Key'    => $folderName ,
-                'Body' => ''
-            ));
-
-            $result = $s3->putObject(array(
-                'Bucket' => 'prionecataloguing',
-                'Key'    => $local ,
-                'Body' => ''
-            ));
-            $result = $s3->putObject(array(
-                'Bucket' => 'prionecataloguing',
-                'Key'    => $editing ,
-                'Body' => ''
-            ));
-            $result = $s3->putObject(array(
-                'Bucket' => 'prionecataloguing',
-                'Key'    => $cataloging ,
-                'Body' => ''
-            ));
-
+            SellerRequest::createFolderInAWS();
             return $ticket;
         }
         return false;
+    }
+
+    public static function createFolderInAWS($freshdeskDisplayId, $seller_name ) {
+        $folderName = $freshdeskDisplayId.'_'.$seller_name.'/';
+        $local = $freshdeskDisplayId.'_'.$seller_name.'/local/';
+        $editing = $freshdeskDisplayId.'_'.$seller_name.'/editing/';
+        $cataloging = $freshdeskDisplayId.'_'.$seller_name.'/cataloging/';
+        $s3 = App::make('aws')->get('s3');
+        $result = $s3->putObject(array(
+            'Bucket' => 'prionecataloguing',
+            'Key'    => $folderName ,
+            'Body' => ''
+        ));
+
+        $result = $s3->putObject(array(
+            'Bucket' => 'prionecataloguing',
+            'Key'    => $local ,
+            'Body' => ''
+        ));
+        $result = $s3->putObject(array(
+            'Bucket' => 'prionecataloguing',
+            'Key'    => $editing ,
+            'Body' => ''
+        ));
+        $result = $s3->putObject(array(
+            'Bucket' => 'prionecataloguing',
+            'Key'    => $cataloging ,
+            'Body' => ''
+        ));
+        return $folderName;
     }
 }

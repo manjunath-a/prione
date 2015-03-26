@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://prione.app/',
+	'url' => 'http://prione.compassites.net/',
 
 	/*
 	|--------------------------------------------------------------------------
