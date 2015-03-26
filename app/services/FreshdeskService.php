@@ -12,20 +12,24 @@ class FreshdeskService {
     public function createTicket($data) {
 
 
-      $data = array (
+      $fdData = array (
             "helpdesk_ticket" => array(
                 "description" => $data['description'],
                 "subject" => $data['subject'],
                 "email" => $data['email'],
                 "priority" => $data['priority'],
-                "status" => $data['status']
+                "status" => $data['status'],
                 ),
             "cc_emails" => \Config::get('mail.cc_email'),
-        );
-      $requestType = '/helpdesk/tickets.json';
-      $fresdeskData =  $this->makeRequest($requestType, $data);
+      );
+      // Check for Custom Fields
+      if(isset($data['custom_field'])) {
+        $fdData['helpdesk_ticket']['custom_field']= $data['custom_field'];
+      }
 
-      return $fresdeskData;
+      $requestType = '/helpdesk/tickets.json';
+      $fresdeskData =  $this->makeRequest($requestType, $fdData);
+      return $fresdeskData->helpdesk_ticket;
 
     }
 
@@ -39,7 +43,7 @@ class FreshdeskService {
           )
       );
       $requestType = '/helpdesk/tickets/'.$data['freshdesk_ticket_id'].'.json';
-        return $this->makeRequest($data);
+      return $this->makeRequest($data);
     }
 
     public function getAllCustomFields() {
@@ -47,13 +51,16 @@ class FreshdeskService {
       try {
           $cusotmFields = array();
           $defaultFields = array();
+
           $ticketFieldArray = $this->makeRequest($requestType);
+
           foreach($ticketFieldArray as $key => $field) {
-              switch($field->field_type) {
+              switch($field->ticket_field->field_type) {
                 case 'custom_dropdown' :
                 case 'custom_text' :
                 case 'custom_text' :
-                      $cusotmFields[] = $field->name;
+                if($field->ticket_field->name == 'no_of_images_203188') continue;
+                      $cusotmFields[] = $field->ticket_field->name;
                      break;
                 case 'default_source':
                 case 'default_status':
@@ -61,11 +68,13 @@ class FreshdeskService {
                 case 'default_priority':
                 case 'default_agent':
                 case 'default_description':
-                     $defaultFields[] = $field->name;
+                     $defaultFields[] = $field->ticket_field->name;
                      break;
               }
           }
+
           $ticketFields = array('custom' =>$cusotmFields, 'default' =>$defaultFields);
+
       } catch (Exception $exe) {
         throw new Exception("Unable to commuincate with FreshDesk");
       }
@@ -95,8 +104,9 @@ class FreshdeskService {
       curl_setopt($connection, CURLOPT_USERPWD, $this->token.":".$this->password);
       curl_setopt($connection, CURLOPT_VERBOSE, 1);
       $ticketResponse = curl_exec($connection);
+
       $ticketArray = json_decode(  $ticketResponse );
 
-      return $ticketArray->helpdesk_ticket;
+      return $ticketArray;
     }
 }
