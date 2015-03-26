@@ -155,4 +155,12 @@ class User extends Eloquent implements ConfideUserInterface {
                     ->where('users.id', '=', $userId)
                     ->select(array('roles.name as rolename', 'city.city_name as cityname'))->first();
     }
+
+    public static function findUserByRoleName($roleName){
+
+        return User::leftjoin('assigned_roles', 'assigned_roles.user_id', '=', 'users.id')
+            ->leftjoin('roles', 'roles.id', '=', 'assigned_roles.role_id')
+            ->where('roles.name', '=', $roleName)
+            ->select('users.id')->first();
+    }
 }

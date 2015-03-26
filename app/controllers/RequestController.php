@@ -21,28 +21,28 @@ class RequestController extends BaseController {
 	public function getIndex()
 	{
 
-    // Get all the available city
-    $cities = City::all();
-    foreach ($cities as $key => $cityArray) {
-        $city[$cityArray['id']] = $cityArray['city_name'];
-    }
-    // Get all the available Sales Channel
-    $salesChannels = SalesChannel::all();
-    foreach ($salesChannels as $key => $channelArray) {
-        $salesChannel[$channelArray['id']] = $channelArray['channel_name'];
-    }
+        // Get all the available city
+        $cities = City::all();
+        foreach ($cities as $key => $cityArray) {
+            $city[$cityArray['id']] = $cityArray['city_name'];
+        }
+        // Get all the available Sales Channel
+        $salesChannels = SalesChannel::all();
+        foreach ($salesChannels as $key => $channelArray) {
+            $salesChannel[$channelArray['id']] = $channelArray['channel_name'];
+        }
 
-    // Get all the available Category
-    $categorys = Category::all();
-    foreach ($categorys as $key => $categoryArray) {
-        $category[$categoryArray['id']] = $categoryArray['category_name'];
-    }
+        // Get all the available Category
+        $categorys = Category::all();
+        foreach ($categorys as $key => $categoryArray) {
+            $category[$categoryArray['id']] = $categoryArray['category_name'];
+        }
 
-		// Show the page
-		return View::make('request/index', compact('city', 'salesChannel', 'category'))
-          ->with('route', 'request')
-          ->with('request_id', null)
-          ->with('data',array());
+            // Show the page
+            return View::make('request/index', compact('city', 'salesChannel', 'category'))
+              ->with('route', 'request')
+              ->with('request_id', null)
+              ->with('data',array());
 	}
   /**
    * Store a newly created resource in storage.
@@ -129,4 +129,9 @@ class RequestController extends BaseController {
     return View::make('request/success')
            ->with('ticketid',$ticket);
   }
+
+  public function getStatus(){
+
+  }
+
 }

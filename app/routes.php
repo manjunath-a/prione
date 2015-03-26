@@ -102,7 +102,14 @@ Route::get('/', array('before' => 'detectLang','uses' => 'UserController@getInde
 
 #Requestor Controller
 // User reset routes
+//Resquest routes
 Route::get('request', 'RequestController@getIndex');
+
+Route::get('request/status', function()
+{
+    // Return about us page
+    return View::make('request/status');
+});
 
 // route to process the request form
 Route::post('request/create', 'RequestController@store');

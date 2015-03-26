@@ -82,6 +82,7 @@ class Ticket extends Eloquent  {
       if(Auth::user()->id) {
         $ticketData['assigned_to'] = Auth::user()->id;
         $ticketData['active'] = 0;
+
         $photographerTransaction = TicketTransaction::updateTicket($ticketData);
       }
       return $leadTransaction->id;
@@ -125,16 +126,18 @@ class Ticket extends Eloquent  {
     }
 
     public static function updateEditingManager($ticketTransactionId, $ticketId, $data) {
-        $cityId =  Auth::user()->city_id;
+
+        $cityId         =  Auth::user()->city_id;
         $localCompleted = Stage::where('stage_name', '(Local) MIF Completed')->first();
-        // Update Team Lead
-        $ticketTransaction = TicketTransaction::where('ticket_id', '=' , $ticketId)
-        ->update(array('active' => 0));
 
         $ticketData = Ticket::ticketData($localCompleted->id, 1, $data);
         $ticketData['photographer_id'] = $data['photographer_id'];
         $ticketData['photosuite_location'] =  $data['photosuite_location'];
         $ticketData['photosuite_date']    = $data['photosuite_date'];
+
+        // Update Team Lead
+        $ticketTransaction  = TicketTransaction::where('ticket_id', '=' , $ticketId)->update(array('active' => 0));
+        $ticketData         = Ticket::ticketData($localCompleted->id, 1, $data);
 
 
         // // Assgining to service Assiocate
@@ -144,8 +147,11 @@ class Ticket extends Eloquent  {
         // // Assgining Local Team lead
         // $ticketData['assigned_to'] = Ticket::findUserByRoleAndCity('Local Team Lead', $cityId);
         // $leadTransaction = TicketTransaction::updateTicket($ticketData);
+
         // Assgining Editing Manager
-        $ticketData['assigned_to'] = Ticket::findUserByRoleAndCity('Editing Manager', $cityId);
+        $ticketData['assigned_to'] = User::findUserByRoleName('Editing Manager');
+var_dump($ticketData);exit;
+       // $ticketData['assigned_to'] = Ticket::findUserByRoleAndCity('Editing Manager', $cityId);
         $leadTransaction           = TicketTransaction::updateTicket($ticketData);
 
         return $leadTransaction->id;
