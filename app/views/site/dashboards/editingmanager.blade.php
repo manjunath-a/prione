@@ -71,7 +71,7 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#editingmanager').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#editingmanager').saveRow('"+cl+"');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#editingmanager').saveRow('"+cl+"');jQuery('#editingmanager').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#editingmanager').restoreRow('"+cl+"');\" />";
                             jQuery("#editingmanager").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }
