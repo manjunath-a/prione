@@ -186,4 +186,11 @@ class SellerRequest extends Eloquent  {
         ));
         return $folderName;
     }
+
+    public function requetIdByTickectId($tickectId)
+    {
+        $seller = Ticket::find($tickectId)->toArray();
+
+        return $seller['request_id'];
+    }
 }

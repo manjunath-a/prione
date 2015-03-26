@@ -154,7 +154,10 @@ class DashboardController extends BaseController {
 
     public function postSeller()
     {
-        $seller  = SellerRequest::find($_POST['id'])->toArray();
+        $sellerRequest  = new SellerRequest();
+        $sellerId       = $sellerRequest->requetIdByTickectId(Input::get('id'));
+        $seller         = SellerRequest::find($sellerId)->toArray();
+
         return Response::json(array(
                     "rows" => [
                                 array(
