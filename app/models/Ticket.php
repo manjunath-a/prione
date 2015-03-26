@@ -69,7 +69,9 @@ class Ticket extends Eloquent  {
         '(Local) Photoshoot Completed / Seller Images Provided')->first();
 
       $ticketData = Ticket::TicketData($photoCompleted->id, 1, $data);
-
+      $ticketData['photographer_id'] =  Auth::user()->id;
+      $ticketData['photosuite_location'] =  $data['photosuite_location'];
+      $ticketData['photosuite_date']    = $data['photosuite_date'];
       // Assgining to service Assiocate
       $ticketData['assigned_to'] = $data['mif_id'];
       $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
@@ -78,10 +80,7 @@ class Ticket extends Eloquent  {
       $leadTransaction = TicketTransaction::updateTicket($ticketData);
        // Check for Poto Grapher assigned
       if(Auth::user()->id) {
-        $ticketData['photographer_id'] =  Auth::user()->id;
-        $ticketData['photosuite_location'] =  $data['photosuite_location'];
         $ticketData['assigned_to'] = Auth::user()->id;
-        $ticketData['photosuite_date']    = $data['photosuite_date'];
         $ticketData['active'] = 0;
         $photographerTransaction = TicketTransaction::updateTicket($ticketData);
       }
@@ -102,12 +101,12 @@ class Ticket extends Eloquent  {
       $mifCompleted = Stage::where('stage_name', '(Local) MIF Completed')->first();
 
       $ticketData = Ticket::ticketData($mifCompleted->id, 1, $data);
+      $ticketData['photographer_id'] = $data['photographer_id'];
+      $ticketData['photosuite_location'] =  $data['photosuite_location'];
+      $ticketData['photosuite_date']    = $data['photosuite_date'];
 
-
-      // // Check for Poto Grapher assigned
+      // Check for Poto Grapher assigned
       // if($data['photographer_id']) {
-      //   $ticketData['photographer_id'] = $data['photographer_id'];
-      //   $ticketData['photosuite_location'] =  $data['photosuite_location'];
       //   $ticketData['assigned_to'] = $data['photographer_id'];
       //   $photographerTransaction = TicketTransaction::updateTicket($ticketData);
       // }
@@ -133,6 +132,9 @@ class Ticket extends Eloquent  {
         ->update(array('active' => 0));
 
         $ticketData = Ticket::ticketData($localCompleted->id, 1, $data);
+        $ticketData['photographer_id'] = $data['photographer_id'];
+        $ticketData['photosuite_location'] =  $data['photosuite_location'];
+        $ticketData['photosuite_date']    = $data['photosuite_date'];
 
 
         // // Assgining to service Assiocate
