@@ -91,7 +91,13 @@ class SellerRequest extends Eloquent  {
                         Requester e-mail ID:XXXXXX@prione.in
                         Requester mobile number:XXXXXX
                         Requester sales channel:PRIONE";
-
+        $ticketFields = $freshdesk->getAllCustomFields();
+        // if($ticketFields) {
+        //     $configFields = Config::get('freshdesk.custom_fields');
+        //     foreach($ticketFields['custom']) {
+        //         $custom_field =array($configFields[]);
+        //     }
+        // }
         $data = array(
                 "description" => $description,
                 "subject" => $subject,
@@ -106,15 +112,11 @@ class SellerRequest extends Eloquent  {
     public static function createRequest( $requestData ) {
 
         $user = new User;
-
-         // $sellerRequest = DB::table('seller_request')->insert(
-         //        $requestData
-         //    );
-
+        // Create a seller request
         $sellerRequest = SellerRequest::create($requestData);
-
+        //Create a Fresh Desk ticekt
         $fdTicket = SellerRequest::buildTicket($requestData);
-
+        // Create a S3 folder with three child folders
         $folder = SellerRequest::createFolderInAWS($fdTicket->display_id, $requestData['seller_name']);
 
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
