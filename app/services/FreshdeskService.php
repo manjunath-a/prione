@@ -23,7 +23,9 @@ class FreshdeskService {
             "cc_emails" => \Config::get('mail.cc_email'),
         );
       $requestType = '/helpdesk/tickets.json';
-      return $this->makeRequest($requestType, $data);
+      $fresdeskData =  $this->makeRequest($requestType, $data);
+
+      return $fresdeskData;
 
     }
 
@@ -52,15 +54,18 @@ class FreshdeskService {
       $requestType = '/ticket_fields.json';
 
       $ticketFieldArray = $this->makeRequest($requestType);
-      foreach($ticketFieldArray as $key => $field) {
-        switch($field->field_type) {
+      // foreach($ticketFieldArray as $key => $field) {
+      //   switch($field->field_type) {
+      //     case 'custom_dropdown' :
+      //     case 'custom_dropdown' :
+      //          break;
 
-        }
-        if($field->field_type === '') {
+      //   }
+      //   if($field->field_type === '') {
 
-        }
-      }
-      return $customFields;
+      //   }
+      // }
+      return $ticketFieldArray;
 
     }
 
