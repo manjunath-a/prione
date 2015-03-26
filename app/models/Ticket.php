@@ -82,7 +82,7 @@ class Ticket extends Eloquent  {
         $ticketData['photosuite_location'] =  $data['photosuite_location'];
         $ticketData['assigned_to'] = Auth::user()->id;
         $ticketData['photosuite_date']    = $data['photosuite_date'];
-        $ticketData['status'] = 0;
+        $ticketData['active'] = 0;
         $photographerTransaction = TicketTransaction::updateTicket($ticketData);
       }
       return $leadTransaction->id;
@@ -119,7 +119,7 @@ class Ticket extends Eloquent  {
       if(Auth::user()->id) {
           $ticketData['mif_id'] =  Auth::user()->id;
           $ticketData['assigned_to'] = Auth::user()->id;
-          $ticketData['status'] = 0;
+          $ticketData['active'] = 0;
           $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
       }
       return $leadTransaction->id;

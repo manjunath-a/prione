@@ -31,19 +31,11 @@ class FreshdeskService {
 
     public function updateTicket($data) {
 
-      // Getting List of custom Fields from freshdesk
-      $customFields = \Config::get('freshdesk.custom_fields');
-      foreach($customFields as $filed => $customField) {
-        if(in_array($filed, $data )) {
-          $fields[$customField] = $data[$field];
-        }
-      }
-
       $data = array(
           "helpdesk_ticket" => array(
               "priority" => $data['priority'],
-              "status" => $data['status']
-              // "custom_field" => $custom_field
+              "status" => $data['status'],
+              "custom_field" => $data['custom_field']
           )
       );
       $requestType = '/helpdesk/tickets/'.$data['freshdesk_ticket_id'].'.json';
@@ -52,20 +44,32 @@ class FreshdeskService {
 
     public function getAllCustomFields() {
       $requestType = '/ticket_fields.json';
-
-      $ticketFieldArray = $this->makeRequest($requestType);
-      // foreach($ticketFieldArray as $key => $field) {
-      //   switch($field->field_type) {
-      //     case 'custom_dropdown' :
-      //     case 'custom_dropdown' :
-      //          break;
-
-      //   }
-      //   if($field->field_type === '') {
-
-      //   }
-      // }
-      return $ticketFieldArray;
+      try {
+          $cusotmFields = array();
+          $defaultFields = array();
+          $ticketFieldArray = $this->makeRequest($requestType);
+          foreach($ticketFieldArray as $key => $field) {
+              switch($field->field_type) {
+                case 'custom_dropdown' :
+                case 'custom_text' :
+                case 'custom_text' :
+                      $cusotmFields[] = $field->name;
+                     break;
+                case 'default_source':
+                case 'default_status':
+                case 'default_group':
+                case 'default_priority':
+                case 'default_agent':
+                case 'default_description':
+                     $defaultFields[] = $field->name;
+                     break;
+              }
+          }
+          $ticketFields = array('custom' =>$cusotmFields, 'default' =>$defaultFields);
+      } catch (Exception $exe) {
+        throw new Exception("Unable to commuincate with FreshDesk");
+      }
+      return $ticketFields;
 
     }
 
