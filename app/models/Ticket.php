@@ -27,7 +27,6 @@ class Ticket extends Eloquent  {
 
 
     $ticketData = Ticket::ticketData($data['stage_id'], 1, $data);
-    $freshdesk = App::make('freshDesk');
 
     if(isset($data['photographer_id'])) {
       $ticketData['photographer_id']    =  $data['photographer_id'];
@@ -49,6 +48,8 @@ class Ticket extends Eloquent  {
     $ticketTransaction          = TicketTransaction::find($ticketTransactionId);
     $ticketTransaction->active  = 0;
     $ticketTransaction->save();
+
+    Ticket::updateFreshDesk($ticketData);
 
     return $leadTransaction->id;
   }
@@ -208,5 +209,39 @@ var_dump($ticketData);exit;
       $ticketData['total_images'] = ($data['total_images'])?$data['total_images']:NULL;
       $ticketData['notes'] = ($data['comment'])?$data['comment']:NULL;
       return $ticketData;
+  }
+
+  public static function updateFreshDesk($ticketData) {
+      $freshdesk = App::make('freshDesk');
+
+      $ticketFields = $freshdesk->getAllCustomFields();
+      $groupTable = Group::find($ticketData['group_id']);
+      $groupsConfig = Config::get('freshdesk.groups');
+      $stage = Stage::find($ticketData['stage_id']);
+      if($ticketFields) {
+          $configFields = Config::get('freshdesk.custom_fields');
+          var_dump($ticketData);
+          $ticketData['stage_name'] = $stage->stage_name;
+          foreach($ticketFields['custom'] as  $fdCustomField) {
+
+              // if(array_key_exists ( $fdCustomField , $configFields)) {
+                  echo $dataField = $configFields[$fdCustomField];
+                  if(isset($ticketData[$dataField]))
+                    $custom_field[$fdCustomField] = $ticketData[$dataField];
+              //  }
+          }
+          var_dump($custom_field);exit;
+
+          $data = array (
+              "priority" => 1,
+              "status" => 2,
+              'group_id' => $groupsConfig[$groupTable->group_name]
+              // 'custom_field' => $custom_field
+          );
+              var_dump($data);exit;
+      }
+
+
+      // return $freshdesk->updateTicket( $data );
   }
 }

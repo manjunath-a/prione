@@ -97,6 +97,6 @@ return array(
 	/**
 	 *
 	 */
-	'cc_email' => "subramania.bharathy@compassitesinc.com, b.arasu@compassitesinc.com",
+	'cc_email' => "subramania.bharathy@compassitesinc.com",
 
 );
