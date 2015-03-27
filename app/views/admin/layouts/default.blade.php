@@ -92,6 +92,16 @@
     							<li{{ (Request::is('admin/roles*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/roles') }}}"><span class="glyphicon glyphicon-user"></span> Roles</a></li>
     						</ul>
     					</li>
+              <li class="dropdown{{ (Request::is('admin/users*|admin/roles*|admin/request*') ? ' active' : '') }}">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="{{{ URL::to('admin/request') }}}">
+                  <span class="glyphicon glyphicon-list"></span> Seller Request <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li {{ (Request::is('/request') ? ' class="active"' : '') }}><a href="{{{ URL::to('/request') }}}"><span class="glyphicon glyphicon-plus"></span> Create Request</a></li>
+                </ul>
+              </li>
+
+
     				</ul>
     				<ul class="nav navbar-nav pull-right">
     					<li><a href="{{{ URL::to('/') }}}">View Homepage</a></li>

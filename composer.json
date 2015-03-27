@@ -25,6 +25,7 @@
         "phpunit/phpunit": "~4.0",
         "mockery/mockery": "~0.9",
         "summerstreet/woodling": "~0.1.6",
+        "doctrine/dbal":"dev-master",
         "barryvdh/laravel-ide-helper": "~1.11"
     },
     "autoload": {

@@ -26,7 +26,7 @@ class SellerRequest extends Eloquent  {
      * @var string
      */
     public static $rules = [
-        'seller_name' => 'required',
+        'requester_name' => 'required',
         'email' => 'required|email',
         'contact_number' => 'required',
         'merchant_name' => 'required',
@@ -54,7 +54,7 @@ class SellerRequest extends Eloquent  {
      */
     public function getSellerByname( $sellerName )
     {
-        return $this->where('seller_name', '=', $sellerName)->first();
+        return $this->where('requester_name', '=', $sellerName)->first();
     }
 
 
@@ -66,10 +66,11 @@ class SellerRequest extends Eloquent  {
         $freshdesk = App::make('freshDesk');
 
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
-
         $merchantCategory = Category::find($requestData['category_id'])->toArray();
+        $salesChannel = SalesChannel::find($requestData['merchant_sales_channel_id'])->toArray();
 
-        $subject = implode(' // ', array($requestData['seller_name'],
+
+        $subject = implode(' // ', array($requestData['merchant_name'],
                             $merchantCity['city_name'],
                             $merchantCategory['category_name'],
                             "SKU# ".$requestData['total_sku'],
@@ -79,7 +80,7 @@ class SellerRequest extends Eloquent  {
                         Number of Unique SKUs to be cataloged? :: ".$requestData['total_sku']."
                         Additional information:Flat file sent and Images uploaded in the S3.
 
-                        Seller name:".$requestData['seller_name']."
+                        Seller name:".$requestData['merchant_name']."
                         City in which service is required:".$merchantCity['city_name']."
 
                         Contact person name:".$requestData['poc_name']."
@@ -89,21 +90,18 @@ class SellerRequest extends Eloquent  {
                         Email ID of seller:".$requestData['poc_email']."
                         Comment :".$requestData['comment']."
 
-                        Requester name:XXXXXX XXXX
-                        Requester e-mail ID:XXXXXX@prione.in
-                        Requester mobile number:XXXXXX
-                        Requester sales channel:PRIONE";
-        $ticketFields = $freshdesk->getAllCustomFields();
+                        Requester name:".$requestData['requester_name']."
+                        Requester e-mail ID:".$requestData['email']."
+                        Requester mobile number:".$requestData['contact_number']."
+                        Requester sales channel:".$salesChannel['channel_name'];
 
-        if($ticketFields) {
-            $configFields = Config::get('freshdesk.custom_fields');
+        // $ticketFields = $freshdesk->getAllCustomFields();
+        $configFields = Config::get('freshdesk.custom_fields');
 
-            foreach($ticketFields['custom'] as  $fdCustomField) {
+        foreach($configFields as  $key => $fdField) {
 
-                if(array_key_exists ( $fdCustomField , $configFields)) {
-                    $dataField = $configFields[$fdCustomField];
-                    $custom_field[$fdCustomField] = $requestData[$dataField];
-                }
+            if(array_key_exists ( $fdField , $requestData)) {
+                $custom_field[$key] = $requestData[$fdField];
             }
         }
         $groups = Config::get('freshdesk.groups');
@@ -113,7 +111,7 @@ class SellerRequest extends Eloquent  {
                 "email" => $requestData['email'],
                 "priority" => 1,
                 "status" => 2,
-                'group_id' => $groups['local'],
+                'group_id' => $groups['Local'],
                 'custom_field' => $custom_field
                 );
 
@@ -128,6 +126,11 @@ class SellerRequest extends Eloquent  {
 
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
         $cityLead = $user->findAllByRoleAndCity('Local Team Lead', $merchantCity['id']);
+        // By default City Lead
+        $leadId = Config::get('ticket.city_lead');
+        // Checks City Based Lead users
+        if(isset($cityLead[0]->id))
+            $leadId = $cityLead[0]->id;
 
         // Create a seller request
         $sellerRequest = SellerRequest::create($requestData);
@@ -137,10 +140,12 @@ class SellerRequest extends Eloquent  {
 
         //Create a Fresh Desk ticekt
         $fdTicket = SellerRequest::buildTicket($requestData);
+
         unset($requestData['stage_name']);
         unset($requestData['city_name']);
         // Create a S3 folder with three child folders
-        $folder = SellerRequest::createFolderInAWS($fdTicket->display_id, $requestData['seller_name']);
+        $folder = SellerRequest::createFolderInAWS($sellerRequest->id,
+            $requestData['merchant_name'], $merchantCity['city_name']);
 
         if($fdTicket->display_id) {
 
@@ -149,12 +154,12 @@ class SellerRequest extends Eloquent  {
             $ticketData['email'] = $requestData['email'];
             $ticketData['subject'] = $fdTicket->subject;
             $ticketData['description'] = $fdTicket->description;
-            $ticketData['s3_url'] = $folder;
+            $ticketData['s3_folder'] = $folder;
 
             $ticket = Ticket::create($ticketData);
             // Ticket Transaction
             $ticketTransactioData['ticket_id'] = $ticket->id;
-            $ticketTransactioData['assigned_to'] = $cityLead[0]->id;
+            $ticketTransactioData['assigned_to'] = $leadId;
             $ticketTransactioData['priority'] = Config::get('ticket.default_priority');
             $ticketTransactioData['status_id'] = Config::get('ticket.default_status');
             $ticketTransactioData['active'] = 1;
@@ -170,19 +175,19 @@ class SellerRequest extends Eloquent  {
             $ticketTransactioData['stage_id'] = $stageId;
             $ticketTransactioData['total_sku'] = $requestData['total_sku'];
             $ticketTransactioData['total_images'] = 0;
+
             $ticketTransaction = TicketTransaction::create($ticketTransactioData);
-
-
             return $ticket;
         }
         return false;
     }
 
-    public static function createFolderInAWS($freshdeskDisplayId, $seller_name ) {
-        $folderName = $freshdeskDisplayId.'_'.$seller_name.'/';
-        $local = $freshdeskDisplayId.'_'.$seller_name.'/local/';
-        $editing = $freshdeskDisplayId.'_'.$seller_name.'/editing/';
-        $cataloging = $freshdeskDisplayId.'_'.$seller_name.'/cataloging/';
+    public static function createFolderInAWS($requestId, $merchant_name ,$cityName ) {
+        $folderName = $requestId.'_'.$merchant_name.'/'.$cityName.'/';
+        $local = $folderName .'/local/';
+        $editing = $folderName .'/editing/';
+        $cataloging = $folderName .'/cataloging/';
+
         $s3 = App::make('aws')->get('s3');
         $result = $s3->putObject(array(
             'Bucket' => 'prionecataloguing',
@@ -208,10 +213,8 @@ class SellerRequest extends Eloquent  {
         return $folderName;
     }
 
-    public function requetIdByTickectId($tickectId)
-    {
+    public function requetIdByTickectId($tickectId)  {
         $seller = Ticket::find($tickectId)->toArray();
-
         return $seller['request_id'];
     }
 }

@@ -1,16 +1,21 @@
-<!-- app/views/request-form.blade.php -->
-<!doctype html>
-<html>
-<head>
-    <title>Request Form</title>
+@extends('site.layouts.default')
 
-    <!-- load bootstrap -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <style>
-        body    { padding-bottom:40px; padding-top:40px; }
-    </style>
-</head>
-<body class="container">
+{{-- Web site Title --}}
+@section('title')
+    {{{ Lang::get('user/user.settings') }}} ::
+    @parent
+@stop
+
+{{-- New Laravel 4 Feature in use --}}
+@section('styles')
+    @parent
+    body {
+    background: #f2f2f2;
+    }
+@stop
+
+{{-- Content --}}
+@section('content')
 
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
@@ -31,17 +36,17 @@
             {{--</div>--}}
 
             <div class="form-group">
-                <label for="seller_name">Name</label>
-                {{ Form::text('seller_name', null, array('class' => 'form-control', 'placeholder' => "Your Name")) }}
+                <label for="requester_name">Requester Name</label>
+                {{ Form::text('requester_name', null, array('class' => 'form-control', 'placeholder' => "Your Name")) }}
             </div>
 
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">Requester Email</label>
                 {{ Form::text('email', null, array('class' => 'form-control', 'placeholder' => "xxxxxx@example.com")) }}
             </div>
 
             <div class="form-group">
-                <label for="contact_number">Contact Number</label>
+                <label for="contact_number">Requester Contact Number</label>
                 {{ Form::text('contact_number', null, array('class' => 'form-control', 'placeholder' => "+91-1234567890")) }}
             </div>
 
@@ -121,6 +126,6 @@
 
     </div>
 </div>
+   </div>
 
-</body>
-</html>
+@stop

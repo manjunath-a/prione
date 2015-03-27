@@ -50,6 +50,7 @@ class RequestController extends BaseController {
    * @return Response
    */
   public function store() {
+      // DB::beginTransaction();
       // Validate the input values
       $validator = Validator::make($data = Input::all(), SellerRequest::$rules);
 
@@ -60,7 +61,7 @@ class RequestController extends BaseController {
       }
 
       try {
-          $requestData['seller_name']   =  $data['seller_name'];
+          $requestData['requester_name']   =  $data['requester_name'];
           $requestData['email']         = $data['email'];
           $requestData['contact_number'] = $data['contact_number'];
           $requestData['merchant_name'] = $data['merchant_name'];
@@ -77,13 +78,16 @@ class RequestController extends BaseController {
           $ticket = SellerRequest::createRequest($requestData);
 
       } catch (Exception $e) {
+          // DB::rollback();
           return Redirect::back()->withErrors($e->getMessage())->withInput();
       }
       return Redirect::to('request/success/'.$ticket->id);
   }
 
   public function updateRequest() {
-
+     // Begin DB transaction
+     // DB::beginTransaction();
+     try {
       $ticketData = Input::all();
       $ticketTransactionId = $ticketData['transaction_id'];
       $ticketId = $ticketData['ticket_id'];
@@ -93,27 +97,47 @@ class RequestController extends BaseController {
           else
               $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
         }
-
+      } catch (Exception $e) {
+        // RollBack Merges
+        // DB::rollback();
+        return $e->getMessage();
+      }
       return $ticketTransaction;
   }
 
    public function updatePhotographer() {
-    $ticketData = Input::all();
-    $ticketTransactionId = $ticketData['transaction_id'];
-    $ticketId = $ticketData['ticket_id'];
-    if($ticketTransactionId) {
-      $ticketTransaction = Ticket::updatePhotographer($ticketTransactionId, $ticketId, $ticketData);
-    }
+       // Begin DB transaction
+      // DB::beginTransaction();
+      try {
+        $ticketData = Input::all();
+        $ticketTransactionId = $ticketData['transaction_id'];
+        $ticketId = $ticketData['ticket_id'];
+        if($ticketTransactionId) {
+          $ticketTransaction = Ticket::updatePhotographer($ticketTransactionId, $ticketId, $ticketData);
+        }
+      } catch (Exception $e) {
+        // RollBack Merges
+        // DB::rollback();
+        return $e->getMessage();
+      }
     return $ticketTransaction;
   }
 
     public function updateMIF() {
-        $ticketData = Input::all();
-        $ticketTransactionId = $ticketData['transaction_id'];
-        $ticketId = $ticketData['ticket_id'];
+        // Begin DB transaction
+        // DB::beginTransaction();
+        try {
+            $ticketData = Input::all();
+            $ticketTransactionId = $ticketData['transaction_id'];
+            $ticketId = $ticketData['ticket_id'];
 
-        if($ticketTransactionId) {
-            $ticketTransaction = Ticket::updateMIF($ticketTransactionId, $ticketId, $ticketData);
+            if($ticketTransactionId) {
+                $ticketTransaction = Ticket::updateMIF($ticketTransactionId, $ticketId, $ticketData);
+            }
+        } catch (Exception $e) {
+          // RollBack Merges
+          // DB::rollback();
+          return $e->getMessage();
         }
         return $ticketTransaction;
     }

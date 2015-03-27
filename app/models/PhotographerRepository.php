@@ -26,8 +26,9 @@ class PhotographerRepository extends EloquentRepositoryAbstract  {
             ->where('ticket_transaction.assigned_to', $user->id)
             ->where('ticket_transaction.active', 1)
             ->select('ticket_transaction.id as id', 'ticket.created_at as created_at', 'ticket_transaction.priority',
-                'ticket_transaction.group_id', 'ticket_transaction.stage_id', 'ticket_transaction.status_id', 'ticket_transaction.pending_reason',
-                'seller_request.seller_name as seller_name', 'seller_request.email',
+                'ticket_transaction.group_id', 'ticket_transaction.stage_id', 'ticket_transaction.status_id',
+                'ticket_transaction.pending_reason', 'seller_request.requester_name as requester_name',
+                'seller_request.email', 'ticket_transaction.created_at as assigned_date',
                 'seller_request.contact_number','seller_request.poc_name',
                 'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',
                 'seller_request.image_available', 'seller_request.comment',
@@ -37,7 +38,7 @@ class PhotographerRepository extends EloquentRepositoryAbstract  {
 
         $this->visibleColumns = array('ticket_transaction.id as id', 'ticket.created_at as created_at', 'ticket_transaction.priority',
             'ticket_transaction.group_id', 'ticket_transaction.stage_id', 'ticket_transaction.status_id', 'ticket_transaction.pending_reason',
-            'seller_request.seller_name as seller_name', 'seller_request.email',
+            'seller_request.requester_name as requester_name', 'seller_request.email',
             'seller_request.contact_number','seller_request.poc_name',
             'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',
             'seller_request.image_available', 'seller_request.comment',

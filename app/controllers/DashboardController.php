@@ -114,7 +114,9 @@ class DashboardController extends BaseController {
         $groupArray = Group::all();
         $group = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
-        $rules  = arraY('only' =>array('(Local) Associates Assigned', '(Local) MIF Completed'));
+        $rules  = arraY('only' =>array('(Local) Associates Assigned',
+                '(Local) Photoshoot Completed / Seller Images Provided',
+                '(Local) MIF Completed'));
         $stageArray = Stage::all();
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
 
