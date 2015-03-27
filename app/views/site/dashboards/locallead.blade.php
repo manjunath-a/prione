@@ -68,13 +68,14 @@
                         {"label":"PhotoGrapher", "name":"photographer_id", "index":"photographer_id","align":"center","width":130,
                         "editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select", "id":"photographer_id"},
 
-                        {"label":"PhotoSuiteDate","index":"photosuite_date","align":"center","width":150,"editable":true,"name":"photosuite_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"}, "editrules":{"date":true},
-                        'editoptions': { 'dataInit' : function (elem) {
+                        {"label":"PhotoSuiteDate","index":"photosuite_date","align":"center","width":150,"editable":true,"name":"photosuite_date",'formatter': "date",
+                        "formatoptions": { "newformat": "Y-m-d"}, "editrules":{"date":true, "required":true}, 'editoptions': { 'dataInit' :
+                        function (elem) {
                             jQuery(elem).datepicker({dateFormat:"yy-mm-dd"});}} },
-                        {"label":"PhotoSuiteLocation","index":"photosuite_location","align":"center","width":150,"editable":true,"name":"photosuite_location"},
+                        {"label":"PhotoSuiteLocation","index":"photosuite_location","align":"center","width":150,"editable":true, "editrules":{"required":false}, "name":"photosuite_location"},
 
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","editable":true,"width":90},
-                        {"label":"No. of Images","align":"center","index":"total_images","name":"total_images","editable":true,"width":100},
+                        {"label":"No. of Images","align":"center", "editrules":{"required":false}, "index":"total_images", "name":"total_images","editable":true,"width":100},
                         {"label":"MIF","index":"mif_id","align":"center","width":150,"editable":true,
                         "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"mif_id"},
                         {"label":"No. of parent SKUs","index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku"},

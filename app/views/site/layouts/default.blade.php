@@ -102,9 +102,11 @@
                         <li><a href="{{{ URL::to('admin') }}}">Admin Panel</a></li>
                         @endif
                         {{--<li><a href="{{{ URL::to('admin/locallead') }}}">Local Lead</a></li>--}}
+                        <li {{ (Request::is('request') ? ' class="active"' : '') }}><a href="{{{ URL::to('/request') }}}"><span class="glyphicon glyphicon-plus"></span>Seller Request</a></li>
                         <li><a href="{{{ URL::to('user') }}}">Logged in as {{{ Auth::user()->username }}}</a></li>
                         <li><a href="{{{ URL::to('user/logout') }}}">Logout</a></li>
                         @else
+                        <li {{ (Request::is('request') ? ' class="active"' : '') }}><a href="{{{ URL::to('/request') }}}"><span class="glyphicon glyphicon-plus"></span>Seller Request</a></li>
                         <li {{ (Request::is('user/login') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/login') }}}">Login</a></li>
                         <!--
                         <li {{ (Request::is('user/create') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/create') }}}">{{{ Lang::get('site.sign_up') }}}</a></li>

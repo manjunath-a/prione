@@ -1,17 +1,21 @@
-<!-- app/views/request-form.blade.php -->
-<!doctype html>
-<html>
-<head>
-    <title>Request Form</title>
+@extends('site.layouts.default')
 
-    <!-- load bootstrap -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <style>
-        body    { padding-bottom:40px; padding-top:40px; }
-    </style>
-</head>
-<body class="container">
+{{-- Web site Title --}}
+@section('title')
+    {{{ Lang::get('user/user.settings') }}} ::
+    @parent
+@stop
 
+{{-- New Laravel 4 Feature in use --}}
+@section('styles')
+    @parent
+    body {
+    background: #f2f2f2;
+    }
+@stop
+
+{{-- Content --}}
+@section('content')
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
 
@@ -26,5 +30,4 @@
     </div>
 </div>
 
-</body>
-</html>
+@stop
