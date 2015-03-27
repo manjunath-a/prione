@@ -48,7 +48,7 @@ class Ticket extends Eloquent  {
     $ticketTransaction          = TicketTransaction::find($ticketTransactionId);
     $ticketTransaction->active  = 0;
     $ticketTransaction->save();
-
+    // FreshDesk Update
     Ticket::updateFreshDesk($ticketData);
 
     return $leadTransaction->id;
@@ -85,6 +85,8 @@ class Ticket extends Eloquent  {
         $ticketData['active'] = 0;
         $photographerTransaction = TicketTransaction::updateTicket($ticketData);
       }
+      // FreshDesk Update
+      Ticket::updateFreshDesk($ticketData);
       return $leadTransaction->id;
   }
 
@@ -122,6 +124,8 @@ class Ticket extends Eloquent  {
           $ticketData['active'] = 0;
           $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
       }
+      // FreshDesk Update
+      Ticket::updateFreshDesk($ticketData);
       return $leadTransaction->id;
     }
 
@@ -148,7 +152,8 @@ class Ticket extends Eloquent  {
         // Assgining Editing Manager
         $ticketData['assigned_to'] = Ticket::findUserByRoleAndCity('Editing Manager', $cityId);
         $leadTransaction           = TicketTransaction::updateTicket($ticketData);
-
+        // FreshDesk Update
+        Ticket::updateFreshDesk($ticketData);
         return $leadTransaction->id;
   }
 
@@ -168,6 +173,8 @@ class Ticket extends Eloquent  {
   public static function ticketData($stageId, $status, $data) {
 
       $ticketTransactionRule = TicketTransaction::$rules;
+
+
       // Add custom validation for date
       if( Input::has('photosuite_date') ) {
           $ticketTransactionRule['photosuite_date'] = 'After:'.Date('Y-m-d');
@@ -207,35 +214,33 @@ class Ticket extends Eloquent  {
 
   public static function updateFreshDesk($ticketData) {
       $freshdesk = App::make('freshDesk');
-
+      $oldTicKet = Ticket::find($ticketData['ticket_id']);
+      $ticketData['s3_folder'] = $oldTicKet->s3_folder;
+      // Get all the list of fiels from FreshDesk
       $ticketFields = $freshdesk->getAllCustomFields();
+      // Get group Name
       $groupTable = Group::find($ticketData['group_id']);
-      $groupsConfig = Config::get('freshdesk.groups');
       $stage = Stage::find($ticketData['stage_id']);
+      $groupsConfig = Config::get('freshdesk.groups');
+
       if($ticketFields) {
           $configFields = Config::get('freshdesk.custom_fields');
-          var_dump($ticketData);
           $ticketData['stage_name'] = $stage->stage_name;
-          foreach($ticketFields['custom'] as  $fdCustomField) {
-
-              // if(array_key_exists ( $fdCustomField , $configFields)) {
-                  echo $dataField = $configFields[$fdCustomField];
-                  if(isset($ticketData[$dataField]))
-                    $custom_field[$fdCustomField] = $ticketData[$dataField];
-              //  }
+          $custom_field =array();
+          foreach($configFields as $key => $field) {
+              if(array_key_exists ( $field , $ticketData)) {
+                  $custom_field[$key] = $ticketData[$field];
+              }
           }
-          var_dump($custom_field);exit;
-
+          // var_dump($ticketData);
           $data = array (
-              "priority" => 1,
-              "status" => 2,
-              'group_id' => $groupsConfig[$groupTable->group_name]
-              // 'custom_field' => $custom_field
+              "freshdesk_ticket_id" => $oldTicKet->freshdesk_ticket_id,
+              "priority" => $ticketData['priority'],
+              "status" => $ticketData['status_id']+1,
+              'group' => $groupsConfig[$groupTable->group_name],
+              'custom_field' => $custom_field
           );
-              var_dump($data);exit;
       }
-
-
-      // return $freshdesk->updateTicket( $data );
+      return $freshdesk->updateTicket( $data );
   }
 }

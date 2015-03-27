@@ -50,6 +50,7 @@ class RequestController extends BaseController {
    * @return Response
    */
   public function store() {
+      // DB::beginTransaction();
       // Validate the input values
       $validator = Validator::make($data = Input::all(), SellerRequest::$rules);
 
@@ -77,12 +78,15 @@ class RequestController extends BaseController {
           $ticket = SellerRequest::createRequest($requestData);
 
       } catch (Exception $e) {
+          // DB::rollback();
           return Redirect::back()->withErrors($e->getMessage())->withInput();
       }
       return Redirect::to('request/success/'.$ticket->id);
   }
 
   public function updateRequest() {
+     // Begin DB transaction
+     // DB::beginTransaction();
      try {
       $ticketData = Input::all();
       $ticketTransactionId = $ticketData['transaction_id'];
@@ -94,12 +98,16 @@ class RequestController extends BaseController {
               $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
         }
       } catch (Exception $e) {
-          return $e->getMessage();
+        // RollBack Merges
+        // DB::rollback();
+        return $e->getMessage();
       }
       return $ticketTransaction;
   }
 
    public function updatePhotographer() {
+       // Begin DB transaction
+      // DB::beginTransaction();
       try {
         $ticketData = Input::all();
         $ticketTransactionId = $ticketData['transaction_id'];
@@ -108,12 +116,16 @@ class RequestController extends BaseController {
           $ticketTransaction = Ticket::updatePhotographer($ticketTransactionId, $ticketId, $ticketData);
         }
       } catch (Exception $e) {
-          return $e->getMessage();
+        // RollBack Merges
+        // DB::rollback();
+        return $e->getMessage();
       }
     return $ticketTransaction;
   }
 
     public function updateMIF() {
+        // Begin DB transaction
+        // DB::beginTransaction();
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
@@ -123,7 +135,9 @@ class RequestController extends BaseController {
                 $ticketTransaction = Ticket::updateMIF($ticketTransactionId, $ticketId, $ticketData);
             }
         } catch (Exception $e) {
-            return $e->getMessage();
+          // RollBack Merges
+          // DB::rollback();
+          return $e->getMessage();
         }
         return $ticketTransaction;
     }

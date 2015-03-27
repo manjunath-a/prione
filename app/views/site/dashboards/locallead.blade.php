@@ -32,9 +32,6 @@
 
     </div>
     <script type="text/javascript">
-       // $.jgrid.no_legacy_api = false;
-       // $.jgrid.useJSON = true;
-       // var $ =jQuery.noConflict();
         var lastsel3;
         jQuery("#locallead").jqGrid({
                     "datatype":"json",
@@ -69,7 +66,7 @@
                         "editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select", "id":"photographer_id"},
 
                         {"label":"PhotoSuiteDate","index":"photosuite_date","align":"center","width":150,"editable":true,"name":"photosuite_date",'formatter': "date",
-                        "formatoptions": { "newformat": "Y-m-d"}, "editrules":{"date":true, "required":true}, 'editoptions': { 'dataInit' :
+                        "formatoptions": { "newformat": "Y-m-d"}, "editrules":{"date":true, "required":false}, 'editoptions': { 'dataInit' :
                         function (elem) {
                             jQuery(elem).datepicker({dateFormat:"yy-mm-dd"});}} },
                         {"label":"PhotoSuiteLocation","index":"photosuite_location","align":"center","width":150,"editable":true, "editrules":{"required":false}, "name":"photosuite_location"},
@@ -95,7 +92,6 @@
                             jQuery("#locallead").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }
                     },
-
                     "subGrid":true,
                     "subGridUrl":"seller",
                     "subGridModel" :[
