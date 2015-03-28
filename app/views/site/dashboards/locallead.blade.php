@@ -42,7 +42,8 @@
                     "url":"locallead",
                     "editurl":'/request/update',
                     "rowNum":25,
-                    "viewrecords":true,
+                    "viewrecords":false,
+                    "refersh":true,
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75,'sortable':false},
                         {"name":"id", "index":"id", "align":"center", "hidden":true},
@@ -116,7 +117,7 @@
                     //'cellEdit': true
                 }
         );
-
+       jQuery("#locallead").jqGrid('navGrid', '#localleadPager', {add: false,edit:false,view:false,del:false,refresh: true});
     </script>
     <!-- ./ content -->
     </div>

@@ -98,6 +98,7 @@
                     "pager":"mifPager"
                 }
         );
+        jQuery("#mif").jqGrid('navGrid', '#mifPager', {add: false,edit:false,view:false,del:false,refresh: true});
     </script>
     <!-- ./ content -->
     </div>

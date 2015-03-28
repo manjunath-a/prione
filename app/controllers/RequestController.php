@@ -88,10 +88,11 @@ class RequestController extends BaseController {
       $ticketTransactionId = $ticketData['transaction_id'];
       $ticketId = $ticketData['ticket_id'];
         if($ticketTransactionId) {
-          if($ticketData['group_id'] == 2)
+          if($ticketData['group_id'] == 2){
               $ticketTransaction = Ticket::updateEditingManager($ticketTransactionId, $ticketId, $ticketData);
-          else
+          }else {
               $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
+          }
         }
       } catch (Exception $e) {
           return $e->getMessage();
@@ -124,6 +125,17 @@ class RequestController extends BaseController {
             }
         } catch (Exception $e) {
             return $e->getMessage();
+        }
+        return $ticketTransaction;
+    }
+
+    public function updateEditingManager() {
+        $ticketData = Input::all();
+        $ticketTransactionId = $ticketData['transaction_id'];
+        $ticketId = $ticketData['ticket_id'];
+
+        if($ticketTransactionId) {
+            $ticketTransaction = Ticket::updateEditor($ticketTransactionId, $ticketId, $ticketData);
         }
         return $ticketTransaction;
     }

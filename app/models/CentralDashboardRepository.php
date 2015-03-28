@@ -69,8 +69,8 @@ class CentralDashboardRepository extends EloquentRepositoryAbstract  {
             'ticket_transaction.sa_variation', 'ticket_transaction.sa_sku',
             'ticket_transaction.total_sku', 'ticket_transaction.total_images',
              'ticket_transaction.id as transaction_id')
-                            ->groupBy('ticket_transaction.id');
-        //->toSql(); exit;
+                            ->groupBy('ticket_transaction.id');//->toSql();exit;
+
         $this->visibleColumns = array('ticket_transaction.id as id', 'ticket.created_at as created_at',
             'ticket_transaction.priority', 'ticket_transaction.group_id', 'ticket_transaction.stage_id',
             'ticket_transaction.status_id', 'ticket_transaction.pending_reason',
@@ -87,6 +87,6 @@ class CentralDashboardRepository extends EloquentRepositoryAbstract  {
 
         $this->orderBy = array(array('id', 'asc'));
 
-        $queries = DB::getQueryLog(); $last_query = end($queries);  var_dump($last_query); exit;
+        //$queries = DB::getQueryLog(); $last_query = end($queries);  var_dump($last_query); exit;
     }
 }

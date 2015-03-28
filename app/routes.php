@@ -125,11 +125,13 @@ Route::post('request/update/', 'RequestController@updateRequest');
 Route::post('request/updatePhotographer/', 'RequestController@updatePhotographer');
 Route::post('request/updateMIF/', 'RequestController@updateMIF');
 Route::post('request/updateEditingManager/', 'RequestController@updateEditingManager');
+Route::post('request/updateEditingTeamLead/', 'RequestController@updateEditingTeamLead');
 
 Route::get('dashboard/locallead/', 'DashboardController@getLocalLead');
 Route::get('dashboard/photographer/', 'DashboardController@getPhotographer');
 Route::get('dashboard/mif/', 'DashboardController@getMIF');
 Route::get('dashboard/editingmanager/', 'DashboardController@getEditingManager');
+Route::get('dashboard/editingteamlead/', 'DashboardController@getEditingTeamLead');
 
 Route::post('/dashboard/locallead', function()
 {
@@ -146,6 +148,11 @@ Route::post('/dashboard/mif', function()
 });
 
 Route::post('/dashboard/editingmanager', function()
+{
+    GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
+});
+
+Route::post('/dashboard/editingteamlead', function()
 {
     GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
 });
