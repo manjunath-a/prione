@@ -33,17 +33,21 @@ class FreshdeskService {
 
     }
 
-    public function updateTicket($data) {
+    public function updateTicket($ticketData) {
 
-      $data = array(
+      $data = array (
           "helpdesk_ticket" => array(
-              "priority" => $data['priority'],
-              "status" => $data['status'],
-              "custom_field" => $data['custom_field']
+              "priority" => $ticketData['priority'],
+              "status" => $ticketData['status'],
+              "group_id" => $ticketData['group'],
+              "custom_field" => $ticketData['custom_field']
           )
       );
-      $requestType = '/helpdesk/tickets/'.$data['freshdesk_ticket_id'].'.json';
-      return $this->makeRequest($data);
+      var_dump($data);
+      $requestType = '/helpdesk/tickets/'.$ticketData['freshdesk_ticket_id'].'.json';
+      $updateResponse =  $this->putMethod($requestType , $data);
+
+      return $updateResponse;
     }
 
     public function getAllCustomFields() {
@@ -94,7 +98,7 @@ class FreshdeskService {
       $connection = curl_init($this->freshdeskUrl .$requestType);
 
       if(is_array($data)) {
-          $json_body = json_encode($data, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
+          echo $json_body = json_encode($data, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
           curl_setopt($connection, CURLOPT_POSTFIELDS, $json_body);
           curl_setopt($connection, CURLOPT_POST, true);
       }
@@ -106,7 +110,29 @@ class FreshdeskService {
       $ticketResponse = curl_exec($connection);
 
       $ticketArray = json_decode(  $ticketResponse );
-
       return $ticketArray;
+    }
+
+    public function putMethod($requestType , $data = NULL) {
+        $this->freshdeskUrl = \Config::get('freshdesk.url');
+        // Fresh Desk password
+        $this->token = \Config::get('freshdesk.token');
+        // Fresh Desk password
+        $this->password = \Config::get('freshdesk.password');
+        $json_body = json_encode($data, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
+        $header[] = "Content-type: application/json";
+        $connection = curl_init($this->freshdeskUrl .$requestType);
+
+        curl_setopt($connection, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($connection, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($connection, CURLOPT_HEADER, false);
+        curl_setopt($connection, CURLOPT_USERPWD, $this->token.":".$this->password);
+        curl_setopt($connection, CURLOPT_POSTFIELDS, $json_body);
+        curl_setopt($connection, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($connection, CURLOPT_VERBOSE, 1);
+        $ticketResponse = curl_exec($connection);
+
+        $ticketArray = json_decode(  $ticketResponse );
+        return $ticketArray;
     }
 }

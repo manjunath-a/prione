@@ -61,7 +61,21 @@ class UserController extends BaseController {
              case 'Editing Manager' :
                 $dashboard = 'editingmanager/';
                 break;
-
+            case 'Editing Team Lead' :
+                $dashboard = 'editingteamlead/';
+                break;
+            case 'Editor' :
+                $dashboard = 'editor/';
+                break;
+            case 'Catalogue Manager' :
+                $dashboard = 'cataloguemanager/';
+                break;
+            case 'Catalogue Team Lead' :
+                $dashboard = 'catalogueteamlead/';
+                break;
+            case 'Cataloguer' :
+                $dashboard = 'cataloguer/';
+                break;
         }
         return  $dashboard;
     }

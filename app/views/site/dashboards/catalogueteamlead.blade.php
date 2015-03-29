@@ -17,26 +17,26 @@
 {{-- Content --}}
 @section('content')
     <div class="page-header">
-        <h3>Dashboard : Editing Team Lead</h3>
+        <h3>Dashboard : Cataloguing Team Lead</h3>
     </div>
 
-    {{ Form::open(array('url' => 'dashboard/editingteamlead', 'method' => 'post', 'id'=> "editingteamleadForm")) }}
+    {{ Form::open(array('url' => 'dashboard/catalogueteamlead', 'method' => 'post', 'id'=> "catalogueteamleadForm")) }}
     <input name="fileProperties" type="hidden" value='[]'>
     <input name="sheetProperties" type="hidden" value='[]'>
     {{ Form::close() }}
-    <table id="editingteamlead">
+    <table id="catalogueteamlead">
 
     </table>
-    <div id="editingteamleadPager">
+    <div id="catalogueteamleadPager">
 
     </div>
     <script type="text/javascript">
         var lastsel3;
-        jQuery("#editingteamlead").jqGrid({
+        jQuery("#catalogueteamlead").jqGrid({
                     "datatype":"json",
                     "mtype":"POST",
-                    "url":"editingteamlead",
-                    "editurl":'/request/updateEditor',
+                    "url":"catalogueteamlead",
+                    "editurl":'/request/updateCataloguer',
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75, 'sortable':false},
                         {"name":"id", "index":"id", "align":"center", "hidden":true},
@@ -52,7 +52,11 @@
                         {"label":"Stage","index":"stage_id","align":"center","width":350,"editable":true,
                             "editoptions":{'value':'{{rtrim($stage, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"stage_id"},
                         {"label":"Editor","index":"editor","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editor, ";")}}'},
-                            "edittype":"select","editrules":{"required":true},"formatter":"select","name":"editor"},
+                            "edittype":"select","editrules":{"required":true},"formatter":"select","name":"editor", "hidden":true},
+                        {"label":"Editing Team Lead","index":"editingteamlead","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editingteamlead, ";")}}'},
+                            "edittype":"select","editrules":{"required":true},"formatter":"select","name":"editingteamlead", 'hidden' : true},
+                        {"label":"Cataloguer","index":"cataloguer","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($cataloguer, ";")}}'},
+                            "edittype":"select","editrules":{"required":true},"formatter":"select","name":"cataloguer"},
                         {"index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku", "hidden":true},
                         {"index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation", "hidden":true},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},
@@ -71,14 +75,14 @@
                     jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
                     gridComplete: function(){
-                        var ids = jQuery("#editingteamlead").jqGrid('getDataIDs');
+                        var ids = jQuery("#catalogueteamlead").jqGrid('getDataIDs');
                         for(var i=0;i < ids.length;i++)
                         {
                             var cl = ids[i];
-                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#editingteamlead').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#editingteamlead').saveRow('"+cl+"');jQuery('#editingteamlead').trigger('reloadGrid');\" />";
-                            ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#editingteamlead').restoreRow('"+cl+"');\" />";
-                            jQuery("#editingteamlead").jqGrid('setRowData',ids[i],{act:be+se+ce});
+                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#catalogueteamlead').editRow('"+cl+"');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#catalogueteamlead').saveRow('"+cl+"');jQuery('#catalogueteamlead').trigger('reloadGrid');\" />";
+                            ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#catalogueteamlead').restoreRow('"+cl+"');\" />";
+                            jQuery("#catalogueteamlead").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }
                     },
                     "subGrid":true,
@@ -89,10 +93,10 @@
                             width : [200,200,200,200]
                         }
                     ],
-                    "pager":"editingteamleadPager"
+                    "pager":"catalogueteamleadPager"
                 }
         );
-        jQuery("#editingteamlead").jqGrid('navGrid', '#editingteamleadPager', {add: false,edit:false,view:false,del:false,refresh: true,search:false});
+        jQuery("#catalogueteamlead").jqGrid('navGrid', '#catalogueteamleadPager', {add: false,edit:false,view:false,del:false,refresh: true,search:false});
     </script>
     <!-- ./ content -->
     </div>

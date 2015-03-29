@@ -32,9 +32,6 @@
 
     </div>
     <script type="text/javascript">
-       // $.jgrid.no_legacy_api = false;
-       // $.jgrid.useJSON = true;
-       // var $ =jQuery.noConflict();
         var lastsel3;
         jQuery("#locallead").jqGrid({
                     "datatype":"json",
@@ -70,7 +67,7 @@
                         "editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select", "id":"photographer_id"},
 
                         {"label":"PhotoSuiteDate","index":"photosuite_date","align":"center","width":150,"editable":true,"name":"photosuite_date",'formatter': "date",
-                        "formatoptions": { "newformat": "Y-m-d"}, "editrules":{"date":true, "required":true}, 'editoptions': { 'dataInit' :
+                        "formatoptions": { "newformat": "Y-m-d"}, "editrules":{"date":true, "required":false}, 'editoptions': { 'dataInit' :
                         function (elem) {
                             jQuery(elem).datepicker({dateFormat:"yy-mm-dd"});}} },
                         {"label":"PhotoSuiteLocation","index":"photosuite_location","align":"center","width":150,"editable":true, "editrules":{"required":false}, "name":"photosuite_location"},
@@ -96,17 +93,14 @@
                             jQuery("#locallead").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }
                     },
-
                     "subGrid":true,
                     "subGridUrl":"seller",
                     "subGridModel" :[
                         {
-                            name  : ['seller_name','Seller Email ID','Contact Number','POC Name','POC Email ID','POC Contact Number'],
-                            width : [120,120,120,120,120,120],
+                            name  : ['Seller name','POC Name','POC Email ID','POC Contact Number'],
+                            width : [250,150,120,180],
                             colModel: [
-                                {"align":"center","index":"seller_name","editable":true,"name":"seller_name"},
-                                {"label":"Seller Email ID","align":"center","index":"email","name":"email"},
-                                {"label":"Contact Number","align":"right","index":"contact_number","name":"contact_number"},
+                                {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
                                 {"label":"POC Contact Number","index":"poc_number","name":"poc_number"}
@@ -117,7 +111,7 @@
                     //'cellEdit': true
                 }
         );
-       jQuery("#locallead").jqGrid('navGrid', '#localleadPager', {add: false,edit:false,view:false,del:false,refresh: true});
+       jQuery("#locallead").jqGrid('navGrid', '#localleadPager', {add: false,edit:false,view:false,del:false,refresh: true,search:false});
     </script>
     <!-- ./ content -->
     </div>
