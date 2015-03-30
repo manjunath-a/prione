@@ -112,7 +112,7 @@ class SellerRequest extends Eloquent  {
                 "email" => $requestData['email'],
                 "priority" => 1,
                 "status" => 2,
-                'group_id' => $groups['Local'],
+                'group' => $groups['Local'],
                 'custom_field' => $custom_field
                 );
 
@@ -139,14 +139,16 @@ class SellerRequest extends Eloquent  {
         $requestData['stage_name'] = Config::get('ticket.default_stage_name');
         $requestData['city_name'] = $merchantCity['city_name'];
 
+        // Create a S3 folder with three child folders
+        $awsFolder = SellerRequest::createFolderInAWS($sellerRequest->id,
+            $requestData['merchant_name'], $merchantCity['city_name']);
+        $requestData['s3_folder'] = $awsFolder;
+
         //Create a Fresh Desk ticekt
         $fdTicket = SellerRequest::buildTicket($requestData);
 
         unset($requestData['stage_name']);
         unset($requestData['city_name']);
-        // Create a S3 folder with three child folders
-        $folder = SellerRequest::createFolderInAWS($sellerRequest->id,
-            $requestData['merchant_name'], $merchantCity['city_name']);
 
         if($fdTicket->display_id) {
 
@@ -155,7 +157,7 @@ class SellerRequest extends Eloquent  {
             $ticketData['email'] = $requestData['email'];
             $ticketData['subject'] = $fdTicket->subject;
             $ticketData['description'] = $fdTicket->description;
-            $ticketData['s3_folder'] = $folder;
+            $ticketData['s3_folder'] = $awsFolder;
 
             $ticket = Ticket::create($ticketData);
             // Ticket Transaction

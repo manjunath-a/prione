@@ -22,14 +22,15 @@ class PhotographerRepository extends EloquentRepositoryAbstract  {
             ->join('stage', 'stage.id', '=', 'ticket_transaction.stage_id')
             ->join('group', 'group.id', '=', 'ticket_transaction.group_id')
             ->join('seller_request', 'seller_request.id', '=', 'ticket.request_id')
+            ->join('category', 'category.id', '=', 'seller_request.category_id')
             ->join('users', 'seller_request.merchant_city_id', '=', 'users.city_id')
             ->where('ticket_transaction.assigned_to', $user->id)
             ->where('ticket_transaction.active', 1)
             ->select('ticket_transaction.id as id', 'ticket.created_at as created_at', 'ticket_transaction.priority',
                 'ticket_transaction.group_id', 'ticket_transaction.stage_id', 'ticket_transaction.status_id',
                 'ticket_transaction.pending_reason', 'seller_request.requester_name as requester_name',
-                'seller_request.email', 'ticket_transaction.created_at as assigned_date',
-                'seller_request.contact_number','seller_request.poc_name',
+                'seller_request.email', 'ticket_transaction.created_at as assigned_date', 'category.category_name as category_name',
+                'seller_request.contact_number','seller_request.poc_name', 'ticket.s3_folder as s3_folder',
                 'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',
                 'seller_request.image_available', 'seller_request.comment',
                 'seller_request.id as seller_request_id', 'ticket.id as ticket_id')
@@ -38,8 +39,8 @@ class PhotographerRepository extends EloquentRepositoryAbstract  {
 
         $this->visibleColumns = array('ticket_transaction.id as id', 'ticket.created_at as created_at', 'ticket_transaction.priority',
             'ticket_transaction.group_id', 'ticket_transaction.stage_id', 'ticket_transaction.status_id', 'ticket_transaction.pending_reason',
-            'seller_request.requester_name as requester_name', 'seller_request.email',
-            'seller_request.contact_number','seller_request.poc_name',
+            'seller_request.requester_name as requester_name', 'seller_request.email', 'category.category_name as category_name',
+            'seller_request.contact_number','seller_request.poc_name', 'ticket.s3_folder as s3_folder',
             'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',
             'seller_request.image_available', 'seller_request.comment',
             'seller_request.id as seller_request_id', 'ticket.id as ticket_id');

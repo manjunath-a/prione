@@ -131,6 +131,7 @@ Route::post('request/updateEditingComplete/', 'RequestController@updateEditingCo
 Route::post('request/updateAssignCatalogue/', 'RequestController@updateAssignCatalogue');
 Route::post('request/updateCatalogueTeamLead/', 'RequestController@updateCatalogueTeamLead');
 Route::post('request/updateCataloguer/', 'RequestController@updateCataloguer');
+Route::post('request/updateCatalogingComplete/', 'RequestController@updateCatalogingComplete');
 
 Route::get('dashboard/locallead/', 'DashboardController@getLocalLead');
 Route::get('dashboard/photographer/', 'DashboardController@getPhotographer');

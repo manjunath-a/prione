@@ -33,6 +33,14 @@
     </div>
     <script type="text/javascript">
         var lastsel3;
+         // define handler function for 'afterSubmit' event.
+        var deleteMessage = function(response,postdata){
+            var json   = response.responseText; // response text is returned from server.
+            var result = JSON.parse(json); // convert json object into javascript object.
+            console.log(result.status);
+            return [result.status,result.message,null];
+        }
+
         jQuery("#locallead").jqGrid({
                     "datatype":"json",
                     "mtype":"POST",
@@ -47,7 +55,7 @@
                         {"name":"transaction_id", "index":"transaction_id", "align":"center", 'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
-                        {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, 'hidden' : true},
+                        {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",'key':true, 'hidden' : true},
                         {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
 
                         {"label":"Request Date","align":"center","index":"created_at","name":"created_at"},
@@ -74,7 +82,7 @@
 
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","editable":true,"width":90},
                         {"label":"No. of Images","align":"center", "editrules":{"required":false}, "index":"total_images", "name":"total_images","editable":true,"width":100},
-                        {"label":"MIF","index":"mif_id","align":"center","width":150,"editable":true,
+                        {"label":"MIF","index":"mif_id","align":"center","width":150,"editable":true, 'key':true,
                         "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"mif_id"},
                         {"label":"No. of parent SKUs","index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku"},
                         {"label":"No. of variations","index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation"},
@@ -111,7 +119,8 @@
                     //'cellEdit': true
                 }
         );
-       jQuery("#locallead").jqGrid('navGrid', '#localleadPager', {add: false,edit:false,view:false,del:false,refresh: true,search:false});
+       jQuery("#locallead").jqGrid('navGrid', '#localleadPager',
+        {add: false,edit:false,view:false,del:false,refresh: true,search:false}, deleteMessage );
     </script>
     <!-- ./ content -->
     </div>

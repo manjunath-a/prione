@@ -43,7 +43,6 @@ class FreshdeskService {
               "custom_field" => $ticketData['custom_field']
           )
       );
-      var_dump($data);
       $requestType = '/helpdesk/tickets/'.$ticketData['freshdesk_ticket_id'].'.json';
       $updateResponse =  $this->putMethod($requestType , $data);
 
@@ -112,7 +111,9 @@ class FreshdeskService {
       $ticketArray = json_decode(  $ticketResponse );
       return $ticketArray;
     }
-
+    /** PUT Method
+     *
+     */
     public function putMethod($requestType , $data = NULL) {
         $this->freshdeskUrl = \Config::get('freshdesk.url');
         // Fresh Desk password
