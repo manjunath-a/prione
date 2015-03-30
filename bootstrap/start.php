@@ -26,9 +26,9 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-    'local' => array('VirtualMint','homestead','*.local','temp.lan','prione.app',false), // Change this to your local machine hostname.
+    'local' => array('VirtualMint','homestead','*.local','temp.lan','prione.app',true), // Change this to your local machine hostname.
     'staging' => array('prione.lan'),
-    'production' => array('prione.compassites.net', true),
+    'production' => array('prione.compassites.net' ),
 
 ));
 

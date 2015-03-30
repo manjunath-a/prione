@@ -21,28 +21,28 @@ class RequestController extends BaseController {
 	public function getIndex()
 	{
 
-    // Get all the available city
-    $cities = City::all();
-    foreach ($cities as $key => $cityArray) {
-        $city[$cityArray['id']] = $cityArray['city_name'];
-    }
-    // Get all the available Sales Channel
-    $salesChannels = SalesChannel::all();
-    foreach ($salesChannels as $key => $channelArray) {
-        $salesChannel[$channelArray['id']] = $channelArray['channel_name'];
-    }
+        // Get all the available city
+        $cities = City::all();
+        foreach ($cities as $key => $cityArray) {
+            $city[$cityArray['id']] = $cityArray['city_name'];
+        }
+        // Get all the available Sales Channel
+        $salesChannels = SalesChannel::all();
+        foreach ($salesChannels as $key => $channelArray) {
+            $salesChannel[$channelArray['id']] = $channelArray['channel_name'];
+        }
 
-    // Get all the available Category
-    $categorys = Category::all();
-    foreach ($categorys as $key => $categoryArray) {
-        $category[$categoryArray['id']] = $categoryArray['category_name'];
-    }
+        // Get all the available Category
+        $categorys = Category::all();
+        foreach ($categorys as $key => $categoryArray) {
+            $category[$categoryArray['id']] = $categoryArray['category_name'];
+        }
 
-		// Show the page
-		return View::make('request/index', compact('city', 'salesChannel', 'category'))
-          ->with('route', 'request')
-          ->with('request_id', null)
-          ->with('data',array());
+            // Show the page
+            return View::make('request/index', compact('city', 'salesChannel', 'category'))
+              ->with('route', 'request')
+              ->with('request_id', null)
+              ->with('data',array());
 	}
   /**
    * Store a newly created resource in storage.
@@ -92,10 +92,11 @@ class RequestController extends BaseController {
       $ticketTransactionId = $ticketData['transaction_id'];
       $ticketId = $ticketData['ticket_id'];
         if($ticketTransactionId) {
-          if($ticketData['group_id'] == 2)
+          if($ticketData['group_id'] == 2){
               $ticketTransaction = Ticket::updateEditingManager($ticketTransactionId, $ticketId, $ticketData);
-          else
+          }else {
               $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
+          }
         }
       } catch (Exception $e) {
         // RollBack Merges
@@ -142,6 +143,83 @@ class RequestController extends BaseController {
         return $ticketTransaction;
     }
 
+    public function updateEditingManager() {
+        $ticketData = Input::all();
+        $ticketTransactionId = $ticketData['transaction_id'];
+        $ticketId = $ticketData['ticket_id'];
+        //print_r($ticketData);exit;
+        if($ticketTransactionId) {
+            $ticketTransaction = Ticket::updateEditor($ticketTransactionId, $ticketId, $ticketData);
+        }
+        return $ticketTransaction;
+    }
+
+    public function updateEditor() {
+        try {
+            $ticketData = Input::all();
+            $ticketTransactionId = $ticketData['transaction_id'];
+            $ticketId = $ticketData['ticket_id'];
+            //print_r($ticketData);exit;
+            if($ticketTransactionId) {
+                if($ticketData['group_id'] == 3){
+                    $ticketTransaction = Ticket::updateCatalogManager($ticketTransactionId, $ticketId, $ticketData);
+                }else {
+                    $ticketTransaction = Ticket::updateAssignEditor($ticketTransactionId, $ticketId, $ticketData);
+                }
+
+            }
+        } catch (Exception $e) {
+            // RollBack Merges
+            // DB::rollback();
+            return $e->getMessage();
+        }
+        return $ticketTransaction;
+    }
+
+    public function updateEditingComplete() {
+        $ticketData = Input::all();
+        $ticketTransactionId = $ticketData['transaction_id'];
+        $ticketId = $ticketData['ticket_id'];
+        //print_r($ticketData);exit;
+        if($ticketTransactionId) {
+            $ticketTransaction = Ticket::updateEditingComplete($ticketTransactionId, $ticketId, $ticketData);
+        }
+        return $ticketTransaction;
+    }
+
+    public function updateAssignCatalogue() {
+        $ticketData = Input::all();
+        $ticketTransactionId = $ticketData['transaction_id'];
+        $ticketId = $ticketData['ticket_id'];
+        //print_r($ticketData);exit;
+        if($ticketTransactionId) {
+            $ticketTransaction = Ticket::updateCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
+        }
+        return $ticketTransaction;
+    }
+
+    public function updateCatalogueTeamLead() {
+        $ticketData = Input::all();
+        $ticketTransactionId = $ticketData['transaction_id'];
+        $ticketId = $ticketData['ticket_id'];
+        //print_r($ticketData);exit;
+        if($ticketTransactionId) {
+            $ticketTransaction = Ticket::updateCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
+        }
+        return $ticketTransaction;
+    }
+
+    public function updateCataloguer() {
+        $ticketData = Input::all();
+        $ticketTransactionId = $ticketData['transaction_id'];
+        $ticketId = $ticketData['ticket_id'];
+        //print_r($ticketData);exit;
+        if($ticketTransactionId) {
+            $ticketTransaction = Ticket::updateCataloguer($ticketTransactionId, $ticketId, $ticketData);
+        }
+        return $ticketTransaction;
+    }
+
   /**
    * Returns sucess Page.
    *
@@ -153,4 +231,9 @@ class RequestController extends BaseController {
     return View::make('request/success')
            ->with('ticketid',$ticket);
   }
+
+  public function getStatus(){
+
+  }
+
 }

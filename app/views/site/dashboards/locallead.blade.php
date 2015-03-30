@@ -39,7 +39,8 @@
                     "url":"locallead",
                     "editurl":'/request/update',
                     "rowNum":25,
-                    "viewrecords":true,
+                    "viewrecords":false,
+                    "refersh":true,
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75,'sortable':false},
                         {"name":"id", "index":"id", "align":"center", "hidden":true},
@@ -96,12 +97,10 @@
                     "subGridUrl":"seller",
                     "subGridModel" :[
                         {
-                            name  : ['seller_name','Seller Email ID','Contact Number','POC Name','POC Email ID','POC Contact Number'],
-                            width : [120,120,120,120,120,120],
+                            name  : ['Seller name','POC Name','POC Email ID','POC Contact Number'],
+                            width : [250,150,120,180],
                             colModel: [
-                                {"align":"center","index":"seller_name","editable":true,"name":"seller_name"},
-                                {"label":"Seller Email ID","align":"center","index":"email","name":"email"},
-                                {"label":"Contact Number","align":"right","index":"contact_number","name":"contact_number"},
+                                {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
                                 {"label":"POC Contact Number","index":"poc_number","name":"poc_number"}
@@ -112,7 +111,7 @@
                     //'cellEdit': true
                 }
         );
-
+       jQuery("#locallead").jqGrid('navGrid', '#localleadPager', {add: false,edit:false,view:false,del:false,refresh: true,search:false});
     </script>
     <!-- ./ content -->
     </div>

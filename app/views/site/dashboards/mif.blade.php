@@ -53,7 +53,7 @@
                         {"label":"Appointment Date","index":"photosuite_date","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },"width":150,"name":"photosuite_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"}},
                         {"label":"PhotoSuiteLocation","index":"photosuite_location","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },"width":150,"name":"photosuite_location", 'hidden': true},
                         {"label":"S3 Path","align":"center","index":"s3_path","name":"s3_path","width":90},
-                        {"label":"Seller Name","align":"center","index":"requester_name","name":"requester_name"},
+                        {"label":"Seller Name","align":"center","index":"merchant_name","name":"merchant_name"},
                         {"label":"Category","align":"center","index":"category","name":"category"},
                         {"label":"MIF","index":"mif_id","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}'},"edittype":"select","formatter":"select","name":"mif_id", 'hidden': true},
                         {"label":"PhotoGrapher","index":"photographer_id","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","name":"photographer_id"},
@@ -82,13 +82,10 @@
                     "subGridUrl":"seller",
                     "subGridModel" :[
                         {
-                            name  : ['Seller Name', 'Seller Email ID', 'Contact Number',
-                                'POC Name', 'POC Email ID','POC Contact Number'],
-                            width : [300,200,120,120,120,200],
+                            name  : ['Seller name','POC Name','POC Email ID','POC Contact Number'],
+                            width : [250,150,120,180],
                             colModel: [
-                                {"align":"center","index":"requester_name","editable":true,"name":"requester_name"},
-                                {"label":"Seller Email ID","align":"center","index":"email","name":"email"},
-                                {"label":"Contact Number","align":"right","index":"contact_number","name":"contact_number"},
+                                {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
                                 {"label":"POC Contact Number","index":"poc_number","name":"poc_number"}
@@ -98,6 +95,7 @@
                     "pager":"mifPager"
                 }
         );
+        jQuery("#mif").jqGrid('navGrid', '#mifPager', {add: false,edit:false,view:false,del:false,refresh: true,search:false});
     </script>
     <!-- ./ content -->
     </div>

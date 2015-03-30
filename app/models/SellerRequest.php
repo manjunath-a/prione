@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
 
 class SellerRequest extends Eloquent  {
 
@@ -213,8 +214,8 @@ class SellerRequest extends Eloquent  {
         return $folderName;
     }
 
-    public function requetIdByTickectId($tickectId)  {
-        $seller = Ticket::find($tickectId)->toArray();
+    public function requetIdByTicketId($ticketId)  {
+        $seller = Ticket::find($ticketId)->toArray();
         return $seller['request_id'];
     }
 }

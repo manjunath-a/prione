@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
 
 class TicketTransaction extends Eloquent  {
 
@@ -57,6 +58,11 @@ class TicketTransaction extends Eloquent  {
   public static function updateTicket($transactionData) {
      //var_dump($transactionData);exit;
     return TicketTransaction::create($transactionData);
+  }
+
+  public function transactionByTicketId($ticketId)
+  {
+      return TicketTransaction::where('ticket_id','=', $ticketId)->where('active','=', 1)->first()->toArray();
   }
 
 }

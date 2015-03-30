@@ -17,26 +17,26 @@
 {{-- Content --}}
 @section('content')
     <div class="page-header">
-        <h3>Dashboard : Editing Manager</h3>
+        <h3>Dashboard : Cataloging Manager</h3>
     </div>
 
-    {{ Form::open(array('url' => 'dashboard/editingmanager', 'method' => 'post', 'id'=> "editingmanagerForm")) }}
+    {{ Form::open(array('url' => 'dashboard/cataloguemanager', 'method' => 'post', 'id'=> "cataloguemanagerForm")) }}
     <input name="fileProperties" type="hidden" value='[]'>
     <input name="sheetProperties" type="hidden" value='[]'>
     {{ Form::close() }}
-    <table id="editingmanager">
+    <table id="cataloguemanager">
 
     </table>
-    <div id="editingmanagerPager">
+    <div id="cataloguemanagerPager">
 
     </div>
     <script type="text/javascript">
         var lastsel3;
-        jQuery("#editingmanager").jqGrid({
+        jQuery("#cataloguemanager").jqGrid({
                     "datatype":"json",
                     "mtype":"POST",
-                    "url":"editingmanager",
-                    "editurl":'/request/updateEditingManager',
+                    "url":"cataloguemanager",
+                    "editurl":'/request/updateAssignCatalogue',
                     "rowNum":25,
                     "viewrecords":false,
                     "colModel":[
@@ -57,10 +57,13 @@
                         {"label":"S3 Path","align":"center","index":"s3_path","name":"s3_path","width":90},
                         {"label":"Seller Name","align":"center","index":"merchant_name","name":"merchant_name"},
                         {"label":"Category","align":"center","index":"category","name":"category"},
-                        {"label":"MIF","index":"mif_id","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","name":"mif_id"},
+                        {"label":"MIF","index":"mif_id","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","name":"mif_id","hidden":true},
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","width":90,"editable":true,"hidden":true},
                         {"label":"No. of Images","align":"center","index":"total_images","name":"total_images","width":100,"editable":true,"hidden":true},
-                        {"label":"Editing Team Lead","index":"editingteamlead","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editingteamlead, ";")}}'},"edittype":"select","formatter":"select","name":"editingteamlead"},
+                        {"label":"Editing Team Lead","index":"editingteamlead","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editingteamlead, ";")}}'},"edittype":"select","formatter":"select","name":"editingteamlead","hidden":true},
+                        {"label":"Editor","index":"editor","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editor, ";")}}'},
+                            "edittype":"select","editrules":{"required":true},"formatter":"select","name":"editor", 'hidden' : true},
+                        {"label":"Catalog Team Lead","index":"catalogueTeamLead","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($catalogueTeamLead, ";")}}'},"edittype":"select","formatter":"select","name":"catalogueTeamLead"},
                         {"label":"Stage","index":"stage_id","align":"center","width":350,"editable":true,
                         "editoptions":{'value':'{{rtrim($stage, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"stage_id"},
                         {"label":"Comment","align":"right","index":"comment","name":"comment","editable":true,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
@@ -68,14 +71,14 @@
                     jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
                     gridComplete: function(){
-                        var ids = jQuery("#editingmanager").jqGrid('getDataIDs');
+                        var ids = jQuery("#cataloguemanager").jqGrid('getDataIDs');
                         for(var i=0;i < ids.length;i++)
                         {
                             var cl = ids[i];
-                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#editingmanager').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#editingmanager').saveRow('"+cl+"');jQuery('#editingmanager').trigger('reloadGrid');\" />";
-                            ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#editingmanager').restoreRow('"+cl+"');\" />";
-                            jQuery("#editingmanager").jqGrid('setRowData',ids[i],{act:be+se+ce});
+                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#cataloguemanager').editRow('"+cl+"');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#cataloguemanager').saveRow('"+cl+"');jQuery('#cataloguemanager').trigger('reloadGrid');\" />";
+                            ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#cataloguemanager').restoreRow('"+cl+"');\" />";
+                            jQuery("#cataloguemanager").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }
                     },
                     "subGrid":true,
@@ -86,10 +89,10 @@
                             width : [200,200,200,200]
                         }
                     ],
-                    "pager":"editingmanagerPager"
+                    "pager":"cataloguemanagerPager"
                 }
         );
-        jQuery("#editingmanager").jqGrid('navGrid', '#editingmanagerPager', {add: false,edit:false,view:false,del:false,refresh: true,search:false});
+        jQuery("#cataloguemanager").jqGrid('navGrid', '#cataloguemanagerPager', {add: false,edit:false,view:false,del:false,refresh: true,search:false});
     </script>
     <!-- ./ content -->
     </div>
