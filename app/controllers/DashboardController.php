@@ -366,8 +366,8 @@ class DashboardController extends BaseController {
                                             array(
                                                 $seller['merchant_name'],
                                                 $seller['poc_name'],
-                                                $seller['poc_number'],
-                                                $seller['poc_email']
+                                                $seller['poc_email'],
+                                                $seller['poc_number']
                                             )
                                     )
                                 ]

@@ -238,9 +238,9 @@ class Ticket extends Eloquent  {
         $seller             = SellerRequest::find($ticketId)->toArray();
         // Deactivate old tickect transaction
         $ticketTransaction  = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
+
         $editingCompleted   = Stage::where('stage_name', '(Central) Editing Completed')->first();
         $ticketData         = Ticket::ticketData($editingCompleted->id, 1, $data);
-
         // Assgining to Local Team Lead
         $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
         $ticketData['photographer_id']      = $data['photographer_id'];
@@ -249,9 +249,11 @@ class Ticket extends Eloquent  {
         $ticketData['editingteamlead_id']   = $data['editingteamlead'];
         $ticketData['editor_id']            = $data['editor'];
         $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
+
         // Assgining Editing Team Lead
         $ticketData['assigned_to']          = $data['editingteamlead'];
         $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
+
         // Assgining Editor
         $ticketData['assigned_to']          = $data['editor'];
         $ticketData['active']               = 0;
