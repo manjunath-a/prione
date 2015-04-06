@@ -49,8 +49,7 @@ class Ticket extends Eloquent  {
     $ticketTransaction          = TicketTransaction::find($ticketTransactionId);
     $ticketTransaction->active  = 0;
     $ticketTransaction->save();
-    // FreshDesk Update
-    Ticket::updateFreshDesk($ticketData);
+
 
     return $leadTransaction->id;
   }
@@ -87,8 +86,7 @@ class Ticket extends Eloquent  {
 
         $photographerTransaction   = TicketTransaction::updateTicket($ticketData);
       }
-      // FreshDesk Update
-      Ticket::updateFreshDesk($ticketData);
+
       return $leadTransaction->id;
   }
 
@@ -126,8 +124,7 @@ class Ticket extends Eloquent  {
           $ticketData['active']      = 0;
           $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
       }
-      // FreshDesk Update
-      Ticket::updateFreshDesk($ticketData);
+
       return $leadTransaction->id;
     }
 
@@ -156,9 +153,6 @@ class Ticket extends Eloquent  {
         $ticketData['assigned_to'] = $editingManager[0]->id;
         $leadTransaction           = TicketTransaction::updateTicket($ticketData);
 
-        //print_r($data);print_r($ticketData);exit;
-        // FreshDesk Update
-        Ticket::updateFreshDesk($ticketData);
         return $leadTransaction->id;
   }
 
@@ -179,8 +173,7 @@ class Ticket extends Eloquent  {
         // Assgining Editing Team Lead
         $ticketData['assigned_to']          = $data['editingteamlead'];
         $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
-         // FreshDesk Update
-        Ticket::updateFreshDesk($ticketData);
+
         return $editorTransaction->id;
     }
 
@@ -207,8 +200,7 @@ class Ticket extends Eloquent  {
         // Assgining Editor
         $ticketData['assigned_to']          = $data['editor'];
         $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
-         // FreshDesk Update
-        Ticket::updateFreshDesk($ticketData);
+
         return $editorTransaction->id;
     }
 
@@ -237,8 +229,7 @@ class Ticket extends Eloquent  {
         $catalogueManager          = $user->findUserByRoleName('Catalogue Manager');
         $ticketData['assigned_to'] = $catalogueManager[0]->id;
         $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
-         // FreshDesk Update
-        Ticket::updateFreshDesk($ticketData);
+
         return $catalogueTransaction->id;
     }
 
@@ -265,8 +256,7 @@ class Ticket extends Eloquent  {
         $ticketData['assigned_to']          = $data['editor'];
         $ticketData['active']               = 0;
         $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
-         // FreshDesk Update
-        Ticket::updateFreshDesk($ticketData);
+
         return $editorTransaction->id;
     }
 
@@ -326,8 +316,7 @@ class Ticket extends Eloquent  {
         // Assgining cataloguer
         $ticketData['assigned_to'] = $data['cataloguer'];
         $cataloguerTransaction      = TicketTransaction::updateTicket($ticketData);
-         // FreshDesk Update
-        Ticket::updateFreshDesk($ticketData);
+
         return $cataloguerTransaction->id;
   }
 
@@ -360,8 +349,7 @@ class Ticket extends Eloquent  {
         // Assgining cataloguer
         $ticketData['assigned_to'] = Auth::user()->id;
         $cataloguerTransaction     = TicketTransaction::updateTicket($ticketData);
-         // FreshDesk Update
-        Ticket::updateFreshDesk($ticketData);
+
         return $cataloguerTransaction->id;
   }
 
@@ -421,34 +409,4 @@ class Ticket extends Eloquent  {
       return $ticketData;
   }
 
-  public static function updateFreshDesk($ticketData) {
-      $freshdesk = App::make('freshDesk');
-      $oldTicKet = Ticket::find($ticketData['ticket_id']);
-      $ticketData['s3_folder'] = $oldTicKet->s3_folder;
-      // Get all the list of fiels from FreshDesk
-      $ticketFields = $freshdesk->getAllCustomFields();
-      // Get group Name
-      $groupTable = Group::find($ticketData['group_id']);
-      $stage = Stage::find($ticketData['stage_id']);
-      $groupsConfig = Config::get('freshdesk.groups');
-
-      if($ticketFields) {
-          $configFields = Config::get('freshdesk.custom_fields');
-          $ticketData['stage_name'] = $stage->stage_name;
-          $custom_field =array();
-          foreach($configFields as $key => $field) {
-              if(array_key_exists ( $field , $ticketData)) {
-                  $custom_field[$key] = $ticketData[$field];
-              }
-          }
-          $data = array (
-              "freshdesk_ticket_id" => $oldTicKet->freshdesk_ticket_id,
-              "priority" => $ticketData['priority'],
-              "status" => $ticketData['status_id']+1,
-              'group' => $groupsConfig[$groupTable->group_name],
-              'custom_field' => $custom_field
-          );
-      }
-      return $freshdesk->updateTicket( $data );
-  }
 }
