@@ -101,8 +101,7 @@ class SellerRequest extends Eloquent  {
                 "email" => $requestData['email'],
                 "priority" => 1,
                 "status" => 2,
-                'group' => $groups['Local'],
-                'custom_field' => $custom_field
+                'group' => 'Local'
                 );
 
         return $data;
