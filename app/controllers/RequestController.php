@@ -159,7 +159,6 @@ class RequestController extends BaseController {
         $ticketData = Input::all();
         $ticketTransactionId = $ticketData['transaction_id'];
         $ticketId = $ticketData['ticket_id'];
-        //print_r($ticketData);exit;
         if($ticketTransactionId) {
             $ticketTransaction = Ticket::updateEditor($ticketTransactionId, $ticketId, $ticketData);
         }
@@ -193,7 +192,6 @@ class RequestController extends BaseController {
         $ticketData = Input::all();
         $ticketTransactionId = $ticketData['transaction_id'];
         $ticketId = $ticketData['ticket_id'];
-        //print_r($ticketData);exit;
         if($ticketTransactionId) {
             $ticketTransaction = Ticket::updateEditingComplete($ticketTransactionId, $ticketId, $ticketData);
         }
@@ -204,7 +202,6 @@ class RequestController extends BaseController {
         $ticketData = Input::all();
         $ticketTransactionId = $ticketData['transaction_id'];
         $ticketId = $ticketData['ticket_id'];
-        //print_r($ticketData);exit;
         if($ticketTransactionId) {
             $ticketTransaction = Ticket::updateCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
         }
@@ -215,7 +212,6 @@ class RequestController extends BaseController {
         $ticketData = Input::all();
         $ticketTransactionId = $ticketData['transaction_id'];
         $ticketId = $ticketData['ticket_id'];
-        //print_r($ticketData);exit;
         if($ticketTransactionId) {
             $ticketTransaction = Ticket::updateCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
         }
@@ -226,7 +222,6 @@ class RequestController extends BaseController {
         $ticketData = Input::all();
         $ticketTransactionId = $ticketData['transaction_id'];
         $ticketId = $ticketData['ticket_id'];
-        //print_r($ticketData);exit;
         if($ticketTransactionId) {
             $ticketTransaction = Ticket::updateCataloguer($ticketTransactionId, $ticketId, $ticketData);
         }
@@ -237,7 +232,6 @@ class RequestController extends BaseController {
         $ticketData = Input::all();
         $ticketTransactionId = $ticketData['transaction_id'];
         $ticketId = $ticketData['ticket_id'];
-        //print_r($ticketData);exit;
         if($ticketTransactionId) {
             $ticketTransaction = Ticket::updateCatalogingComplete($ticketTransactionId, $ticketId, $ticketData);
         }
