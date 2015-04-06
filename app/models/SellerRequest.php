@@ -64,7 +64,6 @@ class SellerRequest extends Eloquent  {
      */
     public static function buildTicket($requestData) {
 
-        $freshdesk = App::make('freshDesk');
 
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
         $merchantCategory = Category::find($requestData['category_id'])->toArray();
@@ -96,16 +95,6 @@ class SellerRequest extends Eloquent  {
                         Requester mobile number:".$requestData['contact_number']."
                         Requester sales channel:".$salesChannel['channel_name'];
 
-        // $ticketFields = $freshdesk->getAllCustomFields();
-        $configFields = Config::get('freshdesk.custom_fields');
-
-        foreach($configFields as  $key => $fdField) {
-
-            if(array_key_exists ( $fdField , $requestData)) {
-                $custom_field[$key] = $requestData[$fdField];
-            }
-        }
-        $groups = Config::get('freshdesk.groups');
         $data = array (
                 "description" => $description,
                 "subject" => $subject,
@@ -116,7 +105,7 @@ class SellerRequest extends Eloquent  {
                 'custom_field' => $custom_field
                 );
 
-        return $data;//$freshdesk->createTicket( $data );
+        return $data;
     }
 
     public static function createRequest( $requestData ) {
@@ -143,49 +132,40 @@ class SellerRequest extends Eloquent  {
         $awsFolder = SellerRequest::createFolderInAWS($sellerRequest->id,
             $requestData['merchant_name'], $merchantCity['city_name']);
         $requestData['s3_folder'] = $awsFolder;
-
-        //Create a Fresh Desk ticekt
-        //$fdTicket = SellerRequest::buildTicket($requestData);
         //Create a DCST ticekt
         $Ticket = SellerRequest::buildTicket($requestData);
-//print_r($fdTicket);exit;
         unset($requestData['stage_name']);
         unset($requestData['city_name']);
 
-       // if($fdTicket->display_id) {
+        $ticketData['request_id'] = $sellerRequest->id;
+        $ticketData['email'] = $requestData['email'];
+        $ticketData['subject'] = $Ticket['subject'];
+        $ticketData['description'] = $Ticket['description'];
+        $ticketData['s3_folder'] = $awsFolder;
 
-            $ticketData['request_id'] = $sellerRequest->id;
-            $ticketData['freshdesk_ticket_id'] = '';//$fdTicket->display_id;
-            $ticketData['email'] = $requestData['email'];
-            $ticketData['subject'] = $Ticket['subject']; //$fdTicket->subject;
-            $ticketData['description'] = $Ticket['description']; //$fdTicket->description;
-            $ticketData['s3_folder'] = $awsFolder;
-
-            $ticket = Ticket::create($ticketData);
-            // Ticket Transaction
-            $ticketTransactioData['ticket_id'] = $ticket->id;
-            $ticketTransactioData['assigned_to'] = $leadId;
-            $ticketTransactioData['priority'] = Config::get('ticket.default_priority');
-            $ticketTransactioData['status_id'] = Config::get('ticket.default_status');
-            $ticketTransactioData['active'] = 1;
-            $ticketTransactioData['group_id'] = Config::get('ticket.default_group');
+        $ticket = Ticket::create($ticketData);
+        // Ticket Transaction
+        $ticketTransactioData['ticket_id'] = $ticket->id;
+        $ticketTransactioData['assigned_to'] = $leadId;
+        $ticketTransactioData['priority'] = Config::get('ticket.default_priority');
+        $ticketTransactioData['status_id'] = Config::get('ticket.default_status');
+        $ticketTransactioData['active'] = 1;
+        $ticketTransactioData['group_id'] = Config::get('ticket.default_group');
 
 
-            if($requestData['image_available'] == 2) {
-                $assignStage = Stage::where('stage_name',
-                      '(Local) Photoshoot Completed / Seller Images Provided')->first();
-                $stageId = $assignStage->id;
-            }
-            // Assign Seller
-            $ticketTransactioData['stage_id'] = $stageId;
-            $ticketTransactioData['total_sku'] = $requestData['total_sku'];
-            $ticketTransactioData['total_images'] = 0;
+        if($requestData['image_available'] == 2) {
+            $assignStage = Stage::where('stage_name',
+                  '(Local) Photoshoot Completed / Seller Images Provided')->first();
+            $stageId = $assignStage->id;
+        }
+        // Assign Seller
+        $ticketTransactioData['stage_id'] = $stageId;
+        $ticketTransactioData['total_sku'] = $requestData['total_sku'];
+        $ticketTransactioData['total_images'] = 0;
 
-            $ticketTransaction = TicketTransaction::create($ticketTransactioData);
-            return $ticket;
-        //}
-        //return false;
-    }
+        $ticketTransaction = TicketTransaction::create($ticketTransactioData);
+        return $ticket;
+     }
 
     public static function createFolderInAWS($requestId, $merchant_name ,$cityName ) {
         $folderName = $requestId.'_'.$merchant_name.'/'.$cityName.'/';

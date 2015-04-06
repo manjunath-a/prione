@@ -78,21 +78,15 @@ class RequestController extends BaseController {
           $requestData['image_available'] = (int)$data['image_available'];
           $requestData['comment']       = $data['comment'];
           $ticket = SellerRequest::createRequest($requestData);
+          if(isset($data['google_form']))
+              return json_encode(array( 'status' => true, 'message' => 'Tickect ID = '.$ticket->id ));
 
       } catch (Exception $e) {
           if(isset($data['google_form']))
-          {
               return json_encode(array( 'status' => false, 'message' => 'Exception '.$e->getMessage() ));
-          }
           // DB::rollback();
           return Redirect::back()->withErrors($e->getMessage())->withInput();
       }
-
-      if(isset($data['google_form']))
-      {
-          return json_encode(array( 'status' => true, 'message' => 'Tickect ID = '.$ticket->id ));
-      }
-
       return Redirect::to('request/success/'.$ticket->id);
   }
 
