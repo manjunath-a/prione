@@ -116,7 +116,7 @@ class SellerRequest extends Eloquent  {
                 'custom_field' => $custom_field
                 );
 
-        return $freshdesk->createTicket( $data );
+        return $data;//$freshdesk->createTicket( $data );
     }
 
     public static function createRequest( $requestData ) {
@@ -145,18 +145,20 @@ class SellerRequest extends Eloquent  {
         $requestData['s3_folder'] = $awsFolder;
 
         //Create a Fresh Desk ticekt
-        $fdTicket = SellerRequest::buildTicket($requestData);
-
+        //$fdTicket = SellerRequest::buildTicket($requestData);
+        //Create a DCST ticekt
+        $Ticket = SellerRequest::buildTicket($requestData);
+//print_r($fdTicket);exit;
         unset($requestData['stage_name']);
         unset($requestData['city_name']);
 
-        if($fdTicket->display_id) {
+       // if($fdTicket->display_id) {
 
             $ticketData['request_id'] = $sellerRequest->id;
-            $ticketData['freshdesk_ticket_id'] = $fdTicket->display_id;
+            $ticketData['freshdesk_ticket_id'] = '';//$fdTicket->display_id;
             $ticketData['email'] = $requestData['email'];
-            $ticketData['subject'] = $fdTicket->subject;
-            $ticketData['description'] = $fdTicket->description;
+            $ticketData['subject'] = $Ticket['subject']; //$fdTicket->subject;
+            $ticketData['description'] = $Ticket['description']; //$fdTicket->description;
             $ticketData['s3_folder'] = $awsFolder;
 
             $ticket = Ticket::create($ticketData);
@@ -181,8 +183,8 @@ class SellerRequest extends Eloquent  {
 
             $ticketTransaction = TicketTransaction::create($ticketTransactioData);
             return $ticket;
-        }
-        return false;
+        //}
+        //return false;
     }
 
     public static function createFolderInAWS($requestId, $merchant_name ,$cityName ) {
@@ -213,7 +215,9 @@ class SellerRequest extends Eloquent  {
             'Key'    => $cataloging ,
             'Body' => ''
         ));
-        return $folderName;
+
+        $s3URL = $s3->getObjectUrl('prionecataloguing',$folderName);
+        return $s3URL;//$folderName;
     }
 
     public function requetIdByTicketId($ticketId)  {

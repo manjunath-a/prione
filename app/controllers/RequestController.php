@@ -48,13 +48,17 @@ class RequestController extends BaseController {
    * @return Response
    */
   public function store() {
+
       // DB::beginTransaction();
       // Validate the input values
       $validator = Validator::make($data = Input::all(), SellerRequest::$rules);
 
-
       // validation fails redirect to form with error
       if ($validator->fails()) {
+          if(isset($data['google_form']))
+          {
+            return json_encode(array( 'status' => false, 'message' => 'Data Error' ));
+          }
           return Redirect::back()->withErrors($validator)->withInput();
       }
 
@@ -76,9 +80,19 @@ class RequestController extends BaseController {
           $ticket = SellerRequest::createRequest($requestData);
 
       } catch (Exception $e) {
+          if(isset($data['google_form']))
+          {
+              return json_encode(array( 'status' => false, 'message' => 'Exception '.$e->getMessage() ));
+          }
           // DB::rollback();
           return Redirect::back()->withErrors($e->getMessage())->withInput();
       }
+
+      if(isset($data['google_form']))
+      {
+          return json_encode(array( 'status' => true, 'message' => 'Tickect ID = '.$ticket->id ));
+      }
+
       return Redirect::to('request/success/'.$ticket->id);
   }
 

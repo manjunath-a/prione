@@ -66,8 +66,8 @@
                         {"label":"PhotoSuiteLocation","index":"photosuite_location","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },"width":150,"name":"photosuite_location","hidden":true},
                         {"label":"S3 Path","align":"center","index":"s3_folder","name":"s3_folder","width":90},
                         {"label":"MIF","index":"mif_id","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","name":"mif_id","hidden":true},
-                        {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","width":90,"editable":true,"hidden":true},
-                        {"label":"No. of Images","align":"center","index":"total_images","name":"total_images","width":100,"editable":true,"hidden":true},
+                        {"align":"center","index":"total_sku","name":"total_sku","width":90,"editable":true,"hidden":true},
+                        {"align":"center","index":"total_images","name":"total_images","width":100,"editable":true,"hidden":true},
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","width":90},
                         {"label":"No. of Images","align":"center","index":"total_images","name":"total_images","width":100},
                         {"label":"Comment","align":"right","index":"comment","name":"comment","editable":true,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
