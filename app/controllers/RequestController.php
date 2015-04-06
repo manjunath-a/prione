@@ -8,9 +8,7 @@ class RequestController extends BaseController {
   public function __construct()
   {
       parent::__construct();
-      // echo Config::get('aws-sdk-php-laravel.bucketname');
 
-      // echo $s3->getCredentials()->getAccessKeyId();exit;
   }
 
 	/**
@@ -94,14 +92,18 @@ class RequestController extends BaseController {
         if($ticketTransactionId) {
           if($ticketData['group_id'] == 2){
               $ticketTransaction = Ticket::updateEditingManager($ticketTransactionId, $ticketId, $ticketData);
-          }else {
+          }else if($ticketData['group_id'] == 1) {
               $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
+          } else {
+              $errorMsg = json_encode( array("message" => "User did not have permission to move Cataloging"));
+              throw new Exception( $errorMsg );
           }
         }
       } catch (Exception $e) {
         // RollBack Merges
         // DB::rollback();
-        return $e->getMessage();
+        $errorMsg = json_encode(array( 'status' => false, 'message' => $e->getMessage() ));
+        return $errorMsg;
       }
       return $ticketTransaction;
   }
@@ -119,7 +121,8 @@ class RequestController extends BaseController {
       } catch (Exception $e) {
         // RollBack Merges
         // DB::rollback();
-        return $e->getMessage();
+        $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
+        return $errorMsg;
       }
     return $ticketTransaction;
   }
@@ -138,7 +141,8 @@ class RequestController extends BaseController {
         } catch (Exception $e) {
           // RollBack Merges
           // DB::rollback();
-          return $e->getMessage();
+          $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
+          return $errorMsg;
         }
         return $ticketTransaction;
     }
@@ -171,7 +175,8 @@ class RequestController extends BaseController {
         } catch (Exception $e) {
             // RollBack Merges
             // DB::rollback();
-            return $e->getMessage();
+            $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
+            return $errorMsg;
         }
         return $ticketTransaction;
     }
@@ -216,6 +221,17 @@ class RequestController extends BaseController {
         //print_r($ticketData);exit;
         if($ticketTransactionId) {
             $ticketTransaction = Ticket::updateCataloguer($ticketTransactionId, $ticketId, $ticketData);
+        }
+        return $ticketTransaction;
+    }
+
+    public function updateCatalogingComplete() {
+        $ticketData = Input::all();
+        $ticketTransactionId = $ticketData['transaction_id'];
+        $ticketId = $ticketData['ticket_id'];
+        //print_r($ticketData);exit;
+        if($ticketTransactionId) {
+            $ticketTransaction = Ticket::updateCatalogingComplete($ticketTransactionId, $ticketId, $ticketData);
         }
         return $ticketTransaction;
     }

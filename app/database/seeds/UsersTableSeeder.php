@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder {
             array(
                 'username'      => 'CatalogueManager',
                 'email'      => 'CatalogueManager@mailinator.com',
-                'password'   => Hash::make('user'),
+                'password'   => Hash::make('CatalogueManager'),
                 'confirmed'   => 1,
                 'confirmation_code' => md5(microtime().Config::get('app.key')),
                 'city_id'   => City::where('city_name', 'Bangalore')->first()->id,

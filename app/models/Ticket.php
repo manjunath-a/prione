@@ -29,12 +29,13 @@ class Ticket extends Eloquent  {
     $ticketData = Ticket::ticketData($data['stage_id'], 1, $data);
 
     if(isset($data['photographer_id'])) {
-      $ticketData['photographer_id']    = $data['photographer_id'];
-      $ticketData['photosuite_location']= $data['photosuite_location'];
-      $ticketData['assigned_to']        = $data['photographer_id'];
-      $ticketData['photosuite_date']    = $data['photosuite_date'];
-
-      $photographerTransaction = TicketTransaction::updateTicket($ticketData);
+        if($data['photographer_id']) {
+            $ticketData['photographer_id']    = $data['photographer_id'];
+            $ticketData['photosuite_location']= $data['photosuite_location'];
+            $ticketData['assigned_to']        = $data['photographer_id'];
+            $ticketData['photosuite_date']    = $data['photosuite_date'];
+            $photographerTransaction = TicketTransaction::updateTicket($ticketData);
+        }
     }
     // Assgining to Service Assiocate
     $ticketData['assigned_to']      = $data['mif_id'];
@@ -178,7 +179,8 @@ class Ticket extends Eloquent  {
         // Assgining Editing Team Lead
         $ticketData['assigned_to']          = $data['editingteamlead'];
         $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
-
+         // FreshDesk Update
+        Ticket::updateFreshDesk($ticketData);
         return $editorTransaction->id;
     }
 
@@ -205,7 +207,8 @@ class Ticket extends Eloquent  {
         // Assgining Editor
         $ticketData['assigned_to']          = $data['editor'];
         $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
-
+         // FreshDesk Update
+        Ticket::updateFreshDesk($ticketData);
         return $editorTransaction->id;
     }
 
@@ -234,7 +237,8 @@ class Ticket extends Eloquent  {
         $catalogueManager          = $user->findUserByRoleName('Catalogue Manager');
         $ticketData['assigned_to'] = $catalogueManager[0]->id;
         $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
-
+         // FreshDesk Update
+        Ticket::updateFreshDesk($ticketData);
         return $catalogueTransaction->id;
     }
 
@@ -261,7 +265,8 @@ class Ticket extends Eloquent  {
         $ticketData['assigned_to']          = $data['editor'];
         $ticketData['active']               = 0;
         $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
-
+         // FreshDesk Update
+        Ticket::updateFreshDesk($ticketData);
         return $editorTransaction->id;
     }
 
@@ -321,8 +326,44 @@ class Ticket extends Eloquent  {
         // Assgining cataloguer
         $ticketData['assigned_to'] = $data['cataloguer'];
         $cataloguerTransaction      = TicketTransaction::updateTicket($ticketData);
+         // FreshDesk Update
+        Ticket::updateFreshDesk($ticketData);
         return $cataloguerTransaction->id;
-    }
+  }
+
+
+  public static function updateCatalogingComplete($ticketTransactionId, $ticketId, $data) {
+        // print_r($data);exit;
+        $seller             = SellerRequest::find($ticketId)->toArray();
+        // Deactivate old tickect transaction
+        $ticketTransaction  = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
+        $editingCompleted   = Stage::where('stage_name', '(Central) Cataloging Completed')->first();
+        $ticketData         = Ticket::ticketData($editingCompleted->id, 1, $data);
+
+        // Assgining to Local Team Lead
+        $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
+        $ticketData['photographer_id']      = $data['photographer_id'];
+        $ticketData['photosuite_location']  = $data['photosuite_location'];
+        $ticketData['photosuite_date']      = $data['photosuite_date'];
+        $ticketData['editingteamlead_id']   = $data['editingteamlead'];
+        $ticketData['editor_id']            = $data['editor'];
+        $ticketData['catalogingteamlead_id']= $data['catalogueTeamLead'];
+        $ticketData['cataloguer_id']        = Auth::user()->id;
+        $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
+        // Assgining Editing Team Lead
+        $ticketData['assigned_to']          = $data['editingteamlead'];
+        $editingTransaction                 = TicketTransaction::updateTicket($ticketData);
+
+        // Assgining catalogue Team Lead
+        $ticketData['assigned_to'] = $data['catalogueTeamLead'];
+        $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
+        // Assgining cataloguer
+        $ticketData['assigned_to'] = Auth::user()->id;
+        $cataloguerTransaction     = TicketTransaction::updateTicket($ticketData);
+         // FreshDesk Update
+        Ticket::updateFreshDesk($ticketData);
+        return $cataloguerTransaction->id;
+  }
 
   public static function findUserByRoleAndCity($role = 'Local Team Lead', $cityId) {
     $user       = new User;
@@ -360,7 +401,8 @@ class Ticket extends Eloquent  {
         {
            $errors .= $message;
         }
-        throw new Exception($errors);
+        $errorMsg = json_encode(array('status'=>false, 'message' => $errors));
+        throw new Exception($errorMsg);
       }
 
       $ticketData['ticket_id']    = $data['ticket_id'];
@@ -399,7 +441,6 @@ class Ticket extends Eloquent  {
                   $custom_field[$key] = $ticketData[$field];
               }
           }
-          // var_dump($ticketData);
           $data = array (
               "freshdesk_ticket_id" => $oldTicKet->freshdesk_ticket_id,
               "priority" => $ticketData['priority'],

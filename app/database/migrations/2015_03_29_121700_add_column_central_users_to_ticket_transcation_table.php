@@ -15,10 +15,10 @@ class AddColumnCentralUsersToTicketTranscationTable extends Migration {
 		Schema::table('ticket_transaction', function(Blueprint $table)
 		{
             //By default assign to admin
-            $table->integer('editingteamlead_id')->unsigned()->default(1)->after('total_images');
-            $table->integer('editor_id')->unsigned()->default(1)->after('editingteamlead_id');
-            $table->integer('catalogingteamlead_id')->default(1)->unsigned()->after('editor_id');
-            $table->integer('cataloguer_id')->unsigned()->default(1)->after('catalogingteamlead_id');
+            $table->integer('editingteamlead_id')->unsigned()->nullable()->default(NULL)->after('total_images');
+            $table->integer('editor_id')->unsigned()->nullable()->default(NULL)->after('editingteamlead_id');
+            $table->integer('catalogingteamlead_id')->nullable()->default(NULL)->unsigned()->after('editor_id');
+            $table->integer('cataloguer_id')->unsigned()->nullable()->default(NULL)->after('catalogingteamlead_id');
 		});
 	}
 
@@ -31,7 +31,10 @@ class AddColumnCentralUsersToTicketTranscationTable extends Migration {
 	{
 		Schema::table('ticket_transaction', function(Blueprint $table)
 		{
-			//
+			$table->dropColumn('editingteamlead_id');
+      $table->dropColumn('editor_id');
+      $table->dropColumn('catalogingteamlead_id');
+      $table->dropColumn('cataloguer_id');
 		});
 	}
 

@@ -15,7 +15,7 @@ return array(
 	// Password
 	'password' => 'X',
 	// Password
-	'groups' => array('Cataloging'=>5000228695, 'Editing'=>5000228696, 'Local'=> 5000228697),
+	'groups' => array('Cataloging' => '5000228695', 'Editing' => '5000228696', 'Local'=> '5000228697'),
 	 // Custome Fields at FreshDesk
   'custom_fields' => array (
   	'stage_203188' => 'stage_name',

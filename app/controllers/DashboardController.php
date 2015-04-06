@@ -341,12 +341,16 @@ class DashboardController extends BaseController {
         $groupArray = Group::all();
         $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
+        $rules  = arraY('only' =>array('(Central) Cataloging Completed',
+                     '(Central) ASIN Created'));
+
         $stageArray = Stage::all();
-        $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
+        $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
 
         // Show the page
         return View::make('site/dashboards/cataloguer', compact('user', 'photographer',
-            'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','cataloguer','priority', 'group', 'stage', 'status'));
+            'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','cataloguer',
+            'priority', 'group', 'stage', 'status'));
 
     }
     public function postSeller()
