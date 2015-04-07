@@ -58,7 +58,7 @@
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",'key':true, 'hidden' : true},
                         {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
 
-                        {"label":"Request Date","align":"center","index":"created_at","name":"created_at"},
+                        {"label":"Request / Assigned Date","align":"center","index":"created_at","name":"created_at"},
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
                         "editoptions":{'value':'{{rtrim($priority, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
 
@@ -74,22 +74,24 @@
                         {"label":"Pending Reason","index":"pending_reason_id","align":"center","width":280,"editable":true,
                             "editoptions":{'value':'{{rtrim($pending, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"pending_reason_id"},
 
-                        {"label":"PhotoGrapher", "name":"photographer_id", "index":"photographer_id","align":"center","width":130,
+                        {"label":"Photographer", "name":"photographer_id", "index":"photographer_id","align":"center","width":130,
                         "editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select", "id":"photographer_id"},
 
-                        {"label":"PhotoSuiteDate","index":"photosuite_date","align":"center","width":150,"editable":true,"name":"photosuite_date",'formatter': "date",
+                        {"label":"Photoshoot Date","index":"photoshoot_date","align":"center","width":150,"editable":true,"name":"photoshoot_date",'formatter': "date",
                         "formatoptions": { "newformat": "Y-m-d"}, "editrules":{"date":true, "required":false}, 'editoptions': { 'dataInit' :
                         function (elem) {
                             jQuery(elem).datepicker({dateFormat:"yy-mm-dd"});}} },
-                        {"label":"PhotoSuiteLocation","index":"photosuite_location","align":"center","width":150,"editable":true, "editrules":{"required":false}, "name":"photosuite_location"},
 
+                        {"label":"Photoshoot Location","index":"photoshoot_location","align":"center","width":90,"editable":true,
+                        "editoptions":{'value':'{{rtrim($photoshootLocation, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"photoshoot_location"},
+                        {"label":"S3 Path","align":"center","index":"s3_folder","name":"s3_folder","width":90},
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","editable":true,"width":90},
                         {"label":"No. of Images","align":"center", "editrules":{"required":false}, "index":"total_images", "name":"total_images","editable":true,"width":100},
-                        {"label":"MIF","index":"mif_id","align":"center","width":150,"editable":true, 'key':true,
+                        {"label":"Service Associate","index":"mif_id","align":"center","width":150,"editable":true, 'key':true,
                         "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"mif_id"},
                         {"label":"No. of parent SKUs","index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku"},
                         {"label":"No. of variations","index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation"},
-                        {"label":"Comment","align":"right","index":"comment","name":"comment","editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
+                        {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
                     ],
                     jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
@@ -108,13 +110,14 @@
                     "subGridUrl":"seller",
                     "subGridModel" :[
                         {
-                            name  : ['Seller name','POC Name','POC Email ID','POC Contact Number'],
+                            name  : ['Seller name','POC Name','POC Email ID','POC Contact Number', 'Seller provider Image'],
                             width : [250,150,120,180],
                             colModel: [
                                 {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
-                                {"label":"POC Contact Number","index":"poc_number","name":"poc_number"}
+                                {"label":"POC Contact Number","index":"poc_number","name":"poc_number"},
+                                {"label":"POC Contact Number","index":"image_available","name":"image_available"}
                             ]
                         }
                     ],

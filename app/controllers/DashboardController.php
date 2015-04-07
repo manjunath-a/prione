@@ -45,7 +45,8 @@ class DashboardController extends BaseController {
         $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
         $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
-        $priority = '-1:select;1:Low;2:Medium;3:High';
+        $priority = '0:select;1:Low;2:Medium;3:High';
+        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
         $status = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -63,7 +64,7 @@ class DashboardController extends BaseController {
 
         // Show the page
         return View::make('site/dashboards/locallead', compact('user', 'photographer',
-            'serviceassociates', 'priority', 'group', 'stage', 'status', 'pending'));
+            'serviceassociates', 'priority', 'photoshootLocation', 'group', 'stage', 'status', 'pending'));
     }
 
 //	public function locallead()
@@ -85,6 +86,7 @@ class DashboardController extends BaseController {
         $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
         $priority = '0:select;1:Low;2:Medium;3:High';
+        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
         $status = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -96,14 +98,15 @@ class DashboardController extends BaseController {
                      '(Local) Photoshoot Completed / Seller Images Provided'));
         $stageArray = Stage::all();
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
+        $pendingRules  = arraY('only' =>array('Seller not reachable',
+                     'Seller cancelled the appointment'));
 
-        $rules  = arraY('only' =>array('Seller cancelled the appointment'));
         $pendingArray   = PendingReason::all();
-        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $rules);
+        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $pendingRules);
 
         // Show the page
         return View::make('site/dashboards/photographer', compact('user', 'photographer',
-            'serviceassociates', 'priority', 'group', 'stage', 'status', 'pending'));
+            'serviceassociates', 'priority', 'photoshootLocation', 'group', 'stage', 'status', 'pending'));
 
     }
 
@@ -119,6 +122,7 @@ class DashboardController extends BaseController {
         $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
         $priority = '0:select;1:Low;2:Medium;3:High';
+        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
         $status = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -132,13 +136,15 @@ class DashboardController extends BaseController {
         $stageArray = Stage::all();
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
 
-        $rules  = arraY('only' =>array('Seller not providing data for building MIF'));
+        $pendingRules  = arraY('only' =>array('Seller not reachable',
+                     'Seller cancelled the appointment',
+                     'Seller not providing data for building MIF'));
         $pendingArray   = PendingReason::all();
-        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $rules);
+        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $pendingRules);
 
         // Show the page
         return View::make('site/dashboards/mif', compact('user', 'photographer',
-            'serviceassociates', 'priority', 'group', 'stage', 'status', 'pending'));
+            'serviceassociates', 'priority', 'photoshootLocation', 'group', 'stage', 'status', 'pending'));
 
     }
 
@@ -158,6 +164,7 @@ class DashboardController extends BaseController {
         $editingteamlead      = $this->util->arrayToJQString($editingTeamLeadArray, 'username', 'id');
 
         $priority = '0:select;1:Low;2:Medium;3:High';
+        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
         $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -170,7 +177,8 @@ class DashboardController extends BaseController {
 
         // Show the page
         return View::make('site/dashboards/editingmanager', compact('user', 'photographer',
-            'serviceassociates', 'editingteamlead','priority', 'group', 'stage', 'status'));
+            'serviceassociates', 'editingteamlead','priority', 'photoshootLocation', 'group',
+            'stage', 'status'));
 
     }
 
@@ -193,6 +201,7 @@ class DashboardController extends BaseController {
         $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
 
         $priority = '0:select;1:Low;2:Medium;3:High';
+        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
         $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -208,7 +217,8 @@ class DashboardController extends BaseController {
 
         // Show the page
         return View::make('site/dashboards/editingteamlead', compact('user', 'photographer',
-            'serviceassociates', 'editingteamlead','editor','priority', 'group', 'stage', 'status', 'pending'));
+            'serviceassociates', 'editingteamlead','editor','priority', 'photoshootLocation',
+            'group', 'stage', 'status', 'pending'));
 
     }
 
@@ -231,6 +241,7 @@ class DashboardController extends BaseController {
         $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
 
         $priority = '0:select;1:Low;2:Medium;3:High';
+        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
         $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -247,7 +258,8 @@ class DashboardController extends BaseController {
 
         // Show the page
         return View::make('site/dashboards/editor', compact('user', 'photographer',
-            'serviceassociates', 'editingteamlead','editor','priority', 'group', 'stage', 'status', 'pending'));
+            'serviceassociates', 'editingteamlead','editor','priority', 'photoshootLocation',
+            'group', 'stage', 'status', 'pending'));
 
     }
 
@@ -273,6 +285,7 @@ class DashboardController extends BaseController {
         $catalogueTeamLead     = $this->util->arrayToJQString($catalogueTeamLeadArray, 'username', 'id');
 
         $priority = '0:select;1:Low;2:Medium;3:High';
+        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
         $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -285,7 +298,8 @@ class DashboardController extends BaseController {
 
         // Show the page
         return View::make('site/dashboards/cataloguemanager', compact('user', 'photographer',
-            'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','priority', 'group', 'stage', 'status'));
+            'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','priority', 'photoshootLocation',
+             'group', 'stage', 'status'));
 
     }
 
@@ -314,6 +328,7 @@ class DashboardController extends BaseController {
         $cataloguer            = $this->util->arrayToJQString($cataloguerArray, 'username', 'id');
 
         $priority = '0:select;1:Low;2:Medium;3:High';
+        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
         $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -326,7 +341,8 @@ class DashboardController extends BaseController {
 
         // Show the page
         return View::make('site/dashboards/catalogueteamlead', compact('user', 'photographer',
-            'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','cataloguer','priority', 'group', 'stage', 'status'));
+            'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','cataloguer','priority',
+            'photoshootLocation', 'group', 'stage', 'status'));
 
     }
 
@@ -355,6 +371,7 @@ class DashboardController extends BaseController {
         $cataloguer            = $this->util->arrayToJQString($cataloguerArray, 'username', 'id');
 
         $priority = '0:select;1:Low;2:Medium;3:High';
+        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
         $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -371,7 +388,7 @@ class DashboardController extends BaseController {
         // Show the page
         return View::make('site/dashboards/cataloguer', compact('user', 'photographer',
             'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','cataloguer',
-            'priority', 'group', 'stage', 'status'));
+            'priority', 'photoshootLocation', 'group', 'stage', 'status'));
 
     }
     public function postSeller()
@@ -379,7 +396,9 @@ class DashboardController extends BaseController {
         $sellerRequest  = new SellerRequest();
         $sellerId       = $sellerRequest->requetIdByTicketId(Input::get('id'));
         $seller         = SellerRequest::find($sellerId)->toArray();
-
+        // var_dump($seller['image_available']);
+        $seller['image_available'] = ($seller['image_available']==1)?'No':'Yes';
+        // var_dump($seller['image_available']);exit;
         return Response::json(array(
                     "rows" => [
                                 array(
@@ -388,7 +407,8 @@ class DashboardController extends BaseController {
                                                 $seller['merchant_name'],
                                                 $seller['poc_name'],
                                                 $seller['poc_email'],
-                                                $seller['poc_number']
+                                                $seller['poc_number'],
+                                                $seller['image_available']
                                             )
                                     )
                                 ]
@@ -409,9 +429,12 @@ class DashboardController extends BaseController {
         $data['city']   = City::find($seller['merchant_city_id'])->toArray();
         $photographer   = User::find($ticket['photographer_id'])->toArray();
         $mif            = User::find($ticket['mif_id'])->toArray();
+        $editor = NULL;
+        if($ticket['editor_id']) {
+            $editorArray     = User::find($ticket['editor_id'])->toArray();
+            $editor = $editorArray['username'];
+        }
         $data['loalLead']= $user->findAllByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);
-
-        //print_r($photographer);print_r($ticket);print_r($data );exit;
 
         return Response::json(array(
                 "rows" => [
@@ -421,7 +444,8 @@ class DashboardController extends BaseController {
                                 $data['city']['city_name'],
                                 $data['loalLead'][0]->username,
                                 $photographer['username'],
-                                $mif['username']
+                                $mif['username'],
+                                $editor
                             )
                     )
                 ]

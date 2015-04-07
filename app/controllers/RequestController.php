@@ -156,11 +156,18 @@ class RequestController extends BaseController {
     }
 
     public function updateEditingManager() {
-        $ticketData = Input::all();
-        $ticketTransactionId = $ticketData['transaction_id'];
-        $ticketId = $ticketData['ticket_id'];
-        if($ticketTransactionId) {
-            $ticketTransaction = Ticket::updateEditor($ticketTransactionId, $ticketId, $ticketData);
+      try {
+            $ticketData = Input::all();
+            $ticketTransactionId = $ticketData['transaction_id'];
+            $ticketId = $ticketData['ticket_id'];
+            if($ticketTransactionId) {
+                $ticketTransaction = Ticket::updateEditor($ticketTransactionId, $ticketId, $ticketData);
+            }
+         } catch (Exception $e) {
+          // RollBack Merges
+          // DB::rollback();
+          $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
+          return $errorMsg;
         }
         return $ticketTransaction;
     }

@@ -34,9 +34,9 @@ class Ticket extends Eloquent  {
         if(isset($data['photographer_id'])) {
             if($data['photographer_id']) {
                 $ticketData['photographer_id']    = $data['photographer_id'];
-                $ticketData['photosuite_location']= $data['photosuite_location'];
+                $ticketData['photoshoot_location']= $data['photoshoot_location'];
                 $ticketData['assigned_to']        = $data['photographer_id'];
-                $ticketData['photosuite_date']    = $data['photosuite_date'];
+                $ticketData['photoshoot_date']    = $data['photoshoot_date'];
                 $photographerTransaction = TicketTransaction::updateTicket($ticketData);
             }
         }
@@ -80,8 +80,8 @@ class Ticket extends Eloquent  {
 
       $ticketData = Ticket::TicketData($photoStage->id, 1, $data);
       $ticketData['photographer_id'] =  Auth::user()->id;
-      $ticketData['photosuite_location'] =  $data['photosuite_location'];
-      $ticketData['photosuite_date']    = $data['photosuite_date'];
+      $ticketData['photoshoot_location'] =  $data['photoshoot_location'];
+      $ticketData['photoshoot_date']    = $data['photoshoot_date'];
 
       // Assgining to Local Team Lead
       $ticketData['assigned_to'] = Ticket::findUserByRoleAndCity('Local Team Lead', $cityId);;
@@ -125,8 +125,8 @@ class Ticket extends Eloquent  {
 
       $ticketData = Ticket::ticketData($mifStage->id, 1, $data);
       $ticketData['photographer_id']     = $data['photographer_id'];
-      $ticketData['photosuite_location'] = $data['photosuite_location'];
-      $ticketData['photosuite_date']     = $data['photosuite_date'];
+      $ticketData['photoshoot_location'] = $data['photoshoot_location'];
+      $ticketData['photoshoot_date']     = $data['photoshoot_date'];
 
       // Check for Poto Grapher assigned
       // if($data['photographer_id']) {
@@ -156,8 +156,8 @@ class Ticket extends Eloquent  {
       $localCompleted = Stage::where('stage_name', '(Local) MIF Completed')->first();
       $ticketData     = Ticket::ticketData($localCompleted->id, 1, $data);
       $ticketData['photographer_id']      = $data['photographer_id'];
-      $ticketData['photosuite_location']  = $data['photosuite_location'];
-      $ticketData['photosuite_date']      = $data['photosuite_date'];
+      $ticketData['photoshoot_location']  = $data['photoshoot_location'];
+      $ticketData['photoshoot_date']      = $data['photoshoot_date'];
 
       // // Assgining to service Assiocate
       // $ticketData['assigned_to'] = $data['mif_id'];
@@ -189,8 +189,8 @@ class Ticket extends Eloquent  {
                               ->update(array('active' => 0,'editingteamlead_id' => $data['editingteamlead']));
 
       $ticketData['photographer_id']      = $data['photographer_id'];
-      $ticketData['photosuite_location']  = $data['photosuite_location'];
-      $ticketData['photosuite_date']      = $data['photosuite_date'];
+      $ticketData['photoshoot_location']  = $data['photoshoot_location'];
+      $ticketData['photoshoot_date']      = $data['photoshoot_date'];
       $ticketData['editingteamlead_id']   = $data['editingteamlead'];
 
       // Assgining Editing Manager
@@ -215,8 +215,8 @@ class Ticket extends Eloquent  {
       // Assgining to Local Team Lead
       $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
       $ticketData['photographer_id']      = $data['photographer_id'];
-      $ticketData['photosuite_location']  = $data['photosuite_location'];
-      $ticketData['photosuite_date']      = $data['photosuite_date'];
+      $ticketData['photoshoot_location']  = $data['photoshoot_location'];
+      $ticketData['photoshoot_date']      = $data['photoshoot_date'];
       $ticketData['editingteamlead_id']   = Auth::user()->id;
       $ticketData['editor_id']            = $data['editor'];
       $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
@@ -242,8 +242,8 @@ class Ticket extends Eloquent  {
       // Assgining to Local Team Lead
       $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
       $ticketData['photographer_id']      = $data['photographer_id'];
-      $ticketData['photosuite_location']  = $data['photosuite_location'];
-      $ticketData['photosuite_date']      = $data['photosuite_date'];
+      $ticketData['photoshoot_location']  = $data['photoshoot_location'];
+      $ticketData['photoshoot_date']      = $data['photoshoot_date'];
       $ticketData['editingteamlead_id']   = Auth::user()->id;
       $ticketData['editor_id']            = $data['editor'];
       $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
@@ -277,8 +277,8 @@ class Ticket extends Eloquent  {
       // Assgining to Local Team Lead
       $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
       $ticketData['photographer_id']      = $data['photographer_id'];
-      $ticketData['photosuite_location']  = $data['photosuite_location'];
-      $ticketData['photosuite_date']      = $data['photosuite_date'];
+      $ticketData['photoshoot_location']  = $data['photoshoot_location'];
+      $ticketData['photoshoot_date']      = $data['photoshoot_date'];
       $ticketData['editingteamlead_id']   = $data['editingteamlead'];
       $ticketData['editor_id']            = $data['editor'];
       $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
@@ -312,8 +312,8 @@ class Ticket extends Eloquent  {
       // Assgining to Local Team Lead
       $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
       $ticketData['photographer_id']      = $data['photographer_id'];
-      $ticketData['photosuite_location']  = $data['photosuite_location'];
-      $ticketData['photosuite_date']      = $data['photosuite_date'];
+      $ticketData['photoshoot_location']  = $data['photoshoot_location'];
+      $ticketData['photoshoot_date']      = $data['photoshoot_date'];
       $ticketData['editingteamlead_id']   = $data['editingteamlead'];
       $ticketData['editor_id']            = $data['editor'];
       $ticketData['catalogingteamlead_id']= $data['catalogueTeamLead'];
@@ -347,8 +347,8 @@ class Ticket extends Eloquent  {
       // Assgining to Local Team Lead
       $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
       $ticketData['photographer_id']      = $data['photographer_id'];
-      $ticketData['photosuite_location']  = $data['photosuite_location'];
-      $ticketData['photosuite_date']      = $data['photosuite_date'];
+      $ticketData['photoshoot_location']  = $data['photoshoot_location'];
+      $ticketData['photoshoot_date']      = $data['photoshoot_date'];
       $ticketData['editingteamlead_id']   = $data['editingteamlead'];
       $ticketData['editor_id']            = $data['editor'];
       $ticketData['catalogingteamlead_id']= Auth::user()->id;
@@ -380,8 +380,8 @@ class Ticket extends Eloquent  {
         // Assgining to Local Team Lead
         $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
         $ticketData['photographer_id']      = $data['photographer_id'];
-        $ticketData['photosuite_location']  = $data['photosuite_location'];
-        $ticketData['photosuite_date']      = $data['photosuite_date'];
+        $ticketData['photoshoot_location']  = $data['photoshoot_location'];
+        $ticketData['photoshoot_date']      = $data['photoshoot_date'];
         $ticketData['editingteamlead_id']   = $data['editingteamlead'];
         $ticketData['editor_id']            = $data['editor'];
         $ticketData['catalogingteamlead_id']= $data['catalogueTeamLead'];
@@ -419,8 +419,8 @@ class Ticket extends Eloquent  {
       $ticketTransactionRule = TicketTransaction::$rules;
 
       // Add custom validation for date
-      if( Input::has('photosuite_date') ) {
-          $ticketTransactionRule['photosuite_date'] = 'After:'.Date('Y-m-d');
+      if( Input::has('photoshoot_date') ) {
+          $ticketTransactionRule['photoshoot_date'] = 'After:'.Date('Y-m-d');
       }
       if( Input::has('mif_id') ) {
           $ticketTransactionRule['mif_id'] = 'required';
@@ -445,7 +445,6 @@ class Ticket extends Eloquent  {
       $ticketData['priority']     = $data['priority'];
       $ticketData['group_id']     = $data['group_id'];
       $ticketData['active']       = $status;
-      $ticketData['notes']        = $data['comment'];
       $ticketData['mif_id']       = $data['mif_id'];
       $ticketData['sa_sku']       = $data['sa_sku'];
       $ticketData['sa_variation'] = $data['sa_variation'];
@@ -454,7 +453,7 @@ class Ticket extends Eloquent  {
       $ticketData['notes']        = ($data['comment'])?$data['comment']:NULL;
       if(isset($data['pending_reason_id']))
       {
-          $ticketData['pending_reason_id']        = ($data['pending_reason_id'])?$data['pending_reason_id']:NULL;
+          $ticketData['pending_reason_id'] = ($data['pending_reason_id'])?$data['pending_reason_id']:NULL;
       }
       return $ticketData;
   }
