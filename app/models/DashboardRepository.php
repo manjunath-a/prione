@@ -57,7 +57,7 @@ class DashboardRepository extends EloquentRepositoryAbstract  {
                             ->where('ticket_transaction.active', $status)
                             ->select('ticket_transaction.id as id', 'ticket.created_at as created_at',
             'ticket_transaction.priority', 'ticket_transaction.group_id', 'ticket_transaction.stage_id',
-            'ticket_transaction.status_id', 'ticket_transaction.pending_reason',
+            'ticket_transaction.status_id', 'ticket_transaction.pending_reason_id',
             'ticket_transaction.created_at as assigned_date','seller_request.requester_name as requester_name',
             'seller_request.email', 'seller_request.contact_number', 'category.category_name as category_name',
              'seller_request.merchant_name as merchant_name', 'seller_request.poc_name',
@@ -74,7 +74,7 @@ class DashboardRepository extends EloquentRepositoryAbstract  {
 
         $this->visibleColumns = array('ticket_transaction.id as id', 'ticket.created_at as created_at',
             'ticket_transaction.priority', 'ticket_transaction.group_id', 'ticket_transaction.stage_id',
-            'ticket_transaction.status_id', 'ticket_transaction.pending_reason', 'category.category_name as category_name',
+            'ticket_transaction.status_id', 'ticket_transaction.pending_reason_id', 'category.category_name as category_name',
             'seller_request.requester_name as requester_name', 'seller_request.email',
             'seller_request.contact_number','seller_request.poc_name', 'ticket_transaction.created_at as assigned_date',
             'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',

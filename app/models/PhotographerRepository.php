@@ -28,7 +28,7 @@ class PhotographerRepository extends EloquentRepositoryAbstract  {
             ->where('ticket_transaction.active', 1)
             ->select('ticket_transaction.id as id', 'ticket.created_at as created_at', 'ticket_transaction.priority',
                 'ticket_transaction.group_id', 'ticket_transaction.stage_id', 'ticket_transaction.status_id',
-                'ticket_transaction.pending_reason', 'seller_request.requester_name as requester_name',
+                'ticket_transaction.pending_reason_id', 'seller_request.requester_name as requester_name',
                 'seller_request.email', 'ticket_transaction.created_at as assigned_date', 'category.category_name as category_name',
                 'seller_request.contact_number','seller_request.poc_name', 'ticket.s3_folder as s3_folder',
                 'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',
@@ -38,7 +38,7 @@ class PhotographerRepository extends EloquentRepositoryAbstract  {
 
 
         $this->visibleColumns = array('ticket_transaction.id as id', 'ticket.created_at as created_at', 'ticket_transaction.priority',
-            'ticket_transaction.group_id', 'ticket_transaction.stage_id', 'ticket_transaction.status_id', 'ticket_transaction.pending_reason',
+            'ticket_transaction.group_id', 'ticket_transaction.stage_id', 'ticket_transaction.status_id', 'ticket_transaction.pending_reason_id',
             'seller_request.requester_name as requester_name', 'seller_request.email', 'category.category_name as category_name',
             'seller_request.contact_number','seller_request.poc_name', 'ticket.s3_folder as s3_folder',
             'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',

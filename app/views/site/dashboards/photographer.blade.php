@@ -54,6 +54,9 @@
                         {'name':'priority', 'index':'priority', 'editable': true, 'align':'center', 'key':true, 'hidden' : true},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},
                         {"label":"Status","index":"status_id","align":"center","width":110,"editable":true, "editoptions":{'value':'{{rtrim($status, ";")}}'},"edittype":"select", "formatter":"select","editrules":{"required":true},"name":"status_id"},
+                        {"label":"Pending Reason","index":"pending_reason_id","align":"center","width":280,"editable":true,
+                            "editoptions":{'value':'{{rtrim($pending, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"pending_reason_id"},
+
                         {"label":"PhotoSuiteDate","index":"photosuite_date","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },"width":150,"name":"photosuite_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"}},
                         {"label":"PhotoSuiteLocation","index":"photosuite_location","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },"width":150,"name":"photosuite_location"},
                         {"label":"S3 Path","align":"center",  "index":"s3_folder","name":"s3_folder","width":90},
