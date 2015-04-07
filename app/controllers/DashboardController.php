@@ -56,9 +56,14 @@ class DashboardController extends BaseController {
         $stageArray = Stage::all();
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
+//        $rules  = arraY('only' =>array('Seller not reachable',
+//            'Seller not giving appointment / not ready','Seller cancelled the appointment'));
+        $pendingArray   = PendingReason::all();
+        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id');
+
         // Show the page
         return View::make('site/dashboards/locallead', compact('user', 'photographer',
-            'serviceassociates', 'priority', 'group', 'stage', 'status'));
+            'serviceassociates', 'priority', 'group', 'stage', 'status', 'pending'));
     }
 
 //	public function locallead()
@@ -91,9 +96,14 @@ class DashboardController extends BaseController {
                      '(Local) Photoshoot Completed / Seller Images Provided'));
         $stageArray = Stage::all();
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
+
+        $rules  = arraY('only' =>array('Seller cancelled the appointment'));
+        $pendingArray   = PendingReason::all();
+        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $rules);
+
         // Show the page
         return View::make('site/dashboards/photographer', compact('user', 'photographer',
-            'serviceassociates', 'priority', 'group', 'stage', 'status'));
+            'serviceassociates', 'priority', 'group', 'stage', 'status', 'pending'));
 
     }
 
@@ -122,9 +132,13 @@ class DashboardController extends BaseController {
         $stageArray = Stage::all();
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
 
+        $rules  = arraY('only' =>array('Seller not providing data for building MIF'));
+        $pendingArray   = PendingReason::all();
+        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $rules);
+
         // Show the page
         return View::make('site/dashboards/mif', compact('user', 'photographer',
-            'serviceassociates', 'priority', 'group', 'stage', 'status'));
+            'serviceassociates', 'priority', 'group', 'stage', 'status', 'pending'));
 
     }
 
@@ -189,9 +203,12 @@ class DashboardController extends BaseController {
         $stageArray = Stage::all();
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
+        $pendingArray   = PendingReason::all();
+        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id');
+
         // Show the page
         return View::make('site/dashboards/editingteamlead', compact('user', 'photographer',
-            'serviceassociates', 'editingteamlead','editor','priority', 'group', 'stage', 'status'));
+            'serviceassociates', 'editingteamlead','editor','priority', 'group', 'stage', 'status', 'pending'));
 
     }
 
@@ -224,9 +241,13 @@ class DashboardController extends BaseController {
         $stageArray = Stage::all();
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
+        $rules  = arraY('only' =>array('Images QC Failed'));
+        $pendingArray   = PendingReason::all();
+        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $rules);
+
         // Show the page
         return View::make('site/dashboards/editor', compact('user', 'photographer',
-            'serviceassociates', 'editingteamlead','editor','priority', 'group', 'stage', 'status'));
+            'serviceassociates', 'editingteamlead','editor','priority', 'group', 'stage', 'status', 'pending'));
 
     }
 

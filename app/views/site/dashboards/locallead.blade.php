@@ -71,6 +71,9 @@
                         {"label":"Status","index":"status_id","align":"center","width":110,"editable":true,
                         "editoptions":{'value':'{{rtrim($status, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"status_id"},
 
+                        {"label":"Pending Reason","index":"pending_reason_id","align":"center","width":280,"editable":true,
+                            "editoptions":{'value':'{{rtrim($pending, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"pending_reason_id"},
+
                         {"label":"PhotoGrapher", "name":"photographer_id", "index":"photographer_id","align":"center","width":130,
                         "editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select", "id":"photographer_id"},
 
