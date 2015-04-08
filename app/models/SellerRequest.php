@@ -138,12 +138,13 @@ class SellerRequest extends Eloquent  {
 
         $ticketData['request_id'] = $sellerRequest->id;
         $ticketData['email'] = $requestData['email'];
-        $ticketData['notes'] = $requestData['comment'];
+
         $ticketData['subject'] = $Ticket['subject'];
         $ticketData['description'] = $Ticket['description'];
         $ticketData['s3_folder'] = $awsFolder;
 
         $ticket = Ticket::create($ticketData);
+        $ticketTransactioData['notes'] = $requestData['comment'];
         // Ticket Transaction
         $ticketTransactioData['ticket_id'] = $ticket->id;
         $ticketTransactioData['assigned_to'] = $leadId;
