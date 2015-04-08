@@ -128,7 +128,7 @@ Route::post('request/updateEditingManager/', 'RequestController@updateEditingMan
 Route::post('request/updateEditingTeamLead/', 'RequestController@updateEditingTeamLead');
 // Route::post('request/updateEditor/', 'RequestController@updateEditor');
 Route::post('request/updateEditingComplete/', 'RequestController@updateEditingComplete');
-Route::post('request/updateAssignCatalogue/', 'RequestController@updateAssignCatalogue');
+Route::post('request/updateAssignCatalogTeamLead/', 'RequestController@updateAssignCatalogTeamLead');
 Route::post('request/updateCatalogueTeamLead/', 'RequestController@updateCatalogueTeamLead');
 Route::post('request/updateCataloguer/', 'RequestController@updateCataloguer');
 Route::post('request/updateCatalogingComplete/', 'RequestController@updateCatalogingComplete');

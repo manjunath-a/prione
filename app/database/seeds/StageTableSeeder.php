@@ -38,7 +38,7 @@ class StageTableSeeder extends Seeder {
                 'status'      => 1,
                 'sort'        => 6
             ),
-             array(
+            array(
                 'stage_name'  => '(Central) QC Completed',
                 'status'      => 1,
                 'sort'        => 7

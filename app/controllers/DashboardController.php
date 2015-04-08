@@ -383,7 +383,7 @@ class DashboardController extends BaseController {
         $groupArray = Group::all();
         $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
-        $rules  = arraY('only' =>array('(Central) Cataloging Completed',
+        $rules  = arraY('only' =>array('(Central) Cataloging Completed', '(Central) QC Completed',
                      '(Central) ASIN Created'));
 
         $stageArray = Stage::all();

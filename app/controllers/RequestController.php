@@ -212,7 +212,7 @@ class RequestController extends BaseController {
         return $ticketTransaction;
     }
 
-    public function updateAssignCatalogue() {
+    public function updateAssignCatalogTeamLead() {
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
@@ -264,23 +264,23 @@ class RequestController extends BaseController {
         return $ticketTransaction;
     }
 
-    public function updateCatalogingComplete() {
-        try {
-            $ticketData = Input::all();
-            $ticketTransactionId = $ticketData['transaction_id'];
-            $ticketId = $ticketData['ticket_id'];
-            if($ticketTransactionId) {
-                $ticketTransaction = Ticket::updateCatalogingComplete($ticketTransactionId, $ticketId, $ticketData);
-            }
-        }catch (Exception $e) {
-            // RollBack Merges
-            // DB::rollback();
-            $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
-            return $errorMsg;
-        }
+    // public function updateCatalogingComplete() {
+    //     try {
+    //         $ticketData = Input::all();
+    //         $ticketTransactionId = $ticketData['transaction_id'];
+    //         $ticketId = $ticketData['ticket_id'];
+    //         if($ticketTransactionId) {
+    //             $ticketTransaction = Ticket::updateCatalogingComplete($ticketTransactionId, $ticketId, $ticketData);
+    //         }
+    //     }catch (Exception $e) {
+    //         // RollBack Merges
+    //         // DB::rollback();
+    //         $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
+    //         return $errorMsg;
+    //     }
 
-        return $ticketTransaction;
-    }
+    //     return $ticketTransaction;
+    // }
 
   /**
    * Returns sucess Page.

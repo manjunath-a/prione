@@ -54,12 +54,22 @@
                             "formatter":"select","editrules":{"required":true},"name":"stage_id"
                         },
 
+                        {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",'key':true,
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {"label":"editingmanager",'width':75,"align":"center","index":"editingmanager_id","name":"editingmanager_id",'key':true,
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {"label":"editingteamlead_id",'width':75,"align":"center","index":"editingteamlead_id","name":"editingteamlead_id",'key':true,
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {"label":"catalogingmanager_id",'width':75,"align":"center","index":"catalogingmanager_id","name":"catalogingmanager_id",'key':true,
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                         {"label":"cataloguer",'width':75,"align":"center","index":"cataloguer","name":"cataloguer",'key':true,
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+
                         {"label":"Editor","index":"editor","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editor, ";")}}'},
                             "edittype":"select","editrules":{"required":true},"formatter":"select","name":"editor", 'hidden' : true},
-                        {"label":"Editing Team Lead","index":"editingteamlead","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editingteamlead, ";")}}'},
-                            "edittype":"select","editrules":{"required":true},"formatter":"select","name":"editingteamlead", 'hidden' : true},
-                        {"label":"Catalog Team Lead","index":"catalogueTeamLead","align":"center","width":150, 'hidden' : true,
-                        "editable":true, "editoptions":{'value':'{{rtrim($catalogueTeamLead, ";")}}'},"edittype":"select","formatter":"select","name":"catalogueTeamLead"},
+
+                        {"label":"Catalog Team Lead","index":"catalogingteamlead_id","align":"center","width":150, 'hidden' : true,
+                        "editable":true, "editoptions":{'value':'{{rtrim($catalogueTeamLead, ";")}}'},"edittype":"select","formatter":"select","name":"catalogingteamlead_id"},
 
 
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},
