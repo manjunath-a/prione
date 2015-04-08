@@ -20,7 +20,7 @@ class CreateTableGroup extends Migration {
     });
 
     Schema::table('ticket_transaction', function(Blueprint $table) {
-			$table->foreign('group_id')->references('id')->on('group')->onDelete('cascade');
+			$table->foreign('group_id')->references('id')->on('group')->onDelete('restrict');
 		});
 	}
 

@@ -14,11 +14,9 @@ class AlterTicketTransactionAddColumns extends Migration {
 	{
 		Schema::table('ticket_transaction', function(Blueprint $table)
 		{
-  	    $table->dropColumn('comment');
   	    $table->integer('priority')->unsigned()->after('ticket_id');
   	    $table->integer('group_id')->unsigned()->after('priority');
   	    $table->integer('stage_id')->unsigned()->after('group_id');
-  	    $table->string('pending_reason');
 
 		});
 	}
