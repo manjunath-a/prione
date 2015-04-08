@@ -138,6 +138,7 @@ class SellerRequest extends Eloquent  {
 
         $ticketData['request_id'] = $sellerRequest->id;
         $ticketData['email'] = $requestData['email'];
+        $ticketData['notes'] = $requestData['comment'];
         $ticketData['subject'] = $Ticket['subject'];
         $ticketData['description'] = $Ticket['description'];
         $ticketData['s3_folder'] = $awsFolder;
@@ -146,6 +147,7 @@ class SellerRequest extends Eloquent  {
         // Ticket Transaction
         $ticketTransactioData['ticket_id'] = $ticket->id;
         $ticketTransactioData['assigned_to'] = $leadId;
+        $ticketTransactioData['localteamlead_id'] = $leadId;
         $ticketTransactioData['priority'] = Config::get('ticket.default_priority');
         $ticketTransactioData['status_id'] = Config::get('ticket.default_status');
         $ticketTransactioData['active'] = 1;
@@ -167,7 +169,9 @@ class SellerRequest extends Eloquent  {
      }
 
     public static function createFolderInAWS($requestId, $merchant_name ,$cityName ) {
-        $folderName = $requestId.'_'.$merchant_name.'/'.$cityName.'/';
+
+        // Folder Formate:  fos<CITYNAME> /<month-year>/ <requestId_merchantName>
+        $folderName = '/fos'.$cityName.'/'.date('m-Y').'/'.$requestId.'_'.$merchant_name;
         $local = $folderName .'/local/';
         $editing = $folderName .'/editing/';
         $cataloging = $folderName .'/cataloging/';

@@ -67,11 +67,12 @@ class CentralDashboardRepository extends EloquentRepositoryAbstract  {
             'seller_request.merchant_name as merchant_name','seller_request.image_available', 'seller_request.comment as seller_comment',
             'seller_request.id as seller_request_id', 'ticket.id as ticket_id', 'ticket.s3_folder as s3_folder',
             'ticket_transaction.photoshoot_date','ticket_transaction.photoshoot_location',
-            'ticket_transaction.photographer_id','ticket_transaction.mif_id',
+            'ticket_transaction.localteamlead_id','ticket_transaction.photographer_id', 'ticket_transaction.mif_id',
+            'ticket_transaction.editingmanager_id', 'ticket_transaction.editingteamlead_id as editingteamlead_id',
+            'ticket_transaction.editor_id as editor',
             'ticket_transaction.sa_variation', 'ticket_transaction.sa_sku',
             'ticket_transaction.total_sku', 'ticket_transaction.total_images',
-            'ticket_transaction.editingteamlead_id as editingteamlead','ticket_transaction.editor_id as editor',
-             'ticket_transaction.catalogingteamlead_id as catalogueTeamLead','ticket_transaction.cataloguer_id as cataloguer',
+            'ticket_transaction.catalogingteamlead_id as catalogueTeamLead','ticket_transaction.cataloguer_id as cataloguer',
              'ticket_transaction.id as transaction_id')
                             ->groupBy('ticket_transaction.id');
 
@@ -83,7 +84,8 @@ class CentralDashboardRepository extends EloquentRepositoryAbstract  {
             'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',
             'seller_request.image_available', 'seller_request.comment  as seller_comment', 'ticket.s3_folder as s3_folder',
             'ticket_transaction.photoshoot_date','ticket_transaction.photoshoot_location',
-            'ticket_transaction.photographer_id','ticket_transaction.mif_id',
+            'ticket_transaction.localteamlead_id','ticket_transaction.photographer_id','ticket_transaction.mif_id',
+            'ticket_transaction.editingmanager_id', 'ticket_transaction.editingteamlead_id as editingteamlead_id',
             'ticket_transaction.sa_variation', 'ticket_transaction.sa_sku',
             'ticket_transaction.total_sku', 'ticket_transaction.total_images',
             'seller_request.id as seller_request_id', 'ticket.id as ticket_id',

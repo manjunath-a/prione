@@ -54,8 +54,14 @@
                             "editoptions":{'value':'{{rtrim($stage, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"stage_id", 'hidden' : true},
                         {"label":"Editor","index":"editor","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editor, ";")}}'},
                             "edittype":"select","editrules":{"required":true},"formatter":"select","name":"editor", 'hidden' : true},
-                        {"label":"Editing Team Lead","index":"editingteamlead","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editingteamlead, ";")}}'},
-                            "edittype":"select","editrules":{"required":true},"formatter":"select","name":"editingteamlead", 'hidden' : true},
+
+                        {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",'key':true,
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {"label":"editingmanager",'width':75,"align":"center","index":"editingmanager_id","name":"editingmanager_id",'key':true,
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {"label":"Editing Team Lead","index":"editingteamlead_id","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editingteamlead, ";")}}'},
+                            "edittype":"select","editrules":{"required":true},"formatter":"select","name":"editingteamlead_id", 'hidden' : true},
+
                         {"index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku", "hidden":true},
                         {"index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation", "hidden":true},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},

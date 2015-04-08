@@ -49,6 +49,10 @@
                         {"index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation", "hidden":true},
                         {"label":"Group","index":"group_id","align":"center","width":110,"editable":true,
                         "editoptions":{'value':'{{rtrim($group, ";")}}', "disabled": 'disabled' },"edittype":"select","formatter":"select","editrules":{"required":true },"name":"group_id"},
+                        {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",'key':true,
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {"label":"editingmanager",'width':75,"align":"center","index":"editingmanager_id","name":"editingmanager_id",'key':true,
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
 
                         {'name':'priority', 'index':'priority', 'editable': true, 'align':'center', 'key':true, 'hidden' : true},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},

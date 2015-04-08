@@ -31,16 +31,16 @@ class AlterTicketTransactionAddCoulmnActive extends Migration {
       $table->integer('catalogingmanager_id')->nullable()->default(NULL)->unsigned()->after('editor_id');
       $table->integer('created_by')->unsigned()->nullable()->after('cataloguer_id');
 
-      $table->foreign('photographer_id')->references('id')->on('users')->onDelete('restrict');
-      $table->foreign('mif_id')->references('id')->on('users')->onDelete('restrict');
-      $table->foreign('editingmanager_id')->references('id')->on('users')->onDelete('restrict');
-      $table->foreign('localteamlead_id')->references('id')->on('users')->onDelete('restrict');
-      $table->foreign('catalogingmanager_id')->references('id')->on('users')->onDelete('restrict');
-      $table->foreign('editingteamlead_id')->references('id')->on('users')->onDelete('restrict');
-      $table->foreign('editor_id')->references('id')->on('users')->onDelete('restrict');
-      $table->foreign('catalogingteamlead_id')->references('id')->on('users')->onDelete('restrict');
-      $table->foreign('cataloguer_id')->references('id')->on('users')->onDelete('restrict');
-      $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
+      $table->foreign('photographer_id')->references('id')->on('users')->onDelete('cascade');
+      $table->foreign('mif_id')->references('id')->on('users')->onDelete('cascade');
+      $table->foreign('editingmanager_id')->references('id')->on('users')->onDelete('cascade');
+      $table->foreign('localteamlead_id')->references('id')->on('users')->onDelete('cascade');
+      $table->foreign('catalogingmanager_id')->references('id')->on('users')->onDelete('cascade');
+      $table->foreign('editingteamlead_id')->references('id')->on('users')->onDelete('cascade');
+      $table->foreign('editor_id')->references('id')->on('users')->onDelete('cascade');
+      $table->foreign('catalogingteamlead_id')->references('id')->on('users')->onDelete('cascade');
+      $table->foreign('cataloguer_id')->references('id')->on('users')->onDelete('cascade');
+      $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
 		});
 	}
 

@@ -126,7 +126,7 @@ Route::post('request/updatePhotographer/', 'RequestController@updatePhotographer
 Route::post('request/updateMIF/', 'RequestController@updateMIF');
 Route::post('request/updateEditingManager/', 'RequestController@updateEditingManager');
 Route::post('request/updateEditingTeamLead/', 'RequestController@updateEditingTeamLead');
-Route::post('request/updateEditor/', 'RequestController@updateEditor');
+// Route::post('request/updateEditor/', 'RequestController@updateEditor');
 Route::post('request/updateEditingComplete/', 'RequestController@updateEditingComplete');
 Route::post('request/updateAssignCatalogue/', 'RequestController@updateAssignCatalogue');
 Route::post('request/updateCatalogueTeamLead/', 'RequestController@updateCatalogueTeamLead');

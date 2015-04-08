@@ -55,7 +55,8 @@ class DashboardRepository extends EloquentRepositoryAbstract  {
                             ->join('users', 'seller_request.merchant_city_id', '=', 'users.city_id')
                             ->where('ticket_transaction.assigned_to', $userId)
                             ->where('ticket_transaction.active', $status)
-                            ->select('ticket_transaction.id as id', 'ticket.created_at as created_at',
+                            ->select('ticket_transaction.id as id',
+                            'ticket_transaction.created_at as created_at',
             'ticket_transaction.priority', 'ticket_transaction.group_id', 'ticket_transaction.stage_id',
             'ticket_transaction.status_id', 'ticket_transaction.pending_reason_id', 'ticket_transaction.notes as comment',
             'ticket_transaction.created_at as assigned_date','seller_request.requester_name as requester_name',
@@ -65,14 +66,14 @@ class DashboardRepository extends EloquentRepositoryAbstract  {
             'seller_request.image_available', 'seller_request.comment as seller_comment', 'ticket.s3_folder as s3_folder',
             'seller_request.id as seller_request_id', 'ticket.id as ticket_id',
             'ticket_transaction.photoshoot_date','ticket_transaction.photoshoot_location',
-            'ticket_transaction.photographer_id','ticket_transaction.mif_id',
+            'ticket_transaction.localteamlead_id','ticket_transaction.photographer_id','ticket_transaction.mif_id',
             'ticket_transaction.sa_variation', 'ticket_transaction.sa_sku',
             'ticket_transaction.total_sku', 'ticket_transaction.total_images',
              'ticket_transaction.id as transaction_id')
                             ->groupBy('ticket_transaction.id');
         // $queries = DB::getQueryLog(); $last_query = end($queries);  var_dump($last_query); exit;
 
-        $this->visibleColumns = array('ticket_transaction.id as id', 'ticket.created_at as created_at',
+        $this->visibleColumns = array('ticket_transaction.id as id', 'ticket_transaction.created_at as created_at',
             'ticket_transaction.priority', 'ticket_transaction.group_id', 'ticket_transaction.stage_id', 'ticket_transaction.notes as comment',
             'ticket_transaction.status_id', 'ticket_transaction.pending_reason_id', 'category.category_name as category_name',
             'seller_request.requester_name as requester_name', 'seller_request.email',
@@ -80,7 +81,7 @@ class DashboardRepository extends EloquentRepositoryAbstract  {
             'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',
             'seller_request.image_available', 'seller_request.comment as seller_comment', 'ticket.s3_folder as s3_folder',
             'ticket_transaction.photoshoot_date','ticket_transaction.photoshoot_location',
-            'ticket_transaction.photographer_id','ticket_transaction.mif_id',
+            'ticket_transaction.localteamlead_id','ticket_transaction.photographer_id','ticket_transaction.mif_id',
             'ticket_transaction.sa_variation', 'ticket_transaction.sa_sku',
             'ticket_transaction.total_sku', 'ticket_transaction.total_images',
             'seller_request.id as seller_request_id', 'ticket.id as ticket_id',

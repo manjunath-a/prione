@@ -56,6 +56,8 @@
                         {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",'key':true, 'hidden' : true},
+                        {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",'key':true,
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
 
                         {"label":"Request / Assigned Date","align":"center","index":"created_at","name":"created_at","width":160},
@@ -87,8 +89,10 @@
                         {"label":"S3 Path","align":"center","index":"s3_folder","name":"s3_folder","width":90},
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","editable":true,"width":90},
                         {"label":"No. of Images","align":"center", "editrules":{"required":false}, "index":"total_images", "name":"total_images","editable":true,"width":100},
+
                         {"label":"Service Associate","index":"mif_id","align":"center","width":150,"editable":true, 'key':true,
                         "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"mif_id"},
+
                         {"label":"No. of parent SKUs","index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku"},
                         {"label":"No. of variations","index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation"},
                         {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
@@ -110,14 +114,14 @@
                     "subGridUrl":"seller",
                     "subGridModel" :[
                         {
-                            name  : ['Seller name','POC Name','POC Email ID','POC Contact Number', 'Seller provider Image'],
-                            width : [250,150,120,180],
+                            name  : ['Seller name','POC Name', 'POC Email ID', 'POC Contact Number', 'Seller provider Image'],
+                            width : [250,150,120,180,160],
                             colModel: [
                                 {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
                                 {"label":"POC Contact Number","index":"poc_number","name":"poc_number"},
-                                {"label":"Seller provider Image","index":"image_available","name":"image_available"}
+                                {"label":"Seller provider Image","align":"center","index":"image_available","name":"image_available"}
                             ]
                         }
                     ],

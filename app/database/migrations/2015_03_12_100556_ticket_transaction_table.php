@@ -22,9 +22,9 @@ class TicketTransactionTable extends Migration {
 				$table->dateTime('created_at');
       	$table->dateTime('updated_at');
       	// Foreign Key
-	      $table->foreign('ticket_id')->references('id')->on('ticket')->onDelete('restrict');
-	      $table->foreign('assigned_to')->references('id')->on('users')->onDelete('restrict');
-	      $table->foreign('status_id')->references('id')->on('status')->onDelete('restrict');
+	      $table->foreign('ticket_id')->references('id')->on('ticket')->onDelete('cascade');
+	      $table->foreign('assigned_to')->references('id')->on('users')->onDelete('cascade');
+	      $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
 		});
 	}
 

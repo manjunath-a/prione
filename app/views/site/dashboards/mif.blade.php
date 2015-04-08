@@ -48,6 +48,9 @@
                         {'name':'priority', 'index':'priority', 'editable': true, 'align':'center', 'key':true, 'hidden' : true},
                         {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
+                        {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",'key':true,
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},
                         {'label':'Assigned Date','name':'assigned_date', 'index':'assigned_date','align':'center', 'key':true},
                         {"label":"Status","index":"status_id","align":"center","width":110,"editable":true,  'hidden': true,

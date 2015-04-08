@@ -99,7 +99,7 @@ class RequestController extends BaseController {
       $ticketId = $ticketData['ticket_id'];
         if($ticketTransactionId) {
           if($ticketData['group_id'] == 2){
-              $ticketTransaction = Ticket::updateEditingManager($ticketTransactionId, $ticketId, $ticketData);
+              $ticketTransaction = Ticket::assignEditingManager($ticketTransactionId, $ticketId, $ticketData);
           }else if($ticketData['group_id'] == 1) {
               $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
           } else {
@@ -161,7 +161,7 @@ class RequestController extends BaseController {
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if($ticketTransactionId) {
-                $ticketTransaction = Ticket::updateEditor($ticketTransactionId, $ticketId, $ticketData);
+                $ticketTransaction = Ticket::updateEditingManager($ticketTransactionId, $ticketId, $ticketData);
             }
          } catch (Exception $e) {
           // RollBack Merges
@@ -172,16 +172,15 @@ class RequestController extends BaseController {
         return $ticketTransaction;
     }
 
-    public function updateEditor() {
+    public function updateEditingTeamLead() {
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
-            //print_r($ticketData);exit;
             if($ticketTransactionId) {
                 if($ticketData['group_id'] == 3){
                     $ticketTransaction = Ticket::updateCatalogManager($ticketTransactionId, $ticketId, $ticketData);
-                }else {
+                } else {
                     $ticketTransaction = Ticket::updateAssignEditor($ticketTransactionId, $ticketId, $ticketData);
                 }
 
