@@ -48,15 +48,15 @@
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
                             "editoptions":{'value':'{{rtrim($priority, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
 
-                        {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",'key':true,
+                        {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
-                        {"label":"editingmanager",'width':75,"align":"center","index":"editingmanager_id","name":"editingmanager_id",'key':true,
+                        {"label":"editingmanager",'width':75,"align":"center","index":"editingmanager_id","name":"editingmanager_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
-                        {"label":"editingteamlead_id",'width':75,"align":"center","index":"editingteamlead_id","name":"editingteamlead_id",'key':true,
+                        {"label":"editingteamlead_id",'width':75,"align":"center","index":"editingteamlead_id","name":"editingteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
-                        {"label":"catalogingmanager_id",'width':75,"align":"center","index":"catalogingmanager_id","name":"catalogingmanager_id",'key':true,
+                        {"label":"catalogingmanager_id",'width':75,"align":"center","index":"catalogingmanager_id","name":"catalogingmanager_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
-                        {"label":"catalogingteamlead_id",'width':75,"align":"center","index":"catalogingteamlead_id","name":"catalogingteamlead_id",'key':true,
+                        {"label":"catalogingteamlead_id",'width':75,"align":"center","index":"catalogingteamlead_id","name":"catalogingteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
 
 

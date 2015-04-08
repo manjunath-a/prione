@@ -47,22 +47,22 @@
                         {"label":"Category","align":"center","index":"category_name","name":"category_name"},
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
                             "editoptions":{'value':'{{rtrim($priority, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
-                        {'name':'group_id', 'index':'group_id', 'editable': true, 'align':'center', 'key':true, 'hidden' : true},
+                        {'name':'group_id', 'index':'group_id', 'editable': true, 'align':'center', 'hidden' : true},
 
                         {"label":"Stage","index":"stage_id","align":"center","width":350,"editable":true,
                             "editoptions":{'value':'{{rtrim($stage, ";")}}'},"edittype":"select",
                             "formatter":"select","editrules":{"required":true},"name":"stage_id"
                         },
 
-                        {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",'key':true,
+                        {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
-                        {"label":"editingmanager",'width':75,"align":"center","index":"editingmanager_id","name":"editingmanager_id",'key':true,
+                        {"label":"editingmanager",'width':75,"align":"center","index":"editingmanager_id","name":"editingmanager_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
-                        {"label":"editingteamlead_id",'width':75,"align":"center","index":"editingteamlead_id","name":"editingteamlead_id",'key':true,
+                        {"label":"editingteamlead_id",'width':75,"align":"center","index":"editingteamlead_id","name":"editingteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
-                        {"label":"catalogingmanager_id",'width':75,"align":"center","index":"catalogingmanager_id","name":"catalogingmanager_id",'key':true,
+                        {"label":"catalogingmanager_id",'width':75,"align":"center","index":"catalogingmanager_id","name":"catalogingmanager_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
-                         {"label":"cataloguer",'width':75,"align":"center","index":"cataloguer","name":"cataloguer",'key':true,
+                         {"label":"cataloguer",'width':75,"align":"center","index":"cataloguer","name":"cataloguer",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
 
                         {"label":"Editor","index":"editor","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editor, ";")}}'},
