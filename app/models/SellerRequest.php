@@ -155,11 +155,12 @@ class SellerRequest extends Eloquent  {
         $ticketTransactioData['group_id'] = Config::get('ticket.default_group');
 
 
-        if($requestData['image_available'] == 2) {
-            $assignStage = Stage::where('stage_name',
-                  '(Local) Photoshoot Completed / Seller Images Provided')->first();
-            $stageId = $assignStage->id;
-        }
+        // if($requestData['image_available'] == 2) {
+        //     $assignStage = Stage::where('stage_name',
+        //           '(Local) Photoshoot Completed / Seller Images Provided')->first();
+        //     $stageId = $assignStage->id;
+        // }
+
         // Assign Seller
         $ticketTransactioData['stage_id'] = $stageId;
         $ticketTransactioData['total_sku'] = $requestData['total_sku'];
