@@ -172,7 +172,7 @@ class SellerRequest extends Eloquent  {
     public static function createFolderInAWS($requestId, $merchant_name ,$cityName ) {
 
         // Folder Formate:  fos<CITYNAME> /<month-year>/ <requestId_merchantName>
-        $folderName = '/fos'.$cityName.'/'.date('m-Y').'/'.$requestId.'_'.$merchant_name;
+        $folderName = '/fos'.$cityName.'/'.date('m-Y').'/'.$requestId.'_'.$merchant_name.'/';
         $local = $folderName .'/local/';
         $editing = $folderName .'/editing/';
         $cataloging = $folderName .'/cataloging/';
