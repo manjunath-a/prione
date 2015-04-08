@@ -74,7 +74,7 @@
                         {"label":"No. of Images","align":"center","index":"total_images","name":"total_images","width":100,"editable":true,"hidden":true},
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","width":90},
                         {"label":"No. of Images","align":"center","index":"total_images","name":"total_images","width":100},
-                        {"label":"Comment","align":"right","index":"comment","name":"comment","editable":true,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
+                        {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
                     ],
                     jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',

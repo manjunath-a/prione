@@ -94,13 +94,13 @@ class DashboardController extends BaseController {
         $groupArray = Group::all();
         $group = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
-        $rules  = arraY('only' =>array('(Local) Associates Assigned',
-                     '(Local) Photoshoot Completed / Seller Images Provided'));
+//        $rules  = arraY('only' =>array('(Local) Associates Assigned',
+//                     '(Local) Photoshoot Completed / Seller Images Provided'));
         $stageArray = Stage::all();
-        $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
+        $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
+
         $pendingRules  = arraY('only' =>array('Seller not reachable',
                      'Seller cancelled the appointment'));
-
         $pendingArray   = PendingReason::all();
         $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $pendingRules);
 
@@ -130,11 +130,11 @@ class DashboardController extends BaseController {
         $groupArray = Group::all();
         $group = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
-        $rules  = arraY('only' =>array('(Local) Associates Assigned',
-                '(Local) Photoshoot Completed / Seller Images Provided',
-                '(Local) MIF Completed'));
+//        $rules  = arraY('only' =>array('(Local) Associates Assigned',
+//                '(Local) Photoshoot Completed / Seller Images Provided',
+//                '(Local) MIF Completed'));
         $stageArray = Stage::all();
-        $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
+        $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         $pendingRules  = arraY('only' =>array('Seller not reachable',
                      'Seller cancelled the appointment',
@@ -212,8 +212,9 @@ class DashboardController extends BaseController {
         $stageArray = Stage::all();
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
+        $pendingRules   = arraY('only' =>array('Editing Images QC Failed', 'Raw Images QC Failed'));
         $pendingArray   = PendingReason::all();
-        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id');
+        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id',$pendingRules);
 
         // Show the page
         return View::make('site/dashboards/editingteamlead', compact('user', 'photographer',
@@ -252,7 +253,7 @@ class DashboardController extends BaseController {
         $stageArray = Stage::all();
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
-        $rules  = arraY('only' =>array('Images QC Failed'));
+        $rules  = arraY('only' =>array('Raw Images QC Failed'));
         $pendingArray   = PendingReason::all();
         $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $rules);
 
@@ -339,10 +340,13 @@ class DashboardController extends BaseController {
         $stageArray = Stage::all();
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
+        $pendingRules   = arraY('only' =>array('Cataloging MIF QC Failed', 'Flat File MIF QC Failed'));
+        $pendingArray   = PendingReason::all();
+        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id',$pendingRules);
         // Show the page
         return View::make('site/dashboards/catalogueteamlead', compact('user', 'photographer',
             'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','cataloguer','priority',
-            'photoshootLocation', 'group', 'stage', 'status'));
+            'photoshootLocation', 'group', 'stage', 'status', 'pending'));
 
     }
 
@@ -385,10 +389,13 @@ class DashboardController extends BaseController {
         $stageArray = Stage::all();
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
 
+        $pendingRules   = arraY('only' =>array( 'Flat File MIF QC Failed'));
+        $pendingArray   = PendingReason::all();
+        $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id',$pendingRules);
         // Show the page
         return View::make('site/dashboards/cataloguer', compact('user', 'photographer',
             'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','cataloguer',
-            'priority', 'photoshootLocation', 'group', 'stage', 'status'));
+            'priority', 'photoshootLocation', 'group', 'stage', 'status', 'pending'));
 
     }
     public function postSeller()

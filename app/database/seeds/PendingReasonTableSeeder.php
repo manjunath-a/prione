@@ -46,7 +46,7 @@ class PendingReasonTableSeeder extends Seeder {
             array(
                 'pending_reason'    => 'Flat File MIF QC Failed',
                 'status'            => 1,
-                'sort'              => 7
+                'sort'              => 8
             )
         );
 

@@ -56,7 +56,7 @@
                             "editoptions":{'value':'{{rtrim($pending, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"pending_reason_id"},
                         {"label":"Appointment Date","index":"photoshoot_date","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },
                         "width":150,"name":"photoshoot_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"}},
-                        {"label":"Photoshoot Location","index":"photoshoot_location","align":"center","width":90,"editable":true,
+                        {"label":"Photoshoot Location","index":"photoshoot_location","align":"center","width":150,"editable":true,
                         "editoptions":{'value':'{{rtrim($photoshootLocation, ";")}}', "disabled": 'disabled' },"edittype":"select","formatter":"select","editrules":{"required":true},"name":"photoshoot_location"},
                         {"label":"S3 Path","align":"center",  "index":"s3_folder","name":"s3_folder","width":90},
                         {"label":"Category","align":"center","index":"category_name","name":"category_name"},
@@ -68,7 +68,7 @@
                         {"label":"No. of Variation","index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation"},
                         {"label":"Stage","index":"stage_id","align":"center","width":350, "editable":true, 'hidden' : true,
                             "editoptions":{'value':'{{rtrim($stage, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"stage_id"},
-                        {"label":"Comment","align":"right","index":"comment","name":"comment","editable":true,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
+                        {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
                     ],
                     jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
@@ -87,13 +87,14 @@
                     "subGridUrl":"seller",
                     "subGridModel" :[
                         {
-                            name  : ['Seller name','POC Name','POC Email ID','POC Contact Number'],
-                            width : [250,150,120,180],
+                            name  : ['Seller name','POC Name','POC Email ID','POC Contact Number', 'Seller provider Image'],
+                            width : [250,250,250,250,250],
                             colModel: [
                                 {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
-                                {"label":"POC Contact Number","index":"poc_number","name":"poc_number"}
+                                {"label":"POC Contact Number","index":"poc_number","name":"poc_number"},
+                                {"label":"Seller provider Image","index":"image_available","name":"image_available"}
                             ]
                         }
                     ],

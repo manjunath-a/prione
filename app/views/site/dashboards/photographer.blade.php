@@ -61,7 +61,7 @@
                             "formatter":"select","editrules":{"required":true},"name":"pending_reason_id"},
                         {"label":"Photoshoot Date","index":"photoshoot_date","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },
                         "width":150,"name":"photoshoot_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"}},
-                        {"label":"Photoshoot Location","index":"photoshoot_location","align":"center","width":90,"editable":true,
+                        {"label":"Photoshoot Location","index":"photoshoot_location","align":"center","width":150,"editable":true,
                         "editoptions":{'value':'{{rtrim($photoshootLocation, ";")}}', "disabled": 'disabled' },"edittype":"select","formatter":"select","editrules":{"required":true},"name":"photoshoot_location"},
                         {"label":"S3 Path","align":"center",  "index":"s3_folder","name":"s3_folder","width":90},
                         {"label":"Category","align":"center","index":"category_name","name":"category_name"},
@@ -97,7 +97,8 @@
                                 {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
-                                {"label":"POC Contact Number","index":"poc_number","name":"poc_number"}
+                                {"label":"POC Contact Number","index":"poc_number","name":"poc_number"},
+                                {"label":"Seller provider Image","index":"image_available","name":"image_available"}
                             ]
                         }
                     ],

@@ -58,7 +58,7 @@
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",'key':true, 'hidden' : true},
                         {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
 
-                        {"label":"Request / Assigned Date","align":"center","index":"created_at","name":"created_at"},
+                        {"label":"Request / Assigned Date","align":"center","index":"created_at","name":"created_at","width":160},
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
                         "editoptions":{'value':'{{rtrim($priority, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
 
@@ -82,7 +82,7 @@
                         function (elem) {
                             jQuery(elem).datepicker({dateFormat:"yy-mm-dd"});}} },
 
-                        {"label":"Photoshoot Location","index":"photoshoot_location","align":"center","width":90,"editable":true,
+                        {"label":"Photoshoot Location","index":"photoshoot_location","align":"center","width":150,"editable":true,
                         "editoptions":{'value':'{{rtrim($photoshootLocation, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"photoshoot_location"},
                         {"label":"S3 Path","align":"center","index":"s3_folder","name":"s3_folder","width":90},
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","editable":true,"width":90},
@@ -117,7 +117,7 @@
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
                                 {"label":"POC Contact Number","index":"poc_number","name":"poc_number"},
-                                {"label":"POC Contact Number","index":"image_available","name":"image_available"}
+                                {"label":"Seller provider Image","index":"image_available","name":"image_available"}
                             ]
                         }
                     ],

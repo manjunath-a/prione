@@ -196,52 +196,90 @@ class RequestController extends BaseController {
     }
 
     public function updateEditingComplete() {
-        $ticketData = Input::all();
-        $ticketTransactionId = $ticketData['transaction_id'];
-        $ticketId = $ticketData['ticket_id'];
-        if($ticketTransactionId) {
-            $ticketTransaction = Ticket::updateEditingComplete($ticketTransactionId, $ticketId, $ticketData);
+        try {
+            $ticketData = Input::all();
+            $ticketTransactionId = $ticketData['transaction_id'];
+            $ticketId = $ticketData['ticket_id'];
+            if($ticketTransactionId) {
+                $ticketTransaction = Ticket::updateEditingComplete($ticketTransactionId, $ticketId, $ticketData);
+            }
+        }catch (Exception $e) {
+            // RollBack Merges
+            // DB::rollback();
+            $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
+            return $errorMsg;
         }
+
         return $ticketTransaction;
     }
 
     public function updateAssignCatalogue() {
-        $ticketData = Input::all();
-        $ticketTransactionId = $ticketData['transaction_id'];
-        $ticketId = $ticketData['ticket_id'];
-        if($ticketTransactionId) {
-            $ticketTransaction = Ticket::updateCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
+        try {
+            $ticketData = Input::all();
+            $ticketTransactionId = $ticketData['transaction_id'];
+            $ticketId = $ticketData['ticket_id'];
+            if($ticketTransactionId) {
+                $ticketTransaction = Ticket::updateAssignCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
+            }
+        }catch (Exception $e) {
+            // RollBack Merges
+            // DB::rollback();
+            $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
+            return $errorMsg;
         }
+
         return $ticketTransaction;
     }
 
     public function updateCatalogueTeamLead() {
-        $ticketData = Input::all();
-        $ticketTransactionId = $ticketData['transaction_id'];
-        $ticketId = $ticketData['ticket_id'];
-        if($ticketTransactionId) {
-            $ticketTransaction = Ticket::updateCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
+        try {
+            $ticketData = Input::all();
+            $ticketTransactionId = $ticketData['transaction_id'];
+            $ticketId = $ticketData['ticket_id'];
+            if($ticketTransactionId) {
+                $ticketTransaction = Ticket::updateCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
+            }
+        }catch (Exception $e) {
+            // RollBack Merges
+            // DB::rollback();
+            $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
+            return $errorMsg;
         }
         return $ticketTransaction;
     }
 
     public function updateCataloguer() {
-        $ticketData = Input::all();
-        $ticketTransactionId = $ticketData['transaction_id'];
-        $ticketId = $ticketData['ticket_id'];
-        if($ticketTransactionId) {
-            $ticketTransaction = Ticket::updateCataloguer($ticketTransactionId, $ticketId, $ticketData);
+        try {
+            $ticketData = Input::all();
+            $ticketTransactionId = $ticketData['transaction_id'];
+            $ticketId = $ticketData['ticket_id'];
+            if($ticketTransactionId) {
+                $ticketTransaction = Ticket::updateCataloguer($ticketTransactionId, $ticketId, $ticketData);
+            }
+        }catch (Exception $e) {
+            // RollBack Merges
+            // DB::rollback();
+            $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
+            return $errorMsg;
         }
         return $ticketTransaction;
     }
 
     public function updateCatalogingComplete() {
-        $ticketData = Input::all();
-        $ticketTransactionId = $ticketData['transaction_id'];
-        $ticketId = $ticketData['ticket_id'];
-        if($ticketTransactionId) {
-            $ticketTransaction = Ticket::updateCatalogingComplete($ticketTransactionId, $ticketId, $ticketData);
+        try {
+            $ticketData = Input::all();
+            $ticketTransactionId = $ticketData['transaction_id'];
+            $ticketId = $ticketData['ticket_id'];
+            if($ticketTransactionId) {
+                $ticketTransaction = Ticket::updateCatalogingComplete($ticketTransactionId, $ticketId, $ticketData);
+            }
+        }catch (Exception $e) {
+            // RollBack Merges
+            // DB::rollback();
+            $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
+            return $errorMsg;
         }
+
         return $ticketTransaction;
     }
 

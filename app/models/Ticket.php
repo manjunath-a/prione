@@ -70,34 +70,30 @@ class Ticket extends Eloquent  {
         throw new Exception("Service Associates is required ");
       }
 
-      if($data['status_id'] == 1) {
-          $photoStage = Stage::where('stage_name',
-              '(Local) Photoshoot Completed / Seller Images Provided')->first();
+      if( $data['pending_reason_id'] != 0 ) {
+          $photoStage = Stage::where('stage_name', '(Local) Associates Not Assigned')->first();
       } else {
-          $photoStage = Stage::where('stage_name',
-              '(Local) Associates Not Assigned')->first();
+          $photoStage = Stage::where('stage_name', '(Local) Photoshoot Completed / Seller Images Provided')->first();
       }
 
       $ticketData = Ticket::TicketData($photoStage->id, 1, $data);
-      $ticketData['photographer_id'] =  Auth::user()->id;
+      $ticketData['photographer_id']     =  Auth::user()->id;
       $ticketData['photoshoot_location'] =  $data['photoshoot_location'];
-      $ticketData['photoshoot_date']    = $data['photoshoot_date'];
+      $ticketData['photoshoot_date']     = $data['photoshoot_date'];
 
       // Assgining to Local Team Lead
       $ticketData['assigned_to'] = Ticket::findUserByRoleAndCity('Local Team Lead', $cityId);;
-      $leadTransaction = TicketTransaction::updateTicket($ticketData);
+      $leadTransaction           = TicketTransaction::updateTicket($ticketData);
 
-      if($data['status_id'] == 1) {
-          // Assgining to service Assiocate
-          $ticketData['assigned_to'] = $data['mif_id'];
-          $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
-          // Check for Poto Grapher assigned
-          if (Auth::user()->id) {
-              $ticketData['assigned_to'] = Auth::user()->id;
-              $ticketData['active'] = 0;
+      // Assgining to service Assiocate
+      $ticketData['assigned_to']   = $data['mif_id'];
+      $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
 
-              $photographerTransaction = TicketTransaction::updateTicket($ticketData);
-          }
+      // Check for Poto Grapher assigned
+      if (Auth::user()->id) {
+          $ticketData['assigned_to'] = Auth::user()->id;
+          $ticketData['active']      = 0;
+          $photographerTransaction   = TicketTransaction::updateTicket($ticketData);
       }
 
       return $leadTransaction->id;
@@ -105,22 +101,22 @@ class Ticket extends Eloquent  {
 
 
   public static function updateMIF($ticketTransactionId, $ticketId, $data) {
+
+      //  'Validate Ticket';
+      if($data['stage_id'] <= 2) {
+          throw new Exception("Photoshoot need to be completed before Service Associates Complete");
+      }elseif($data['mif_id'] == 0) {
+              throw new Exception("Service Associates is required ");
+          }
+
       $cityId =  Auth::user()->city_id;
       // Update Team Lead
-      $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)
-        ->update(array('active' => 0));
+      $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
 
-      //  'Model Ticket';
-      if($data['mif_id'] == 0) {
-          throw new Exception("Service Associates is required ");
-      }
-
-      if($data['status_id'] == 1) {
-          $mifStage = Stage::where('stage_name',
-              '(Local) MIF Completed')->first();
+      if( $data['pending_reason_id'] != 0 ) {
+          $mifStage = Stage::where('stage_name', '(Local) Photoshoot Completed / Seller Images Provided')->first();
       } else {
-          $mifStage = Stage::where('stage_name',
-              '(Local) Associates Not Assigned')->first();
+          $mifStage = Stage::where('stage_name', '(Local) MIF Completed')->first();
       }
 
       $ticketData = Ticket::ticketData($mifStage->id, 1, $data);
@@ -128,25 +124,18 @@ class Ticket extends Eloquent  {
       $ticketData['photoshoot_location'] = $data['photoshoot_location'];
       $ticketData['photoshoot_date']     = $data['photoshoot_date'];
 
-      // Check for Poto Grapher assigned
-      // if($data['photographer_id']) {
-      //   $ticketData['assigned_to'] = $data['photographer_id'];
-      //   $photographerTransaction = TicketTransaction::updateTicket($ticketData);
-      // }
-
       // Assgining to Local Team Lead
       $ticketData['assigned_to'] = Ticket::findUserByRoleAndCity('Local Team Lead', $cityId);
       $leadTransaction = TicketTransaction::updateTicket($ticketData);
 
-      if($data['status_id'] == 1) {
-          // Assgining to Service Assiocate as current Session user
-          if (Auth::user()->id) {
-              $ticketData['mif_id'] = Auth::user()->id;
-              $ticketData['assigned_to'] = Auth::user()->id;
-              $ticketData['active'] = 0;
-              $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
-          }
+      // Assgining to Service Assiocate as current Session user
+      if (Auth::user()->id) {
+          $ticketData['mif_id']        = Auth::user()->id;
+          $ticketData['assigned_to']   = Auth::user()->id;
+          $ticketData['active']        = 0;
+          $serviceAssociateTransaction = TicketTransaction::updateTicket($ticketData);
       }
+
       return $leadTransaction->id;
     }
 
@@ -205,12 +194,17 @@ class Ticket extends Eloquent  {
   }
 
   public static function updateAssignEditor($ticketTransactionId, $ticketId, $data) {
-
+     // print_r($data);exit;
       $seller             = SellerRequest::find($ticketId)->toArray();
       // Deactivate old tickect transaction
       $ticketTransaction  = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
       $localCompleted     = Stage::where('stage_name', '(Local) MIF Completed')->first();
       $ticketData         = Ticket::ticketData($localCompleted->id, 1, $data);
+
+      if( $data['pending_reason_id'] == 6 ) {
+          $data['group_id']  = 1;
+          $data['priority']  = 3;
+      }
 
       // Assgining to Local Team Lead
       $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
@@ -220,13 +214,15 @@ class Ticket extends Eloquent  {
       $ticketData['editingteamlead_id']   = Auth::user()->id;
       $ticketData['editor_id']            = $data['editor'];
       $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
-      // Assgining Editing Team Lead
-      $ticketData['assigned_to']          = Auth::user()->id;
-      $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
 
-      // Assgining Editor
-      $ticketData['assigned_to']          = $data['editor'];
-      $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
+      if( $data['pending_reason_id'] != 6 ) {
+          // Assgining Editing Team Lead
+          $ticketData['assigned_to']          = Auth::user()->id;
+          $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
+          // Assgining Editor
+          $ticketData['assigned_to']          = $data['editor'];
+          $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
+      }
 
       return $editorTransaction->id;
   }
@@ -261,19 +257,20 @@ class Ticket extends Eloquent  {
   }
 
   public static function updateEditingComplete($ticketTransactionId, $ticketId, $data) {
-
+      //print_r($data);exit;
       $seller             = SellerRequest::find($ticketId)->toArray();
       // Deactivate old tickect transaction
       $ticketTransaction  = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
 
-      if($data['pending_reason_id'] == 5) {
-          $editingStage = Stage::where('stage_name', '(Local) MIF Completed')->first();
+      if( $data['pending_reason_id'] == 6 ) {
+          $editingStage     = Stage::where('stage_name', '(Local) MIF Completed')->first();
+          $data['group_id'] = 1;
+          $data['priority'] = 3;
       } else {
           $editingStage = Stage::where('stage_name', '(Central) Editing Completed')->first();
       }
 
-      $ticketData         = Ticket::ticketData($editingStage->id, 1, $data);
-
+      $ticketData       = Ticket::ticketData($editingStage->id, 1, $data);
       // Assgining to Local Team Lead
       $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
       $ticketData['photographer_id']      = $data['photographer_id'];
@@ -283,23 +280,67 @@ class Ticket extends Eloquent  {
       $ticketData['editor_id']            = $data['editor'];
       $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
 
-      // Assgining Editing Manager
-      $user = new User;
-      $editingManager            = $user->findUserByRoleName('Editing Manager');
-      $ticketData['assigned_to'] = $editingManager[0]->id;
-      $leadTransaction           = TicketTransaction::updateTicket($ticketData);
+      if( $data['pending_reason_id'] == 0 ) {
 
-      // Assgining Editing Team Lead
-      $ticketData['assigned_to']          = $data['editingteamlead'];
-      $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
+          // Assgining Editing Manager
+          $user = new User;
+          $editingManager            = $user->findUserByRoleName('Editing Manager');
+          $ticketData['assigned_to'] = $editingManager[0]->id;
+          $leadTransaction           = TicketTransaction::updateTicket($ticketData);
+
+          // Assgining Editing Team Lead
+          $ticketData['assigned_to'] = $data['editingteamlead'];
+          $editorTransaction         = TicketTransaction::updateTicket($ticketData);
+      }
 
       // Assgining Editor
-      $ticketData['assigned_to']          = $data['editor'];
-      $ticketData['active']               = 0;
-      $editorTransaction                  = TicketTransaction::updateTicket($ticketData);
+      $ticketData['assigned_to']     = $data['editor'];
+      $ticketData['active']          = 0;
+      $editorTransaction             = TicketTransaction::updateTicket($ticketData);
 
       return $editorTransaction->id;
   }
+
+    public static function updateAssignCatalogTeamLead($ticketTransactionId, $ticketId, $data) {
+        //print_r($data);exit;
+        $seller             = SellerRequest::find($ticketId)->toArray();
+        // Deactivate old tickect transaction
+        $ticketTransaction  = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
+        $editingCompleted   = Stage::where('stage_name', '(Central) Editing Completed')->first();
+        $ticketData         = Ticket::ticketData($editingCompleted->id, 1, $data);
+
+        // Assgining to Local Team Lead
+        $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
+        $ticketData['photographer_id']      = $data['photographer_id'];
+        $ticketData['photoshoot_location']  = $data['photoshoot_location'];
+        $ticketData['photoshoot_date']      = $data['photoshoot_date'];
+        $ticketData['editingteamlead_id']   = $data['editingteamlead'];
+        $ticketData['editor_id']            = $data['editor'];
+        $ticketData['catalogingteamlead_id']= $data['catalogueTeamLead'];
+        $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
+
+        // Assgining Editing Manager
+        $user = new User;
+        $editingManager            = $user->findUserByRoleName('Editing Manager');
+        $ticketData['assigned_to'] = $editingManager[0]->id;
+        $leadTransaction           = TicketTransaction::updateTicket($ticketData);
+
+        // Assgining Editing Team Lead
+        $ticketData['assigned_to'] = $data['editingteamlead'];
+        $editingTransaction        = TicketTransaction::updateTicket($ticketData);
+
+        // Assgining catalogue Manager
+        $catalogueManager          = $user->findUserByRoleName('Catalogue Manager');
+        $ticketData['assigned_to'] = $catalogueManager[0]->id;
+        $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
+
+        // Assgining catalogue TeamLead
+        $ticketData['assigned_to'] = $data['catalogueTeamLead'];
+        $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
+
+        return $catalogueTransaction->id;
+    }
+
 
   public static function updateCatalogTeamLead($ticketTransactionId, $ticketId, $data) {
       //print_r($data);exit;
@@ -309,40 +350,10 @@ class Ticket extends Eloquent  {
       $editingCompleted   = Stage::where('stage_name', '(Central) Editing Completed')->first();
       $ticketData         = Ticket::ticketData($editingCompleted->id, 1, $data);
 
-      // Assgining to Local Team Lead
-      $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
-      $ticketData['photographer_id']      = $data['photographer_id'];
-      $ticketData['photoshoot_location']  = $data['photoshoot_location'];
-      $ticketData['photoshoot_date']      = $data['photoshoot_date'];
-      $ticketData['editingteamlead_id']   = $data['editingteamlead'];
-      $ticketData['editor_id']            = $data['editor'];
-      $ticketData['catalogingteamlead_id']= $data['catalogueTeamLead'];
-      $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
-
-      // Assgining Editing Team Lead
-      $ticketData['assigned_to']          = $data['editingteamlead'];
-      $editingTransaction                 = TicketTransaction::updateTicket($ticketData);
-
-      // Assgining catalogue Manager
-      $user = new User;
-      $catalogueManager          = $user->findUserByRoleName('Catalogue Manager');
-      $ticketData['assigned_to'] = $catalogueManager[0]->id;
-      $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
-
-      // Assgining catalogue TeamLead
-      $ticketData['assigned_to'] = $data['catalogueTeamLead'];
-      $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
-
-      return $catalogueTransaction->id;
-  }
-
-  public static function updateCataloguer($ticketTransactionId, $ticketId, $data) {
-      //print_r($data);exit;
-      $seller             = SellerRequest::find($ticketId)->toArray();
-      // Deactivate old tickect transaction
-      $ticketTransaction  = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
-      $editingCompleted   = Stage::where('stage_name', '(Central) Editing Completed')->first();
-      $ticketData         = Ticket::ticketData($editingCompleted->id, 1, $data);
+      if( $data['pending_reason_id'] == 8 ) {
+          $data['group_id']  = 1;
+          $data['priority']  = 3;
+      }
 
       // Assgining to Local Team Lead
       $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
@@ -354,18 +365,95 @@ class Ticket extends Eloquent  {
       $ticketData['catalogingteamlead_id']= Auth::user()->id;
       $ticketData['cataloguer_id']        = $data['cataloguer'];
       $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
-      // Assgining Editing Team Lead
-      $ticketData['assigned_to']          = $data['editingteamlead'];
-      $editingTransaction                 = TicketTransaction::updateTicket($ticketData);
 
-      // Assgining catalogue Team Lead
-      $ticketData['assigned_to'] = Auth::user()->id;
-      $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
-      // Assgining cataloguer
-      $ticketData['assigned_to'] = $data['cataloguer'];
-      $cataloguerTransaction      = TicketTransaction::updateTicket($ticketData);
+      if( $data['pending_reason_id'] != 8 ) {
 
-      return $cataloguerTransaction->id;
+          // Assgining Editing Manager
+          $user = new User;
+          $editingManager            = $user->findUserByRoleName('Editing Manager');
+          $ticketData['assigned_to'] = $editingManager[0]->id;
+          $leadTransaction           = TicketTransaction::updateTicket($ticketData);
+
+          // Assgining Editing Team Lead
+          $ticketData['assigned_to'] = $data['editingteamlead'];
+          $editingTransaction        = TicketTransaction::updateTicket($ticketData);
+
+          // Assgining catalogue Manager
+          $catalogueManager          = $user->findUserByRoleName('Catalogue Manager');
+          $ticketData['assigned_to'] = $catalogueManager[0]->id;
+          $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
+
+          // Assgining catalogue Team Lead
+          $ticketData['assigned_to'] = Auth::user()->id;
+          $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
+
+          // Assgining cataloguer
+          $ticketData['assigned_to'] = $data['cataloguer'];
+          $cataloguerTransaction     = TicketTransaction::updateTicket($ticketData);
+      }
+
+      return $leadTransaction->id;
+  }
+
+  public static function updateCataloguer($ticketTransactionId, $ticketId, $data) {
+      //print_r($data);exit;
+      $seller             = SellerRequest::find($ticketId)->toArray();
+      // Deactivate old tickect transaction
+      $ticketTransaction  = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
+      $catalogCompleted   = Stage::where('stage_name', '(Central) Editing Completed')->first();
+
+
+      if( $data['pending_reason_id'] == 8 ) {
+          $data['group_id']  = 1;
+          $data['priority']  = 3;
+      }elseif($data['stage_id'] == 6 ) { #TODO has to remove this value check
+          $catalogCompleted   = Stage::where('stage_name', '(Central) Cataloging Completed')->first();
+          $data['status_id']  = 3;
+      }elseif($data['stage_id'] == 8 ) { #TODO has to remove this value check
+          $data['status_id']  = 4;
+          $catalogCompleted   = Stage::where('stage_name', '(Central) ASIN Created')->first();
+      }
+
+      $ticketData         = Ticket::ticketData($catalogCompleted->id, 1, $data);
+
+      // Assgining to Local Team Lead
+      $ticketData['assigned_to']          = Ticket::findUserByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);;
+      $ticketData['photographer_id']      = $data['photographer_id'];
+      $ticketData['photoshoot_location']  = $data['photoshoot_location'];
+      $ticketData['photoshoot_date']      = $data['photoshoot_date'];
+      $ticketData['editingteamlead_id']   = $data['editingteamlead'];
+      $ticketData['editor_id']            = $data['editor'];
+      $ticketData['catalogingteamlead_id']= Auth::user()->id;
+      $ticketData['cataloguer_id']        = $data['cataloguer'];
+      $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
+
+      if( $data['pending_reason_id'] != 8 or $data['status_id']  != 4) {
+
+          // Assgining Editing Manager
+          $user = new User;
+          $editingManager            = $user->findUserByRoleName('Editing Manager');
+          $ticketData['assigned_to'] = $editingManager[0]->id;
+          $leadTransaction           = TicketTransaction::updateTicket($ticketData);
+
+          // Assgining Editing Team Lead
+          $ticketData['assigned_to'] = $data['editingteamlead'];
+          $editingTransaction        = TicketTransaction::updateTicket($ticketData);
+
+          // Assgining catalogue Manager
+          $catalogueManager          = $user->findUserByRoleName('Catalogue Manager');
+          $ticketData['assigned_to'] = $catalogueManager[0]->id;
+          $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
+
+          // Assgining catalogue Team Lead
+          $ticketData['assigned_to'] = Auth::user()->id;
+          $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
+
+          // Assgining cataloguer
+          $ticketData['assigned_to'] = $data['cataloguer'];
+          $cataloguerTransaction     = TicketTransaction::updateTicket($ticketData);
+      }
+
+      return $leadTransaction->id;
   }
 
 
