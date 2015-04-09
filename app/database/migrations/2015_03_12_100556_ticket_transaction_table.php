@@ -15,9 +15,10 @@ class TicketTransactionTable extends Migration {
 		Schema::create('ticket_transaction', function(Blueprint $table) {
 				$table->increments('id', true)->unsigned();
 				$table->integer('ticket_id')->unsigned();;
-				$table->string('comment', 255);
 				$table->integer('status_id')->unsigned();;
 				$table->integer('assigned_to')->unsigned();;
+				$table->integer('total_sku')->unsigned()->nullable();
+  	    $table->integer('total_images')->unsigned()->nullable();
 				$table->dateTime('created_at');
       	$table->dateTime('updated_at');
       	// Foreign Key

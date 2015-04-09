@@ -17,7 +17,6 @@ class AlterTicketTransactionAddPendingReasonColumn extends Migration {
       //By default assign to admin
       $table->integer('pending_reason_id')->unsigned()->nullable()->default(NULL)->after('status_id');
       $table->foreign('pending_reason_id')->references('id')->on('pending_reason')->onDelete('cascade');
-      $table->dropColumn('pending_reason');
 
 		});
 	}

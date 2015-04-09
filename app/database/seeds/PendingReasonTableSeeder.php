@@ -29,14 +29,24 @@ class PendingReasonTableSeeder extends Seeder {
                 'sort'              => 4
             ),
             array(
-                'pending_reason'    => 'Images QC Failed',
+                'pending_reason'    => 'Editing Images QC Failed',
                 'status'            => 1,
                 'sort'              => 5
             ),
             array(
-                'pending_reason'    => 'MIF QC Failed',
+                'pending_reason'    => 'Raw Images QC Failed',
                 'status'            => 1,
                 'sort'              => 6
+            ),
+            array(
+                'pending_reason'    => 'Cataloging MIF QC Failed',
+                'status'            => 1,
+                'sort'              => 7
+            ),
+            array(
+                'pending_reason'    => 'Flat File MIF QC Failed',
+                'status'            => 1,
+                'sort'              => 8
             )
         );
 

@@ -14,11 +14,11 @@ class SellerRequestTable extends Migration {
 	{
 		 Schema::create('seller_request', function(Blueprint $table) {
       $table->increments('id', true)->unsigned();
-      $table->string('seller_name', 150);
+      $table->string('requester_name', 150);
       $table->string('email',150 );
       $table->mediumInteger('contact_number');
       $table->string('merchant_name', 150);
-      $table->integer('merchant_id');
+      $table->string('merchant_id',255);
       $table->integer('merchant_city_id')->unsigned();
       $table->integer('merchant_sales_channel_id')->unsigned();
       $table->string('poc_name', 150);
@@ -27,7 +27,9 @@ class SellerRequestTable extends Migration {
       $table->integer('category_id')->unsigned();
       $table->integer('total_sku')->unsigned();
       $table->boolean('image_available')->unsigned();
-      $table->string('coment');
+      $table->string('comment');
+      $table->dateTime('updated_at');
+      $table->dateTime('created_at');
 
       // Foreign Key
       $table->foreign('merchant_city_id')->references('id')->on('city')->onDelete('cascade');

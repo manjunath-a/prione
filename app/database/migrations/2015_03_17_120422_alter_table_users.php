@@ -15,7 +15,7 @@ class AlterTableUsers extends Migration {
 		Schema::table('users', function(Blueprint $table)
 		{
   	    $table->integer('city_id')->unsigned()->nullable()->after('confirmed');
-  	    $table->foreign('city_id')->references('id')->on('city')->onDelete('cascade');
+  	    $table->foreign('city_id')->references('id')->on('city')->onDelete('restrict');
 		});
 	}
 
