@@ -10,11 +10,17 @@ class DashboardController extends BaseController {
      */
     protected $user;
 
-     /**
+    /**
      * Util Service
-     * @var User
+     * @var util
      */
     protected $util;
+
+     /**
+     * TicketValidator
+     * @var validateTicket
+     */
+    protected $validateTicket;
 
     /**
      * Inject the models.
@@ -26,6 +32,7 @@ class DashboardController extends BaseController {
 
         $this->user = $user;
         $this->util = App::make('util');
+        $this->validateTicket = App::make('ticketValidator');
     }
 
 	/**
@@ -45,7 +52,9 @@ class DashboardController extends BaseController {
         $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
         $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -85,7 +94,9 @@ class DashboardController extends BaseController {
         $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
         $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -121,7 +132,9 @@ class DashboardController extends BaseController {
         $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
         $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -163,7 +176,9 @@ class DashboardController extends BaseController {
         $editingTeamLeadArray = $user->findUserByRoleName('Editing Team Lead');
         $editingteamlead      = $this->util->arrayToJQString($editingTeamLeadArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -200,7 +215,9 @@ class DashboardController extends BaseController {
         $editorArray          = $user->findUserByRoleName('Editor');
         $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -241,7 +258,9 @@ class DashboardController extends BaseController {
         $editorArray          = $user->findUserByRoleName('Editor');
         $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -285,7 +304,9 @@ class DashboardController extends BaseController {
         $catalogueTeamLeadArray= $user->findUserByRoleName('Catalogue Team Lead');
         $catalogueTeamLead     = $this->util->arrayToJQString($catalogueTeamLeadArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -328,7 +349,9 @@ class DashboardController extends BaseController {
         $cataloguerArray       = $user->findUserByRoleName('Cataloguer');
         $cataloguer            = $this->util->arrayToJQString($cataloguerArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -374,7 +397,9 @@ class DashboardController extends BaseController {
         $cataloguerArray       = $user->findUserByRoleName('Cataloguer');
         $cataloguer            = $this->util->arrayToJQString($cataloguerArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();

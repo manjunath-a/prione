@@ -53,7 +53,7 @@ App::error(function(Exception $exception, $code)
     $pathInfo = Request::getPathInfo();
     $message = $exception->getMessage() ?: 'Exception';
     Log::error("$code - $message @ $pathInfo\r\n$exception");
-    
+
     if (Config::get('app.debug')) {
     	return;
     }
@@ -86,6 +86,12 @@ App::down(function()
 {
 	return Response::make("Be right back!", 503);
 });
+
+/*
+|--------------------------------------------------------------------------
+| Ticket Validator
+|--------------------------------------------------------------------------
+*/
 
 /*
 |--------------------------------------------------------------------------

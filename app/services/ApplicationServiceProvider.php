@@ -9,5 +9,9 @@ class ApplicationServiceProvider extends ServiceProvider
     $this->app->bind('util', function()  {
         return new UtilService();
     });
+    $this->app->bind('ticketValidator', function()  {
+        return new TicketValidator( );
+    });
   }
+
 }

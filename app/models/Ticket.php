@@ -30,10 +30,6 @@ class Ticket extends Eloquent  {
 
   public static function assignTicket($ticketTransactionId, $ticketId, $data) {
 
-
-    if($data['mif_id'] == 0) {
-        throw new Exception("Service Associates is required ");
-    }
     $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
 
     $ticketData = Ticket::ticketData($data['stage_id'], 1, $data);
@@ -59,11 +55,6 @@ class Ticket extends Eloquent  {
     // Assgining to Local Team Lead from Session user
     $ticketData['assigned_to'] = Auth::user()->id;
     $leadTransaction = TicketTransaction::updateTicket($ticketData);
-
-    // Update Team Lead
-    //    $ticketTransaction          = TicketTransaction::find($ticketTransactionId);
-    //    $ticketTransaction->active  = 0;
-    //    $ticketTransaction->save();
 
     return $leadTransaction->id;
   }
@@ -551,8 +542,8 @@ class Ticket extends Eloquent  {
         {
            $errors .= $message;
         }
-        $errorMsg = json_encode(array('status'=>false, 'message' => $errors));
-        throw new Exception($errorMsg);
+        // $errorMsg = json_encode(array('status'=>false, 'message' => $errors));
+        throw new Exception($errors);
       }
 
       $ticketData['ticket_id']    = $data['ticket_id'];
@@ -568,6 +559,7 @@ class Ticket extends Eloquent  {
       $ticketData['total_sku']    = ($data['total_sku'])?$data['total_sku']:NULL;
       $ticketData['total_images'] = ($data['total_images'])?$data['total_images']:NULL;
       $ticketData['notes']        = ($data['comment'])?$data['comment']:NULL;
+      $ticketData['created_by']   =  Auth::user()->id;
       if(isset($data['pending_reason_id']))
       {
           $ticketData['pending_reason_id'] = ($data['pending_reason_id'])?$data['pending_reason_id']:NULL;

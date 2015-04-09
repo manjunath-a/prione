@@ -2,13 +2,20 @@
 
 class RequestController extends BaseController {
 
+    /**
+     * TicketValidator
+     * @var validateTicket
+     */
+    protected $validateTicket;
+
+
   /**
    * construct the models.
    */
   public function __construct()
   {
       parent::__construct();
-
+      $this->validateTicket = App::make('ticketValidator');
   }
 
 	/**
@@ -92,67 +99,78 @@ class RequestController extends BaseController {
 
   public function updateRequest() {
      // Begin DB transaction
-     // DB::beginTransaction();
+     DB::beginTransaction();
      try {
-      $ticketData = Input::all();
-      $ticketTransactionId = $ticketData['transaction_id'];
-      $ticketId = $ticketData['ticket_id'];
-        if($ticketTransactionId) {
-          if($ticketData['group_id'] == 2){
-              $ticketTransaction = Ticket::assignEditingManager($ticketTransactionId, $ticketId, $ticketData);
-          }else if($ticketData['group_id'] == 1) {
-              $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
-          } else {
-              $errorMsg = json_encode( array("message" => "User did not have permission to move Cataloging"));
-              throw new Exception( $errorMsg );
+          $ticketData = Input::all();
+          $ticketTransactionId = $ticketData['transaction_id'];
+          $ticketId = $ticketData['ticket_id'];
+          if($ticketTransactionId) {
+                if($ticketData['group_id'] == 2) {
+                    $this->validateTicket->editingManagerFlow($ticketData);
+                    $ticketTransaction = Ticket::assignEditingManager($ticketTransactionId,
+                      $ticketId, $ticketData);
+                } else if($ticketData['group_id'] == 1) {
+                    // Check for Local Lead update Process
+                    $this->validateTicket->localLeadFlow($ticketData);
+                    $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
+                } else if($ticketData['group_id'] == 3) {
+                    throw new Exception($this->validateTicket->_custom_messages['not_authorsied_catalog_move']);
+                }
           }
-        }
+          // Push to DB
+          DB::commit();
       } catch (Exception $e) {
-        // RollBack Merges
-        // DB::rollback();
-        $errorMsg = json_encode(array( 'status' => false, 'message' => $e->getMessage() ));
-        return $errorMsg;
+          // RollBack Entry from Trancation
+          DB::rollback();
+          $errorMsg = json_encode(array( 'status' => false, 'message' => $e->getMessage() ));
+          return $errorMsg;
       }
-      return $ticketTransaction;
+      return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
   }
 
    public function updatePhotographer() {
        // Begin DB transaction
-      // DB::beginTransaction();
+      DB::beginTransaction();
       try {
         $ticketData = Input::all();
         $ticketTransactionId = $ticketData['transaction_id'];
         $ticketId = $ticketData['ticket_id'];
         if($ticketTransactionId) {
+          $this->validateTicket->photographerFlow($ticketData);
           $ticketTransaction = Ticket::updatePhotographer($ticketTransactionId, $ticketId, $ticketData);
         }
+        // Push to DB
+        DB::commit();
       } catch (Exception $e) {
         // RollBack Merges
         // DB::rollback();
         $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
         return $errorMsg;
       }
-    return $ticketTransaction;
+    return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
   }
 
     public function updateMIF() {
         // Begin DB transaction
-        // DB::beginTransaction();
+        DB::beginTransaction();
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
 
             if($ticketTransactionId) {
+                $this->validateTicket->servicesAssociateFlow($ticketData);
                 $ticketTransaction = Ticket::updateMIF($ticketTransactionId, $ticketId, $ticketData);
             }
+            // Push to DB
+            DB::commit();
         } catch (Exception $e) {
           // RollBack Merges
-          // DB::rollback();
-          $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
+          DB::rollback();
+          $errorMsg = json_encode(array('status' => false, 'message' => $e->getMessage() ));
           return $errorMsg;
         }
-        return $ticketTransaction;
+        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
     }
 
     public function updateEditingManager() {
@@ -169,7 +187,7 @@ class RequestController extends BaseController {
           $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
           return $errorMsg;
         }
-        return $ticketTransaction;
+        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
     }
 
     public function updateEditingTeamLead() {
@@ -191,7 +209,7 @@ class RequestController extends BaseController {
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
-        return $ticketTransaction;
+        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
     }
 
     public function updateEditingComplete() {
@@ -209,7 +227,7 @@ class RequestController extends BaseController {
             return $errorMsg;
         }
 
-        return $ticketTransaction;
+        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
     }
 
     public function updateAssignCatalogTeamLead() {
@@ -227,7 +245,7 @@ class RequestController extends BaseController {
             return $errorMsg;
         }
 
-        return $ticketTransaction;
+        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
     }
 
     public function updateCatalogueTeamLead() {
@@ -244,7 +262,7 @@ class RequestController extends BaseController {
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
-        return $ticketTransaction;
+        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
     }
 
     public function updateCataloguer() {
@@ -261,7 +279,7 @@ class RequestController extends BaseController {
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
-        return $ticketTransaction;
+        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
     }
 
     // public function updateCatalogingComplete() {
