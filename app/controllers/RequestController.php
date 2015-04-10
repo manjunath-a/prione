@@ -106,7 +106,7 @@ class RequestController extends BaseController {
           $ticketId = $ticketData['ticket_id'];
           if($ticketTransactionId) {
                 if($ticketData['group_id'] == 2) {
-                    $this->validateTicket->editingManagerFlow($ticketData);
+                    $this->validateTicket->localLeadToEditingManagerFlow($ticketData);
                     $ticketTransaction = Ticket::assignEditingManager($ticketTransactionId,
                       $ticketId, $ticketData);
                 } else if($ticketData['group_id'] == 1) {

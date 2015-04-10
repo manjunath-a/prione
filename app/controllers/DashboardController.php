@@ -64,6 +64,7 @@ class DashboardController extends BaseController {
         $group = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
 //        $rules  = arraY('only' =>array('Seller not reachable',
@@ -108,6 +109,7 @@ class DashboardController extends BaseController {
 //        $rules  = arraY('only' =>array('(Local) Associates Assigned',
 //                     '(Local) Photoshoot Completed / Seller Images Provided'));
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         $pendingRules  = arraY('only' =>array('Seller not reachable',
@@ -147,6 +149,7 @@ class DashboardController extends BaseController {
 //                '(Local) Photoshoot Completed / Seller Images Provided',
 //                '(Local) MIF Completed'));
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         $pendingRules  = arraY('only' =>array('Seller not reachable',
@@ -188,6 +191,7 @@ class DashboardController extends BaseController {
         $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         // Show the page
@@ -227,6 +231,7 @@ class DashboardController extends BaseController {
         $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         $pendingRules   = arraY('only' =>array('Editing Images QC Failed', 'Raw Images QC Failed'));
@@ -270,6 +275,7 @@ class DashboardController extends BaseController {
         $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         $rules  = arraY('only' =>array('Raw Images QC Failed'));
@@ -316,6 +322,7 @@ class DashboardController extends BaseController {
         $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         // Show the page
@@ -361,6 +368,7 @@ class DashboardController extends BaseController {
         $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         $pendingRules   = arraY('only' =>array('Cataloging MIF QC Failed', 'Flat File MIF QC Failed'));
@@ -412,6 +420,7 @@ class DashboardController extends BaseController {
                      '(Central) ASIN Created'));
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
 
         $pendingRules   = arraY('only' =>array( 'Flat File MIF QC Failed'));

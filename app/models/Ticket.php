@@ -35,21 +35,24 @@ class Ticket extends Eloquent  {
     $ticketData = Ticket::ticketData($data['stage_id'], 1, $data);
 
     // Checks for Open Status
-    if($data['status_id'] == 1)
-    {
+    if($data['status_id'] == 1)   {
         if(isset($data['photographer_id'])) {
             if($data['photographer_id']) {
                 $ticketData['photographer_id']    = $data['photographer_id'];
                 $ticketData['photoshoot_location']= $data['photoshoot_location'];
                 $ticketData['assigned_to']        = $data['photographer_id'];
                 $ticketData['photoshoot_date']    = $data['photoshoot_date'];
-                $photographerTransaction = TicketTransaction::updateTicket($ticketData);
+                // Checks associate assigned stage else dont make entry in db
+                if($data['stage_id']==2) {
+                  $photographerTransaction = TicketTransaction::updateTicket($ticketData);
+                }
             }
         }
-
-        // Assgining to Service Assiocate
-        $ticketData['assigned_to']      = $data['mif_id'];
-        $serviceAssociateTransaction    = TicketTransaction::updateTicket($ticketData);
+        if($data['stage_id']!=4) {
+          // Assgining to Service Assiocate
+          $ticketData['assigned_to']      = $data['mif_id'];
+          $serviceAssociateTransaction    = TicketTransaction::updateTicket($ticketData);
+        }
     }
 
     // Assgining to Local Team Lead from Session user
@@ -74,7 +77,7 @@ class Ticket extends Eloquent  {
       if( $data['pending_reason_id'] != 0 ) {
           $photoStage = Stage::where('stage_name', '(Local) Associates Not Assigned')->first();
       } else {
-          $photoStage = Stage::where('stage_name', '(Local) Photoshoot Completed / Seller Images Provided')->first();
+          $photoStage = Stage::where('stage_name', '(Local) Photoshoot Completed')->first();
       }
 
       $ticketData = Ticket::TicketData($photoStage->id, 1, $data);
@@ -115,7 +118,7 @@ class Ticket extends Eloquent  {
       $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
 
       if( $data['pending_reason_id'] != 0 ) {
-          $mifStage = Stage::where('stage_name', '(Local) Photoshoot Completed / Seller Images Provided')->first();
+          $mifStage = Stage::where('stage_name', '(Local) Associates Not Assigned')->first();
       } else {
           $mifStage = Stage::where('stage_name', '(Local) MIF Completed')->first();
       }
