@@ -47,8 +47,18 @@
                         {"name":"id", "index":"id", "align":"center", "hidden":true},
                         {"name":"transaction_id", "index":"transaction_id", "align":"center", 'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
+
                         {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {"label":"editingmanager",'width':75,"align":"center","index":"editingmanager_id","name":"editingmanager_id",
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {"label":"editingteamlead_id",'width':75,"align":"center","index":"editingteamlead_id","name":"editingteamlead_id",
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {"label":"catalogingmanager_id",'width':75,"align":"center","index":"catalogingmanager_id","name":"catalogingmanager_id",
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {"label":"catalogingteamlead_id",'width':75,"align":"center","index":"catalogingteamlead_id","name":"catalogingteamlead_id",
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+
 
                         {'label':'Assigned Date','name':'assigned_date', 'index':'assigned_date','align':'center'},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},

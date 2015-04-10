@@ -70,9 +70,10 @@ class CentralDashboardRepository extends EloquentRepositoryAbstract  {
             'ticket_transaction.localteamlead_id','ticket_transaction.photographer_id', 'ticket_transaction.mif_id',
             'ticket_transaction.editingmanager_id', 'ticket_transaction.editingteamlead_id as editingteamlead_id',
             'ticket_transaction.editor_id as editor',
+            'ticket_transaction.catalogingmanager_id', 'ticket_transaction.catalogingteamlead_id as catalogingteamlead_id','ticket_transaction.cataloguer_id as cataloguer',
             'ticket_transaction.sa_variation', 'ticket_transaction.sa_sku',
             'ticket_transaction.total_sku', 'ticket_transaction.total_images',
-            'ticket_transaction.catalogingmanager_id', 'ticket_transaction.catalogingteamlead_id as catalogingteamlead_id','ticket_transaction.cataloguer_id as cataloguer',
+
             'ticket_transaction.id as transaction_id')
                             ->groupBy('ticket_transaction.id');
 

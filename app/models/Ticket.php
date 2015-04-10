@@ -75,7 +75,7 @@ class Ticket extends Eloquent  {
       $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
 
       if( $data['pending_reason_id'] != 0 ) {
-          $photoStage = Stage::where('stage_name', '(Local) Associates Not Assigned')->first();
+          $photoStage = Stage::where('stage_name', '(Local) Associates Assigned')->first();
       } else {
           $photoStage = Stage::where('stage_name', '(Local) Photoshoot Completed')->first();
       }
@@ -118,7 +118,10 @@ class Ticket extends Eloquent  {
       $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
 
       if( $data['pending_reason_id'] != 0 ) {
-          $mifStage = Stage::where('stage_name', '(Local) Associates Not Assigned')->first();
+          if($data['image_available']==1)
+              $mifStage = Stage::where('stage_name', '(Local) Photoshoot Completed')->first();
+          else
+              $mifStage = Stage::where('stage_name', '(Local) Seller Images Provided')->first();
       } else {
           $mifStage = Stage::where('stage_name', '(Local) MIF Completed')->first();
       }
@@ -166,7 +169,32 @@ class Ticket extends Eloquent  {
         return $leadTransaction->id;
     }
 
-  public static function updateEditingManager($ticketTransactionId, $ticketId, $data) {
+    public static function assignCatalogingManager($ticketTransactionId, $ticketId, $data) {
+
+        $cityId         =  Auth::user()->city_id;
+        $localCompleted = Stage::where('stage_name', '(Local) Editing Completed')->first();
+        $ticketData     = Ticket::ticketData($localCompleted->id, 1, $data);
+        $ticketData['photographer_id']      = $data['photographer_id'];
+        $ticketData['photoshoot_location']  = $data['photoshoot_location'];
+        $ticketData['photoshoot_date']      = $data['photoshoot_date'];
+        $ticketTransaction          = TicketTransaction::where('ticket_id', '=' , $ticketId)
+        ->update(array('active' => 0));
+
+        //Assgining To cataloging Manager
+        $ticketData['catalogingmanager_id'] = $data['catalogingmanager_id'];
+        $ticketData['assigned_to']  = $ticketData['catalogingmanager_id'];
+        $leadTransaction           = TicketTransaction::updateTicket($ticketData);
+
+        // Assgining Local Team lead
+        // Update Team Lead
+        $ticketData['assigned_to']  = $ticketData['localteamlead_id'];
+        $leadTransaction            = TicketTransaction::updateTicket($ticketData);
+
+        // Assgining Editing Manager
+        return $leadTransaction->id;
+    }
+
+    public static function updateEditingManager($ticketTransactionId, $ticketId, $data) {
 
       $localCompleted     = Stage::where('stage_name', '(Local) MIF Completed')->first();
       $ticketData         = Ticket::ticketData($localCompleted->id, 1, $data);

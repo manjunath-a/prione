@@ -17,6 +17,7 @@ class TicketValidator  extends IlluminateValidator {
         "stage_sa_assign" => "Change stage to assigned",
         "pending_reason_cant_move" => "Pending reason Ticket move not allowed",
         "editing_cant_move" => "Only MIF Complete stage can be moved to Editing Group",
+        "cataloging_cant_move" => "Not allowed to move Cataloging Group",
     );
 
     public function __construct()
@@ -37,21 +38,17 @@ class TicketValidator  extends IlluminateValidator {
       if($data['image_available'] == 1 && !$data['photographer_id']) {
           throw new \Exception($this->_custom_messages['photographer_required']);
       }
+
       // Check already in photographer or MIF queue
-      if($data['stage_id'] != '1' && !$data['pending_reason_id']) {
-
-        if(isset($ticketTransaction['photographer_id']) &&
-          ($ticketTransaction['photographer_id'] != $data['photographer_id'] &&
-          !$ticketTransaction['pending_reason_id'])) {
-          throw new \Exception($this->_custom_messages['photographer_already_assigned']);
-        }
-
-        if(isset($ticketTransaction['mif_id']) && ($ticketTransaction['mif_id'] != $data['mif_id'] &&
-          !$ticketTransaction['pending_reason_id'])) {
-          throw new \Exception($this->_custom_messages['service_associate_already_assigned']);
-        }
-
+      if($ticketTransaction['photographer_id'] != $data['photographer_id'] &&
+        ($data['stage_id'] == '3' OR  $data['stage_id'] == '4')) {
+        throw new \Exception($this->_custom_messages['photographer_already_assigned']);
       }
+
+      if($ticketTransaction['mif_id'] != $data['mif_id'] && $data['stage_id'] == '4' ) {
+        throw new \Exception($this->_custom_messages['service_associate_already_assigned']);
+      }
+
       // While pending reason ticket should not move the any queue
       if($data['stage_id'] != 1 && $data['pending_reason_id']) {
           throw new \Exception($this->_custom_messages['pending_reason_cant_move']);
@@ -85,8 +82,9 @@ class TicketValidator  extends IlluminateValidator {
      *  Photographer Work flow Validation
      */
     public function photographerFlow($data) {
-      $rules = [    'total_images' => 'required|Integer',
-                    'total_sku' => 'required|Integer',
+      $rules = [
+              'total_images' => 'required|Integer',
+              'total_sku' => 'required|Integer',
                 ];
       if(!$data['pending_reason_id']) {
          $this->checkValidator($data, $rules);
@@ -140,11 +138,25 @@ class TicketValidator  extends IlluminateValidator {
             throw new \Exception($this->_custom_messages['service_associate_required']);
         }
 
-      $this->checkValidator($data, $commonRules);
+      $this->checkValidator($data, $this->commonRules);
 
-      if($data['stage_id'] != '5') {
+      if($data['stage_id'] != '4') {
         throw new \Exception($this->_custom_messages['editing_cant_move']);
       }
+    }
+
+    /**
+     *  Editing Manager Work flow Validation
+     */
+    public function localLeadToCatalogingManagerFlow($data) {
+
+        $ticketTransaction = \TicketTransaction::find($data['transaction_id'])->toArray();
+
+        // While pending reason ticket should not move the any queue
+        if(!$data['catalogingmanager_id']) {
+            throw new \Exception($this->_custom_messages['cataloging_cant_move']);
+        }
+
     }
 
     /**

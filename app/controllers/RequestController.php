@@ -114,7 +114,9 @@ class RequestController extends BaseController {
                     $this->validateTicket->localLeadFlow($ticketData);
                     $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
                 } else if($ticketData['group_id'] == 3) {
-                    throw new Exception($this->validateTicket->_custom_messages['not_authorsied_catalog_move']);
+                    $this->validateTicket->localLeadToCatalogingManagerFlow($ticketData);
+                    $ticketTransaction = Ticket::assignCatalogingManager($ticketTransactionId,
+                      $ticketId, $ticketData);
                 }
           }
           // Push to DB
@@ -125,7 +127,7 @@ class RequestController extends BaseController {
           $errorMsg = json_encode(array( 'status' => false, 'message' => $e->getMessage() ));
           return $errorMsg;
       }
-      return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+      return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
   }
 
    public function updatePhotographer() {
@@ -147,7 +149,7 @@ class RequestController extends BaseController {
         $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
         return $errorMsg;
       }
-    return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+    return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
   }
 
     public function updateMIF() {
@@ -170,7 +172,7 @@ class RequestController extends BaseController {
           $errorMsg = json_encode(array('status' => false, 'message' => $e->getMessage() ));
           return $errorMsg;
         }
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     public function updateEditingManager() {
@@ -187,7 +189,7 @@ class RequestController extends BaseController {
           $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
           return $errorMsg;
         }
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     public function updateEditingTeamLead() {
@@ -209,7 +211,7 @@ class RequestController extends BaseController {
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     public function updateEditingComplete() {
@@ -227,7 +229,7 @@ class RequestController extends BaseController {
             return $errorMsg;
         }
 
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     public function updateAssignCatalogTeamLead() {
@@ -245,7 +247,7 @@ class RequestController extends BaseController {
             return $errorMsg;
         }
 
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     public function updateCatalogueTeamLead() {
@@ -262,7 +264,7 @@ class RequestController extends BaseController {
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     public function updateCataloguer() {
@@ -279,7 +281,7 @@ class RequestController extends BaseController {
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     // public function updateCatalogingComplete() {
