@@ -21,8 +21,9 @@
             {{--ID : #{{$user->id}}--}}
             City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
     </div>
-
-    {{ Form::open(array('url' => 'dashboard/photographer', 'method' => 'post', 'id'=> "photographerForm")) }}
+    <div id="myMessage" role="alert"> </div>
+    {{ Form::open(array('url' => 'dashboard/photographer', 'method' => 'post',
+            'id'=> "photographerForm")) }}
     <input name="fileProperties" type="hidden" value='[]'>
     <input name="sheetProperties" type="hidden" value='[]'>
     {{ Form::close() }}
@@ -85,7 +86,7 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#photographer').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#photographer').saveRow('"+cl+"');jQuery('#photographer').trigger('reloadGrid');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#photographer').saveRow('"+cl+"', '' , '', '', aftersavefunc, '');jQuery('#photographer').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#photographer').restoreRow('"+cl+"');\" />";
                             jQuery("#photographer").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }

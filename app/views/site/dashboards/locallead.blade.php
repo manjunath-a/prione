@@ -19,86 +19,17 @@
     <div class="page-header">
         <h3>Dashboard : {{$user->username}}
          City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
-    </div><div id="myMessage"> </div>
+    </div>
+    <div id="myMessage" role="alert"> </div>
     {{ Form::open(array('url' => 'dashboard/locallead', 'method' => 'post',
         'id'=> "sellerrequestExportForm")) }}
-        <input name="fileProperties" type="hidden" value='[]'>
-        <input name="sheetProperties" type="hidden" value='[]'>
     {{ Form::close() }}
     <table id="locallead">
-
     </table>
     <div id="localleadPager">
-
     </div>
     <script type="text/javascript">
-//        $(function() {
-//            // setTimeout() function will be fired after page is loaded
-//            // it will wait for 5 sec. and then will fire
-//            // $("#myMessage").hide() function
-//            setTimeout(function() {
-//                $("#myMessage").hide();
-//            }, 5000);
-//        });
-        var lastsel3;
-//         // define handler function for 'afterSubmit' event.
-//        var deleteMessage = function(response,postdata){
-//            var json   = response.responseText; // response text is returned from server.
-//            var result = JSON.parse(json); // convert json object into javascript object.
-//            console.log(result.status);
-//            return [result.status,result.message,null];
-//        }
 
-//        function isError(text) {alert(text);
-//            if(text.indexOf('ERROR') >= 0) {
-//                return [false, text];
-//            }
-//            return [true,''];
-//        }
-        aftersavefunc = function(response,postdata) {
-            data = JSON.parse(postdata.responseText);
-//            alert(data.status);
-//            alert(data.message);
-//
-           // alert(JSON.stringify(data));
-            if(data.status == false)
-            {
-//                alert(data.status);
-                $("#myMessage").addClass( "alert alert-error" );
-            } else if(data.status == true) {
-//                alert(data.status);
-                $("#myMessage").addClass( "alert alert-warning" );
-            }
-            $("#myMessage").text(data.message);
-            //$("#myMessage").text(JSON.stringify(postdata));
-            var $self = $(this);
-            setTimeout(function () {
-                $self.trigger("reloadGrid");
-            }, 50);
-            setTimeout(function() {
-                $("#myMessage").hide();
-            }, 5000);
-            return true;
-//            var json   = response.responseText; // response text is returned from server.
-//            var result = JSON.parse(json); // convert json object into javascript object.
-//            console.log(result.status);
-//            return [result.status,result.message,null];
-        }
-
-//        onErrorHandler = function(response,postdata) {
-//            alert(JSON.stringify(response));
-//            alert(JSON.stringify(postdata));
-////            alert(JSON.stringify(error));
-//            var $self = $(this);
-//            setTimeout(function () {
-//                $self.trigger("reloadGrid");
-//            }, 50);
-//            return true;
-////            var json   = response.responseText; // response text is returned from server.
-////            var result = JSON.parse(json); // convert json object into javascript object.
-////            console.log(result.status);
-////            return [result.status,result.message,null];
-//        }
         jQuery("#locallead").jqGrid({
                     "datatype":"json",
                     "mtype":"POST",
@@ -183,21 +114,13 @@
                             ]
                         }
                     ],
-//                    reloadAfterSubmit:true,
-//                    afterSubmitEvent:function(response, postdata) {alert("it Works");
-//                        return isError(response.responseText);
-//
-//                    },
                     "pager":"localleadPager"
                     //'cellEdit': true
                 }
         );
        jQuery("#locallead").jqGrid('navGrid', '#localleadPager',
         {add: false,edit:false,view:false,del:false,refresh: true,search:false});
-
-        //saveRow (rowid, onSuccessHandler , url, extraparam, aftersavefunc, onErrorHandler);
     </script>
     <!-- ./ content -->
     </div>
-
 @stop

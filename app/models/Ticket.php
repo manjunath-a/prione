@@ -30,40 +30,34 @@ class Ticket extends Eloquent  {
 
   public static function assignTicket($ticketTransactionId, $ticketId, $data) {
 
-
-    if($data['mif_id'] == 0) {
-        throw new Exception("Service Associates is required ");
-    }
     $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
 
     $ticketData = Ticket::ticketData($data['stage_id'], 1, $data);
 
     // Checks for Open Status
-    if($data['status_id'] == 1)
-    {
+    if($data['status_id'] == 1)   {
         if(isset($data['photographer_id'])) {
             if($data['photographer_id']) {
                 $ticketData['photographer_id']    = $data['photographer_id'];
                 $ticketData['photoshoot_location']= $data['photoshoot_location'];
                 $ticketData['assigned_to']        = $data['photographer_id'];
                 $ticketData['photoshoot_date']    = $data['photoshoot_date'];
-                $photographerTransaction = TicketTransaction::updateTicket($ticketData);
+                // Checks associate assigned stage else dont make entry in db
+                if($data['stage_id']==2) {
+                  $photographerTransaction = TicketTransaction::updateTicket($ticketData);
+                }
             }
         }
-
-        // Assgining to Service Assiocate
-        $ticketData['assigned_to']      = $data['mif_id'];
-        $serviceAssociateTransaction    = TicketTransaction::updateTicket($ticketData);
+        if($data['stage_id']!=4) {
+          // Assgining to Service Assiocate
+          $ticketData['assigned_to']      = $data['mif_id'];
+          $serviceAssociateTransaction    = TicketTransaction::updateTicket($ticketData);
+        }
     }
 
     // Assgining to Local Team Lead from Session user
     $ticketData['assigned_to'] = Auth::user()->id;
     $leadTransaction = TicketTransaction::updateTicket($ticketData);
-
-    // Update Team Lead
-    //    $ticketTransaction          = TicketTransaction::find($ticketTransactionId);
-    //    $ticketTransaction->active  = 0;
-    //    $ticketTransaction->save();
 
     return $leadTransaction->id;
   }
@@ -83,7 +77,7 @@ class Ticket extends Eloquent  {
       if( $data['pending_reason_id'] != 0 ) {
           $photoStage = Stage::where('stage_name', '(Local) Associates Not Assigned')->first();
       } else {
-          $photoStage = Stage::where('stage_name', '(Local) Photoshoot Completed / Seller Images Provided')->first();
+          $photoStage = Stage::where('stage_name', '(Local) Photoshoot Completed')->first();
       }
 
       $ticketData = Ticket::TicketData($photoStage->id, 1, $data);
@@ -124,7 +118,7 @@ class Ticket extends Eloquent  {
       $ticketTransaction = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
 
       if( $data['pending_reason_id'] != 0 ) {
-          $mifStage = Stage::where('stage_name', '(Local) Photoshoot Completed / Seller Images Provided')->first();
+          $mifStage = Stage::where('stage_name', '(Local) Associates Not Assigned')->first();
       } else {
           $mifStage = Stage::where('stage_name', '(Local) MIF Completed')->first();
       }
@@ -551,8 +545,8 @@ class Ticket extends Eloquent  {
         {
            $errors .= $message;
         }
-        $errorMsg = json_encode(array('status'=>false, 'message' => $errors));
-        throw new Exception($errorMsg);
+        // $errorMsg = json_encode(array('status'=>false, 'message' => $errors));
+        throw new Exception($errors);
       }
 
       $ticketData['ticket_id']    = $data['ticket_id'];
@@ -568,6 +562,7 @@ class Ticket extends Eloquent  {
       $ticketData['total_sku']    = ($data['total_sku'])?$data['total_sku']:NULL;
       $ticketData['total_images'] = ($data['total_images'])?$data['total_images']:NULL;
       $ticketData['notes']        = ($data['comment'])?$data['comment']:NULL;
+      $ticketData['created_by']   =  Auth::user()->id;
       if(isset($data['pending_reason_id']))
       {
           $ticketData['pending_reason_id'] = ($data['pending_reason_id'])?$data['pending_reason_id']:NULL;

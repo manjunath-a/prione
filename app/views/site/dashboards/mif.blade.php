@@ -20,7 +20,7 @@
         <h3>Dashboard : {{$user->username}}
             City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
     </div>
-
+    <div id="myMessage" role="alert"> </div>
     {{ Form::open(array('url' => 'dashboard/mif', 'method' => 'post', 'id'=> "mifForm")) }}
     <input name="fileProperties" type="hidden" value='[]'>
     <input name="sheetProperties" type="hidden" value='[]'>
@@ -81,7 +81,7 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#mif').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#mif').saveRow('"+cl+"');jQuery('#mif').trigger('reloadGrid');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#mif').saveRow('"+cl+"', '' , '', '', aftersavefunc, '');jQuery('#mif').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#mif').restoreRow('"+cl+"');\" />";
                             jQuery("#mif").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }

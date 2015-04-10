@@ -10,11 +10,17 @@ class DashboardController extends BaseController {
      */
     protected $user;
 
-     /**
+    /**
      * Util Service
-     * @var User
+     * @var util
      */
     protected $util;
+
+     /**
+     * TicketValidator
+     * @var validateTicket
+     */
+    protected $validateTicket;
 
     /**
      * Inject the models.
@@ -26,6 +32,7 @@ class DashboardController extends BaseController {
 
         $this->user = $user;
         $this->util = App::make('util');
+        $this->validateTicket = App::make('ticketValidator');
     }
 
 	/**
@@ -45,7 +52,9 @@ class DashboardController extends BaseController {
         $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
         $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -55,6 +64,7 @@ class DashboardController extends BaseController {
         $group = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
 //        $rules  = arraY('only' =>array('Seller not reachable',
@@ -85,7 +95,9 @@ class DashboardController extends BaseController {
         $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
         $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -97,6 +109,7 @@ class DashboardController extends BaseController {
 //        $rules  = arraY('only' =>array('(Local) Associates Assigned',
 //                     '(Local) Photoshoot Completed / Seller Images Provided'));
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         $pendingRules  = arraY('only' =>array('Seller not reachable',
@@ -121,7 +134,9 @@ class DashboardController extends BaseController {
         $serviceAssociateArray = $this->user->findAllByRoleAndCity('Services Associate', $user->city_id);
         $serviceassociates = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -134,6 +149,7 @@ class DashboardController extends BaseController {
 //                '(Local) Photoshoot Completed / Seller Images Provided',
 //                '(Local) MIF Completed'));
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         $pendingRules  = arraY('only' =>array('Seller not reachable',
@@ -163,7 +179,9 @@ class DashboardController extends BaseController {
         $editingTeamLeadArray = $user->findUserByRoleName('Editing Team Lead');
         $editingteamlead      = $this->util->arrayToJQString($editingTeamLeadArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -173,6 +191,7 @@ class DashboardController extends BaseController {
         $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         // Show the page
@@ -200,7 +219,9 @@ class DashboardController extends BaseController {
         $editorArray          = $user->findUserByRoleName('Editor');
         $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -210,6 +231,7 @@ class DashboardController extends BaseController {
         $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         $pendingRules   = arraY('only' =>array('Editing Images QC Failed', 'Raw Images QC Failed'));
@@ -241,7 +263,9 @@ class DashboardController extends BaseController {
         $editorArray          = $user->findUserByRoleName('Editor');
         $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -251,6 +275,7 @@ class DashboardController extends BaseController {
         $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         $rules  = arraY('only' =>array('Raw Images QC Failed'));
@@ -285,7 +310,9 @@ class DashboardController extends BaseController {
         $catalogueTeamLeadArray= $user->findUserByRoleName('Catalogue Team Lead');
         $catalogueTeamLead     = $this->util->arrayToJQString($catalogueTeamLeadArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -295,6 +322,7 @@ class DashboardController extends BaseController {
         $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         // Show the page
@@ -328,7 +356,9 @@ class DashboardController extends BaseController {
         $cataloguerArray       = $user->findUserByRoleName('Cataloguer');
         $cataloguer            = $this->util->arrayToJQString($cataloguerArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -338,6 +368,7 @@ class DashboardController extends BaseController {
         $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         $pendingRules   = arraY('only' =>array('Cataloging MIF QC Failed', 'Flat File MIF QC Failed'));
@@ -374,7 +405,9 @@ class DashboardController extends BaseController {
         $cataloguerArray       = $user->findUserByRoleName('Cataloguer');
         $cataloguer            = $this->util->arrayToJQString($cataloguerArray, 'username', 'id');
 
-        $priority = '0:select;1:Low;2:Medium;3:High';
+        $priorityArray = Priority::all();
+        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+
         $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
 
         $statusArray = Status::all();
@@ -387,6 +420,7 @@ class DashboardController extends BaseController {
                      '(Central) ASIN Created'));
 
         $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
 
         $pendingRules   = arraY('only' =>array( 'Flat File MIF QC Failed'));
