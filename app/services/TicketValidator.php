@@ -13,11 +13,16 @@ class TicketValidator  extends IlluminateValidator {
         "service_associate_already_assigned" => "Service Associates already assgined.",
         "photographer_required" => "Photographer is required.",
         "photographer_already_assigned" => "Photographer already assgined ",
+        "etl_required" => "Editing Team Lead is required",
+        "editor_required" => "Editior is required",
+        "ctl_required" => "Cataloging Team Lead is required",
+        "cataloguer_required" =>"Cataloger is required",
         "not_authorsied_catalog_move" => "You did not have permission to move to cataloging.",
         "stage_sa_assign" => "Change stage to assigned",
         "pending_reason_cant_move" => "Pending reason Ticket move not allowed",
         "editing_cant_move" => "Only MIF Complete stage can be moved to Editing Group",
         "cataloging_cant_move" => "Not allowed to move Cataloging Group",
+        "not_authorsied_edit" => "Edit option is not available for other Group Ticket",
     );
 
     public function __construct()
@@ -158,6 +163,107 @@ class TicketValidator  extends IlluminateValidator {
         }
 
     }
+
+    /**
+     * editingManagerFlow
+     */
+
+     public function editingManagerFlow($data) {
+
+        //Check for Image Not available
+        if(!$data['editingteamlead_id']) {
+            throw new \Exception($this->_custom_messages['etl_required']);
+        }
+        // Not authorize to move cataloguing group
+        if($data['group_id'] != 2 ) {
+          throw new \Exception($this->_custom_messages['not_authorsied_edit']);
+        }
+     }
+
+     /**
+      * editingTeamLeadFlow
+      */
+
+     public function editingTeamLeadFlow($data) {
+
+        //Check for Image Not available
+        if(!$data['editor'] && !$data['pending_reason_id']) {
+            throw new \Exception($this->_custom_messages['editor_required']);
+        }
+        // Not authorize to move cataloguing group
+        if($data['group_id'] != 2 ) {
+          throw new \Exception($this->_custom_messages['not_authorsied_edit']);
+        }
+     }
+
+    /**
+     * editorFlow
+     */
+     public function editorFlow($data) {
+        $rules = [
+                  'total_images' => 'Integer',
+                  'total_sku' => 'Integer',
+                ];
+        if(!$data['pending_reason_id']) {
+           $this->checkValidator($data, $rules);
+        }
+        // Not authorize to move cataloguing group
+        if($data['group_id'] != 2 ) {
+          throw new \Exception($this->_custom_messages['not_authorsied_edit']);
+        }
+     }
+
+    /**
+     * catalogingManagerFlow
+     */
+
+    public function catalogingManagerFlow($data) {
+
+        //Check for Image Not available
+        if(!$data['catalogingteamlead_id']) {
+            throw new \Exception($this->_custom_messages['ctl_required']);
+        }
+        // Not authorize to move cataloguing group
+        if($data['group_id'] != 3 ) {
+          throw new \Exception($this->_custom_messages['not_authorsied_edit']);
+        }
+    }
+
+    /**
+     * catalogingTeamLeadFlow
+     */
+
+    public function catalogingTeamLeadFlow($data) {
+        $rules = [
+                  'sa_variation' => 'Integer',
+                  'sa_sku' => 'Integer',
+                ];
+        $this->checkValidator($data, $rules);
+        //Check for Image Not available
+        if(!$data['cataloguer'] && !$data['pending_reason_id']) {
+            throw new \Exception($this->_custom_messages['cataloguer_required']);
+        }
+        // Not authorize to move cataloguing group
+        if($data['group_id'] != 3 ) {
+          throw new \Exception($this->_custom_messages['not_authorsied_edit']);
+        }
+    }
+
+     /**
+     * catalogerFlow
+     */
+     public function catalogerFlow($data) {
+        $rules = [
+                  'sa_variation' => 'Integer',
+                  'sa_sku' => 'Integer',
+                ];
+        $this->checkValidator($data, $rules);
+        // Not authorize to move cataloguing group
+        if($data['group_id'] != 3 ) {
+          throw new \Exception($this->_custom_messages['not_authorsied_edit']);
+        }
+     }
+
 
     /**
      * checkValidator

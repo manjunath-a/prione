@@ -19,7 +19,7 @@
     <div class="page-header">
         <h3>Dashboard : Cataloguing Team Lead</h3>
     </div>
-
+    <div id="myMessage" role="alert"> </div>
     {{ Form::open(array('url' => 'dashboard/catalogueteamlead', 'method' => 'post', 'id'=> "catalogueteamleadForm")) }}
     <input name="fileProperties" type="hidden" value='[]'>
     <input name="sheetProperties" type="hidden" value='[]'>
@@ -47,6 +47,7 @@
                         {"label":"Category","align":"center","index":"category_name","name":"category_name"},
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
                             "editoptions":{'value':'{{rtrim($priority, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
+                        {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
 
                         {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
@@ -98,7 +99,7 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#catalogueteamlead').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#catalogueteamlead').saveRow('"+cl+"');jQuery('#catalogueteamlead').trigger('reloadGrid');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#catalogueteamlead').saveRow('"+cl+"', '' , '', '', aftersavefunc, '');jQuery('#catalogueteamlead').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#catalogueteamlead').restoreRow('"+cl+"');\" />";
                             jQuery("#catalogueteamlead").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }

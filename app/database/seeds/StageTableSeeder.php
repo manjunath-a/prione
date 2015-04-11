@@ -19,7 +19,7 @@ class StageTableSeeder extends Seeder {
                 'sort'        => 2
             ),
             array(
-                'stage_name'  => '(Local) Photoshoot Completed ',
+                'stage_name'  => '(Local) Photoshoot Completed',
                 'status'      => 1,
                 'sort'        => 3
             ),

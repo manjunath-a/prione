@@ -19,7 +19,7 @@
     <div class="page-header">
         <h3>Dashboard : Cataloging Manager</h3>
     </div>
-
+    <div id="myMessage" role="alert"> </div>
     {{ Form::open(array('url' => 'dashboard/cataloguemanager', 'method' => 'post', 'id'=> "cataloguemanagerForm")) }}
     <input name="fileProperties" type="hidden" value='[]'>
     <input name="sheetProperties" type="hidden" value='[]'>
@@ -47,7 +47,8 @@
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
                         {"index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku", "hidden":true},
                         {"index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation", "hidden":true},
-                        {'name':'group_id', 'index':'group_id', 'editable': true, 'align':'center', 'hidden' : true},
+                       {"label":"Group","index":"group_id","align":"center","width":110,"editable":true,
+                        "editoptions":{'value':'{{rtrim($group, ";")}}', "disabled": 'disabled' },"edittype":"select","formatter":"select","editrules":{"required":true },"name":"group_id"},
                         {'name':'priority', 'index':'priority', 'editable': true, 'align':'center', 'hidden' : true},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},
                         {"label":"Status","index":"status_id","align":"center","width":110,"editable":true, "editoptions":{'value':'{{rtrim($status, ";")}}',"disabled": 'disabled'},"edittype":"select", "formatter":"select","editrules":{"required":true},"name":"status_id"},
@@ -73,7 +74,9 @@
                         {"label":"No. of Images","align":"center","index":"total_images","name":"total_images","width":100,"editable":true,"hidden":true},
                         {"label":"Editor","index":"editor","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editor, ";")}}'},
                             "edittype":"select","editrules":{"required":true},"formatter":"select","name":"editor", 'hidden' : true},
-                        {"label":"Catalog Team Lead","index":"cataloguteamlead_id","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($catalogueTeamLead, ";")}}'},"edittype":"select","formatter":"select","name":"cataloguteamlead_id"},
+                        {"label":"Catalog Team Lead","index":"catalogingteamlead_id","align":"center","width":150,
+                        "editable":true, "editoptions":{'value':'{{rtrim($catalogueTeamLead, ";")}}'},"edittype":"select",
+                        "formatter":"select","name":"catalogingteamlead_id"},
                         {"label":"Stage","index":"stage_id","align":"center","width":350,"editable":true,
                         "editoptions":{'value':'{{rtrim($stage, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"stage_id"},
                         {"label":"No. of parent SKUs","index":"sa_sku","align":"center","width":130,"name":"sa_sku"},
@@ -88,7 +91,7 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#cataloguemanager').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#cataloguemanager').saveRow('"+cl+"');jQuery('#cataloguemanager').trigger('reloadGrid');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#cataloguemanager').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#cataloguemanager').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#cataloguemanager').restoreRow('"+cl+"');\" />";
                             jQuery("#cataloguemanager").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }

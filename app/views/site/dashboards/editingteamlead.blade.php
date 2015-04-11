@@ -19,17 +19,13 @@
     <div class="page-header">
         <h3>Dashboard : Editing Team Lead</h3>
     </div>
-
+    <div id="myMessage" role="alert"> </div>
     {{ Form::open(array('url' => 'dashboard/editingteamlead', 'method' => 'post', 'id'=> "editingteamleadForm")) }}
     <input name="fileProperties" type="hidden" value='[]'>
     <input name="sheetProperties" type="hidden" value='[]'>
     {{ Form::close() }}
-    <table id="editingteamlead">
-
-    </table>
-    <div id="editingteamleadPager">
-
-    </div>
+    <table id="editingteamlead"></table>
+    <div id="editingteamleadPager"></div>
     <script type="text/javascript">
         var lastsel3;
         jQuery("#editingteamlead").jqGrid({
@@ -91,7 +87,7 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#editingteamlead').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#editingteamlead').saveRow('"+cl+"');jQuery('#editingteamlead').trigger('reloadGrid');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#editingteamlead').saveRow('"+cl+"', '' , '', '', aftersavefunc, '');jQuery('#editingteamlead').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#editingteamlead').restoreRow('"+cl+"');\" />";
                             jQuery("#editingteamlead").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }

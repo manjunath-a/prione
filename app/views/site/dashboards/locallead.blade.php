@@ -52,6 +52,8 @@
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {"label":"editingteamlead_id",'width':75,"align":"center","index":"editingteamlead_id","name":"editingteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {"label":"editor_id",'width':75,"align":"center","index":"editor_id","name":"editor_id",
+                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {"label":"catalogingmanager_id",'width':75,"align":"center","index":"catalogingmanager_id","name":"catalogingmanager_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {"label":"catalogingteamlead_id",'width':75,"align":"center","index":"catalogingteamlead_id","name":"catalogingteamlead_id",

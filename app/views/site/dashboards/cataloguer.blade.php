@@ -19,7 +19,7 @@
     <div class="page-header">
         <h3>Dashboard : Cataloguer</h3>
     </div>
-
+    <div id="myMessage" role="alert"> </div>
     {{ Form::open(array('url' => 'dashboard/cataloguer', 'method' => 'post', 'id'=> "cataloguerForm")) }}
     <input name="fileProperties" type="hidden" value='[]'>
     <input name="sheetProperties" type="hidden" value='[]'>
@@ -53,6 +53,7 @@
                             "editoptions":{'value':'{{rtrim($stage, ";")}}'},"edittype":"select",
                             "formatter":"select","editrules":{"required":true},"name":"stage_id"
                         },
+                        {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
 
                         {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
@@ -98,7 +99,7 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#cataloguer').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#cataloguer').saveRow('"+cl+"');jQuery('#cataloguer').trigger('reloadGrid');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#cataloguer').saveRow('"+cl+"', '' , '', '', aftersavefunc, '');jQuery('#cataloguer').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#cataloguer').restoreRow('"+cl+"');\" />";
                             jQuery("#cataloguer").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }

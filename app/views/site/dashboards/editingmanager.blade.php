@@ -19,7 +19,7 @@
     <div class="page-header">
         <h3>Dashboard : Editing Manager</h3>
     </div>
-
+    <div id="myMessage" role="alert"> </div>
     {{ Form::open(array('url' => 'dashboard/editingmanager', 'method' => 'post', 'id'=> "editingmanagerForm")) }}
     <input name="fileProperties" type="hidden" value='[]'>
     <input name="sheetProperties" type="hidden" value='[]'>
@@ -74,7 +74,8 @@
                         "editable":true, "editrules":{'edithidden': true },"editoptions":{"disabled": 'disabled' }},
                         {"label":"No. of Images","align":"center","index":"total_images","name":"total_images","width":100,
                         "editable":true, "editrules":{'edithidden': true },"editoptions":{"disabled": 'disabled' }},
-                        {"label":"Editing Team Lead","index":"editingteamlead","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($editingteamlead, ";")}}'},"edittype":"select","formatter":"select","name":"editingteamlead"},
+                        {"label":"Editing Team Lead","index":"editingteamlead_id", "name":"editingteamlead_id", "align":"center","width":150,
+                        "editable":true, "editoptions":{'value':'{{rtrim($editingteamlead, ";")}}'},"edittype":"select","formatter":"select"},
                         {"label":"Stage","index":"stage_id","align":"center","width":350,"editable":true,
                         "editoptions":{'value':'{{rtrim($stage, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"stage_id"},
                         {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
@@ -87,7 +88,7 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#editingmanager').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#editingmanager').saveRow('"+cl+"');jQuery('#editingmanager').trigger('reloadGrid');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#editingmanager').saveRow('"+cl+"', '' , '', '', aftersavefunc, '');jQuery('#editingmanager').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#editingmanager').restoreRow('"+cl+"');\" />";
                             jQuery("#editingmanager").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }

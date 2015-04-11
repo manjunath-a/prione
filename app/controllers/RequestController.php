@@ -176,16 +176,21 @@ class RequestController extends BaseController {
     }
 
     public function updateEditingManager() {
+      // Begin DB transaction
+      DB::beginTransaction();
       try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if($ticketTransactionId) {
+                $this->validateTicket->editingManagerFlow($ticketData);
                 $ticketTransaction = Ticket::updateEditingManager($ticketTransactionId, $ticketId, $ticketData);
             }
+             // Push to DB
+            DB::commit();
          } catch (Exception $e) {
           // RollBack Merges
-          // DB::rollback();
+          DB::rollback();
           $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
           return $errorMsg;
         }
@@ -193,6 +198,8 @@ class RequestController extends BaseController {
     }
 
     public function updateEditingTeamLead() {
+        // Begin DB transaction
+        DB::beginTransaction();
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
@@ -201,13 +208,15 @@ class RequestController extends BaseController {
                 if($ticketData['group_id'] == 3){
                     $ticketTransaction = Ticket::updateCatalogManager($ticketTransactionId, $ticketId, $ticketData);
                 } else {
+                    $this->validateTicket->editingTeamLeadFlow($ticketData);
                     $ticketTransaction = Ticket::updateAssignEditor($ticketTransactionId, $ticketId, $ticketData);
                 }
-
             }
+            // Push to DB
+            DB::commit();
         } catch (Exception $e) {
             // RollBack Merges
-            // DB::rollback();
+            DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
@@ -215,16 +224,21 @@ class RequestController extends BaseController {
     }
 
     public function updateEditingComplete() {
+        // Begin DB transaction
+        DB::beginTransaction();
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if($ticketTransactionId) {
+                $this->validateTicket->editorFlow($ticketData);
                 $ticketTransaction = Ticket::updateEditingComplete($ticketTransactionId, $ticketId, $ticketData);
             }
+            // Push to DB
+            DB::commit();
         }catch (Exception $e) {
             // RollBack Merges
-            // DB::rollback();
+            DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
@@ -233,16 +247,21 @@ class RequestController extends BaseController {
     }
 
     public function updateAssignCatalogTeamLead() {
+        // Begin DB transaction
+        DB::beginTransaction();
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if($ticketTransactionId) {
+                $this->validateTicket->catalogingManagerFlow($ticketData);
                 $ticketTransaction = Ticket::updateAssignCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
             }
+             // Push to DB
+            DB::commit();
         }catch (Exception $e) {
-            // RollBack Merges
-            // DB::rollback();
+             // RollBack Merges
+            DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
@@ -251,16 +270,21 @@ class RequestController extends BaseController {
     }
 
     public function updateCatalogueTeamLead() {
+        // Begin DB transaction
+        DB::beginTransaction();
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if($ticketTransactionId) {
+                $this->validateTicket->catalogingTeamLeadFlow($ticketData);
                 $ticketTransaction = Ticket::updateCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
             }
+            // Push to DB
+            DB::commit();
         }catch (Exception $e) {
             // RollBack Merges
-            // DB::rollback();
+            DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
@@ -268,16 +292,21 @@ class RequestController extends BaseController {
     }
 
     public function updateCataloguer() {
+        // Begin DB transaction
+        DB::beginTransaction();
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if($ticketTransactionId) {
+                $this->validateTicket->catalogerFlow($ticketData);
                 $ticketTransaction = Ticket::updateCataloguer($ticketTransactionId, $ticketId, $ticketData);
             }
+            // Push to DB
+            DB::commit();
         }catch (Exception $e) {
             // RollBack Merges
-            // DB::rollback();
+            DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
