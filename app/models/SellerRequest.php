@@ -111,7 +111,7 @@ class SellerRequest extends Eloquent  {
 
         $user = new User;
         // Default as (Local) Associates Not Assigned
-        $stageId = Config::get('ticket.default_stage');
+        $stage = Stage::where('stage_name', '(Local) Associates Not Assigned')->first();
 
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
         $cityLead = $user->findAllByRoleAndCity('Local Team Lead', $merchantCity['id']);
@@ -162,7 +162,7 @@ class SellerRequest extends Eloquent  {
         // }
 
         // Assign Seller
-        $ticketTransactioData['stage_id'] = $stageId;
+        $ticketTransactioData['stage_id'] = $stage->id;
         $ticketTransactioData['total_sku'] = $requestData['total_sku'];
         $ticketTransactioData['total_images'] = 0;
 

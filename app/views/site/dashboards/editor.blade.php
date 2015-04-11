@@ -19,7 +19,7 @@
     <div class="page-header">
         <h3>Dashboard : Editor</h3>
     </div>
-
+    <div id="myMessage" role="alert"> </div>
     {{ Form::open(array('url' => 'dashboard/editor', 'method' => 'post', 'id'=> "editorForm")) }}
     <input name="fileProperties" type="hidden" value='[]'>
     <input name="sheetProperties" type="hidden" value='[]'>
@@ -87,7 +87,7 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#editor').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#editor').saveRow('"+cl+"');jQuery('#editor').trigger('reloadGrid');\" />";
+                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#editor').saveRow('"+cl+"', '' , '', '', aftersavefunc, '');jQuery('#editor').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#editor').restoreRow('"+cl+"');\" />";
                             jQuery("#editor").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }

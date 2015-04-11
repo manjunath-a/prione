@@ -114,7 +114,9 @@ class RequestController extends BaseController {
                     $this->validateTicket->localLeadFlow($ticketData);
                     $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
                 } else if($ticketData['group_id'] == 3) {
-                    throw new Exception($this->validateTicket->_custom_messages['not_authorsied_catalog_move']);
+                    $this->validateTicket->localLeadToCatalogingManagerFlow($ticketData);
+                    $ticketTransaction = Ticket::assignCatalogingManager($ticketTransactionId,
+                      $ticketId, $ticketData);
                 }
           }
           // Push to DB
@@ -125,7 +127,7 @@ class RequestController extends BaseController {
           $errorMsg = json_encode(array( 'status' => false, 'message' => $e->getMessage() ));
           return $errorMsg;
       }
-      return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+      return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
   }
 
    public function updatePhotographer() {
@@ -147,7 +149,7 @@ class RequestController extends BaseController {
         $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
         return $errorMsg;
       }
-    return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+    return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
   }
 
     public function updateMIF() {
@@ -170,27 +172,34 @@ class RequestController extends BaseController {
           $errorMsg = json_encode(array('status' => false, 'message' => $e->getMessage() ));
           return $errorMsg;
         }
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     public function updateEditingManager() {
+      // Begin DB transaction
+      DB::beginTransaction();
       try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if($ticketTransactionId) {
+                $this->validateTicket->editingManagerFlow($ticketData);
                 $ticketTransaction = Ticket::updateEditingManager($ticketTransactionId, $ticketId, $ticketData);
             }
+             // Push to DB
+            DB::commit();
          } catch (Exception $e) {
           // RollBack Merges
-          // DB::rollback();
+          DB::rollback();
           $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
           return $errorMsg;
         }
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     public function updateEditingTeamLead() {
+        // Begin DB transaction
+        DB::beginTransaction();
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
@@ -199,87 +208,109 @@ class RequestController extends BaseController {
                 if($ticketData['group_id'] == 3){
                     $ticketTransaction = Ticket::updateCatalogManager($ticketTransactionId, $ticketId, $ticketData);
                 } else {
+                    $this->validateTicket->editingTeamLeadFlow($ticketData);
                     $ticketTransaction = Ticket::updateAssignEditor($ticketTransactionId, $ticketId, $ticketData);
                 }
-
             }
+            // Push to DB
+            DB::commit();
         } catch (Exception $e) {
             // RollBack Merges
-            // DB::rollback();
+            DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     public function updateEditingComplete() {
+        // Begin DB transaction
+        DB::beginTransaction();
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if($ticketTransactionId) {
+                $this->validateTicket->editorFlow($ticketData);
                 $ticketTransaction = Ticket::updateEditingComplete($ticketTransactionId, $ticketId, $ticketData);
             }
+            // Push to DB
+            DB::commit();
         }catch (Exception $e) {
             // RollBack Merges
-            // DB::rollback();
+            DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
 
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     public function updateAssignCatalogTeamLead() {
+        // Begin DB transaction
+        DB::beginTransaction();
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if($ticketTransactionId) {
+                $this->validateTicket->catalogingManagerFlow($ticketData);
                 $ticketTransaction = Ticket::updateAssignCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
             }
+             // Push to DB
+            DB::commit();
         }catch (Exception $e) {
-            // RollBack Merges
-            // DB::rollback();
+             // RollBack Merges
+            DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
 
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     public function updateCatalogueTeamLead() {
+        // Begin DB transaction
+        DB::beginTransaction();
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if($ticketTransactionId) {
+                $this->validateTicket->catalogingTeamLeadFlow($ticketData);
                 $ticketTransaction = Ticket::updateCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
             }
+            // Push to DB
+            DB::commit();
         }catch (Exception $e) {
             // RollBack Merges
-            // DB::rollback();
+            DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     public function updateCataloguer() {
+        // Begin DB transaction
+        DB::beginTransaction();
         try {
             $ticketData = Input::all();
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if($ticketTransactionId) {
+                $this->validateTicket->catalogerFlow($ticketData);
                 $ticketTransaction = Ticket::updateCataloguer($ticketTransactionId, $ticketId, $ticketData);
             }
+            // Push to DB
+            DB::commit();
         }catch (Exception $e) {
             // RollBack Merges
-            // DB::rollback();
+            DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
             return $errorMsg;
         }
-        return json_encode(array( 'status' => true, 'message' => 'Ticked Saved Successfuly'));
+        return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
     // public function updateCatalogingComplete() {
