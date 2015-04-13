@@ -432,12 +432,21 @@ class Ticket extends Eloquent  {
       }
 
       if( $data['pending_reason_id'] == 7 ) {
+          $catalogStage = Stage::where('stage_name', '(Central) Editing Completed')->first();
+          $data['group_id']  = 3;
+          $data['priority']  = 3;
+          $data['status_id']  = 1;
+      }
+
+      if( $data['pending_reason_id'] == 8 ) {
+          $catalogStage = Stage::where('stage_name', '(Local) Seller Images Provided')->first();
+
           if($data['image_available']==1)
               $catalogStage = Stage::where('stage_name', '(Local) Photoshoot Completed')->first();
-          else
-              $catalogStage = Stage::where('stage_name', '(Local) Seller Images Provided')->first();
+
           $data['group_id']  = 1;
           $data['priority']  = 3;
+          $data['status_id']  = 1;
       }
 
       $ticketData         = Ticket::ticketData($catalogStage->id, 1, $data);
@@ -452,6 +461,7 @@ class Ticket extends Eloquent  {
       $ticketData['editingteamlead_id']   = $data['editingteamlead_id'];
       $ticketData['catalogingteamlead_id'] = $data['catalogingteamlead_id'];
       $ticketData['editor_id']            = $data['editor'];
+
       if($data['cataloguer']) {
           $ticketData['catalogingteamlead_id']= Auth::user()->id;
           $ticketData['cataloguer_id']        = $data['cataloguer'];
@@ -475,6 +485,7 @@ class Ticket extends Eloquent  {
           // Assgining catalogue Team Lead
           $ticketData['assigned_to'] = $data['catalogingteamlead_id'];
           $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
+
           if($data['cataloguer']) {
               // Assgining cataloguer
               $ticketData['assigned_to'] = $data['cataloguer'];
@@ -482,7 +493,7 @@ class Ticket extends Eloquent  {
           }
       }
 
-      return $catalogueTransaction->id;
+      return $leadTransaction->id;
   }
 
   public static function updateCataloguer($ticketTransactionId, $ticketId, $data) {
