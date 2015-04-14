@@ -32,6 +32,7 @@
                     "datatype":"json",
                     "mtype":"POST",
                     "url":"editingteamlead",
+                    "height": 340,
                     "editurl":'/request/updateEditingTeamLead',
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75, 'sortable':false},

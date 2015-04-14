@@ -119,8 +119,6 @@ return array(
         // Amazon service provider added
         'Aws\Laravel\AwsServiceProvider',
         /* Uncomment for use in development */
-//        'Way\Generators\GeneratorsServiceProvider', // Generators
-//        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider', // IDE Helpers
         'Barryvdh\Debugbar\ServiceProvider', //Laravel Debugger
 
     ),

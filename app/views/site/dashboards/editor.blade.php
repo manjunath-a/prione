@@ -36,6 +36,7 @@
                     "datatype":"json",
                     "mtype":"POST",
                     "url":"editor",
+                    "height": 340,
                     "editurl":'/request/updateEditingComplete',
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75, 'sortable':false},

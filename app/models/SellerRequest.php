@@ -178,31 +178,32 @@ class SellerRequest extends Eloquent  {
         $editing = $folderName .'/editing/';
         $cataloging = $folderName .'/cataloging/';
 
-        $s3 = App::make('aws')->get('s3');
-        $result = $s3->putObject(array(
-            'Bucket' => 'prionecataloguing',
-            'Key'    => $folderName ,
-            'Body' => ''
-        ));
+        // $s3 = App::make('aws')->get('s3');
+        // $result = $s3->putObject(array(
+        //     'Bucket' => 'prionecataloguing',
+        //     'Key'    => $folderName ,
+        //     'Body' => ''
+        // ));
 
-        $result = $s3->putObject(array(
-            'Bucket' => 'prionecataloguing',
-            'Key'    => $local ,
-            'Body' => ''
-        ));
-        $result = $s3->putObject(array(
-            'Bucket' => 'prionecataloguing',
-            'Key'    => $editing ,
-            'Body' => ''
-        ));
-        $result = $s3->putObject(array(
-            'Bucket' => 'prionecataloguing',
-            'Key'    => $cataloging ,
-            'Body' => ''
-        ));
+        // $result = $s3->putObject(array(
+        //     'Bucket' => 'prionecataloguing',
+        //     'Key'    => $local ,
+        //     'Body' => ''
+        // ));
+        // $result = $s3->putObject(array(
+        //     'Bucket' => 'prionecataloguing',
+        //     'Key'    => $editing ,
+        //     'Body' => ''
+        // ));
+        // $result = $s3->putObject(array(
+        //     'Bucket' => 'prionecataloguing',
+        //     'Key'    => $cataloging ,
+        //     'Body' => ''
+        // ));
 
-        $s3URL = $s3->getObjectUrl('prionecataloguing',$folderName);
-        return $s3URL;//$folderName;
+        // $s3URL = $s3->getObjectUrl('prionecataloguing',$folderName);
+        return $folderName;
+        // return $s3URL;
     }
 
     public function requetIdByTicketId($ticketId)  {
