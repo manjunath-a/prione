@@ -41,6 +41,7 @@
                     "url":"photographer",
                     "editurl":'/request/updatePhotographer',
                     "rowNum":25,
+                    "height": 340,
                     "viewrecords":false,
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75, 'sortable':false},

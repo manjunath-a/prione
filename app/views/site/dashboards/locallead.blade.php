@@ -36,6 +36,7 @@
                     "url":"locallead",
                     "editurl":'/request/update',
                     "rowNum":25,
+                    "height": 340,
                     "viewrecords":false,
                     "refersh":true,
                     "colModel":[

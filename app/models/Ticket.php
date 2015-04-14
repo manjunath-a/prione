@@ -35,7 +35,7 @@ class Ticket extends Eloquent  {
     $ticketData = Ticket::ticketData($data['stage_id'], 1, $data);
 
     // Checks for Open Status
-    if($data['status_id'] == 1)   {
+    if($ticketData['status_id'] == 1)   {
         if(isset($data['photographer_id'])) {
             if($data['photographer_id']) {
                 $ticketData['photographer_id']    = $data['photographer_id'];
@@ -48,13 +48,12 @@ class Ticket extends Eloquent  {
                 }
             }
         }
-        if($data['stage_id']!=4) {
+        if($ticketData['stage_id']!=4 && $ticketData['mif_id']) {
           // Assgining to Service Assiocate
           $ticketData['assigned_to']      = $data['mif_id'];
           $serviceAssociateTransaction    = TicketTransaction::updateTicket($ticketData);
         }
     }
-
     // Assgining to Local Team Lead from Session user
     $ticketData['assigned_to'] = Auth::user()->id;
     $leadTransaction = TicketTransaction::updateTicket($ticketData);
@@ -424,11 +423,13 @@ class Ticket extends Eloquent  {
       $seller             = SellerRequest::find($ticketId)->toArray();
       // Deactivate old tickect transaction
       $ticketTransaction  = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
+      $catalogStage = Stage::where('stage_name', '(Central) Editing Completed')->first();
 
       if( $data['stage_id'] == 7 ) {
           $catalogStage     = Stage::where('stage_name', '(Central) QC Completed')->first();
-      } else {
-          $catalogStage = Stage::where('stage_name', '(Central) Editing Completed')->first();
+      }
+      if( $data['stage_id'] == 8 ) {
+          $catalogStage     = Stage::where('stage_name', '(Central) ASIN Created')->first();
       }
 
       if( $data['pending_reason_id'] == 7 ) {
@@ -644,7 +645,7 @@ class Ticket extends Eloquent  {
       $ticketData['group_id']     = $data['group_id'];
       $ticketData['active']       = $status;
       $ticketData['localteamlead_id'] = $data['localteamlead_id'];
-      $ticketData['mif_id']       = $data['mif_id'];
+      $ticketData['mif_id']       = ($data['mif_id'])?$data['mif_id']:NULL;
       $ticketData['sa_sku']       = $data['sa_sku'];
       $ticketData['sa_variation'] = $data['sa_variation'];
       $ticketData['total_sku']    = ($data['total_sku'])?$data['total_sku']:NULL;
