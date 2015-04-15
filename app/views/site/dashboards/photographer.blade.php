@@ -74,6 +74,9 @@
                         {"label":"Pending Reason","index":"pending_reason_id","align":"center","width":280,"editable":true,
                             "editoptions":{'value':'{{rtrim($pending, ";")}}'},"edittype":"select",
                             "formatter":"select","editrules":{"required":true},"name":"pending_reason_id"},
+                        {"label":"Photographer", "name":"photographer_id", "index":"photographer_id","align":"center","width":130, "hidden":true,
+                        "editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select", "id":"photographer_id"},
+
                         {"label":"Photoshoot Date","index":"photoshoot_date","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },
                         "width":150,"name":"photoshoot_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"}},
                         {"label":"Photoshoot Location","index":"photoshoot_location","align":"center","width":150,"editable":true,

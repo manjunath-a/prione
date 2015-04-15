@@ -108,8 +108,8 @@ class TicketValidator  extends IlluminateValidator {
             $this->checkValidator($data, $this->commonRules);
         }
 
-        if($data['image_available'] == 1 ) {
-          throw new Exception($this->_custom_messages['photoshoot_required']);
+        if($data['image_available'] == 1 && $data['stage_id'] !=3 ) {
+          throw new \Exception($this->_custom_messages['photoshoot_required']);
         }
     }
 
