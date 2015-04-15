@@ -325,9 +325,6 @@ class Ticket extends Eloquent  {
 
       // Assgining to Local Team Lead
       $ticketData['assigned_to']          = $data['localteamlead_id'];
-      // $ticketData['photographer_id']      = $data['photographer_id'];
-      // $ticketData['photoshoot_location']  = $data['photoshoot_location'];
-      // $ticketData['photoshoot_date']      = $data['photoshoot_date'];
       $ticketData['editingmanager_id']    = $data['editingmanager_id'];
       $ticketData['editingteamlead_id']   = $data['editingteamlead_id'];
       $ticketData['editor_id']            = $data['editor'];
@@ -363,9 +360,6 @@ class Ticket extends Eloquent  {
 
        // Assgining to Local Team Lead
         $ticketData['assigned_to']          = $data['localteamlead_id'];
-        // $ticketData['photographer_id']      = $data['photographer_id'];
-        // $ticketData['photoshoot_location']  = $data['photoshoot_location'];
-        // $ticketData['photoshoot_date']      = $data['photoshoot_date'];
         $ticketData['catalogingmanager_id']   = $data['catalogingmanager_id'];
         $ticketData['editingmanager_id']   = $data['editingmanager_id'];
         $ticketData['editingteamlead_id']   = $data['editingteamlead_id'];
@@ -398,7 +392,6 @@ class Ticket extends Eloquent  {
      */
 
     public static function updateCatalogTeamLead($ticketTransactionId, $ticketId, $data) {
-      //print_r($data);exit;
       $seller             = SellerRequest::find($ticketId)->toArray();
       // Deactivate old tickect transaction
       $ticketTransaction  = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
@@ -433,9 +426,7 @@ class Ticket extends Eloquent  {
 
       // Assgining to Local Team Lead
       $ticketData['assigned_to']          = $data['localteamlead_id'];
-      // $ticketData['photographer_id']      = $data['photographer_id'];
-      // $ticketData['photoshoot_location']  = $data['photoshoot_location'];
-      // $ticketData['photoshoot_date']      = $data['photoshoot_date'];
+
       $ticketData['catalogingmanager_id'] = $data['catalogingmanager_id'];
       $ticketData['editingmanager_id']    = $data['editingmanager_id'];
       $ticketData['editingteamlead_id']   = $data['editingteamlead_id'];
@@ -505,10 +496,8 @@ class Ticket extends Eloquent  {
 
       // Assgining to Local Team Lead
       $ticketData['assigned_to']          = $data['localteamlead_id'];
-      // $ticketData['photographer_id']      = $data['photographer_id'];
-      // $ticketData['photoshoot_location']  = $data['photoshoot_location'];
-      // $ticketData['photoshoot_date']      = $data['photoshoot_date'];
-      // $ticketData['catalogingmanager_id'] = $data['catalogingmanager_id'];
+
+      $ticketData['catalogingmanager_id'] = $data['catalogingmanager_id'];
       $ticketData['editingmanager_id']    = $data['editingmanager_id'];
       $ticketData['editingteamlead_id']   = $data['editingteamlead_id'];
       $ticketData['catalogingteamlead_id'] = $data['catalogingteamlead_id'];
@@ -543,41 +532,7 @@ class Ticket extends Eloquent  {
   }
 
 
-  // public static function updateCatalogingComplete($ticketTransactionId, $ticketId, $data) {
-  //       // print_r($data);exit;
-  //       $seller             = SellerRequest::find($ticketId)->toArray();
-  //       // Deactivate old tickect transaction
-  //       $ticketTransaction  = TicketTransaction::where('ticket_id', '=' ,$ticketId)->update(array('active' => 0));
-  //       $editingCompleted   = Stage::where('stage_name', '(Central) Cataloging Completed')->first();
-  //       $ticketData         = Ticket::ticketData($editingCompleted->id, 1, $data);
 
-  //       // Assgining to Local Team Lead
-  //       $ticketData['assigned_to']          = $data['localteamlead_id'];
-  //       $ticketData['photographer_id']      = $data['photographer_id'];
-  //       $ticketData['photoshoot_location']  = $data['photoshoot_location'];
-  //       $ticketData['photoshoot_date']      = $data['photoshoot_date'];
-
-  //       $ticketData['catalogingmanager_id'] = $data['catalogingmanager_id'];
-  //       $ticketData['editingmanager_id']    = $data['editingmanager_id'];
-  //       $ticketData['editingteamlead_id']   = $data['editingteamlead_id'];
-  //       $ticketData['catalogingteamlead_id'] = $data['catalogingteamlead_id'];
-  //       $ticketData['editor_id']            = $data['editor'];
-  //       $ticketData['cataloguer_id']        = $data['cataloguer'];
-
-  //       $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
-  //       // Assgining Editing Team Lead
-  //       $ticketData['assigned_to']          = $data['editingteamlead'];
-  //       $editingTransaction                 = TicketTransaction::updateTicket($ticketData);
-
-  //       // Assgining catalogue Team Lead
-  //       $ticketData['assigned_to'] = $data['catalogueTeamLead'];
-  //       $catalogueTransaction      = TicketTransaction::updateTicket($ticketData);
-  //       // Assgining cataloguer
-  //       $ticketData['assigned_to'] = Auth::user()->id;
-  //       $cataloguerTransaction     = TicketTransaction::updateTicket($ticketData);
-
-  //       return $cataloguerTransaction->id;
-  // }
 
   public static function findUserByRoleAndCity($role = 'Local Team Lead', $cityId) {
     $user       = new User;
