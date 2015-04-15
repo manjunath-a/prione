@@ -12,7 +12,9 @@ class TicketValidator  extends IlluminateValidator {
         "service_associate_required" => "Service Associates is required .",
         "service_associate_already_assigned" => "Service Associates already assgined.",
         "photographer_required" => "Photographer is required.",
+        "photoshoot_required" =>"Photoshoot need to be completed before Service Associates Complete",
         "photographer_already_assigned" => "Photographer already assgined ",
+        "emg_required" => "Editing Manager required",
         "etl_required" => "Editing Team Lead is required",
         "editor_required" => "Editior is required",
         "ctl_required" => "Cataloging Team Lead is required",
@@ -60,7 +62,7 @@ class TicketValidator  extends IlluminateValidator {
         if($data['photographer_id'] && $data['image_available'] == 1) {
             $rules = [
                       'photoshoot_location' => 'required',
-                      'photoshoot_date' => 'required|after:date',
+                      'photoshoot_date' => 'required',
                     ];
             $this->checkValidator($data, $rules);
         }
@@ -105,6 +107,10 @@ class TicketValidator  extends IlluminateValidator {
         if(!$data['pending_reason_id']) {
             $this->checkValidator($data, $this->commonRules);
         }
+
+        if($data['image_available'] == 1 ) {
+          throw new Exception($this->_custom_messages['photoshoot_required']);
+        }
     }
 
     /**
@@ -134,7 +140,7 @@ class TicketValidator  extends IlluminateValidator {
         if($data['image_available'] == 1) {
             $commonRules = array_merge($this->commonRules , array(
                   'photoshoot_location' => 'required',
-                  'photoshoot_date' => 'required|after:date'
+                  'photoshoot_date' => 'required'
                 ));
             if(!$data['photographer_id']) {
                 throw new \Exception($this->_custom_messages['photographer_required']);
@@ -158,6 +164,14 @@ class TicketValidator  extends IlluminateValidator {
     public function localLeadToCatalogingManagerFlow($data) {
 
         $ticketTransaction = \TicketTransaction::find($data['transaction_id'])->toArray();
+
+        if(!$data['editingmanager_id']) {
+            throw new \Exception($this->_custom_messages['emg_required']);
+        }
+
+        if(!$data['editingteamlead_id']) {
+            throw new \Exception($this->_custom_messages['etl_required']);
+        }
 
         // While pending reason ticket should not move the any queue
         if(!$data['catalogingmanager_id']) {

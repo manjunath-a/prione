@@ -52,7 +52,10 @@
                         "editoptions":{'value':'{{rtrim($group, ";")}}', "disabled": 'disabled' },"edittype":"select","formatter":"select","editrules":{"required":true },"name":"group_id"},
                         {'name':'priority', 'index':'priority', 'editable': true, 'align':'center', 'hidden' : true},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},
-                        {"label":"Status","index":"status_id","align":"center","width":110,"editable":true, "editoptions":{'value':'{{rtrim($status, ";")}}',"disabled": 'disabled'},"edittype":"select", "formatter":"select","editrules":{"required":true},"name":"status_id"},
+                        {"label":"Status","index":"status_id","align":"center","width":110,"editable":true,
+                         "editoptions":{'value':'{{rtrim($status, ";")}}',"disabled": 'disabled'},
+                         "edittype":"select", "formatter":"select","editrules":{"required":true},
+                         "name":"status_id"},
                         {"label":"Photographer","index":"photographer_id","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","name":"photographer_id","hidden":true},
                         {"label":"Photoshoot Date","index":"photoshoot_date","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },"width":150,"name":"photoshoot_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"},"hidden":true},
 

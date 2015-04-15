@@ -49,7 +49,10 @@
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
                             "editoptions":{'value':'{{rtrim($priority, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
                         {'name':'group_id', 'index':'group_id', 'editable': true, 'align':'center', 'hidden' : true},
-
+                        {"label":"Status","index":"status_id","align":"center","width":110,"editable":true,
+                        "editoptions":{'value':'{{rtrim($status, ";")}}',"disabled": 'disabled'},
+                        "edittype":"select", "formatter":"select","editrules":{"required":true},
+                        "name":"status_id"},
                         {"label":"Stage","index":"stage_id","align":"center","width":350,"editable":true,
                             "editoptions":{'value':'{{rtrim($stage, ";")}}'},"edittype":"select",
                             "formatter":"select","editrules":{"required":true},"name":"stage_id"
@@ -75,7 +78,7 @@
 
 
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},
-                        {"label":"Status","index":"status_id","align":"center","width":110,"editable":true, "editoptions":{'value':'{{rtrim($status, ";")}}',"disabled": 'disabled'},"edittype":"select", "formatter":"select","editrules":{"required":true},"name":"status_id", 'hidden' : true},
+
                         {"label":"Pending Reason","index":"pending_reason_id","align":"center","width":280,"editable":true,
                             "editoptions":{'value':'{{rtrim($pending, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"pending_reason_id"},
 
