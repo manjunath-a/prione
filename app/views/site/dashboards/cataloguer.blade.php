@@ -49,6 +49,7 @@
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
                             "editoptions":{'value':'{{rtrim($priority, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
                         {'name':'group_id', 'index':'group_id', 'editable': true, 'align':'center', 'hidden' : true},
+
                         {"label":"Status","index":"status_id","align":"center","width":110,"editable":true,
                         "editoptions":{'value':'{{rtrim($status, ";")}}',"disabled": 'disabled'},
                         "edittype":"select", "formatter":"select","editrules":{"required":true},

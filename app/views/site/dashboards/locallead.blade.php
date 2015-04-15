@@ -60,7 +60,6 @@
                         {"label":"catalogingteamlead_id",'width':75,"align":"center","index":"catalogingteamlead_id","name":"catalogingteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
 
-
                         {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
 
                         {"label":"Request / Assigned Date","align":"center","index":"created_at","name":"created_at","width":160},
