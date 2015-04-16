@@ -133,6 +133,7 @@ Route::post('request/updateCatalogueTeamLead/', 'RequestController@updateCatalog
 Route::post('request/updateCataloguer/', 'RequestController@updateCataloguer');
 Route::post('request/updateCatalogingComplete/', 'RequestController@updateCatalogingComplete');
 
+Route::get('dashboard/admin/', 'DashboardController@getAdmin');
 Route::get('dashboard/locallead/', 'DashboardController@getLocalLead');
 Route::get('dashboard/photographer/', 'DashboardController@getPhotographer');
 Route::get('dashboard/mif/', 'DashboardController@getMIF');
@@ -143,6 +144,10 @@ Route::get('dashboard/cataloguemanager/', 'DashboardController@getCatalogueManag
 Route::get('dashboard/catalogueteamlead/', 'DashboardController@getCatalogueTeamLead');
 Route::get('dashboard/cataloguer/', 'DashboardController@getCataloguer');
 
+Route::post('/dashboard/admin', function()
+{
+    GridEncoder::encodeRequestedData(new AdminDashboardRepository(new Ticket()), Input::all());
+});
 Route::post('/dashboard/locallead', function()
 {
     GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
@@ -190,6 +195,9 @@ Route::post('/dashboard/cataloguer', function()
 Route::post('/dashboard/seller', 'DashboardController@postSeller');
 
 Route::post('/dashboard/editing', 'DashboardController@postEditing');
+
+//Report routes
+Route::get('report/admin/', 'ReportController@getAdmin');
 
 App::missing(function($e) {
     $url = Request::fullUrl();

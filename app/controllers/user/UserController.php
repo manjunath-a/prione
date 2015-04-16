@@ -76,6 +76,9 @@ class UserController extends BaseController {
             case 'Cataloguer' :
                 $dashboard = 'cataloguer/';
                 break;
+            case 'admin' :
+                $dashboard = 'admin/';
+                break;
         }
         return  $dashboard;
     }

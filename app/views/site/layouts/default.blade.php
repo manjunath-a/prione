@@ -31,6 +31,7 @@
             {{ HTML::style('assets/font-awesome-v4.1.0/css/font-awesome.min.css'); }}
             {{ HTML::style('assets/jquery-ui-v1.10.3/css/smoothness/jquery-ui-1.10.3.custom.css'); }}
             {{ HTML::style('assets/jquery-jqGrid-v4.6.0/css/ui.jqgrid.css'); }}
+            {{ HTML::style('assets/adminlte/css/AdminLTE.css'); }}
             <!-- {{ HTML::style('assets/tutorial/css/main.css'); }} -->
             <!-- {{ HTML::style('assets/tutorial/css/callouts.css'); }} -->
             <!--[if lt IE 9]><script src="../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -101,7 +102,8 @@
                     <ul class="nav navbar-nav pull-right">
                         @if (Auth::check())
                         @if (Auth::user()->hasRole('admin'))
-                        <li><a href="{{{ URL::to('admin') }}}">Admin Panel</a></li>
+                        <li><a href="{{{ URL::to('admin/users') }}}">Admin Panel</a></li>
+                        <li><a href="{{{ URL::to('report/admin') }}}">Admin Report</a></li>
                         @endif
                         {{--<li><a href="{{{ URL::to('admin/locallead') }}}">Local Lead</a></li>--}}
                         <li {{ (Request::is('request') ? ' class="active"' : '') }}><a href="{{{ URL::to('/request') }}}"><span class="glyphicon glyphicon-plus"></span>Seller Request</a></li>

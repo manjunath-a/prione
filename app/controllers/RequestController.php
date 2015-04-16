@@ -64,7 +64,7 @@ class RequestController extends BaseController {
       if ($validator->fails()) {
           if(isset($data['google_form']))
           {
-            return json_encode(array( 'status' => false, 'message' => 'Data Error' ));
+            return json_encode(array( 'status' => false, 'message' => $validator->getMessages() ));
           }
           return Redirect::back()->withErrors($validator)->withInput();
       }
