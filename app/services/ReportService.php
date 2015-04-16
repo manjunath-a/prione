@@ -31,7 +31,7 @@ class ReportService
          // where `dcst_ticket_transaction`.`stage_id` = 6 group by `dcst_ticket_transaction`.`ticket_id`)
         // as tt
 
-        $total =  \DB::query('ticket_transaction')
+        $total =  \DB::table('ticket_transaction')
                       ->groupBy('ticket_transaction.ticket_id')
                       ->where('ticket_transaction.stage_id','=', $stageId)
                       ->count();
