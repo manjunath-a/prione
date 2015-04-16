@@ -50,7 +50,19 @@
     <link rel="stylesheet" href="{{asset('assets/css/wysihtml5/bootstrap-wysihtml5.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/datatables-bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/colorbox.css')}}">
+    {{ HTML::style('assets/jquery-ui-v1.10.3/css/smoothness/jquery-ui-1.10.3.custom.css'); }}
+    {{ HTML::style('assets/jquery-jqGrid-v4.6.0/css/ui.jqgrid.css'); }}
 
+    {{ HTML::script('assets/jquery-v2.0.3/jquery.js'); }}
+    {{ HTML::script('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect.min.js'); }}
+    {{ HTML::script('assets/jquery-ui-v1.10.3/js/jquery-ui.js'); }}
+    {{ HTML::script('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect-shake.min.js'); }}
+    {{ HTML::script('assets/jquery-scrollto-v1.4.11/jquery.scrollTo.min.js'); }}
+    {{ HTML::script('assets/jquery-jqMgVal-v0.1/jquery.jqMgVal.src.js'); }}
+
+    {{ HTML::script('assets/prione/util.js'); }}
+    {{ HTML::script('assets/jquery-jqGrid-v4.6.0/js/i18n/grid.locale-en.js'); }}
+    {{ HTML::script('assets/jquery-jqGrid-v4.6.0/src/jquery.jqGrid.js'); }}
 	<style>
 	body {
 		padding: 60px 0;
@@ -82,7 +94,7 @@
                 </div>
     			<div class="collapse navbar-collapse navbar-ex1-collapse">
     				<ul class="nav navbar-nav">
-    					<li{{ (Request::is('admin') ? ' class="active"' : '') }}><a href="{{{ URL::to('dashboard/admin') }}}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+    					<li{{ (Request::is('admin') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/dashboard') }}}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
     					<li class="dropdown{{ (Request::is('admin/users*|admin/roles*') ? ' active' : '') }}">
     						<a class="dropdown-toggle" data-toggle="dropdown" href="{{{ URL::to('admin/users') }}}">
     							<span class="glyphicon glyphicon-user"></span> Users <span class="caret"></span>
@@ -92,20 +104,30 @@
     							<li{{ (Request::is('admin/roles*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/roles') }}}"><span class="glyphicon glyphicon-user"></span> Roles</a></li>
     						</ul>
     					</li>
-              <li class="dropdown{{ (Request::is('admin/users*|admin/roles*|admin/request*') ? ' active' : '') }}">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="{{{ URL::to('admin/request') }}}">
-                  <span class="glyphicon glyphicon-list"></span> Seller Request <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li {{ (Request::is('/request') ? ' class="active"' : '') }}><a href="{{{ URL::to('/request') }}}"><span class="glyphicon glyphicon-plus"></span> Create Request</a></li>
-                </ul>
-              </li>
+                        <li class="dropdown{{ (Request::is('admin/users*|admin/roles*|admin/request*') ? ' active' : '') }}">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="{{{ URL::to('admin/request') }}}">
+                              <span class="glyphicon glyphicon-list"></span> Seller Request <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li {{ (Request::is('/request') ? ' class="active"' : '') }}><a href="{{{ URL::to('/request') }}}"><span class="glyphicon glyphicon-plus"></span> Create Request</a></li>
+                            </ul>
+                        </li>
+                         <li class="dropdown{{ (Request::is('admin/report*|admin/users*|admin/roles*|admin/request*') ? ' active' : '') }}">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="{{{ URL::to('admin/report') }}}">
+                              <span class="glyphicon glyphicon-list"></span> Reports <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li {{ (Request::is('admin/report/demand') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/report/demand') }}}">
+                              <span class="glyphicon glyphicon-plus"></span> Total Demand</a></li>
+                            </ul>
+                        </li>
+
 
 
     				</ul>
     				<ul class="nav navbar-nav pull-right">
-    					<li><a href="{{{ URL::to('/') }}}">View Homepage</a></li>
-
+<!--     					<li><a href="{{{ URL::to('/') }}}">View Homepage</a></li>
+ -->
                         <li class="divider-vertical"></li>
     					<li class="dropdown">
     							<a class="dropdown-toggle" data-toggle="dropdown" href="#">

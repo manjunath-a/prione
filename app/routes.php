@@ -45,14 +45,17 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     Route::post('users/{user}/delete', 'AdminUsersController@postDelete');
     Route::controller('users', 'AdminUsersController');
 
-    // # Request Management
-    // Route::get('sellerrequest/{request}/show', 'AdminRequestController@getShow');
-    // Route::get('sellerrequest/{request}/edit', 'AdminRequestController@getEdit');
-    // Route::post('sellerrequest/{request}/edit', 'AdminRequestController@postEdit');
-    // Route::get('sellerrequest/{request}/delete', 'AdminRequestController@getDelete');
-    // Route::post('sellerrequest/{request}/delete', 'AdminRequestController@postDelete');
-    // Route::controller('sellerrequest', 'AdminRequestController');
+    # Dashboard Management
+    Route::get('dashboard/', 'AdminDashboardController@getAdmin');
+    Route::post('dashboard/', function()
+    {
+        GridEncoder::encodeRequestedData(new AdminDashboardRepository(new Ticket()), Input::all());
+    });
+    Route::post('request/update/', 'AdminDashboardController@updateRequest');
 
+    # Report Management
+    Route::get('report/', 'AdminReportController@getIndex');
+    Route::get('report/demand', 'AdminReportController@getDemand');
 
     # User Role Management
     Route::get('roles/{role}/show', 'AdminRolesController@getShow');
@@ -64,6 +67,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
 
     # Admin Dashboard
     Route::controller('/', 'AdminDashboardController');
+
+
 });
 
 
@@ -133,7 +138,6 @@ Route::post('request/updateCatalogueTeamLead/', 'RequestController@updateCatalog
 Route::post('request/updateCataloguer/', 'RequestController@updateCataloguer');
 Route::post('request/updateCatalogingComplete/', 'RequestController@updateCatalogingComplete');
 
-Route::get('dashboard/admin/', 'DashboardController@getAdmin');
 Route::get('dashboard/locallead/', 'DashboardController@getLocalLead');
 Route::get('dashboard/photographer/', 'DashboardController@getPhotographer');
 Route::get('dashboard/mif/', 'DashboardController@getMIF');
@@ -144,10 +148,7 @@ Route::get('dashboard/cataloguemanager/', 'DashboardController@getCatalogueManag
 Route::get('dashboard/catalogueteamlead/', 'DashboardController@getCatalogueTeamLead');
 Route::get('dashboard/cataloguer/', 'DashboardController@getCataloguer');
 
-Route::post('/dashboard/admin', function()
-{
-    GridEncoder::encodeRequestedData(new AdminDashboardRepository(new Ticket()), Input::all());
-});
+
 Route::post('/dashboard/locallead', function()
 {
     GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
@@ -196,8 +197,7 @@ Route::post('/dashboard/seller', 'DashboardController@postSeller');
 
 Route::post('/dashboard/editing', 'DashboardController@postEditing');
 
-//Report routes
-Route::get('report/admin/', 'ReportController@getAdmin');
+
 
 App::missing(function($e) {
     $url = Request::fullUrl();
