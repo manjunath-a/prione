@@ -2,6 +2,13 @@
 
 class AdminReportController extends AdminController
 {
+
+    /**
+     * Util Service
+     * @var util
+     */
+    protected $util;
+
     /**
      * Report Service
      * @var report
@@ -14,6 +21,7 @@ class AdminReportController extends AdminController
     public function __construct()
     {
         parent::__construct();
+        $this->util = App::make('util');
         $this->report = App::make('report');
     }
 
@@ -34,6 +42,18 @@ class AdminReportController extends AdminController
      */
     public function getDemand()
     {
+
+        $stageArray = Stage::all();
+        $stageArray = $stageArray->sortBy('sort');
+        $stage = $this->util->selectOptions($stageArray, 'stage_name', 'id');
+
+        $statusArray = Status::all();
+        $status = $this->util->selectOptions($statusArray, 'status_name', 'id');
+
+        $roleArray = Role::all();
+        $role = $this->util->selectOptions($roleArray, 'name', 'id');
+
+
         $total_request = $this->report->getTotalRequest();
         $total_sku = $this->report->getTotalSKU();
 
@@ -47,8 +67,8 @@ class AdminReportController extends AdminController
         $statusOpen   = Status::where('status_name', 'open')->first();
         $total_status = $this->report->getCountByStatus($statusOpen->id);
 
-        return View::make('admin/report/demand', compact('total_request', 'total_sku',
-                    'total_catlog', 'total_asin', 'total_status' ));
+        return View::make('admin/report/demand', compact( 'stage', 'status', 'role',
+         'total_request', 'total_sku',  'total_catlog', 'total_asin', 'total_status' ));
     }
 
 

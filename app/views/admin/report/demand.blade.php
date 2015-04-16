@@ -27,10 +27,16 @@
             <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
+
+                    <div class="form-group">
+                        <label for="merchant_city_id">Total Count By : Stage</label>
+                        <div>
+                           {{Form::select('stage_id', $stage, '', array('class' => 'form-control', 'onChange'=>'getStage();'))}}
+                        </div>
+                    </div>
                     <h3>{{$total_catlog}}
                         {{--<sup style="font-size: 20px">%</sup>--}}
                     </h3>
-                    <p>Catalog Completed(resolved)</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
@@ -42,8 +48,15 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>{{$total_status}}</h3>
-                    <p>Open Request</p>
+                    <div class="form-group">
+                        <label for="merchant_city_id">Total Count By : Status</label>
+                        <div>
+                           {{Form::select('status_id', $status, '', array('class' => 'form-control', 'onChange'=>'getStatus();'))}}
+                        </div>
+                    </div>
+                    <h3>{{$total_status}}
+                        {{--<sup style="font-size: 20px">%</sup>--}}
+                    </h3>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -55,8 +68,15 @@
             <!-- small box -->
             <div class="small-box bg-red">
                 <div class="inner">
-                    <h3>{{$total_asin}}</h3>
-                    <p>Asin Created(Closed)</p>
+                    <div class="form-group">
+                        <label for="merchant_city_id">Active Count By Role </label>
+                        <div>
+                           {{Form::select('role_id', $role, '', array('class' => 'form-control', 'onChange'=>'getRole();'))}}
+                        </div>
+                    </div>
+                    <h3>{{$total_status}}
+                        {{--<sup style="font-size: 20px">%</sup>--}}
+                    </h3>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
