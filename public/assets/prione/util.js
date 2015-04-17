@@ -23,7 +23,7 @@ aftersavefunc = function(response, postdata) {
 function getRequestCountByStatus(statusId)
 {
   GSC.doPost({
-        url: "/admin/report/" + statusId + '/status/',
+        url: "admin/report/" + statusId + '/status/',
         async: false,
         cache: false,
         success: function (data) {
@@ -43,7 +43,7 @@ function getRequestCountByStatus(statusId)
 function getRequestCountByStage(stageId)
 {
   GSC.doPost({
-        url: "/admin/report/" + stageId + '/stage/',
+        url: "admin/report/" + stageId + '/stage/',
         async: false,
         cache: false,
         success: function (data) {
@@ -63,7 +63,7 @@ function getRequestCountByStage(stageId)
 function getRequestCountByRoleWithActive(roleId)
 {
   GSC.doPost({
-        url: "/admin/report/" + roleId + "/role/",
+        url: "admin/report/" + roleId + "/role/",
         async: false,
         cache: false,
         success: function (data) {
