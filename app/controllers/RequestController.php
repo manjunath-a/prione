@@ -214,7 +214,7 @@ class RequestController extends BaseController {
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if($ticketTransactionId) {
-                if($ticketData['group_id'] == 3){
+                if($ticketData['group_id'] == 3) {
                     $ticketTransaction = Ticket::updateCatalogManager($ticketTransactionId, $ticketId, $ticketData);
                 } else {
                     $this->validateTicket->editingTeamLeadFlow($ticketData);
@@ -246,7 +246,7 @@ class RequestController extends BaseController {
             }
             // Push to DB
             DB::commit();
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             // RollBack Merges
             DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
@@ -280,7 +280,7 @@ class RequestController extends BaseController {
         return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
-    public function updateCatalogueTeamLead()
+    public function updateCatalogTeamLead()
     {
         // Begin DB transaction
         DB::beginTransaction();
@@ -303,7 +303,7 @@ class RequestController extends BaseController {
         return json_encode(array( 'status' => true, 'message' => 'Ticket updated Successfully'));
     }
 
-    public function updateCataloguer()
+    public function updateCataloger()
     {
         // Begin DB transaction
         DB::beginTransaction();

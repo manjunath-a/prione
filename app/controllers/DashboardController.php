@@ -290,7 +290,7 @@ class DashboardController extends BaseController {
 
     }
 
-    public function getCatalogueManager()
+    public function getCatalogManager()
     {
         list($user, $redirect) = User::checkAuthAndRedirect('user');
         if($redirect){return $redirect;}
@@ -327,13 +327,13 @@ class DashboardController extends BaseController {
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         // Show the page
-        return View::make('site/dashboards/cataloguemanager', compact('user', 'photographer',
+        return View::make('site/dashboards/catalogmanager', compact('user', 'photographer',
             'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','priority', 'photoshootLocation',
              'group', 'stage', 'status'));
 
     }
 
-    public function getCatalogueTeamLead()
+    public function getCatalogTeamLead()
     {
         list($user, $redirect) = User::checkAuthAndRedirect('user');
         if($redirect){return $redirect;}
@@ -376,13 +376,13 @@ class DashboardController extends BaseController {
         $pendingArray   = PendingReason::all();
         $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id',$pendingRules);
         // Show the page
-        return View::make('site/dashboards/catalogueteamlead', compact('user', 'photographer',
+        return View::make('site/dashboards/catalogteamlead', compact('user', 'photographer',
             'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','cataloguer','priority',
             'photoshootLocation', 'group', 'stage', 'status', 'pending'));
 
     }
 
-    public function getCataloguer()
+    public function getCataloger()
     {
         list($user, $redirect) = User::checkAuthAndRedirect('user');
         if($redirect){return $redirect;}
@@ -428,7 +428,7 @@ class DashboardController extends BaseController {
         $pendingArray   = PendingReason::all();
         $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id',$pendingRules);
         // Show the page
-        return View::make('site/dashboards/cataloguer', compact('user', 'photographer',
+        return View::make('site/dashboards/cataloger', compact('user', 'photographer',
             'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','cataloguer',
             'priority', 'photoshootLocation', 'group', 'stage', 'status', 'pending'));
 

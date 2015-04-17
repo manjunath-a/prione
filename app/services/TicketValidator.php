@@ -28,6 +28,7 @@ class TicketValidator  extends IlluminateValidator
         "pending_reason_cant_move" => "Pending reason Ticket move not allowed",
         "editing_cant_move" => "Only MIF Complete stage can be moved to Editing Group",
         "cataloging_cant_move" => "Not allowed to move Cataloging Group",
+        "asin_creation_not_allowed" => "ASIN not allowed unti QC Completed",
         "not_authorsied_edit" => "Edit option is not available for other Group Ticket",
     );
 
@@ -216,7 +217,7 @@ class TicketValidator  extends IlluminateValidator
             throw new \Exception($this->_custom_messages['editor_required']);
         }
         // Not authorize to move cataloguing group
-        if($data['group_id'] != 2 ) {
+        if($data['group_id'] != 2 && !$data['pending_reason_id']) {
           throw new \Exception($this->_custom_messages['not_authorsied_edit']);
         }
      }
@@ -286,10 +287,16 @@ class TicketValidator  extends IlluminateValidator
                   'sa_variation' => 'Integer',
                   'sa_sku' => 'Integer',
                 ];
+        $ticketTransaction = \TicketTransaction::find($data['transaction_id'])->toArray();
+        // MOve allowed from QC commpleted -> ASIN created
+        if($ticketTransaction['stage_id'] !=7 && $data['stage_id']==8) {
+            throw new \Exception($this->_custom_messages['asin_creation_not_allowed']);
+        }
+
         $this->checkValidator($data, $rules);
         // Not authorize to move cataloguing group
         if($data['group_id'] != 3 ) {
-          throw new \Exception($this->_custom_messages['not_authorsied_edit']);
+            throw new \Exception($this->_custom_messages['not_authorsied_edit']);
         }
      }
 
