@@ -26,24 +26,29 @@ class ReportService
 
     public function getCountByStage($stageId)
     {
-
-        // select count(*) from  (select id from dcst_ticket_transaction
-         // where `dcst_ticket_transaction`.`stage_id` = 6 group by `dcst_ticket_transaction`.`ticket_id`)
-        // as tt
-
-        $total =  \DB::table('ticket_transaction')
-                      ->groupBy('ticket_transaction.ticket_id')
-                      ->where('ticket_transaction.stage_id','=', $stageId)
-                      ->count();
-        return $total;
+        $active=1;
+        if($stageId==8)
+            $active=0;
+        $results = \DB::select("SELECT count(*) AS demand FROM (
+                                SELECT  id FROM dcst_ticket_transaction
+                                WHERE dcst_ticket_transaction.stage_id = :stage_id
+                                AND dcst_ticket_transaction.active = :active=1
+                                GROUP BY dcst_ticket_transaction.ticket_id) AS cnt", ['stage_id' => $stageId,
+                                'active' =>$active]);
+        return $results[0]->demand;
     }
 
     public function getCountByStatus($statusId)
     {
-        $total =  \DB::table('ticket_transaction')
-                      ->groupBy('ticket_transaction.ticket_id')
-                      ->where('ticket_transaction.status_id', '=' ,$statusId)
-                      ->count();
-        return $total;
+        $active=1;
+        if($statusId==4)
+            $active=0;
+        $results = \DB::select("SELECT count(*) AS demand FROM (
+                                SELECT  id FROM dcst_ticket_transaction
+                                WHERE dcst_ticket_transaction.status_id = :status_id
+                                AND dcst_ticket_transaction.active = :active
+                                GROUP BY dcst_ticket_transaction.ticket_id) AS cnt", ['status_id' => $statusId,
+                                'active' => $active]);
+        return $results[0]->demand;
     }
 }
