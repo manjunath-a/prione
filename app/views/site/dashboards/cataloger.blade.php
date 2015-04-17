@@ -36,7 +36,7 @@
                     "datatype":"json",
                     "mtype":"POST",
                     "url":"cataloguer",
-                    "editurl":'/request/updateCataloguer',
+                    "editurl":'/request/updateCataloger',
                     "height": 340,
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75, 'sortable':false},
@@ -113,8 +113,8 @@
                     "subGridUrl":"editing",
                     "subGridModel" :[
                         {
-                            name  : ['City','City Team Lead','Photographer Name','Service Associate' ,'Editor'],
-                            width : [200,200,200,200,200]
+                            name  : ['Category','City','City Team Lead','Photographer Name','Service Associate' ,'Editor'],
+                            width : [200, 200,200,200,200,200]
                         }
                     ],
                     "pager":"cataloguerPager"

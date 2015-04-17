@@ -97,8 +97,8 @@
                     "subGridUrl":"editing",
                     "subGridModel" :[
                         {
-                            name  : ['City','City Team Lead','Photographer Name','Service Associate' ,'Editor'],
-                            width : [200,200,200,200,200]
+                            name  : ['Category','City','City Team Lead','Photographer Name','Service Associate' ,'Editor'],
+                            width : [200, 200,200,200,200,200]
                         }
                     ],
                     "pager":"editingteamleadPager"

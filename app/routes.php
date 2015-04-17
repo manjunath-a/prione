@@ -138,8 +138,8 @@ Route::post('request/updateEditingTeamLead/', 'RequestController@updateEditingTe
 // Route::post('request/updateEditor/', 'RequestController@updateEditor');
 Route::post('request/updateEditingComplete/', 'RequestController@updateEditingComplete');
 Route::post('request/updateAssignCatalogTeamLead/', 'RequestController@updateAssignCatalogTeamLead');
-Route::post('request/updateCatalogueTeamLead/', 'RequestController@updateCatalogueTeamLead');
-Route::post('request/updateCataloguer/', 'RequestController@updateCataloguer');
+Route::post('request/updateCatalogTeamLead/', 'RequestController@updateCatalogTeamLead');
+Route::post('request/updateCataloger/', 'RequestController@updateCataloger');
 Route::post('request/updateCatalogingComplete/', 'RequestController@updateCatalogingComplete');
 
 Route::get('dashboard/locallead/', 'DashboardController@getLocalLead');
@@ -148,9 +148,9 @@ Route::get('dashboard/mif/', 'DashboardController@getMIF');
 Route::get('dashboard/editingmanager/', 'DashboardController@getEditingManager');
 Route::get('dashboard/editingteamlead/', 'DashboardController@getEditingTeamLead');
 Route::get('dashboard/editor/', 'DashboardController@getEditor');
-Route::get('dashboard/cataloguemanager/', 'DashboardController@getCatalogueManager');
-Route::get('dashboard/catalogueteamlead/', 'DashboardController@getCatalogueTeamLead');
-Route::get('dashboard/cataloguer/', 'DashboardController@getCataloguer');
+Route::get('dashboard/catalogmanager/', 'DashboardController@getCatalogManager');
+Route::get('dashboard/catalogteamlead/', 'DashboardController@getCatalogTeamLead');
+Route::get('dashboard/cataloger/', 'DashboardController@getCataloger');
 
 
 Route::post('/dashboard/locallead', function()

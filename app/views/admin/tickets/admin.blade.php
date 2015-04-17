@@ -91,34 +91,8 @@
                     ],
                     jsonReader: { repeatitems : true, id: 'ticket_id' },
                     sortname: 'ticket_id',
-//                    gridComplete: function(){
-//                        var ids = jQuery("#admin").jqGrid('getDataIDs');
-//                        for(var i=0;i < ids.length;i++)
-//                        {
-//                            var cl = ids[i];
-//                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#admin').editRow('"+cl+"');\" />";
-//                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#admin').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
-//                            ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#admin').restoreRow('"+cl+"');\" />";
-//                            jQuery("#admin").jqGrid('setRowData',ids[i],{act:be+se+ce});
-//                        }
-//                    },
-//                    "subGrid":true,
-//                    "subGridUrl":"seller",
-//                    "subGridModel" :[
-//                        {
-//                            name  : ['Seller name','POC Name', 'POC Email ID', 'POC Contact Number', 'Seller provider Image'],
-//                            width : [250,150,120,180,160],
-//                            colModel: [
-//                                {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
-//                                {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
-//                                {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
-//                                {"label":"POC Contact Number","index":"poc_number","name":"poc_number"},
-//                                {"label":"Seller provider Image","align":"center","index":"image_available","name":"image_available"}
-//                            ]
-//                        }
-//                    ],
+
                     "pager":"adminPager"
-                    //'cellEdit': true
                 }
         );
        jQuery("#admin").jqGrid('navGrid', '#adminPager',

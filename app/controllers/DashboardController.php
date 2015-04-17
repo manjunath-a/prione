@@ -290,7 +290,7 @@ class DashboardController extends BaseController {
 
     }
 
-    public function getCatalogueManager()
+    public function getCatalogManager()
     {
         list($user, $redirect) = User::checkAuthAndRedirect('user');
         if($redirect){return $redirect;}
@@ -327,13 +327,13 @@ class DashboardController extends BaseController {
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
         // Show the page
-        return View::make('site/dashboards/cataloguemanager', compact('user', 'photographer',
+        return View::make('site/dashboards/catalogmanager', compact('user', 'photographer',
             'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','priority', 'photoshootLocation',
              'group', 'stage', 'status'));
 
     }
 
-    public function getCatalogueTeamLead()
+    public function getCatalogTeamLead()
     {
         list($user, $redirect) = User::checkAuthAndRedirect('user');
         if($redirect){return $redirect;}
@@ -376,13 +376,13 @@ class DashboardController extends BaseController {
         $pendingArray   = PendingReason::all();
         $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id',$pendingRules);
         // Show the page
-        return View::make('site/dashboards/catalogueteamlead', compact('user', 'photographer',
+        return View::make('site/dashboards/catalogteamlead', compact('user', 'photographer',
             'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','cataloguer','priority',
             'photoshootLocation', 'group', 'stage', 'status', 'pending'));
 
     }
 
-    public function getCataloguer()
+    public function getCataloger()
     {
         list($user, $redirect) = User::checkAuthAndRedirect('user');
         if($redirect){return $redirect;}
@@ -428,7 +428,7 @@ class DashboardController extends BaseController {
         $pendingArray   = PendingReason::all();
         $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id',$pendingRules);
         // Show the page
-        return View::make('site/dashboards/cataloguer', compact('user', 'photographer',
+        return View::make('site/dashboards/cataloger', compact('user', 'photographer',
             'serviceassociates', 'editingteamlead','editor','catalogueTeamLead','cataloguer',
             'priority', 'photoshootLocation', 'group', 'stage', 'status', 'pending'));
 
@@ -438,6 +438,8 @@ class DashboardController extends BaseController {
         $sellerRequest  = new SellerRequest();
         $sellerId       = $sellerRequest->requetIdByTicketId(Input::get('id'));
         $seller         = SellerRequest::find($sellerId)->toArray();
+        $category   = Category::find($seller['category_id'])->toArray();
+
         // var_dump($seller['image_available']);
         $seller['image_available'] = ($seller['image_available']==1)?'No':'Yes';
         // var_dump($seller['image_available']);exit;
@@ -447,6 +449,7 @@ class DashboardController extends BaseController {
                                     "cell" =>
                                             array(
                                                 $seller['merchant_name'],
+                                                $category['category_name'],
                                                 $seller['poc_name'],
                                                 $seller['poc_email'],
                                                 $seller['poc_number'],
@@ -466,15 +469,18 @@ class DashboardController extends BaseController {
 
         $sellerId       = $sellerRequest->requetIdByTicketId(Input::get('id'));
         $seller         = SellerRequest::find($sellerId)->toArray();
+        $category   = Category::find($seller['category_id'])->toArray();
         $ticket         = $ticketTransaction->transactionByTicketId(Input::get('id'));
 
         $data['city']   = City::find($seller['merchant_city_id'])->toArray();
-        $photographer   = User::find($ticket['photographer_id'])->toArray();
+        $photographer = NULL;
+        if($ticket['photographer_id']) {
+            $photographer   = User::find($ticket['photographer_id'])->toArray();
+        }
         $mif            = User::find($ticket['mif_id'])->toArray();
         $editor = NULL;
         if($ticket['editor_id']) {
-            $editorArray     = User::find($ticket['editor_id'])->toArray();
-            $editor = $editorArray['username'];
+            $editor     = User::find($ticket['editor_id'])->toArray();
         }
         $data['loalLead']= $user->findAllByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);
 
@@ -483,11 +489,12 @@ class DashboardController extends BaseController {
                     array(
                         "cell" =>
                             array(
+                                $category['category_name'],
                                 $data['city']['city_name'],
                                 $data['loalLead'][0]->username,
                                 $photographer['username'],
                                 $mif['username'],
-                                $editor
+                                $editor['username'],
                             )
                     )
                 ]

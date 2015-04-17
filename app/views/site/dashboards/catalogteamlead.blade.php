@@ -37,7 +37,7 @@
                     "mtype":"POST",
                     "url":"catalogueteamlead",
                     "height": 340,
-                    "editurl":'/request/updateCatalogueTeamLead',
+                    "editurl":'/request/updateCatalogTeamLead',
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75, 'sortable':false},
                         {"name":"id", "index":"id", "align":"center", "hidden":true},
@@ -113,8 +113,8 @@
                     "subGridUrl":"editing",
                     "subGridModel" :[
                         {
-                            name  : ['City','City Team Lead','Photographer Name','Service Associate' ,'Editor'],
-                            width : [200,200,200,200,200]
+                            name  : ['Category','City','City Team Lead','Photographer Name','Service Associate' ,'Editor'],
+                            width : [200, 200,200,200,200,200]
                         }
                     ],
                     "pager":"catalogueteamleadPager"
