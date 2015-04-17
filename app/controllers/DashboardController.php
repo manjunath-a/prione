@@ -469,15 +469,18 @@ class DashboardController extends BaseController {
 
         $sellerId       = $sellerRequest->requetIdByTicketId(Input::get('id'));
         $seller         = SellerRequest::find($sellerId)->toArray();
+        $category   = Category::find($seller['category_id'])->toArray();
         $ticket         = $ticketTransaction->transactionByTicketId(Input::get('id'));
 
         $data['city']   = City::find($seller['merchant_city_id'])->toArray();
-        $photographer   = User::find($ticket['photographer_id'])->toArray();
+        $photographer = NULL;
+        if($ticket['photographer_id']) {
+            $photographer   = User::find($ticket['photographer_id'])->toArray();
+        }
         $mif            = User::find($ticket['mif_id'])->toArray();
         $editor = NULL;
         if($ticket['editor_id']) {
-            $editorArray     = User::find($ticket['editor_id'])->toArray();
-            $editor = $editorArray['username'];
+            $editor     = User::find($ticket['editor_id'])->toArray();
         }
         $data['loalLead']= $user->findAllByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);
 
@@ -486,11 +489,12 @@ class DashboardController extends BaseController {
                     array(
                         "cell" =>
                             array(
+                                $category['category_name'],
                                 $data['city']['city_name'],
                                 $data['loalLead'][0]->username,
                                 $photographer['username'],
                                 $mif['username'],
-                                $editor
+                                $editor['username'],
                             )
                     )
                 ]
