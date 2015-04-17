@@ -25,6 +25,7 @@ class TicketValidator  extends IlluminateValidator
         "cataloguer_required" =>"Cataloger is required",
         "not_authorsied_catalog_move" => "You did not have permission to move to cataloging.",
         "stage_sa_assign" => "Change stage to assigned",
+        "stage_required" => "Stage is required",
         "pending_reason_cant_move" => "Pending reason Ticket move not allowed",
         "editing_cant_move" => "Only MIF Complete stage can be moved to Editing Group",
         "cataloging_cant_move" => "Not allowed to move Cataloging Group",
@@ -87,6 +88,9 @@ class TicketValidator  extends IlluminateValidator
         // Not authorize to move cataloguing group
         if($data['group_id'] != 2 and $data['group_id']!=1) {
           throw new \Exception($this->_custom_messages['not_authorsied_catalog_move']);
+        }
+        if(!$data['stage_id']) {
+            throw new \Exception($this->_custom_messages['stage_required']);
         }
     }
 
@@ -164,6 +168,10 @@ class TicketValidator  extends IlluminateValidator
       if($data['stage_id'] != '4') {
           throw new \Exception($this->_custom_messages['editing_cant_move']);
       }
+
+      if(!$data['stage_id']) {
+            throw new \Exception($this->_custom_messages['stage_required']);
+      }
     }
 
     /**
@@ -185,6 +193,9 @@ class TicketValidator  extends IlluminateValidator
         // While pending reason ticket should not move the any queue
         if(!$data['catalogingmanager_id']) {
             throw new \Exception($this->_custom_messages['cataloging_cant_move']);
+        }
+        if(!$data['stage_id']) {
+            throw new \Exception($this->_custom_messages['stage_required']);
         }
 
     }
@@ -219,6 +230,9 @@ class TicketValidator  extends IlluminateValidator
         // Not authorize to move cataloguing group
         if($data['group_id'] != 2 && !$data['pending_reason_id']) {
           throw new \Exception($this->_custom_messages['not_authorsied_edit']);
+        }
+        if(!$data['stage_id']) {
+            throw new \Exception($this->_custom_messages['stage_required']);
         }
      }
 
@@ -276,6 +290,9 @@ class TicketValidator  extends IlluminateValidator
         if($data['group_id'] != 3 ) {
           throw new \Exception($this->_custom_messages['not_authorsied_edit']);
         }
+        if(!$data['stage_id']) {
+            throw new \Exception($this->_custom_messages['stage_required']);
+        }
     }
 
      /**
@@ -297,6 +314,9 @@ class TicketValidator  extends IlluminateValidator
         // Not authorize to move cataloguing group
         if($data['group_id'] != 3 ) {
             throw new \Exception($this->_custom_messages['not_authorsied_edit']);
+        }
+        if(!$data['stage_id']) {
+            throw new \Exception($this->_custom_messages['stage_required']);
         }
      }
 

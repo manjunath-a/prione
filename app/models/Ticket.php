@@ -361,6 +361,7 @@ class Ticket extends Eloquent  {
         $ticketData['editingteamlead_id']   = $data['editingteamlead_id'];
         $ticketData['editor_id']            = $data['editor'];
         $ticketData['catalogingteamlead_id']= $data['catalogingteamlead_id'];
+
         // Assgining Local Team Lead
         $ticketData['assigned_to']          = $data['localteamlead_id'];
         $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
@@ -420,26 +421,20 @@ class Ticket extends Eloquent  {
 
         $ticketData         = Ticket::ticketData($catalogStage->id, 1, $data);
 
-        // Assgining to Local Team Lead
-        $ticketData['assigned_to']          = $data['localteamlead_id'];
-
         $ticketData['catalogingmanager_id'] = $data['catalogingmanager_id'];
         $ticketData['editingmanager_id']    = $data['editingmanager_id'];
         $ticketData['editingteamlead_id']   = $data['editingteamlead_id'];
         $ticketData['catalogingteamlead_id'] = $data['catalogingteamlead_id'];
         $ticketData['editor_id']            = $data['editor'];
-
+        $ticketData['catalogingteamlead_id'] = Auth::user()->id;
         if($data['cataloguer']) {
             // Assgining cataloguer
             $ticketData['cataloguer_id'] = $data['cataloguer'];
             $ticketData['assigned_to'] = $data['cataloguer'];
             $cataloguerTransaction     = TicketTransaction::updateTicket($ticketData);
         }
-
-        $ticketData['assigned_to'] = $ticketData['localteamlead_id'];
-        $leadTransaction = TicketTransaction::updateTicket($ticketData);
-
-        $ticketData['catalogingteamlead_id'] = Auth::user()->id;
+        // Assgining to Local Team Lead
+        $ticketData['assigned_to']          = $data['localteamlead_id'];
         $leadTransaction = TicketTransaction::updateTicket($ticketData);
 
         // Assgining Editing Manager
