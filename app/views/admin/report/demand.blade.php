@@ -31,7 +31,7 @@
                     <div class="form-group">
                         <label for="merchant_city_id">Total Count By : Stage</label>
                         <div>
-                           {{Form::select('stage_id', $stage, '', array('class' => 'form-control', 'onChange'=>'getRequestCountByStage(this.value);'))}}
+                           {{Form::select('stage_id', $stage, $compelted, array('class' => 'form-control', 'onChange'=>'getRequestCountByStage(this.value);'))}}
                         </div>
                     </div>
                     <h3><span id="total_stage_count">{{$total_stage_count}}</span>
