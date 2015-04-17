@@ -4,7 +4,7 @@
 
 # Configuration
 /app/config/local
-/app/config/staging
+#/app/config/staging
 /app/config/production
 /app/database/migrations/.directory
 /app/config/packages/aws/
