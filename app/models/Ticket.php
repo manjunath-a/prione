@@ -469,6 +469,7 @@ class Ticket extends Eloquent  {
         if( $data['pending_reason_id'] == 8 ) {
             $catalogCompleted = Stage::where('stage_name', '(Central) Editing Completed')->first();
             $data['priority']  = 3; // Urgent
+            $data['group_id']  = 1; // Local
 
         } elseif($data['stage_id'] == 6 ) {
             $catalogCompleted   = Stage::where('stage_name', '(Central) Cataloging Completed')->first();
@@ -493,7 +494,7 @@ class Ticket extends Eloquent  {
         $ticketData['cataloguer_id']        = $data['cataloguer'];
         $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
 
-        // if( $data['pending_reason_id'] != 8 ) {
+        if( $data['pending_reason_id'] != 8 ) {
             // Assgining Editing Manager
             $ticketData['assigned_to'] = $data['editingmanager_id'];
             $leadTransaction           = TicketTransaction::updateTicket($ticketData);
@@ -509,7 +510,7 @@ class Ticket extends Eloquent  {
             // Assgining cataloguer
             $ticketData['assigned_to'] = $data['cataloguer'];
             $cataloguerTransaction     = TicketTransaction::updateTicket($ticketData);
-        // }
+        }
         return $leadTransaction->id;
     }
 
