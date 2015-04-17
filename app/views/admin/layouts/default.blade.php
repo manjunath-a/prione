@@ -59,7 +59,7 @@
     {{ HTML::script('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect-shake.min.js'); }}
     {{ HTML::script('assets/jquery-scrollto-v1.4.11/jquery.scrollTo.min.js'); }}
     {{ HTML::script('assets/jquery-jqMgVal-v0.1/jquery.jqMgVal.src.js'); }}
-
+    {{ HTML::script('assets/prione/serviceClient.js'); }}
     {{ HTML::script('assets/prione/util.js'); }}
     {{ HTML::script('assets/jquery-jqGrid-v4.6.0/js/i18n/grid.locale-en.js'); }}
     {{ HTML::script('assets/jquery-jqGrid-v4.6.0/src/jquery.jqGrid.js'); }}
@@ -75,7 +75,11 @@
 	<!--[if lt IE 9]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-
+    <script type="text/javascript">
+        (function () {
+            baseURL = '<?php echo Config::get('app.url');?>';
+        })();
+    </script>
 </head>
 
 <body>

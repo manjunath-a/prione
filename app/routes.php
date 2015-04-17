@@ -57,6 +57,10 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     Route::get('report/', 'AdminReportController@getIndex');
     Route::get('report/demand', 'AdminReportController@getDemand');
 
+    Route::post('report/{id}/stage', 'AdminReportController@getStage');
+    Route::post('report/{id}/status', 'AdminReportController@getStatus');
+    Route::post('report/{id}/role', 'AdminReportController@getRole');
+
     # User Role Management
     Route::get('roles/{role}/show', 'AdminRolesController@getShow');
     Route::get('roles/{role}/edit', 'AdminRolesController@getEdit');
