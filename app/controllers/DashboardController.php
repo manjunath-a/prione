@@ -438,6 +438,8 @@ class DashboardController extends BaseController {
         $sellerRequest  = new SellerRequest();
         $sellerId       = $sellerRequest->requetIdByTicketId(Input::get('id'));
         $seller         = SellerRequest::find($sellerId)->toArray();
+        $category   = Category::find($seller['category_id'])->toArray();
+
         // var_dump($seller['image_available']);
         $seller['image_available'] = ($seller['image_available']==1)?'No':'Yes';
         // var_dump($seller['image_available']);exit;
@@ -447,6 +449,7 @@ class DashboardController extends BaseController {
                                     "cell" =>
                                             array(
                                                 $seller['merchant_name'],
+                                                $category['category_name'],
                                                 $seller['poc_name'],
                                                 $seller['poc_email'],
                                                 $seller['poc_number'],

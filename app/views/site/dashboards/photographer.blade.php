@@ -109,14 +109,15 @@
                     "subGridUrl":"seller",
                     "subGridModel" :[
                         {
-                            name  : ['Seller name','POC Name','POC Email ID','POC Contact Number', 'Seller provider Image'],
+                            name  : ['Seller name','Category','POC Name','POC Email ID','POC Contact Number', 'Seller Provided Images'],
                             width : [250,150,120,180],
                             colModel: [
                                 {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
+                                {"label":"Category","align":"center","index":"category","name":"category"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
                                 {"label":"POC Contact Number","index":"poc_number","name":"poc_number"},
-                                {"label":"Seller provider Image","index":"image_available","name":"image_available"}
+                                {"label":"Seller Provided Images","index":"image_available","name":"image_available"}
                             ]
                         }
                     ],
