@@ -466,11 +466,7 @@ class Ticket extends Eloquent  {
         $status =1;
         // 8 == Flat File MIF QC Failed (Rejection)
         if( $data['pending_reason_id'] == 8 ) {
-            if($data['image_available']==1)
-                $catalogCompleted = Stage::where('stage_name', '(Local) Photoshoot Completed')->first();
-            else
-                $catalogCompleted = Stage::where('stage_name', '(Central) Editing Completed')->first();
-            $data['group_id']  = 1; //Local Group
+            $catalogCompleted = Stage::where('stage_name', '(Central) Editing Completed')->first();
             $data['priority']  = 3; // Urgent
 
         } elseif($data['stage_id'] == 6 ) {
