@@ -35,8 +35,9 @@ class DashboardController extends BaseController {
         $this->validateTicket = App::make('ticketValidator');
     }
 
+
 	/**
-	 * Returns all the blog posts.
+	 * Returns all the Locl Lead tickects
 	 *
 	 * @return View
 	 */

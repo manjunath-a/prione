@@ -19,3 +19,63 @@ aftersavefunc = function(response, postdata) {
   }, 5000);
   return true;
 }
+
+function getRequestCountByStatus(statusId)
+{
+  GSC.doPost({
+        url: "/admin/report/" + statusId + '/status/',
+        async: false,
+        cache: false,
+        success: function (data) {
+            console.log(data);
+            response = data;
+            $('#total_status_count').text(data.count);
+        },
+        error: function (e) {
+            console.log('Error in genres:' + e.message);
+        },
+        complete: function () {
+            console.log('List of Ticket');
+        }
+    });
+}
+
+function getRequestCountByStage(stageId)
+{
+  GSC.doPost({
+        url: "/admin/report/" + stageId + '/stage/',
+        async: false,
+        cache: false,
+        success: function (data) {
+            console.log(data);
+            response = data;
+            $('#total_stage_count').text(data.count);
+        },
+        error: function (e) {
+            console.log('Error in genres:' + e.message);
+        },
+        complete: function () {
+            console.log('List of Ticket');
+        }
+    });
+}
+
+function getRequestCountByRoleWithActive(roleId)
+{
+  GSC.doPost({
+        url: "/admin/report/" + roleId + "/role/",
+        async: false,
+        cache: false,
+        success: function (data) {
+            console.log(data);
+            response = data;
+            $('#total_role_count').text(data.count);
+        },
+        error: function (e) {
+            console.log('Error in genres:' + e.message);
+        },
+        complete: function () {
+            console.log('List of Ticket');
+        }
+    });
+}

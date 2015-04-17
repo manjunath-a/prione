@@ -24,4 +24,27 @@ class UtilService {
       }
       return $jqString;
     }
+
+    public function selectOptions($dataArray, $name = 'username', $key = 'id', $rules='all') {
+      $options['0'] = 'select';
+      if($dataArray) {
+          foreach($dataArray as $value) {
+            if($rules !='all' ) {
+              if(isset($rules['only']) && is_array($rules)) {
+                if(in_array($value->$name, $rules['only'])) {
+                   $options[$value->$key] = $value->$name;
+                }
+              }
+              if(isset($rules['skip']) && is_array($rules)) {
+                if(in_array($value->$name, $rules['skip'])) {
+                  continue;
+                }
+              }
+            } else {
+              $options[$value->$key] = $value->$name;
+            }
+          }
+      }
+      return $options;
+    }
 }
