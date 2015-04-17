@@ -464,6 +464,7 @@ class Ticket extends Eloquent  {
         $catalogCompleted   = Stage::where('stage_name', '(Central) Editing Completed')->first();
         // Default Active status =1
         $status =1;
+
         // 8 == Flat File MIF QC Failed (Rejection)
         if( $data['pending_reason_id'] == 8 ) {
             $catalogCompleted = Stage::where('stage_name', '(Central) Editing Completed')->first();
@@ -492,7 +493,7 @@ class Ticket extends Eloquent  {
         $ticketData['cataloguer_id']        = $data['cataloguer'];
         $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
 
-        if( $data['pending_reason_id'] != 8 ) {
+        // if( $data['pending_reason_id'] != 8 ) {
             // Assgining Editing Manager
             $ticketData['assigned_to'] = $data['editingmanager_id'];
             $leadTransaction           = TicketTransaction::updateTicket($ticketData);
@@ -508,7 +509,7 @@ class Ticket extends Eloquent  {
             // Assgining cataloguer
             $ticketData['assigned_to'] = $data['cataloguer'];
             $cataloguerTransaction     = TicketTransaction::updateTicket($ticketData);
-        }
+        // }
         return $leadTransaction->id;
     }
 
