@@ -533,13 +533,6 @@ class Ticket extends Eloquent  {
 
         $ticketTransactionRule = TicketTransaction::$rules;
 
-        // Add custom validation for date
-        if( Input::has('photoshoot_date') ) {
-            $ticketTransactionRule['photoshoot_date'] = 'After:'.Date('Y-m-d');
-        }
-        if( Input::has('mif_id') ) {
-            $ticketTransactionRule['mif_id'] = 'required';
-        }
         $validator = Validator::make($data, $ticketTransactionRule);
         // validation fails redirect to form with error
         if ($validator->fails()) {
