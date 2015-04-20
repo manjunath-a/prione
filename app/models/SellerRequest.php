@@ -20,7 +20,6 @@ class SellerRequest extends Eloquent  {
 
     protected $guarded = array('id');
 
-
     /**
      * Add your validation rules here
      *
@@ -34,14 +33,13 @@ class SellerRequest extends Eloquent  {
         'merchant_id' => 'required',
         'merchant_city_id' => 'required',
         'merchant_sales_channel_id' => 'required',
-        'poc_name' => 'required|string|min:3',
+        'poc_name' => 'required|string',
         'poc_email' => 'required|email',
         'poc_number' => 'required',
         'category_id' => 'required',
         'total_sku' => 'required|Integer',
-        'image_available' => 'required',
-        'comment' => 'required'
-    ];
+        'image_available' => 'required'
+        ];
 
     public function ticket()
     {
@@ -62,13 +60,12 @@ class SellerRequest extends Eloquent  {
     /**
      *
      */
-    public static function buildTicket($requestData) {
-
+    public static function buildTicket($requestData)
+    {
 
         $merchantCity = City::find($requestData['merchant_city_id'])->toArray();
         $merchantCategory = Category::find($requestData['category_id'])->toArray();
         $salesChannel = SalesChannel::find($requestData['merchant_sales_channel_id'])->toArray();
-
 
         $subject = implode(' // ', array($requestData['merchant_name'],
                             $merchantCity['city_name'],
@@ -79,17 +76,14 @@ class SellerRequest extends Eloquent  {
         $description = "Category :: ". $merchantCategory['category_name']."
                         Number of Unique SKUs to be cataloged? :: ".$requestData['total_sku']."
                         Additional information:Flat file sent and Images uploaded in the S3.
-
                         Seller name:".$requestData['merchant_name']."
                         City in which service is required:".$merchantCity['city_name']."
-
                         Contact person name:".$requestData['poc_name']."
                         Complete address of seller:NA
                         Contact number of seller:".$requestData['poc_number']."
                         Alternate contact number of seller:".$requestData['poc_number']."
                         Email ID of seller:".$requestData['poc_email']."
                         Comment :".$requestData['comment']."
-
                         Requester name:".$requestData['requester_name']."
                         Requester e-mail ID:".$requestData['email']."
                         Requester mobile number:".$requestData['contact_number']."
@@ -107,7 +101,8 @@ class SellerRequest extends Eloquent  {
         return $data;
     }
 
-    public static function createRequest( $requestData ) {
+    public static function createRequest( $requestData )
+    {
 
         $user = new User;
         // Default as (Local) Associates Not Assigned
@@ -154,13 +149,6 @@ class SellerRequest extends Eloquent  {
         $ticketTransactioData['active'] = 1;
         $ticketTransactioData['group_id'] = Config::get('ticket.default_group');
 
-
-        // if($requestData['image_available'] == 2) {
-        //     $assignStage = Stage::where('stage_name',
-        //           '(Local) Photoshoot Completed / Seller Images Provided')->first();
-        //     $stageId = $assignStage->id;
-        // }
-
         // Assign Seller
         $ticketTransactioData['stage_id'] = $stage->id;
         $ticketTransactioData['total_sku'] = $requestData['total_sku'];
@@ -170,7 +158,8 @@ class SellerRequest extends Eloquent  {
         return $ticket;
      }
 
-    public static function createFolderInAWS($requestId, $merchant_name ,$cityName ) {
+    public static function createFolderInAWS($requestId, $merchant_name ,$cityName )
+    {
 
         // Folder Formate:  fos<CITYNAME> /<month-year>/ <requestId_merchantName>
         $folderName = '/fos'.$cityName.'/'.date('m-Y').'/'.$requestId.'_'.$merchant_name.'/';
@@ -178,35 +167,35 @@ class SellerRequest extends Eloquent  {
         $editing = $folderName .'/editing/';
         $cataloging = $folderName .'/cataloging/';
 
-        // $s3 = App::make('aws')->get('s3');
-        // $result = $s3->putObject(array(
-        //     'Bucket' => 'prionecataloguing',
-        //     'Key'    => $folderName ,
-        //     'Body' => ''
-        // ));
+        $s3 = App::make('aws')->get('s3');
+        $result = $s3->putObject(array(
+            'Bucket' => 'prionecataloguing',
+            'Key'    => $folderName ,
+            'Body' => ''
+        ));
 
-        // $result = $s3->putObject(array(
-        //     'Bucket' => 'prionecataloguing',
-        //     'Key'    => $local ,
-        //     'Body' => ''
-        // ));
-        // $result = $s3->putObject(array(
-        //     'Bucket' => 'prionecataloguing',
-        //     'Key'    => $editing ,
-        //     'Body' => ''
-        // ));
-        // $result = $s3->putObject(array(
-        //     'Bucket' => 'prionecataloguing',
-        //     'Key'    => $cataloging ,
-        //     'Body' => ''
-        // ));
+        $result = $s3->putObject(array(
+            'Bucket' => 'prionecataloguing',
+            'Key'    => $local ,
+            'Body' => ''
+        ));
+        $result = $s3->putObject(array(
+            'Bucket' => 'prionecataloguing',
+            'Key'    => $editing ,
+            'Body' => ''
+        ));
+        $result = $s3->putObject(array(
+            'Bucket' => 'prionecataloguing',
+            'Key'    => $cataloging ,
+            'Body' => ''
+        ));
 
-        // $s3URL = $s3->getObjectUrl('prionecataloguing',$folderName);
-        return $folderName;
-        // return $s3URL;
+        $s3URL = $s3->getObjectUrl('prionecataloguing',$folderName);
+        return $s3URL;
     }
 
-    public function requetIdByTicketId($ticketId)  {
+    public function requetIdByTicketId($ticketId)
+    {
         $seller = Ticket::find($ticketId)->toArray();
         return $seller['request_id'];
     }
