@@ -1,20 +1,20 @@
 <?php
+
 /**
  * Created by Compassites.
  * User: Arasu
  * Date: 20/03/15
- * Time: 8:43 PM
+ * Time: 8:43 PM.
  */
 
-
-use Illuminate\Database\Eloquent\Model;
-
-class PhotographerRepository extends EloquentRepositoryAbstract  {
-
-    public function __construct() {
-
-        list($user,$redirect) = User::checkAuthAndRedirect('user');
-        if($redirect){return $redirect;}
+class PhotographerRepository extends EloquentRepositoryAbstract
+{
+    public function __construct()
+    {
+        list($user, $redirect) = User::checkAuthAndRedirect('user');
+        if ($redirect) {
+            return $redirect;
+        }
 
         $this->Database = DB::table('ticket_transaction')
             ->join('ticket', 'ticket.id', '=', 'ticket_transaction.ticket_id')
@@ -31,12 +31,11 @@ class PhotographerRepository extends EloquentRepositoryAbstract  {
                 'ticket_transaction.pending_reason_id', 'ticket_transaction.notes as comment',
                 'seller_request.requester_name as requester_name',
                 'seller_request.email', 'ticket_transaction.created_at as assigned_date', 'category.category_name as category_name',
-                'seller_request.contact_number','seller_request.poc_name', 'ticket.s3_folder as s3_folder',
-                'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',
+                'seller_request.contact_number', 'seller_request.poc_name', 'ticket.s3_folder as s3_folder',
+                'seller_request.poc_email', 'seller_request.poc_number', 'seller_request.total_sku',
                 'seller_request.image_available', 'seller_request.comment',
                 'seller_request.id as seller_request_id', 'ticket.id as ticket_id')
-            ->groupBy('ticket_transaction.id');
-
+            ->groupBy('ticket_transaction.ticket_id');
 
         $this->visibleColumns = array('ticket_transaction.id as id', 'ticket.created_at as created_at', 'ticket_transaction.priority',
             'ticket_transaction.group_id', 'ticket_transaction.stage_id', 'ticket_transaction.notes as comment', 'ticket_transaction.status_id', 'ticket_transaction.pending_reason_id',
@@ -44,7 +43,7 @@ class PhotographerRepository extends EloquentRepositoryAbstract  {
             'seller_request.contact_number','seller_request.poc_name', 'ticket.s3_folder as s3_folder',
             'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',
             'seller_request.image_available', 'seller_request.comment',
-            'seller_request.id as seller_request_id', 'ticket.id as ticket_id');
+            'seller_request.id as seller_request_id', 'ticket.id as ticket_id', );
 
         $this->orderBy = array(array('id', 'asc'));
     }

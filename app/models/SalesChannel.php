@@ -1,8 +1,8 @@
 <?php
 
-class SalesChannel extends Eloquent {
-
-	 /**
+class SalesChannel extends Eloquent
+{
+    /**
      * The database table used by the model.
      *
      * @var string
@@ -17,34 +17,33 @@ class SalesChannel extends Eloquent {
     protected $primaryKey = 'id';
     protected $guarded = array('id');
 
-   /**
-	 * Get the channelName content.
-	 *
-	 * @return string
-	 */
-	public function channelName()
-	{
-		return $this->channelName;
-	}
+    /**
+     * Get the channelName content.
+     *
+     * @return string
+     */
+    public function channelName()
+    {
+        return $this->channelName;
+    }
 
-	/**
-	 * Get the status .
-	 *
-	 * @return integer
-	 */
-	public function status()
-	{
-		return $this->status;
-	}
+    /**
+     * Get the status .
+     *
+     * @return int
+     */
+    public function status()
+    {
+        return $this->status;
+    }
 
-	/**
-	 * Get the sort .
-	 *
-	 * @return integer
-	 */
-	public function sort()
-	{
-		return $this->sort;
-	}
-
+    /**
+     * Get the sort .
+     *
+     * @return int
+     */
+    public function sort()
+    {
+        return $this->sort;
+    }
 }

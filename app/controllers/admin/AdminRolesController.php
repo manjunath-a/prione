@@ -1,30 +1,33 @@
 <?php
 
-class AdminRolesController extends AdminController {
-
-
+class AdminRolesController extends AdminController
+{
     /**
-     * User Model
+     * User Model.
+     *
      * @var User
      */
     protected $user;
 
     /**
-     * Role Model
+     * Role Model.
+     *
      * @var Role
      */
     protected $role;
 
     /**
-     * Permission Model
+     * Permission Model.
+     *
      * @var Permission
      */
     protected $permission;
 
     /**
      * Inject the models.
-     * @param User $user
-     * @param Role $role
+     *
+     * @param User       $user
+     * @param Role       $role
      * @param Permission $permission
      */
     public function __construct(User $user, Role $role, Permission $permission)
@@ -82,15 +85,14 @@ class AdminRolesController extends AdminController {
 
         // Declare the rules for the form validation
         $rules = array(
-            'name' => 'required'
+            'name' => 'required',
         );
 
         // Validate the inputs
         $validator = Validator::make(Input::all(), $rules);
         // Check if the form validates with success
-        if ($validator->passes())
-        {
-  	    // Get the inputs, with some exceptions
+        if ($validator->passes()) {
+            // Get the inputs, with some exceptions
             $inputs = Input::except('csrf_token');
 
             $this->role->name = $inputs['name'];
@@ -100,17 +102,16 @@ class AdminRolesController extends AdminController {
             $this->role->perms()->sync($this->permission->preparePermissionsForSave($inputs['permissions']));
 
             // Was the role created?
-            if ($this->role->id)
-            {
+            if ($this->role->id) {
                 // Redirect to the new role page
-                return Redirect::to('admin/roles/' . $this->role->id . '/edit')->with('success', Lang::get('admin/roles/messages.create.success'));
+                return Redirect::to('admin/roles/'.$this->role->id.'/edit')->with('success', Lang::get('admin/roles/messages.create.success'));
             }
 
             // Redirect to the new role page
             return Redirect::to('admin/roles/create')->with('error', Lang::get('admin/roles/messages.create.error'));
 
             // Redirect to the role create page
-            return Redirect::to('admin/roles/create')->withInput()->with('error', Lang::get('admin/roles/messages.' . $error));
+            return Redirect::to('admin/roles/create')->withInput()->with('error', Lang::get('admin/roles/messages.'.$error));
         }
 
         // Form validation failed
@@ -121,6 +122,7 @@ class AdminRolesController extends AdminController {
      * Display the specified resource.
      *
      * @param $id
+     *
      * @return Response
      */
     public function getShow($id)
@@ -132,16 +134,14 @@ class AdminRolesController extends AdminController {
      * Show the form for editing the specified resource.
      *
      * @param $role
+     *
      * @return Response
      */
     public function getEdit($role)
     {
-        if(! empty($role))
-        {
+        if (!empty($role)) {
             $permissions = $this->permission->preparePermissionsForDisplay($role->perms()->get());
-        }
-        else
-        {
+        } else {
             // Redirect to the roles management page
             return Redirect::to('admin/roles')->with('error', Lang::get('admin/roles/messages.does_not_exist'));
         }
@@ -157,47 +157,44 @@ class AdminRolesController extends AdminController {
      * Update the specified resource in storage.
      *
      * @param $role
+     *
      * @return Response
      */
     public function postEdit($role)
     {
         // Declare the rules for the form validation
         $rules = array(
-            'name' => 'required'
+            'name' => 'required',
         );
 
         // Validate the inputs
         $validator = Validator::make(Input::all(), $rules);
 
         // Check if the form validates with success
-        if ($validator->passes())
-        {
+        if ($validator->passes()) {
             // Update the role data
             $role->name        = Input::get('name');
             $role->perms()->sync($this->permission->preparePermissionsForSave(Input::get('permissions')));
 
             // Was the role updated?
-            if ($role->save())
-            {
+            if ($role->save()) {
                 // Redirect to the role page
-                return Redirect::to('admin/roles/' . $role->id . '/edit')->with('success', Lang::get('admin/roles/messages.update.success'));
-            }
-            else
-            {
+                return Redirect::to('admin/roles/'.$role->id.'/edit')->with('success', Lang::get('admin/roles/messages.update.success'));
+            } else {
                 // Redirect to the role page
-                return Redirect::to('admin/roles/' . $role->id . '/edit')->with('error', Lang::get('admin/roles/messages.update.error'));
+                return Redirect::to('admin/roles/'.$role->id.'/edit')->with('error', Lang::get('admin/roles/messages.update.error'));
             }
         }
 
         // Form validation failed
-        return Redirect::to('admin/roles/' . $role->id . '/edit')->withInput()->withErrors($validator);
+        return Redirect::to('admin/roles/'.$role->id.'/edit')->withInput()->withErrors($validator);
     }
-
 
     /**
      * Remove user page.
      *
      * @param $role
+     *
      * @return Response
      */
     public function getDelete($role)
@@ -213,13 +210,15 @@ class AdminRolesController extends AdminController {
      * Remove the specified user from storage.
      *
      * @param $role
+     *
      * @internal param $id
+     *
      * @return Response
      */
     public function postDelete($role)
     {
-            // Was the role deleted?
-            if($role->delete()) {
+        // Was the role deleted?
+            if ($role->delete()) {
                 // Redirect to the role management page
                 return Redirect::to('admin/roles')->with('success', Lang::get('admin/roles/messages.delete.success'));
             }
@@ -241,7 +240,6 @@ class AdminRolesController extends AdminController {
         // ->edit_column('created_at','{{{ Carbon::now()->diffForHumans(Carbon::createFromFormat(\'Y-m-d H\', $test)) }}}')
         ->edit_column('users', '{{{ DB::table(\'assigned_roles\')->where(\'role_id\', \'=\', $id)->count()  }}}')
 
-
         ->add_column('actions', '<a href="{{{ URL::to(\'admin/roles/\' . $id . \'/edit\' ) }}}" class="iframe btn btn-xs btn-default">{{{ Lang::get(\'button.edit\') }}}</a>
                                 <a href="{{{ URL::to(\'admin/roles/\' . $id . \'/delete\' ) }}}" class="iframe btn btn-xs btn-danger">{{{ Lang::get(\'button.delete\') }}}</a>
                     ')
@@ -250,5 +248,4 @@ class AdminRolesController extends AdminController {
 
         ->make();
     }
-
 }

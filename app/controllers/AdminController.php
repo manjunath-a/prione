@@ -1,7 +1,7 @@
 <?php
 
-class AdminController extends BaseController {
-
+class AdminController extends BaseController
+{
     /**
      * Initializer.
      *
@@ -11,5 +11,4 @@ class AdminController extends BaseController {
     {
         parent::__construct();
     }
-
 }

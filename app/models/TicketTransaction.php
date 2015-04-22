@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class TicketTransaction extends Eloquent  {
-
+class TicketTransaction extends Eloquent
+{
   /**
    * The database table used by the model.
    *
@@ -11,8 +11,8 @@ class TicketTransaction extends Eloquent  {
    */
   protected $table = 'ticket_transaction';
 
-  /**
-     * Add your validation rules here
+    /**
+     * Add your validation rules here.
      *
      * @var string
      */
@@ -35,34 +35,39 @@ class TicketTransaction extends Eloquent  {
    */
   protected $guarded = array('id');
 
-  public function ticket() {
-      return $this->belongsTo('Ticket');
-  }
+    public function ticket()
+    {
+        return $this->belongsTo('Ticket');
+    }
 
-  public function request() {
-      return $this->belongsTo('SellerRequest');
-  }
+    public function request()
+    {
+        return $this->belongsTo('SellerRequest');
+    }
 
-  public function group() {
-      return $this->belongsTo('Group');
-  }
+    public function group()
+    {
+        return $this->belongsTo('Group');
+    }
 
-  public function stage() {
-      return $this->belongsTo('Stage');
-  }
+    public function stage()
+    {
+        return $this->belongsTo('Stage');
+    }
 
-  public function status() {
-      return $this->belongsTo('Status');
-  }
+    public function status()
+    {
+        return $this->belongsTo('Status');
+    }
 
-  public static function updateTicket($transactionData) {
-     //var_dump($transactionData);exit;
-    return TicketTransaction::create($transactionData);
-  }
+    public static function updateTicket($transactionData)
+    {
+        //var_dump($transactionData);exit;
+    return self::create($transactionData);
+    }
 
-  public function transactionByTicketId($ticketId)
-  {
-      return TicketTransaction::where('ticket_id','=', $ticketId)->where('active','=', 1)->first()->toArray();
-  }
-
+    public function transactionByTicketId($ticketId)
+    {
+        return self::where('ticket_id', '=', $ticketId)->where('active', '=', 1)->first()->toArray();
+    }
 }

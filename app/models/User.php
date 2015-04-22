@@ -5,41 +5,50 @@ use Zizaco\Confide\ConfideUserInterface;
 use Zizaco\Entrust\HasRole;
 use Carbon\Carbon;
 
-class User extends Eloquent implements ConfideUserInterface {
+class User extends Eloquent implements ConfideUserInterface
+{
     use ConfideUser, HasRole;
 
     /**
-     * Get user by username
+     * Get user by username.
+     *
      * @param $username
+     *
      * @return mixed
      */
-    public function getUserByUsername( $username )
+    public function getUserByUsername($username)
     {
         return $this->where('username', '=', $username)->first();
     }
 
-    public function city() {
-      return $this->belongsTo('City');
-    }
-
-     /**
-     * Get user by username
-     * @param $username
-     * @return mixed
-     */
-    public static function findByCityId( $cityId )
+    public function city()
     {
-        return User::where('city_id', '=', $cityId)->first()->get();
+        return $this->belongsTo('City');
     }
 
     /**
-     * Find the user and check whether they are confirmed
+     * Get user by username.
+     *
+     * @param $username
+     *
+     * @return mixed
+     */
+    public static function findByCityId($cityId)
+    {
+        return self::where('city_id', '=', $cityId)->first()->get();
+    }
+
+    /**
+     * Find the user and check whether they are confirmed.
      *
      * @param array $identity an array with identities to check (eg. ['username' => 'test'])
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isConfirmed($identity) {
+    public function isConfirmed($identity)
+    {
         $user = Confide::getUserByEmailOrUsername($identity);
+
         return ($user && $user->confirmed);
     }
 
@@ -54,12 +63,13 @@ class User extends Eloquent implements ConfideUserInterface {
     }
 
     /**
-     * Save roles inputted from multiselect
+     * Save roles inputted from multiselect.
+     *
      * @param $inputRoles
      */
     public function saveRoles($inputRoles)
     {
-        if(! empty($inputRoles)) {
+        if (!empty($inputRoles)) {
             $this->roles()->sync($inputRoles);
         } else {
             $this->roles()->detach();
@@ -68,43 +78,47 @@ class User extends Eloquent implements ConfideUserInterface {
 
     /**
      * Returns user's current role ids only.
+     *
      * @return array|bool
      */
     public function currentRoleIds()
     {
         $roles = $this->roles;
         $roleIds = false;
-        if( !empty( $roles ) ) {
+        if (!empty($roles)) {
             $roleIds = array();
-            foreach( $roles as $role )
-            {
+            foreach ($roles as $role) {
                 $roleIds[] = $role->id;
             }
         }
+
         return $roleIds;
     }
 
     /**
      * Redirect after auth.
      * If ifValid is set to true it will redirect a logged in user.
+     *
      * @param $redirect
      * @param bool $ifValid
+     *
      * @return mixed
      */
-    public static function checkAuthAndRedirect($redirect, $ifValid=false)
+    public static function checkAuthAndRedirect($redirect, $ifValid = false)
     {
         // Get the user information
         $user = Auth::user();
         $redirectTo = false;
 
-        if(empty($user->id) && ! $ifValid) // Not logged in redirect, set session.
-        {
+        if (empty($user->id) && !$ifValid) {
+            // Not logged in redirect, set session.
+
             Session::put('loginRedirect', $redirect);
             $redirectTo = Redirect::to('user/login')
-                ->with( 'notice', Lang::get('user/user.login_first') );
-        }
-        elseif(!empty($user->id) && $ifValid) // Valid user, we want to redirect.
-        {
+                ->with('notice', Lang::get('user/user.login_first'));
+        } elseif (!empty($user->id) && $ifValid) {
+            // Valid user, we want to redirect.
+
             $redirectTo = Redirect::to($redirect);
         }
 
@@ -126,9 +140,10 @@ class User extends Eloquent implements ConfideUserInterface {
         return $this->email;
     }
     /**
-     * function  findAllByRoleAndCity
+     * function  findAllByRoleAndCity.
      */
-    public function findAllByRoleAndCity($rolename, $cityId) {
+    public function findAllByRoleAndCity($rolename, $cityId)
+    {
 
         // 'SELECT `dcst_users`.`id`, `dcst_users`.`username` FROM `dcst_roles`
         //     inner join `dcst_assigned_roles` on `dcst_roles`.`id` = `dcst_assigned_roles`.`role_id`
@@ -141,26 +156,25 @@ class User extends Eloquent implements ConfideUserInterface {
                   ->where('roles.name', $rolename)
                   ->select('users.id', 'users.username')
                   ->get();
-
     }
 
     /**
-     * findUserRoleById ()
+     * findUserRoleById ().
      */
-    public function findUserRoleById($userId) {
-
-        return User::leftjoin('assigned_roles', 'assigned_roles.user_id', '=', 'users.id')
+    public function findUserRoleById($userId)
+    {
+        return self::leftjoin('assigned_roles', 'assigned_roles.user_id', '=', 'users.id')
                     ->leftjoin('roles', 'roles.id', '=', 'assigned_roles.role_id')
                     ->leftjoin('city', 'city.id', '=', 'users.city_id')
                     ->where('users.id', '=', $userId)
                     ->select(array('roles.name as rolename', 'city.city_name as cityname'))->first();
     }
 
-    public function findUserByRoleName($roleName){
-
-        return User::leftjoin('assigned_roles', 'assigned_roles.user_id', '=', 'users.id')
+    public function findUserByRoleName($roleName)
+    {
+        return self::leftjoin('assigned_roles', 'assigned_roles.user_id', '=', 'users.id')
             ->leftjoin('roles', 'roles.id', '=', 'assigned_roles.role_id')
             ->where('roles.name', '=', $roleName)
-            ->select('users.id','users.username')->get();
+            ->select('users.id', 'users.username')->get();
     }
 }

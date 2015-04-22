@@ -97,7 +97,8 @@
 
                         {"label":"No. of parent SKUs","index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku"},
                         {"label":"No. of variations","index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation"},
-                        {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
+                        {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true ,'edittype':"textarea",
+                         , 'editoptions':{'rows':"1",'cols':"30"}}
                     ],
                     jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
@@ -111,7 +112,26 @@
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
                             jQuery("#locallead").jqGrid('setRowData',ids[i],{act:be+se+ce});
                         }
+                        // $("#info_dialog").position({
+                        //     of: $("#" + $.jgrid.jqID(rowid)),
+                        //     my: "top",
+                        //     at: "bottom"
+                        // });
+
                     },
+                // beforeSelectRow: function (rowid, e) {
+                //     var $self = $(this),
+                //         iCol = $.jgrid.getCellIndex($(e.target).closest("td")[0]),
+                //         cm = $self.jqGrid("getGridParam", "colModel");
+
+                //     if (iCol === 29) {
+                //         console.log(rowid);
+                //          $("#alertmod_locallead").show({'title' : 'Some title'});
+                //         // OpenPopupWindow(rowid);
+                //     }
+
+                    return false;
+                },
                     "subGrid":true,
                     "subGridUrl":"seller",
                     "subGridModel" :[
@@ -134,6 +154,9 @@
         );
        jQuery("#locallead").jqGrid('navGrid', '#localleadPager',
         {add: false,edit:false,view:false,del:false,refresh: true,search:false});
+       function ticketComments(rowId, iRow, iCol, cellValue, e) {
+           alert(rowId); return 'view';
+       }
     </script>
     <!-- ./ content -->
     </div>

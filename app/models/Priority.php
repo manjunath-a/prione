@@ -1,8 +1,8 @@
 <?php
 
-class Priority extends Eloquent {
-
-	 /**
+class Priority extends Eloquent
+{
+    /**
      * The database table used by the model.
      *
      * @var string
