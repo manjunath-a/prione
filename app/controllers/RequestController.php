@@ -43,11 +43,11 @@ class RequestController extends BaseController {
             $category[$categoryArray['id']] = $categoryArray['category_name'];
         }
 
-            // Show the page
-            return View::make('request/index', compact('city', 'salesChannel', 'category'))
-              ->with('route', 'request')
-              ->with('request_id', null)
-              ->with('data',array());
+        // Show the page
+        return View::make('request/index', compact('city', 'salesChannel', 'category'))
+          ->with('route', 'request')
+          ->with('request_id', null)
+          ->with('data',array());
   	}
 
     /**
@@ -86,10 +86,10 @@ class RequestController extends BaseController {
             $requestData['image_available'] = (int)$data['image_available'];
             $requestData['comment']       = $data['comment'];
             $ticket = SellerRequest::createRequest($requestData);
-            if(isset($data['google_form']))
-                return json_encode(array( 'status' => true, 'message' => 'Tickect ID = '.$ticket->id ));
             // Push to DB
             DB::commit();
+            if(isset($data['google_form']))
+                return json_encode(array( 'status' => true, 'message' => 'Tickect ID = '.$ticket->id ));
         } catch (Exception $e) {
             // RollBack Entry from Trancation
             DB::rollback();
@@ -294,7 +294,7 @@ class RequestController extends BaseController {
             }
             // Push to DB
             DB::commit();
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             // RollBack Merges
             DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
@@ -317,7 +317,7 @@ class RequestController extends BaseController {
             }
             // Push to DB
             DB::commit();
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             // RollBack Merges
             DB::rollback();
             $errorMsg = json_encode(array('status'=>false, 'message' => $e->getMessage() ));
