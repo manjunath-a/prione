@@ -35,7 +35,7 @@ class PhotographerRepository extends EloquentRepositoryAbstract  {
                 'seller_request.poc_email', 'seller_request.poc_number','seller_request.total_sku',
                 'seller_request.image_available', 'seller_request.comment',
                 'seller_request.id as seller_request_id', 'ticket.id as ticket_id')
-            ->groupBy('ticket_transaction.id');
+            ->groupBy('ticket_transaction.ticket_id');
 
 
         $this->visibleColumns = array('ticket_transaction.id as id', 'ticket.created_at as created_at', 'ticket_transaction.priority',

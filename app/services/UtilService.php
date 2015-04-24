@@ -1,50 +1,56 @@
 <?php
-namespace App\Services;
-class UtilService {
 
-    public function arrayToJQString($dataArray, $name = 'username', $key = 'id', $rules='all') {
-      $jqString = '0:select';
-      if($dataArray) {
-          foreach($dataArray as $value) {
-            if($rules !='all' ) {
-              if(isset($rules['only']) && is_array($rules)) {
-                if(in_array($value->$name, $rules['only'])) {
-                  $jqString .= ";".$value->$key.":".$value->$name;
+namespace App\Services;
+
+class UtilService
+{
+    public function arrayToJQString($dataArray, $name = 'username', $key = 'id', $rules = 'all')
+    {
+        $jqString = '0:select';
+        if ($dataArray) {
+            foreach ($dataArray as $value) {
+                if ($rules != 'all') {
+                    if (isset($rules['only']) && is_array($rules)) {
+                        if (in_array($value->$name, $rules['only'])) {
+                            $jqString .= ';'.$value->$key.':'.$value->$name;
+                        }
+                    }
+                    if (isset($rules['skip']) && is_array($rules)) {
+                        if (in_array($value->$name, $rules['skip'])) {
+                            continue;
+                        }
+                    }
+                } else {
+                    $jqString .= ';'.$value->$key.':'.$value->$name;
                 }
-              }
-              if(isset($rules['skip']) && is_array($rules)) {
-                if(in_array($value->$name, $rules['skip'])) {
-                  continue;
-                }
-              }
-            } else {
-              $jqString .= ";".$value->$key.":".$value->$name;
             }
-          }
-      }
-      return $jqString;
+        }
+
+        return $jqString;
     }
 
-    public function selectOptions($dataArray, $name = 'username', $key = 'id', $rules='all') {
-      $options['0'] = 'select';
-      if($dataArray) {
-          foreach($dataArray as $value) {
-            if($rules !='all' ) {
-              if(isset($rules['only']) && is_array($rules)) {
-                if(in_array($value->$name, $rules['only'])) {
-                   $options[$value->$key] = $value->$name;
+    public function selectOptions($dataArray, $name = 'username', $key = 'id', $rules = 'all')
+    {
+        $options['0'] = 'select';
+        if ($dataArray) {
+            foreach ($dataArray as $value) {
+                if ($rules != 'all') {
+                    if (isset($rules['only']) && is_array($rules)) {
+                        if (in_array($value->$name, $rules['only'])) {
+                            $options[$value->$key] = $value->$name;
+                        }
+                    }
+                    if (isset($rules['skip']) && is_array($rules)) {
+                        if (in_array($value->$name, $rules['skip'])) {
+                            continue;
+                        }
+                    }
+                } else {
+                    $options[$value->$key] = $value->$name;
                 }
-              }
-              if(isset($rules['skip']) && is_array($rules)) {
-                if(in_array($value->$name, $rules['skip'])) {
-                  continue;
-                }
-              }
-            } else {
-              $options[$value->$key] = $value->$name;
             }
-          }
-      }
-      return $options;
+        }
+
+        return $options;
     }
 }

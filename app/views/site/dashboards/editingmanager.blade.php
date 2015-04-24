@@ -50,27 +50,15 @@
                         {"index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation", "hidden":true},
                         {"label":"Group","index":"group_id","align":"center","width":110,"editable":true,
                         "editoptions":{'value':'{{rtrim($group, ";")}}', "disabled": 'disabled' },"edittype":"select","formatter":"select","editrules":{"required":true },"name":"group_id"},
-                        {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",
-                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
-                        {"label":"editingmanager",'width':75,"align":"center","index":"editingmanager_id","name":"editingmanager_id",
-                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
 
                         {'name':'priority', 'index':'priority', 'editable': true, 'align':'center',  'hidden' : true},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},
                         {"label":"Status","index":"status_id","align":"center","width":110, 'hidden': true,
                         "editable":true, "editoptions":{'value':'{{rtrim($status, ";")}}',"disabled": 'disabled'},"edittype":"select", "formatter":"select", "editrules":{"required":true},"name":"status_id"},
-                        {"label":"Photographer","index":"photographer_id","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","name":"photographer_id","hidden":true},
-
-                        {"label":"Photoshoot Date","index":"photoshoot_date","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },"width":150,"name":"photoshoot_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"},"hidden":true},
-
-                         {"label":"Photoshoot Location","index":"photoshoot_location","align":"center","width":90,"editable":true,  'hidden': true,
-                        "editoptions":{'value':'{{rtrim($photoshootLocation, ";")}}', "disabled": 'disabled' },"edittype":"select","formatter":"select","editrules":{"required":true},"name":"photoshoot_location"},
 
                         {"label":"S3 Path","align":"center","index":"s3_folder","name":"s3_folder","width":90},
                         {"label":"Seller Name","align":"center","index":"merchant_name","name":"merchant_name"},
                         {"label":"Category","align":"center","index":"category_name","name":"category_name"},
-                        {"label":"MIF","index":"mif_id","align":"center","width":150,"editable":true, "hidden":true,
-                         "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","name":"mif_id"},
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","width":90,
                         "editable":true, "editrules":{'edithidden': true },"editoptions":{"disabled": 'disabled' }},
                         {"label":"No. of Images","align":"center","index":"total_images","name":"total_images","width":100,

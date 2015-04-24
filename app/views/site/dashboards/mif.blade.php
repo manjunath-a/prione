@@ -53,8 +53,6 @@
                         {'name':'image_available', 'index':'image_available','align':'center',
                         'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
-                        {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",
-                            'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
 
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},
                         {'label':'Assigned Date','name':'assigned_date', 'index':'assigned_date','align':'center', },
