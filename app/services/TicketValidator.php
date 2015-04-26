@@ -1,6 +1,6 @@
 <?php
 
-namespace app\services;
+namespace App\Services;
 
 use Illuminate\Validation\Validator as IlluminateValidator;
 
@@ -21,6 +21,7 @@ class TicketValidator  extends IlluminateValidator
         'emg_required' => 'Editing Manager required',
         'etl_required' => 'Editing Team Lead is required',
         'editor_required' => 'Editior is required',
+        'editing_complete_required' => 'Only Editing completed ticket can be moved !',
         'ctl_required' => 'Cataloging Team Lead is required',
         'cataloguer_required' => 'Cataloger is required',
         'not_authorsied_catalog_move' => 'You did not have permission to move to cataloging.',
@@ -30,6 +31,7 @@ class TicketValidator  extends IlluminateValidator
         'editing_cant_move' => 'Only MIF Complete stage can be moved to Editing Group',
         'cataloging_cant_move' => 'Not allowed to move Cataloging Group',
         'asin_creation_not_allowed' => 'ASIN not allowed unti QC Completed',
+        'invalid_pending_reason' => 'Invalid Pending reason!',
         'not_authorsied_edit' => 'Edit option is not available for other Group Ticket',
     );
 
@@ -220,15 +222,24 @@ class TicketValidator  extends IlluminateValidator
         if (!$data['editor_id'] && !$data['pending_reason_id']) {
             throw new \Exception($this->_custom_messages['editor_required']);
         }
-
-        $editingStages = array(6,7,8,9);
-        // Not authorize to move other group unles stagerelated to Editing
-        if ($data['group_id'] != 2 && !in_array($data['cataloguer'], $editingStages)) {
+        $editingStages = array(9,4,5);
+        // Not authorize to move other group unles stage related to Editing
+        if ($data['group_id'] != 2 && !in_array($data['stage_id'], $editingStages)) {
             throw new \Exception($this->_custom_messages['not_authorsied_edit']);
         }
-
         if (!$data['stage_id']) {
             throw new \Exception($this->_custom_messages['stage_required']);
+        }
+    }
+
+    /**
+     * editingTeamLeadToCatalogManager
+     * @param array $data
+     */
+    public function editingTeamLeadToCatalogManager($data)
+    {
+        if ($data['stage_id']!= 5) {
+            throw new \Exception($this->_custom_messages['editing_complete_required']);
         }
     }
 
@@ -280,18 +291,34 @@ class TicketValidator  extends IlluminateValidator
         if (!$data['cataloguer_id'] && !$data['pending_reason_id']) {
             throw new \Exception($this->_custom_messages['cataloguer_required']);
         }
+        $catalogingStages = array(5,6,7,8);
 
-        $catalogingStages = array(6,7,8,9);
-        // Not authorize to move cataloguing group unles stagerelated to Cataloging
-        if ($data['group_id'] != 3 && !in_array($data['cataloguer_id'], $catalogingStages)) {
-            throw new \Exception($this->_custom_messages['not_authorsied_edit']);
+        if (!in_array($data['stage_id'], $catalogingStages)) {
+            throw new \Exception($this->_custom_messages['stage_required']);
         }
-
         if (!$data['stage_id']) {
             throw new \Exception($this->_custom_messages['stage_required']);
         }
     }
 
+
+    /**
+     * catalogingTeamLeadFlow.
+     */
+    public function catalogingTeamLeadToLocalTeamLeadFlow($data)
+    {
+        // Not authorize to move cataloguing group unles stagerelated to Cataloging
+        if ($data['pending_reason_id'] != 8) {
+            throw new \Exception($this->_custom_messages['invalid_pending_reason']);
+        }
+        $catalogingStages = array(5,6,7,8);
+        if (!in_array($data['stage_id'], $catalogingStages)) {
+            throw new \Exception($this->_custom_messages['not_authorsied_edit']);
+        }
+        if(!$data['stage_id']) {
+            throw new \Exception($this->_custom_messages['stage_required']);
+        }
+    }
     /**
      * catalogerFlow.
      */

@@ -227,7 +227,10 @@ class RequestController extends BaseController
             $ticketId = $ticketData['ticket_id'];
             if ($ticketTransactionId) {
                 if ($ticketData['group_id'] == 3) {
+                    $this->validateTicket->editingTeamLeadToCatalogManager($ticketData);
                     $ticketTransaction = Ticket::updateCatalogManager($ticketTransactionId, $ticketId, $ticketData);
+                } elseif ($ticketData['group_id'] == 1) {
+                    $ticketTransaction = Ticket::assignLocalTeamLead($ticketTransactionId, $ticketId, $ticketData);
                 } else {
                     $this->validateTicket->editingTeamLeadFlow($ticketData);
                     $ticketTransaction = Ticket::updateAssignEditor($ticketTransactionId, $ticketId, $ticketData);
@@ -305,8 +308,13 @@ class RequestController extends BaseController
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if ($ticketTransactionId) {
-                $this->validateTicket->catalogingTeamLeadFlow($ticketData);
-                $ticketTransaction = Ticket::updateCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
+                if ($ticketData['group_id'] == 1) {
+                    $this->validateTicket->catalogingTeamLeadToLocalTeamLeadFlow($ticketData);
+                    $ticketTransaction = Ticket::updateCatalogingTeamLeadToLocalTeamLead($ticketTransactionId, $ticketId, $ticketData);
+                } else {
+                    $this->validateTicket->catalogingTeamLeadFlow($ticketData);
+                    $ticketTransaction = Ticket::updateCatalogTeamLead($ticketTransactionId, $ticketId, $ticketData);
+                }
             }
             // Push to DB
             DB::commit();

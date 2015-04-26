@@ -49,7 +49,6 @@ class PendingReasonTableSeeder extends Seeder {
                 'sort'              => 8
             )
         );
-
         DB::table('pending_reason')->insert( $pendingReason );
     }
 

@@ -287,7 +287,7 @@ class DashboardController extends BaseController
         $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
-        $rules  = array('only' => array('Raw Images QC Failed'));
+        $rules  = array('only' => array('Editing Images QC Failed', 'Raw Images QC Failed'));
         $pendingArray   = PendingReason::all();
         $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $rules);
 
@@ -382,7 +382,7 @@ class DashboardController extends BaseController
         $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
-        $pendingRules   = array('only' => array('Cataloging MIF QC Failed', 'Flat File MIF QC Failed'));
+        $pendingRules   = array('only' => array('MIF QC failed', 'Flat file QC failed'));
         $pendingArray   = PendingReason::all();
         $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $pendingRules);
         // Show the page
@@ -435,7 +435,7 @@ class DashboardController extends BaseController
         $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
 
-        $pendingRules   = array('only' => array('Flat File MIF QC Failed'));
+        $pendingRules   = array('only' => array('Flat file QC failed'));
         $pendingArray   = PendingReason::all();
         $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $pendingRules);
         // Show the page
@@ -443,6 +443,7 @@ class DashboardController extends BaseController
             'serviceassociates', 'editingteamlead', 'editor', 'catalogueTeamLead', 'cataloguer',
             'priority', 'photoshootLocation', 'group', 'stage', 'status', 'pending'));
     }
+
     public function postSeller()
     {
         $sellerRequest  = new SellerRequest();
