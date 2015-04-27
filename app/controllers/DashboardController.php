@@ -317,7 +317,7 @@ class DashboardController extends BaseController
         $editorArray          = $user->findUserByRoleName('Editor');
         $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
 
-        $catalogueTeamLeadArray = $user->findUserByRoleName('Catalogue Team Lead');
+        $catalogueTeamLeadArray = $user->findUserByRoleName('Cataloge Team Lead');
         $catalogueTeamLead     = $this->util->arrayToJQString($catalogueTeamLeadArray, 'username', 'id');
 
         $priorityArray = Priority::all();
@@ -361,10 +361,10 @@ class DashboardController extends BaseController
         $editorArray          = $user->findUserByRoleName('Editor');
         $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
 
-        $catalogueTeamLeadArray = $user->findUserByRoleName('Catalogue Team Lead');
+        $catalogueTeamLeadArray = $user->findUserByRoleName('Cataloge Team Lead');
         $catalogueTeamLead     = $this->util->arrayToJQString($catalogueTeamLeadArray, 'username', 'id');
 
-        $cataloguerArray       = $user->findUserByRoleName('Cataloguer');
+        $cataloguerArray       = $user->findUserByRoleName('Cataloger');
         $cataloguer            = $this->util->arrayToJQString($cataloguerArray, 'username', 'id');
 
         $priorityArray = Priority::all();
@@ -411,10 +411,10 @@ class DashboardController extends BaseController
         $editorArray          = $user->findUserByRoleName('Editor');
         $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
 
-        $catalogueTeamLeadArray = $user->findUserByRoleName('Catalogue Team Lead');
+        $catalogueTeamLeadArray = $user->findUserByRoleName('Catalog Team Lead');
         $catalogueTeamLead     = $this->util->arrayToJQString($catalogueTeamLeadArray, 'username', 'id');
 
-        $cataloguerArray       = $user->findUserByRoleName('Cataloguer');
+        $cataloguerArray       = $user->findUserByRoleName('Cataloger');
         $cataloguer            = $this->util->arrayToJQString($cataloguerArray, 'username', 'id');
 
         $priorityArray = Priority::all();
@@ -435,7 +435,7 @@ class DashboardController extends BaseController
         $stageArray = $stageArray->sortBy('sort');
         $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id', $rules);
 
-        $pendingRules   = array('only' => array('Flat file QC failed'));
+        $pendingRules   = array('only' => array('MIF QC failed', 'Flat file QC failed'));
         $pendingArray   = PendingReason::all();
         $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id', $pendingRules);
         // Show the page
@@ -447,13 +447,14 @@ class DashboardController extends BaseController
     public function postSeller()
     {
         $sellerRequest  = new SellerRequest();
-        $sellerId       = $sellerRequest->requetIdByTicketId(Input::get('id'));
+        $ticketId = Input::get('id');
+        $sellerId       = $sellerRequest->requetIdByTicketId($ticketId);
         $seller         = SellerRequest::find($sellerId)->toArray();
         $category   = Category::find($seller['category_id'])->toArray();
 
-        // var_dump($seller['image_available']);
+        $ticketTransaction = TicketTransaction::getAssignedUsersByTicketId($ticketId);
+        $ticketUsers = $ticketTransaction[0];
         $seller['image_available'] = ($seller['image_available'] == 1) ? 'No' : 'Yes';
-        // var_dump($seller['image_available']);exit;
         return Response::json(array(
                     'rows' => [
                                 array(
@@ -464,6 +465,16 @@ class DashboardController extends BaseController
                                                 $seller['poc_email'],
                                                 $seller['poc_number'],
                                                 $seller['image_available'],
+                                                $ticketUsers->LocalTeamLead,
+                                                $ticketUsers->Photographer,
+                                                $ticketUsers->ServiceAssociate,
+                                                $ticketUsers->EditingManager,
+                                                $ticketUsers->EditingTeamLead,
+                                                $ticketUsers->Editor,
+                                                $ticketUsers->CatalogingManager,
+                                                $ticketUsers->CatalogingTeamLead,
+                                                $ticketUsers->Cataloger,
+                                                $ticketUsers->RejectedBy
                                             ),
                                     ),
                                 ],
@@ -476,23 +487,16 @@ class DashboardController extends BaseController
         $sellerRequest      = new SellerRequest();
         $ticketTransaction  = new TicketTransaction();
         $user               = new User();
-
-        $sellerId       = $sellerRequest->requetIdByTicketId(Input::get('id'));
+        $ticketId = Input::get('id');
+        $sellerId       = $sellerRequest->requetIdByTicketId($ticketId);
         $seller         = SellerRequest::find($sellerId)->toArray();
         $category   = Category::find($seller['category_id'])->toArray();
-        $ticket         = $ticketTransaction->transactionByTicketId(Input::get('id'));
+        $ticket         = $ticketTransaction->transactionByTicketId($ticketId);
+
+        $ticketTransaction = TicketTransaction::getAssignedUsersByTicketId($ticketId);
+        $ticketUsers = $ticketTransaction[0];
 
         $data['city']   = City::find($seller['merchant_city_id'])->toArray();
-        $photographer = null;
-        if ($ticket['photographer_id']) {
-            $photographer   = User::find($ticket['photographer_id'])->toArray();
-        }
-        $mif            = User::find($ticket['mif_id'])->toArray();
-        $editor = null;
-        if ($ticket['editor_id']) {
-            $editor     = User::find($ticket['editor_id'])->toArray();
-        }
-        $data['loalLead'] = $user->findAllByRoleAndCity('Local Team Lead', $seller['merchant_city_id']);
 
         return Response::json(array(
                 'rows' => [
@@ -500,10 +504,16 @@ class DashboardController extends BaseController
                         'cell' => array(
                                 $category['category_name'],
                                 $data['city']['city_name'],
-                                $data['loalLead'][0]->username,
-                                $photographer['username'],
-                                $mif['username'],
-                                $editor['username'],
+                                $ticketUsers->LocalTeamLead,
+                                $ticketUsers->Photographer,
+                                $ticketUsers->ServiceAssociate,
+                                $ticketUsers->EditingManager,
+                                $ticketUsers->EditingTeamLead,
+                                $ticketUsers->Editor,
+                                $ticketUsers->CatalogingManager,
+                                $ticketUsers->CatalogingTeamLead,
+                                $ticketUsers->Cataloger
+
                             ),
                     ),
                 ],
