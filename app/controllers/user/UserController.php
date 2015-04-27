@@ -47,41 +47,41 @@ class UserController extends BaseController
         $roles = $this->user->findUserRoleById($user->id);
         $dashboard = $this->findDashboard($roles);
         // Show the page
-        return Redirect::to('dashboard/'.$dashboard);
+        return Redirect::to($dashboard);
     }
 
     public function findDashboard($roles)
     {
         switch ($roles->rolename) {
             case 'Local Team Lead' :
-                $dashboard = 'locallead/';
+                $dashboard = 'dashboard/locallead/';
                 break;
             case 'Photographer' :
-                $dashboard = 'photographer/';
+                $dashboard = 'dashboard/photographer/';
                 break;
             case 'Services Associate' :
-                $dashboard = 'mif/';
+                $dashboard = 'dashboard/mif/';
                 break;
              case 'Editing Manager' :
-                $dashboard = 'editingmanager/';
+                $dashboard = 'dashboard/editingmanager/';
                 break;
             case 'Editing Team Lead' :
-                $dashboard = 'editingteamlead/';
+                $dashboard = 'dashboard/editingteamlead/';
                 break;
             case 'Editor' :
-                $dashboard = 'editor/';
+                $dashboard = 'dashboard/editor/';
                 break;
-            case 'Catalogue Manager' :
-                $dashboard = 'catalogmanager/';
+            case 'Catalog Manager' :
+                $dashboard = 'dashboard/catalogmanager/';
                 break;
-            case 'Catalogue Team Lead' :
-                $dashboard = 'catalogteamlead/';
+            case 'Catalog Team Lead' :
+                $dashboard = 'dashboard/catalogteamlead/';
                 break;
-            case 'Cataloguer' :
-                $dashboard = 'cataloger/';
+            case 'Cataloger' :
+                $dashboard = 'dashboard/cataloger/';
                 break;
             case 'admin' :
-                $dashboard = 'admin/';
+                $dashboard = 'admin/dashboard/';
                 break;
         }
 
