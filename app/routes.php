@@ -13,14 +13,14 @@
 
 /** ------------------------------------------
  *  Route model binding
- *  ------------------------------------------
+ *  ------------------------------------------.
  */
 Route::model('user', 'User');
 #Route::model('comment', 'Comment');
 #Route::model('post', 'Post');
 Route::model('role', 'Role');
 
-/** ------------------------------------------
+/* ------------------------------------------
  *  Route constraint patterns
  *  ------------------------------------------
  */
@@ -30,12 +30,11 @@ Route::pattern('user', '[0-9]+');
 Route::pattern('role', '[0-9]+');
 Route::pattern('token', '[0-9a-z]+');
 
-/** ------------------------------------------
+/* ------------------------------------------
  *  Admin Routes
  *  ------------------------------------------
  */
-Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
-{
+Route::group(array('prefix' => 'admin', 'before' => 'auth'), function () {
 
     # User Management
     Route::get('users/{user}/show', 'AdminUsersController@getShow');
@@ -47,8 +46,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
 
     # Dashboard Management
     Route::get('dashboard/', 'AdminDashboardController@getAdmin');
-    Route::post('dashboard/', function()
-    {
+    Route::post('dashboard/', function () {
         GridEncoder::encodeRequestedData(new AdminDashboardRepository(new Ticket()), Input::all());
     });
     Route::post('request/update/', 'AdminDashboardController@updateRequest');
@@ -72,11 +70,9 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     # Admin Dashboard
     Route::controller('/', 'AdminDashboardController');
 
-
 });
 
-
-/** ------------------------------------------
+/* ------------------------------------------
  *  Frontend Routes
  *  ------------------------------------------
  */
@@ -97,25 +93,23 @@ Route::controller('user', 'UserController');
 //:: Application Routes ::
 
 # Filter for detect language
-Route::when('contact-us','detectLang');
+Route::when('contact-us', 'detectLang');
 
 # Contact Us Static Page
-Route::get('contact-us', function()
-{
+Route::get('contact-us', function () {
     // Return about us page
     return View::make('site/contact-us');
 });
 
 # Index Page - Last route, no matches
-Route::get('/', array('before' => 'detectLang','uses' => 'UserController@getIndex'));
+Route::get('/', array('before' => 'detectLang', 'uses' => 'UserController@getIndex'));
 
 #Requestor Controller
 // User reset routes
 //Resquest routes
 Route::get('request', 'RequestController@getIndex');
 
-Route::get('request/status', function()
-{
+Route::get('request/status', function () {
     // Return about us page
     return View::make('request/status');
 });
@@ -125,7 +119,7 @@ Route::post('request/create', 'RequestController@store');
 // request created success
 Route::get('request/success/{ticket}', 'RequestController@success');
 
-Route::get('info/', function() {
+Route::get('info/', function () {
     phpinfo();
 });
 
@@ -152,48 +146,38 @@ Route::get('dashboard/catalogmanager/', 'DashboardController@getCatalogManager')
 Route::get('dashboard/catalogteamlead/', 'DashboardController@getCatalogTeamLead');
 Route::get('dashboard/cataloger/', 'DashboardController@getCataloger');
 
-
-Route::post('/dashboard/locallead', function()
-{
+Route::post('/dashboard/locallead', function () {
     GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
 });
-Route::post('/dashboard/photographer', function()
-{
+Route::post('/dashboard/photographer', function () {
     GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
 });
 
-Route::post('/dashboard/mif', function()
-{
+Route::post('/dashboard/mif', function () {
     GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
 });
 
-Route::post('/dashboard/editingmanager', function()
-{
+Route::post('/dashboard/editingmanager', function () {
     GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
 });
 
-Route::post('/dashboard/editingteamlead', function()
-{
+Route::post('/dashboard/editingteamlead', function () {
     GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
 });
 
-Route::post('/dashboard/editor', function()
-{
+Route::post('/dashboard/editor', function () {
     GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
 });
 
-Route::post('/dashboard/cataloguemanager', function()
-{
+Route::post('/dashboard/cataloguemanager', function () {
     GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
 });
 
-Route::post('/dashboard/catalogueteamlead', function()
-{
+Route::post('/dashboard/catalogueteamlead', function () {
     GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
 });
 
-Route::post('/dashboard/cataloguer', function()
-{
+Route::post('/dashboard/cataloguer', function () {
     GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
 });
 
@@ -201,11 +185,9 @@ Route::post('/dashboard/seller', 'DashboardController@postSeller');
 
 Route::post('/dashboard/editing', 'DashboardController@postEditing');
 
-
-
-App::missing(function($e) {
+App::missing(function ($e) {
     $url = Request::fullUrl();
     Log::warning("404 for URL: $url");
+
     return Response::view('error/404', array(), 404);
 });
-

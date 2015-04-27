@@ -2,15 +2,16 @@
 
 class AdminReportController extends AdminController
 {
-
     /**
-     * Util Service
+     * Util Service.
+     *
      * @var util
      */
     protected $util;
 
     /**
-     * Report Service
+     * Report Service.
+     *
      * @var report
      */
     protected $report;
@@ -25,15 +26,15 @@ class AdminReportController extends AdminController
         $this->report = App::make('report');
     }
 
-  	/**
-  	 * Returns report.
-  	 *
-  	 * @return View
-  	 */
-  	public function getIndex()
-  	{
-         return Redirect::to('admin/report/demand');
-  	}
+    /**
+     * Returns report.
+     *
+     * @return View
+     */
+    public function getIndex()
+    {
+        return Redirect::to('admin/report/demand');
+    }
 
     /**
      * Returns admin report.
@@ -42,7 +43,6 @@ class AdminReportController extends AdminController
      */
     public function getDemand()
     {
-
         $stageArray = Stage::all();
         $stageArray = $stageArray->sortBy('sort');
         $stage = $this->util->selectOptions($stageArray, 'stage_name', 'id');
@@ -52,7 +52,6 @@ class AdminReportController extends AdminController
 
         $roleArray = Role::all();
         $role = $this->util->selectOptions($roleArray, 'name', 'id');
-
 
         $total_request_count = $this->report->getTotalRequest();
         $total_sku_count = $this->report->getTotalSKU();
@@ -67,16 +66,16 @@ class AdminReportController extends AdminController
         $total_status_count = $this->report->getCountByStatus($statusOpen->id);
         $total_role_count = 0;
 
-        return View::make('admin/report/demand', compact( 'stage', 'status', 'role', 'compelted',
+        return View::make('admin/report/demand', compact('stage', 'status', 'role', 'compelted',
          'total_request_count', 'total_sku_count',  'total_stage_count',  'total_status_count',
-         'total_role_count' ));
+         'total_role_count'));
     }
 
     public function getStatus($statusId)
     {
         $this->layout = null;
         $count = $this->report->getCountByStatus($statusId);
-        $total_status = array('status'=>true, 'count'=>$count);
+        $total_status = array('status' => true, 'count' => $count);
         echo json_encode($total_status);
         exit;
     }
@@ -85,7 +84,7 @@ class AdminReportController extends AdminController
     {
         $this->layout = null;
         $count = $this->report->getCountByStage($stageId);
-        $total_stage = array('status'=>true, 'count'=>$count);
+        $total_stage = array('status' => true, 'count' => $count);
         echo json_encode($total_stage);
         exit;
     }
@@ -94,7 +93,7 @@ class AdminReportController extends AdminController
     {
         $this->layout = null;
         $count = $this->report->getCountByStatus($roleId);
-        $total_role = array('status'=>true, 'count'=>$count);
+        $total_role = array('status' => true, 'count' => $count);
         echo json_encode($total_role);
         exit;
     }

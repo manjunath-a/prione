@@ -1,24 +1,24 @@
 <?php
 
-class ReportController extends BaseController {
-
+class ReportController extends BaseController
+{
   /**
    * construct the models.
    */
   public function __construct()
   {
-//      parent::__construct();
+      //      parent::__construct();
   }
 
-	/**
-	 * Returns report.
-	 *
-	 * @return View
-	 */
-	public function getIndex()
-	{
+    /**
+     * Returns report.
+     *
+     * @return View
+     */
+    public function getIndex()
+    {
         //
-	}
+    }
 
     /**
      * Returns admin report.
@@ -32,6 +32,4 @@ class ReportController extends BaseController {
         return View::make('site/report/admin');
           //  ->with('ticketid',$ticket);
     }
-
-
 }

@@ -1,9 +1,10 @@
 <?php
 
-class UserController extends BaseController {
-
+class UserController extends BaseController
+{
     /**
-     * User Model
+     * User Model.
+     *
      * @var User
      */
     protected $user;
@@ -15,7 +16,8 @@ class UserController extends BaseController {
 
     /**
      * Inject the models.
-     * @param User $user
+     *
+     * @param User           $user
      * @param UserRepository $userRepo
      */
     public function __construct(User $user, UserRepository $userRepo)
@@ -26,14 +28,16 @@ class UserController extends BaseController {
     }
 
     /**
-     * Users settings page
+     * Users settings page.
      *
      * @return View
      */
     public function getIndex()
     {
         list($user, $redirect) = $this->user->checkAuthAndRedirect('user');
-        if($redirect){return $redirect;}
+        if ($redirect) {
+            return $redirect;
+        }
 
         // Get all the available city
         $cities = City::all();
@@ -46,9 +50,9 @@ class UserController extends BaseController {
         return Redirect::to('dashboard/'.$dashboard);
     }
 
-    public function findDashboard($roles) {
-
-        switch($roles->rolename) {
+    public function findDashboard($roles)
+    {
+        switch ($roles->rolename) {
             case 'Local Team Lead' :
                 $dashboard = 'locallead/';
                 break;
@@ -80,12 +84,12 @@ class UserController extends BaseController {
                 $dashboard = 'admin/';
                 break;
         }
+
         return  $dashboard;
     }
 
     /**
-     * Stores new user
-     *
+     * Stores new user.
      */
     public function postIndex()
     {
@@ -114,12 +118,13 @@ class UserController extends BaseController {
                 ->withInput(Input::except('password'))
                 ->with('error', $error);
         }
-
     }
 
     /**
-     * Edits a user
+     * Edits a user.
+     *
      * @var User
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postEdit(User $user)
@@ -136,6 +141,7 @@ class UserController extends BaseController {
             if ($password != $passwordConfirmation) {
                 // Redirect to the new user page
                 $error = Lang::get('admin/users/messages.password_does_not_match');
+
                 return Redirect::to('user')
                     ->with('error', $error);
             } else {
@@ -146,34 +152,31 @@ class UserController extends BaseController {
 
         if ($this->userRepo->save($user)) {
             return Redirect::to('user')
-                ->with( 'success', Lang::get('user/user.user_account_updated') );
+                ->with('success', Lang::get('user/user.user_account_updated'));
         } else {
             $error = $user->errors()->all(':message');
+
             return Redirect::to('user')
                 ->withInput(Input::except('password', 'password_confirmation'))
                 ->with('error', $error);
         }
-
     }
 
     /**
-     * Displays the form for user creation
-     *
+     * Displays the form for user creation.
      */
     public function getCreate()
     {
         return View::make('site/user/create');
     }
 
-
     /**
-     * Displays the login form
-     *
+     * Displays the login form.
      */
     public function getLogin()
     {
         $user = Auth::user();
-        if(!empty($user->id)){
+        if (!empty($user->id)) {
             return Redirect::to('/dashboard');
         }
 
@@ -181,8 +184,7 @@ class UserController extends BaseController {
     }
 
     /**
-     * Attempt to do login
-     *
+     * Attempt to do login.
      */
     public function postLogin()
     {
@@ -204,32 +206,28 @@ class UserController extends BaseController {
                 ->withInput(Input::except('password'))
                 ->with('error', $err_msg);
         }
-
     }
 
     /**
-     * Attempt to confirm account with code
+     * Attempt to confirm account with code.
      *
-     * @param  string $code
+     * @param string $code
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function getConfirm($code)
     {
-        if ( Confide::confirm( $code ) )
-        {
+        if (Confide::confirm($code)) {
             return Redirect::to('user/login')
-                ->with( 'notice', Lang::get('confide::confide.alerts.confirmation') );
-        }
-        else
-        {
+                ->with('notice', Lang::get('confide::confide.alerts.confirmation'));
+        } else {
             return Redirect::to('user/login')
-                ->with( 'error', Lang::get('confide::confide.alerts.wrong_confirmation') );
+                ->with('error', Lang::get('confide::confide.alerts.wrong_confirmation'));
         }
     }
 
     /**
-     * Displays the forgot password form
-     *
+     * Displays the forgot password form.
      */
     public function getForgot()
     {
@@ -237,17 +235,18 @@ class UserController extends BaseController {
     }
 
     /**
-     * Attempt to reset password with given email
-     *
+     * Attempt to reset password with given email.
      */
     public function postForgotPassword()
     {
         if (Confide::forgotPassword(Input::get('email'))) {
             $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
+
             return Redirect::to('user/forgot')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
+
             return Redirect::to('user/login')
                 ->withInput()
                 ->with('error', $error_msg);
@@ -255,47 +254,42 @@ class UserController extends BaseController {
     }
 
     /**
-     * Shows the change password form with the given token
-     *
+     * Shows the change password form with the given token.
      */
-    public function getReset( $token )
+    public function getReset($token)
     {
-
         return View::make('site/user/reset')
-            ->with('token',$token);
+            ->with('token', $token);
     }
 
-
     /**
-     * Attempt change password of the user
-     *
+     * Attempt change password of the user.
      */
     public function postReset()
     {
-
         $input = array(
-            'token'                 =>Input::get('token'),
-            'password'              =>Input::get('password'),
-            'password_confirmation' =>Input::get('password_confirmation'),
+            'token'                 => Input::get('token'),
+            'password'              => Input::get('password'),
+            'password_confirmation' => Input::get('password_confirmation'),
         );
 
         // By passing an array with the token, password and confirmation
         if ($this->userRepo->resetPassword($input)) {
             $notice_msg = Lang::get('confide::confide.alerts.password_reset');
+
             return Redirect::to('user/login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-            return Redirect::to('user/reset', array('token'=>$input['token']))
+
+            return Redirect::to('user/reset', array('token' => $input['token']))
                 ->withInput()
                 ->with('error', $error_msg);
         }
-
     }
 
     /**
      * Log the user out of the application.
-     *
      */
     public function getLogout()
     {
@@ -305,18 +299,19 @@ class UserController extends BaseController {
     }
 
     /**
-     * Get user's profile
+     * Get user's profile.
+     *
      * @param $username
+     *
      * @return mixed
      */
     public function getProfile($username)
     {
-        $userModel = new User;
+        $userModel = new User();
         $user = $userModel->getUserByUsername($username);
 
         // Check if the user exists
-        if (is_null($user))
-        {
+        if (is_null($user)) {
             return App::abort(404);
         }
 
@@ -325,28 +320,32 @@ class UserController extends BaseController {
 
     public function getSettings()
     {
-        list($user,$redirect) = User::checkAuthAndRedirect('user/settings');
-        if($redirect){return $redirect;}
+        list($user, $redirect) = User::checkAuthAndRedirect('user/settings');
+        if ($redirect) {
+            return $redirect;
+        }
 
         return View::make('site/user/profile', compact('user'));
     }
 
     /**
      * Process a dumb redirect.
+     *
      * @param $url1
      * @param $url2
      * @param $url3
+     *
      * @return string
      */
-    public function processRedirect($url1,$url2,$url3)
+    public function processRedirect($url1, $url2, $url3)
     {
         $redirect = '';
-        if( ! empty( $url1 ) )
-        {
+        if (!empty($url1)) {
             $redirect = $url1;
-            $redirect .= (empty($url2)? '' : '/' . $url2);
-            $redirect .= (empty($url3)? '' : '/' . $url3);
+            $redirect .= (empty($url2) ? '' : '/'.$url2);
+            $redirect .= (empty($url3) ? '' : '/'.$url3);
         }
+
         return $redirect;
     }
 }
