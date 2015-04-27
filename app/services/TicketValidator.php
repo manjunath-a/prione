@@ -180,16 +180,15 @@ class TicketValidator  extends IlluminateValidator
     {
         $ticketTransaction = \TicketTransaction::find($data['transaction_id'])->toArray();
 
-        if (!$data['editingmanager_id']) {
+        if (!$ticketTransaction['editingmanager_id']) {
             throw new \Exception($this->_custom_messages['emg_required']);
         }
 
-        if (!$data['editingteamlead_id']) {
+        if (!$ticketTransaction['editingteamlead_id']) {
             throw new \Exception($this->_custom_messages['etl_required']);
         }
 
-        // While pending reason ticket should not move the any queue
-        if (!$data['catalogingmanager_id']) {
+        if (!$ticketTransaction['catalogingmanager_id']) {
             throw new \Exception($this->_custom_messages['cataloging_cant_move']);
         }
         if (!$data['stage_id']) {
@@ -338,6 +337,9 @@ class TicketValidator  extends IlluminateValidator
         // Not authorize to move cataloguing group
         if ($data['group_id'] != 3) {
             throw new \Exception($this->_custom_messages['not_authorsied_edit']);
+        }
+        if ($data['pending_reason_id']  && $data['pending_reason_id'] !=8) {
+            throw new \Exception($this->_custom_messages['invalid_pending_reason']);
         }
         if (!$data['stage_id']) {
             throw new \Exception($this->_custom_messages['stage_required']);

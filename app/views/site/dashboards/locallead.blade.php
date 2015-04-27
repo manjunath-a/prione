@@ -105,15 +105,24 @@
                     "subGridUrl":"seller",
                     "subGridModel" :[
                         {
-                            name  : ['Seller name', 'Category', 'POC Name', 'POC Email ID', 'POC Contact Number', 'Seller Provided Images'],
-                            width : [250,200,200,200,150,160],
+                            name  : ['Seller name', 'Category', 'POC Name', 'POC Email ID', 'POC Contact Number', 'Seller Provided Images','Local Team Lead', 'Photographer','Service Associate' ,'Editing Manager','Editing Team Lead', 'Editor','Cataloging Manager','Cataloging Team Lead','Cataloger'],
+                            width : [250,200,200,200,150,160,200,200,200,200,200,200,200,200,200],
                             colModel: [
                                 {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
                                 {"label":"Category","align":"center","index":"category","name":"category"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
                                 {"label":"POC Contact Number","index":"poc_number","name":"poc_number"},
-                                {"label":"Seller Provided Images","align":"center","index":"image_available","name":"image_available"}
+                                {"label":"Seller Provided Images","align":"center","index":"image_available","name":"image_available"},
+                                {"label":"Local Team Lead","align":"center","index":"LocalTeamLead","name":"LocalTeamLead"},
+                                {"label":"Photographer","align":"center","index":"Photographer","name":"Photographer"},
+                                {"label":"Service Associate","align":"center","index":"ServiceAssociate","name":"ServiceAssociate"},
+                                {"label":"Editing Manager","align":"center","index":"EditingManager","name":"EditingManager"},
+                                {"label":"Editing Team Lead","align":"center","index":"EditingTeamLead","name":"EditingTeamLead"},
+                                {"label":"Editor","align":"center","index":"Editor","name":"Editor"},
+                                {"label":"Cataloging Manager","align":"center","index":"CatalogingManager","name":"CatalogingManager"},
+                                {"label":"Cataloging Team Lead","align":"center","index":"CatalogingTeamLead","name":"CatalogingTeamLead"},
+                                {"label":"Cataloger","align":"center","index":"Cataloger","name":"Cataloger"}
                             ]
                         }
                     ],
