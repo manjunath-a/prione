@@ -51,10 +51,10 @@ class TicketValidator  extends IlluminateValidator
             if ($data['mif_id'] == 0) {
                 throw new \Exception($this->_custom_messages['service_associate_required']);
             }
-            // //Check for Image Not available
-            // if ($data['image_available'] == 1 && !$data['photographer_id']) {
-            //     throw new \Exception($this->_custom_messages['photographer_required']);
-            // }
+            // // Check for Image Not available
+            if ($data['stage_id'] == 2 && !$data['photographer_id']) {
+                throw new \Exception($this->_custom_messages['photographer_required']);
+            }
 
             // Check already in photographer or MIF queue
             if ($ticketTransaction['photographer_id'] != $data['photographer_id'] &&
@@ -68,13 +68,13 @@ class TicketValidator  extends IlluminateValidator
             $this->checkValidator($data, $this->commonRules);
 
             // // Check photographer  1 = Image Not available 2 = seller provided
-            // if ($data['photographer_id'] && $data['image_available'] == 1) {
-            //     $rules = [
-            //               'photoshoot_location' => 'required',
-            //               'photoshoot_date' => 'required',
-            //             ];
-            //     $this->checkValidator($data, $rules);
-            // }
+            if ($data['photographer_id'] && $data['stage_id'] == 2) {
+                $rules = [
+                          'photoshoot_location' => 'required',
+                          'photoshoot_date' => 'required',
+                        ];
+                $this->checkValidator($data, $rules);
+            }
             // Check for associate Change
             if ($data['photographer_id'] && $data['mif_id']) {
                 if ($data['stage_id'] == '1') {
