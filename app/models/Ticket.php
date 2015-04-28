@@ -43,12 +43,12 @@ class Ticket extends Eloquent
 
         // Checks for Open Status
         if ($ticketData['status_id'] == 1) {
-            if (isset($ticketData['photographer_id'])) {
+            if (isset($ticketData['photographer_id']) && $data['photographer_id']) {
                 $ticketData['assigned_to']        = $ticketData['photographer_id'];
-              // Checks associate assigned stage else dont make entry in db
-              if ($ticketData['stage_id'] == 2) {
-                  $photographerTransaction = TicketTransaction::updateTicket($ticketData);
-              }
+                // Checks associate assigned stage else dont make entry in db
+                if ($ticketData['stage_id'] == 2) {
+                    $photographerTransaction = TicketTransaction::updateTicket($ticketData);
+                }
             }
             // Assgining to Service Assiocate
             if ($ticketData['stage_id'] != 4 && $ticketData['mif_id']) {
