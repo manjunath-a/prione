@@ -16,7 +16,9 @@ class TicketValidator  extends IlluminateValidator
         'service_associate_required' => 'Service Associates is required .',
         'service_associate_already_assigned' => 'Service Associates already assgined.',
         'photographer_required' => 'Photographer is required.',
+        'photoshoot_data_required' => 'Photoshoot information required (Photogrpaher, Location and Date)',
         'photoshoot_required' => 'Photoshoot need to be completed before Service Associates Complete',
+        'photoshoot_not_required' => 'Photoshoot not required for Stage - (Local) Seller Images Provided',
         'photographer_already_assigned' => 'Photographer already assgined ',
         'emg_required' => 'Editing Manager required',
         'etl_required' => 'Editing Team Lead is required',
@@ -51,36 +53,24 @@ class TicketValidator  extends IlluminateValidator
             if ($data['mif_id'] == 0) {
                 throw new \Exception($this->_custom_messages['service_associate_required']);
             }
-            // // Check for Image Not available
-            if ($data['stage_id'] == 2 && !$data['photographer_id']) {
-                throw new \Exception($this->_custom_messages['photographer_required']);
+
+            if ($data['stage_id'] == 9 && ($data['photographer_id'] or $data['photoshoot_location']  or  $data['photoshoot_date'])) {
+                throw new \Exception($this->_custom_messages['photoshoot_not_required']);
             }
 
-            // Check already in photographer or MIF queue
-            if ($ticketTransaction['photographer_id'] != $data['photographer_id'] &&
-              ($data['stage_id'] == '3' or  $data['stage_id'] == '4')) {
-                throw new \Exception($this->_custom_messages['photographer_already_assigned']);
+            // Check the stage not seller provided image  and either
+            //  all three data shoud be empty or not empty (photogrpaher , location and date)
+            if($data['stage_id'] != 9 &&
+                !(($data['photographer_id'] && $data['photoshoot_location']  &&  $data['photoshoot_date'])
+                                                            or
+                 (!$data['photographer_id'] && !$data['photoshoot_location']  &&  !$data['photoshoot_date']))) {
+                throw new \Exception($this->_custom_messages['photoshoot_data_required']);
             }
-
             if ($ticketTransaction['mif_id'] != $data['mif_id'] && $data['stage_id'] == '4') {
                 throw new \Exception($this->_custom_messages['service_associate_already_assigned']);
             }
             $this->checkValidator($data, $this->commonRules);
 
-            // // Check photographer  1 = Image Not available 2 = seller provided
-            if ($data['photographer_id'] && $data['stage_id'] == 2) {
-                $rules = [
-                          'photoshoot_location' => 'required',
-                          'photoshoot_date' => 'required',
-                        ];
-                $this->checkValidator($data, $rules);
-            }
-            // Check for associate Change
-            if ($data['photographer_id'] && $data['mif_id']) {
-                if ($data['stage_id'] == '1') {
-                    throw new \Exception($this->_custom_messages['stage_sa_assign']);
-                }
-            }
         }
         // While pending reason ticket should not move the any queue
         if ($data['stage_id'] != 1 && $data['pending_reason_id']) {
@@ -114,12 +104,13 @@ class TicketValidator  extends IlluminateValidator
      */
     public function servicesAssociateFlow($data)
     {
+
         // Image available and stage should be photoshoot complete
-        if ($data['image_available'] == 1 && $data['stage_id'] != 3) {
+        if ($data['stage_id'] == 3 ) {
             throw new \Exception($this->_custom_messages['photoshoot_required']);
         }
 
-        if ($data['image_available'] == 2 && ($data['stage_id'] != 3 and $data['stage_id'] != 9)) {
+        if (($data['stage_id'] != 3 and $data['stage_id'] != 9)) {
             throw new \Exception($this->_custom_messages['photoshoot_required']);
         }
         $this->checkValidator($data, $this->commonRules);

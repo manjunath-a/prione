@@ -92,15 +92,6 @@ Route::controller('user', 'UserController');
 
 //:: Application Routes ::
 
-# Filter for detect language
-Route::when('contact-us', 'detectLang');
-
-# Contact Us Static Page
-Route::get('contact-us', function () {
-    // Return about us page
-    return View::make('site/contact-us');
-});
-
 # Index Page - Last route, no matches
 Route::get('/', array('before' => 'detectLang', 'uses' => 'UserController@getIndex'));
 
@@ -119,71 +110,77 @@ Route::post('request/create', 'RequestController@store');
 // request created success
 Route::get('request/success/{ticket}', 'RequestController@success');
 
-Route::get('info/', function () {
-    phpinfo();
+
+Route::group(array('prefix' => 'request', 'before' => 'auth'), function () {
+        // Before CSRF checks : FIXME
+    Route::post('update/', 'RequestController@updateRequest');
+    Route::post('updatePhotographer/', 'RequestController@updatePhotographer');
+    Route::post('updateMIF/', 'RequestController@updateMIF');
+    Route::post('updateEditingManager/', 'RequestController@updateEditingManager');
+    Route::post('updateEditingTeamLead/', 'RequestController@updateEditingTeamLead');
+    // Route::post('request/updateEditor/', 'RequestController@updateEditor');
+    Route::post('updateEditingComplete/', 'RequestController@updateEditingComplete');
+    Route::post('updateAssignCatalogTeamLead/', 'RequestController@updateAssignCatalogTeamLead');
+    Route::post('updateCatalogTeamLead/', 'RequestController@updateCatalogTeamLead');
+    Route::post('updateCataloger/', 'RequestController@updateCataloger');
+    Route::post('updateCatalogingComplete/', 'RequestController@updateCatalogingComplete');
+    Route::get('info/', function () {
+        phpinfo();
+    });
 });
 
-// Before CSRF checks : FIXME
-Route::post('request/update/', 'RequestController@updateRequest');
-Route::post('request/updatePhotographer/', 'RequestController@updatePhotographer');
-Route::post('request/updateMIF/', 'RequestController@updateMIF');
-Route::post('request/updateEditingManager/', 'RequestController@updateEditingManager');
-Route::post('request/updateEditingTeamLead/', 'RequestController@updateEditingTeamLead');
-// Route::post('request/updateEditor/', 'RequestController@updateEditor');
-Route::post('request/updateEditingComplete/', 'RequestController@updateEditingComplete');
-Route::post('request/updateAssignCatalogTeamLead/', 'RequestController@updateAssignCatalogTeamLead');
-Route::post('request/updateCatalogTeamLead/', 'RequestController@updateCatalogTeamLead');
-Route::post('request/updateCataloger/', 'RequestController@updateCataloger');
-Route::post('request/updateCatalogingComplete/', 'RequestController@updateCatalogingComplete');
+Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function () {
+    Route::get('locallead/', 'DashboardController@getLocalLead');
+    Route::get('photographer/', 'DashboardController@getPhotographer');
+    Route::get('mif/', 'DashboardController@getMIF');
+    Route::get('editingmanager/', 'DashboardController@getEditingManager');
+    Route::get('editingteamlead/', 'DashboardController@getEditingTeamLead');
+    Route::get('editor/', 'DashboardController@getEditor');
+    Route::get('catalogmanager/', 'DashboardController@getCatalogManager');
+    Route::get('catalogteamlead/', 'DashboardController@getCatalogTeamLead');
+    Route::get('cataloger/', 'DashboardController@getCataloger');
 
-Route::get('dashboard/locallead/', 'DashboardController@getLocalLead');
-Route::get('dashboard/photographer/', 'DashboardController@getPhotographer');
-Route::get('dashboard/mif/', 'DashboardController@getMIF');
-Route::get('dashboard/editingmanager/', 'DashboardController@getEditingManager');
-Route::get('dashboard/editingteamlead/', 'DashboardController@getEditingTeamLead');
-Route::get('dashboard/editor/', 'DashboardController@getEditor');
-Route::get('dashboard/catalogmanager/', 'DashboardController@getCatalogManager');
-Route::get('dashboard/catalogteamlead/', 'DashboardController@getCatalogTeamLead');
-Route::get('dashboard/cataloger/', 'DashboardController@getCataloger');
+    Route::post('locallead/', function () {
+        GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
+    });
+    Route::post('photographer/', function () {
+        GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
+    });
 
-Route::post('/dashboard/locallead', function () {
-    GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
-});
-Route::post('/dashboard/photographer', function () {
-    GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
-});
+    Route::post('mif', function () {
+        GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
+    });
 
-Route::post('/dashboard/mif', function () {
-    GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
-});
+    Route::post('editingmanager/', function () {
+        GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
+    });
 
-Route::post('/dashboard/editingmanager', function () {
-    GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
-});
+    Route::post('editingteamlead/', function () {
+        GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
+    });
 
-Route::post('/dashboard/editingteamlead', function () {
-    GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
-});
+    Route::post('editor/', function () {
+        GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
+    });
 
-Route::post('/dashboard/editor', function () {
-    GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
-});
+    Route::post('cataloguemanager/', function () {
+        GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
+    });
 
-Route::post('/dashboard/cataloguemanager', function () {
-    GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
-});
+    Route::post('catalogueteamlead/', function () {
+        GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
+    });
 
-Route::post('/dashboard/catalogueteamlead', function () {
-    GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
+    Route::post('cataloguer/', function () {
+        GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
+    });
+
+    Route::post('seller/', 'DashboardController@postSeller');
+    Route::post('sellerinfo/', 'DashboardController@postSellerInfo');
+    Route::post('editing/', 'DashboardController@postEditing');
+
 });
 
-Route::post('/dashboard/cataloguer', function () {
-    GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
-});
-
-Route::post('/dashboard/seller', 'DashboardController@postSeller');
-
-Route::post('/dashboard/editing', 'DashboardController@postEditing');
 
 App::missing(function ($e) {
     $url = Request::fullUrl();

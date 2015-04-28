@@ -737,6 +737,8 @@ class Ticket extends Eloquent
         $ticketData['rejected_role'] = (isset($data['rejected_role'])) ? $data['rejected_role'] :$ticketTransaction['rejected_role'];
         if (isset($data['pending_reason_id'])) {
             $ticketData['pending_reason_id'] = ($data['pending_reason_id']) ? $data['pending_reason_id'] : NULL;
+            $userRole = Auth::user()->roles;
+            $ticketData['rejected_role'] = $userRole[0]->id;
         }
         // var_dump($ticketTransaction);
         // var_dump($ticketData);exit;

@@ -87,8 +87,11 @@
                     "subGridUrl":"editing",
                     "subGridModel" :[
                         {
-                            name  : ['Category','City','Local Team Lead', 'Photographer','Service Associate' ,'Editing Manager','Editing Team Lead', 'Editor','Cataloging Manager','Cataloging Team Lead','Cataloger'],
-                            width : [200,200,200,200,200,200,200,200,200,200,200]
+                            name  : ['Requester Name', 'Requester Email',  'Requester Number',
+                                    'Category','City','Local Team Lead', 'Photographer','Service Associate',
+                                    'Editing Manager','Editing Team Lead', 'Editor','Cataloging Manager',
+                                    'Cataloging Team Lead','Cataloger','Rejected By'],
+                            width : [200,200,200,200,200,200,200,200,200,200,200,200,200,200,200]
                         }
                     ],
                     "pager":"cataloguerPager"
