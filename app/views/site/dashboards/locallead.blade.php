@@ -105,14 +105,21 @@
                     "subGridUrl":"seller",
                     "subGridModel" :[
                         {
-                            name  : ['Seller name', 'Category', 'POC Name', 'POC Email ID', 'POC Contact Number', 'Seller Provided Images','Local Team Lead', 'Photographer','Service Associate' ,'Editing Manager','Editing Team Lead', 'Editor','Cataloging Manager','Cataloging Team Lead','Cataloger'],
-                            width : [250,200,200,200,150,160,200,200,200,200,200,200,200,200,200],
+                            name  : ['Seller name', 'Category', 'POC Name', 'POC Email', 'POC Number', 'Requester Name',
+                                    'Requester Email',  'Requester Number', 'Seller Provided Images',
+                                    'Local Team Lead', 'Photographer', 'Service Associate' ,
+                                    'Editing Manager', 'Editing Team Lead', 'Editor',
+                                    'Cataloging Manager', 'Cataloging Team Lead', 'Cataloger','Rejected By'],
+                            width : [200,200,200,200,150,120,120,120,160,120,120,120,120,120,120,120,120,120],
                             colModel: [
                                 {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
                                 {"label":"Category","align":"center","index":"category","name":"category"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
-                                {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
+                                {"label":"POC Email","align":"center","index":"poc_email","name":"poc_email"},
                                 {"label":"POC Contact Number","index":"poc_number","name":"poc_number"},
+                                {"label":"Requester Name","align":"center","index":"requester_name","name":"requester_name"},
+                                {"label":"Requester Email","align":"center","index":"email","name":"email"},
+                                {"label":"Requester Number","index":"contact_number","name":"contact_number"},
                                 {"label":"Seller Provided Images","align":"center","index":"image_available","name":"image_available"},
                                 {"label":"Local Team Lead","align":"center","index":"LocalTeamLead","name":"LocalTeamLead"},
                                 {"label":"Photographer","align":"center","index":"Photographer","name":"Photographer"},
@@ -122,7 +129,8 @@
                                 {"label":"Editor","align":"center","index":"Editor","name":"Editor"},
                                 {"label":"Cataloging Manager","align":"center","index":"CatalogingManager","name":"CatalogingManager"},
                                 {"label":"Cataloging Team Lead","align":"center","index":"CatalogingTeamLead","name":"CatalogingTeamLead"},
-                                {"label":"Cataloger","align":"center","index":"Cataloger","name":"Cataloger"}
+                                {"label":"Cataloger","align":"center","index":"Cataloger","name":"Cataloger"},
+                                {"label":"Reject By","align":"center","index":"RejectedBy","name":"RejectedBy"}
                             ]
                         }
                     ],

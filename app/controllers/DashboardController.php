@@ -464,6 +464,9 @@ class DashboardController extends BaseController
                                                 $seller['poc_name'],
                                                 $seller['poc_email'],
                                                 $seller['poc_number'],
+                                                $seller['requester_name'],
+                                                $seller['email'],
+                                                $seller['contact_number'],
                                                 $seller['image_available'],
                                                 $ticketUsers->LocalTeamLead,
                                                 $ticketUsers->Photographer,
@@ -474,6 +477,38 @@ class DashboardController extends BaseController
                                                 $ticketUsers->CatalogingManager,
                                                 $ticketUsers->CatalogingTeamLead,
                                                 $ticketUsers->Cataloger,
+                                                $ticketUsers->RejectedBy
+                                            ),
+                                    ),
+                                ],
+                            )
+                    );
+    }
+
+    public function postSellerInfo()
+    {
+        $sellerRequest  = new SellerRequest();
+        $ticketId = Input::get('id');
+        $sellerId       = $sellerRequest->requetIdByTicketId($ticketId);
+        $seller         = SellerRequest::find($sellerId)->toArray();
+        $category   = Category::find($seller['category_id'])->toArray();
+
+        $ticketTransaction = TicketTransaction::getAssignedUsersByTicketId($ticketId);
+        $ticketUsers = $ticketTransaction[0];
+        $seller['image_available'] = ($seller['image_available'] == 1) ? 'No' : 'Yes';
+        return Response::json(array(
+                    'rows' => [
+                                array(
+                                    'cell' => array(
+                                                $seller['merchant_name'],
+                                                $category['category_name'],
+                                                $seller['poc_name'],
+                                                $seller['poc_email'],
+                                                $seller['poc_number'],
+                                                $seller['requester_name'],
+                                                $seller['email'],
+                                                $seller['contact_number'],
+                                                $seller['image_available'],
                                                 $ticketUsers->RejectedBy
                                             ),
                                     ),
@@ -502,6 +537,9 @@ class DashboardController extends BaseController
                 'rows' => [
                     array(
                         'cell' => array(
+                                $seller['requester_name'],
+                                $seller['email'],
+                                $seller['contact_number'],
                                 $category['category_name'],
                                 $data['city']['city_name'],
                                 $ticketUsers->LocalTeamLead,
@@ -512,7 +550,8 @@ class DashboardController extends BaseController
                                 $ticketUsers->Editor,
                                 $ticketUsers->CatalogingManager,
                                 $ticketUsers->CatalogingTeamLead,
-                                $ticketUsers->Cataloger
+                                $ticketUsers->Cataloger,
+                                $ticketUsers->RejectedBy
 
                             ),
                     ),
