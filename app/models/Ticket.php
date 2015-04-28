@@ -121,7 +121,8 @@ class Ticket extends Eloquent
                                         ->update(array('active' => 0));
 
         if ($data['pending_reason_id'] != 0) {
-            if ($data['image_available'] == 1) {
+            //if ($data['image_available'] == 1) {
+            if ($data['photogharaper_id'] != '' or $data['photogharaper_id'] != 0 ) {
                 $mifStage = Stage::where('stage_name', '(Local) Photoshoot Completed')->first();
             } else {
                 $mifStage = Stage::where('stage_name', '(Local) Seller Images Provided')->first();
