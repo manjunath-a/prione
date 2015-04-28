@@ -317,7 +317,7 @@ class DashboardController extends BaseController
         $editorArray          = $user->findUserByRoleName('Editor');
         $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
 
-        $catalogueTeamLeadArray = $user->findUserByRoleName('Cataloge Team Lead');
+        $catalogueTeamLeadArray = $user->findUserByRoleName('Catalog Team Lead');
         $catalogueTeamLead     = $this->util->arrayToJQString($catalogueTeamLeadArray, 'username', 'id');
 
         $priorityArray = Priority::all();
@@ -361,7 +361,7 @@ class DashboardController extends BaseController
         $editorArray          = $user->findUserByRoleName('Editor');
         $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
 
-        $catalogueTeamLeadArray = $user->findUserByRoleName('Cataloge Team Lead');
+        $catalogueTeamLeadArray = $user->findUserByRoleName('Catalog Team Lead');
         $catalogueTeamLead     = $this->util->arrayToJQString($catalogueTeamLeadArray, 'username', 'id');
 
         $cataloguerArray       = $user->findUserByRoleName('Cataloger');
