@@ -10,4 +10,5 @@ return array(
   'city_lead' => 8, // Bangalore City Lead
   'default_stage_name' => '(Local) Associates Not Assigned',
   'default_group' => 1,
+  'photoshoot_location' =>'0:select;Studio:Studio;2:Seller Site',
 );

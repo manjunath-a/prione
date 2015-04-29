@@ -34,6 +34,7 @@ class DashboardRepository extends EloquentRepositoryAbstract  {
                             ->where('ticket_transaction.active', $status)
                             ->select('ticket_transaction.id as id',
                             'ticket_transaction.created_at as created_at',
+                            'seller_request.created_at as request_created',
             'ticket_transaction.priority', 'ticket_transaction.group_id', 'ticket_transaction.stage_id',
             'ticket_transaction.status_id', 'ticket_transaction.pending_reason_id', 'ticket_transaction.notes as comment',
             'ticket_transaction.created_at as assigned_date','seller_request.requester_name as requester_name',

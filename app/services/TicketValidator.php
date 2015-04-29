@@ -105,11 +105,6 @@ class TicketValidator  extends IlluminateValidator
     public function servicesAssociateFlow($data)
     {
 
-        // Image available and stage should be photoshoot complete
-//        if ($data['stage_id'] == 3 ) {
-//            throw new \Exception($this->_custom_messages['photoshoot_required']);
-//        }
-
         if (($data['stage_id'] != 3 and $data['stage_id'] != 9)) {
             throw new \Exception($this->_custom_messages['photoshoot_required']);
         }
@@ -138,16 +133,6 @@ class TicketValidator  extends IlluminateValidator
             !$ticketTransaction['pending_reason_id'])) {
             throw new \Exception($this->_custom_messages['service_associate_already_assigned']);
         }
-
-//        if ($data['image_available'] == 1) {
-//            $commonRules = array_merge($this->commonRules, array(
-//                  'photoshoot_location' => 'required',
-//                  'photoshoot_date' => 'required',
-//                ));
-//            if (!$data['photographer_id']) {
-//                throw new \Exception($this->_custom_messages['photographer_required']);
-//            }
-//        }
 
         if (!$data['mif_id']) {
             throw new \Exception($this->_custom_messages['service_associate_required']);

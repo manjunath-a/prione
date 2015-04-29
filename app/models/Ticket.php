@@ -76,14 +76,14 @@ class Ticket extends Eloquent
         $ticketTransaction = TicketTransaction::where('ticket_id', '=', $ticketId)
                                         ->where('active', '=', 1)
                                         ->update(array('active' => 0));
-        $photoStage = Stage::where('stage_name', '(Local) Photoshoot Completed')->first();
+        $photoStageId = 3; // (Local) Photoshoot Completed
 
         if ($data['pending_reason_id'] != 0) {
-            $photoStage = Stage::where('stage_name', '(Local) Associates Assigned')->first();
-            $photoRole = Auth::user()->roles;
-            $ticketData['rejected_role'] = $photoRole[0]->id;
+            $photoStageId = 2; // (Local) Associates Assigned
+            $photoRoleId =  9 ; //Auth::user()->roles; // Photogrpaher Role
+            $ticketData['rejected_role'] = $photoRoleId;
         }
-        $ticketData = self::TicketData($photoStage->id, $data);
+        $ticketData = self::TicketData($photoStageId, $data);
 
         $ticketData['photographer_id']     =  Auth::user()->id;
         // Assgining to Local Team Lead
@@ -121,20 +121,20 @@ class Ticket extends Eloquent
                                         ->update(array('active' => 0));
 
         if ($data['pending_reason_id'] != 0) {
-            $mifStage = Stage::where('stage_name', '(Local) Seller Images Provided')->first();
+            $mifStageId = 9;//  (Local) Seller Images Provided
             if ( isset($data['photographer_id']) ) {
                 //if ($data['image_available'] == 1) {
                 if ( $data['photographer_id'] != 0 ) {
-                    $mifStage = Stage::where('stage_name', '(Local) Photoshoot Completed')->first();
+                    $mifStageId = 3;  // (Local) Photoshoot Completed
                 }
             }
             // Assign Rejected Role
-            $saRole = Auth::user()->roles;
-            $ticketData['rejected_role'] = $saRole[0]->id;
+            $saRoleId = 10; // Auth::user()->roles;
+            $ticketData['rejected_role'] = $saRoleId;
         } else {
-            $mifStage = Stage::where('stage_name', '(Local) MIF Completed')->first();
+            $mifStageId =  4; //(Local) MIF Completed
         }
-        $ticketData = self::TicketData($mifStage->id, $data);
+        $ticketData = self::TicketData($mifStageId , $data);
         // Assgining to Local Team Lead
         $ticketData['assigned_to'] = $ticketData['localteamlead_id'];
         $leadTransaction = TicketTransaction::updateTicket($ticketData);
@@ -158,9 +158,9 @@ class Ticket extends Eloquent
      */
     public static function assignEditingManager($ticketTransactionId, $ticketId, $data)
     {
-        $localCompleted = Stage::where('stage_name', '(Local) MIF Completed')->first();
+        $mifCompletedId = 4; //  (Local) MIF Completed
 
-        $ticketData     = self::TicketData($localCompleted->id, $data);
+        $ticketData     = self::TicketData($mifCompletedId, $data);
 
         $ticketTransaction = TicketTransaction::where('ticket_id', '=', $ticketId)
                                                 ->where('active', '=', 1)

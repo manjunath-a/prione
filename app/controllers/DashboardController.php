@@ -60,7 +60,7 @@ class DashboardController extends BaseController
         $priorityArray = Priority::all();
         $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
 
-        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
+        $photoshootLocation = Config::get('ticket.photoshoot_location');
 
         $statusArray = Status::all();
         $status = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -72,8 +72,6 @@ class DashboardController extends BaseController
         $stageArray = $stageArray->sortBy('sort');
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
-//        $rules  = arraY('only' =>array('Seller not reachable',
-//            'Seller not giving appointment / not ready','Seller cancelled the appointment'));
         $pendingArray   = PendingReason::all();
         $pending        = $this->util->arrayToJQString($pendingArray, 'pending_reason', 'id');
 
@@ -103,7 +101,7 @@ class DashboardController extends BaseController
         $priorityArray = Priority::all();
         $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
 
-        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
+        $photoshootLocation = Config::get('ticket.photoshoot_location');
 
         $statusArray = Status::all();
         $status = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -143,7 +141,7 @@ class DashboardController extends BaseController
         $priorityArray = Priority::all();
         $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
 
-        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
+        $photoshootLocation = Config::get('ticket.photoshoot_location');
 
         $statusArray = Status::all();
         $status = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -189,7 +187,7 @@ class DashboardController extends BaseController
         $priorityArray = Priority::all();
         $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
 
-        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
+        $photoshootLocation = Config::get('ticket.photoshoot_location');
 
         $statusArray = Status::all();
         $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -230,7 +228,7 @@ class DashboardController extends BaseController
         $priorityArray = Priority::all();
         $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
 
-        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
+        $photoshootLocation = Config::get('ticket.photoshoot_location');
 
         $statusArray = Status::all();
         $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -275,7 +273,7 @@ class DashboardController extends BaseController
         $priorityArray = Priority::all();
         $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
 
-        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
+        $photoshootLocation = Config::get('ticket.photoshoot_location');
 
         $statusArray = Status::all();
         $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -323,7 +321,7 @@ class DashboardController extends BaseController
         $priorityArray = Priority::all();
         $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
 
-        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
+        $photoshootLocation = Config::get('ticket.photoshoot_location');
 
         $statusArray = Status::all();
         $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -370,7 +368,7 @@ class DashboardController extends BaseController
         $priorityArray = Priority::all();
         $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
 
-        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
+        $photoshootLocation = Config::get('ticket.photoshoot_location');
 
         $statusArray = Status::all();
         $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
@@ -420,7 +418,7 @@ class DashboardController extends BaseController
         $priorityArray = Priority::all();
         $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
 
-        $photoshootLocation = '0:select;Studio:Studio;2:Seller Site';
+        $photoshootLocation = Config::get('ticket.photoshoot_location');
 
         $statusArray = Status::all();
         $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
