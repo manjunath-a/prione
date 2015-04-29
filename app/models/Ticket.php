@@ -235,7 +235,7 @@ class Ticket extends Eloquent
      */
     public static function updateEditingManager($ticketTransactionId, $ticketId, $data)
     {
-        $localCompletedId     =  4  //(Local) MIF Completed
+        $localCompletedId   =  4; //(Local) MIF Completed
         $ticketData         = self::TicketData($localCompletedId, $data);
 
         $ticketTransaction  = TicketTransaction::where('ticket_id', '=', $ticketId)
