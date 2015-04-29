@@ -51,7 +51,7 @@
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
 
-                        {"label":"Request / Assigned Date","align":"center","index":"created_at","name":"created_at","width":160},
+                        {"label":"Request / Assigned Date","align":"center","index":"request_created","name":"request_created","width":160},
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
                         "editoptions":{'value':'{{rtrim($priority, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
 
