@@ -193,8 +193,8 @@ class Ticket extends Eloquent
      */
     public static function assignCatalogingManager($ticketTransactionId, $ticketId, $data)
     {
-        $localCompleted = Stage::where('stage_name', '(Central) Editing Completed')->first();
-        $ticketData     = self::TicketData($localCompleted->id, $data);
+        $localCompletedId =  5 ; //(Central) Editing Completed
+        $ticketData     = self::TicketData($localCompletedId, $data);
 
         $ticketTransaction = TicketTransaction::where('ticket_id', '=', $ticketId)
                                                 ->where('active', '=', 1)
@@ -235,8 +235,8 @@ class Ticket extends Eloquent
      */
     public static function updateEditingManager($ticketTransactionId, $ticketId, $data)
     {
-        $localCompleted     = Stage::where('stage_name', '(Local) MIF Completed')->first();
-        $ticketData         = self::TicketData($localCompleted->id, $data);
+        $localCompletedId     =  4  //(Local) MIF Completed
+        $ticketData         = self::TicketData($localCompletedId, $data);
 
         $ticketTransaction  = TicketTransaction::where('ticket_id', '=', $ticketId)
                                             ->where('active', '=', 1)
@@ -267,14 +267,13 @@ class Ticket extends Eloquent
         $ticketTransaction  = TicketTransaction::where('ticket_id', '=', $ticketId)
                                     ->where('active', '=', 1)
                                     ->update(array('active' => 0));
-        $localCompleted     = Stage::where('stage_name', '(Local) MIF Completed')->first();
-        $ticketData         = self::TicketData($localCompleted->id, $data);
+        $localCompletedId   =  4;  //(Local) MIF Completed
+        $ticketData         = self::TicketData($localCompletedId, $data);
         // 6 = Raw Images QC Failed
         if ($data['pending_reason_id'] == 6) {
             $ticketData['group_id']  = 1;
             $ticketData['priority']  = 3;
-            $stageNotAssigned  = Stage::where('stage_name', '(Local) Associates Not Assigned')->first();
-            $ticketData['stage_id']     = $stageNotAssigned->id;
+            $ticketData['stage_id']     = 1;  //(Local) Associates Not Assigned
             // Assign Rejected Role
             $etlRole = Auth::user()->roles;
             $ticketData['rejected_role'] = $etlRole[0]->id;
@@ -282,8 +281,7 @@ class Ticket extends Eloquent
         // 5 = Editing Images QC Failed
         if ($data['pending_reason_id'] == 5) {
             $ticketData['priority']  = 3;
-            $stageMif  = Stage::where('stage_name', '(Local) MIF Completed')->first();
-            $ticketData['stage_id']     = $stageMif->id;
+            $ticketData['stage_id']  = 4; //(Local) MIF Completed
             // Assign Rejected Role
             $etlRole = Auth::user()->roles;
             $ticketData['rejected_role'] = $etlRole[0]->id;
@@ -326,14 +324,14 @@ class Ticket extends Eloquent
         $ticketTransaction  = TicketTransaction::where('ticket_id', '=', $ticketId)
                                     ->where('active', '=', 1)
                                     ->update(array('active' => 0));
-        $localCompleted     = Stage::where('stage_name', '(Local) MIF Completed')->first();
-        $ticketData         = self::TicketData($localCompleted->id, $data);
+        $localCompletedId     =  4 ; //(Local) MIF Completed
+        $ticketData         = self::TicketData($localCompletedId, $data);
         // 6 = Raw Images QC Failed
         if ($data['pending_reason_id'] == 6) {
             $ticketData['group_id']  = 1;
             $ticketData['priority']  = 3;
-            $stageNotAssigned  = Stage::where('stage_name', '(Local) Associates Not Assigned')->first();
-            $ticketData['stage_id']     = $stageNotAssigned->id;
+            $stageNotAssignedId  = 1; //(Local) Associates Not Assigned
+            $ticketData['stage_id']     = $stageNotAssignedId;
             // Assign Rejected Role
             $etlRole = Auth::user()->roles;
             $ticketData['rejected_role'] = $etlRole[0]->id;
@@ -368,14 +366,12 @@ class Ticket extends Eloquent
         $ticketTransaction  = TicketTransaction::where('ticket_id', '=', $ticketId)
                                         ->where('active', '=', 1)
                                         ->update(array('active' => 0));
-        $editingStage = Stage::where('stage_name', '(Central) Editing Completed')->first();
-
-        $ticketData       = self::TicketData($editingStage->id, $data);
+        $editingStageId =  5 ; //(Central) Editing Completed
+        $ticketData       = self::TicketData($editingStageId, $data);
 
         // 6 = Raw Images QC Failed
         if ($data['pending_reason_id'] == 6) {
-            $editingStage     = Stage::where('stage_name', '(Local) MIF Completed')->first();
-            $ticketData['stage_id'] = $editingStage->id;
+            $ticketData['stage_id'] = 4; //(Local) MIF Completed
             $ticketData['priority'] = 3;
             // Assign Rejected Role
             $etlRole = Auth::user()->roles;
@@ -411,8 +407,8 @@ class Ticket extends Eloquent
         $ticketTransaction  = TicketTransaction::where('ticket_id', '=', $ticketId)
                                     ->where('active', '=', 1)
                                     ->update(array('active' => 0));
-        $editingCompleted   = Stage::where('stage_name', '(Central) Editing Completed')->first();
-        $ticketData         = self::TicketData($editingCompleted->id, $data);
+        $editingCompletedId   = 5; // (Central) Editing Completed ;
+        $ticketData         = self::TicketData($editingCompletedId, $data);
 
         $user = new User();
         $catalogueManager          = $user->findUserByRoleName('Catalog Manager');
@@ -443,12 +439,12 @@ class Ticket extends Eloquent
      */
     public static function updateAssignCatalogTeamLead($ticketTransactionId, $ticketId, $data)
     {
-        // Deactivate old tickect transaction
+        // Deactivate old active tickect transaction
         $ticketTransaction  = TicketTransaction::where('ticket_id', '=', $ticketId)
                                         ->where('active', '=', 1)
                                         ->update(array('active' => 0));
-        $editingCompleted   = Stage::where('stage_name', '(Central) Editing Completed')->first();
-        $ticketData         = self::TicketData($editingCompleted->id, $data);
+        $editingCompletedId =  5 ; // (Central) Editing Completed
+        $ticketData         = self::TicketData($editingCompletedId, $data);
 
         // Assgining Local Team Lead
         $ticketData['assigned_to'] = $ticketData['localteamlead_id'];
@@ -480,19 +476,16 @@ class Ticket extends Eloquent
      */
     public static function updateCatalogTeamLead($ticketTransactionId, $ticketId, $data)
     {
-        // Deactivate old tickect transaction
+        // Deactivate old active tickect transaction
         $ticketTransaction  = TicketTransaction::where('ticket_id', '=', $ticketId)
                                     ->where('active', '=', 1)
                                     ->update(array('active' => 0));
-
-
         // (Central) QC Completed [  OR ] (Central) ASIN Created'
         $catalogStageId = $data['stage_id'];
 
         // 7 = MIF QC failed
         if ($data['pending_reason_id'] == 7) {
-            $catalogStage = Stage::where('stage_name', '(Central) Editing Completed')->first();
-            $catalogStageId = $catalogStage->id;
+            $catalogStageId = 5 ; //(Central) Editing Completed
             $data['group_id']  = 3; // Cataloging
             $data['priority']  = 3; // Higher
             $data['status_id']  = 1;  // Open
@@ -502,8 +495,7 @@ class Ticket extends Eloquent
         }
         // 8 =Flat File QC failed
         if ($data['pending_reason_id'] == 8) {
-            $catalogStage = Stage::where('stage_name', '(Local) Associates Not Assigned')->first();
-            $catalogStageId = $catalogStage->id;
+            $catalogStageId = 1;  //(Local) Associates Not Assigned
             $data['group_id']  = 1; // Local
             $data['priority']  = 3; // Higher
             $data['status_id']  = 1; // Open
@@ -559,8 +551,7 @@ class Ticket extends Eloquent
         $ticketTransaction  = TicketTransaction::where('ticket_id', '=', $ticketId)
                                     ->where('active', '=', 1)
                                     ->update(array('active' => 0));
-        $catalogStage = Stage::where('stage_name', '(Local) Associates Not Assigned')->first();
-        $catalogStageId = $catalogStage->id;
+        $catalogStageId = 1; // (Local) Associates Not Assigned
         // Build Default Ticket Values
         $ticketData         = self::TicketData($catalogStageId, $data);
 
@@ -573,7 +564,7 @@ class Ticket extends Eloquent
         $ticketData['rejected_role'] = $ctlRole[0]->id;
 
         // Assgining to Local Team Lead
-        $ticketData['assigned_to']          = $ticketData['localteamlead_id'];
+        $ticketData['assigned_to'] = $ticketData['localteamlead_id'];
         $leadTransaction = TicketTransaction::updateTicket($ticketData);
 
          // Assgining Editing Manager
@@ -607,32 +598,32 @@ class Ticket extends Eloquent
         $ticketTransaction  = TicketTransaction::where('ticket_id', '=', $ticketId)
                                         ->where('active', '=', 1)
                                         ->update(array('active' => 0));
-        $catalogCompleted   = Stage::where('stage_name', '(Central) Editing Completed')->first();
+        $catalogCompletedId   =  5; //(Central) Editing Completed ;
         // Default visible status =1
         $status = 1;
 
         // 8 == Flat File QC failed (Rejection)
         if ($data['pending_reason_id'] == 8) {
-            $catalogCompleted = Stage::where('stage_name', '(Central) Editing Completed')->first();
+            $catalogCompletedId = 5; //(Central) Editing Completed ;
             $data['priority']  = 3; // Urgent
             // Assign Rejected Role
-            $ctlRole = Role::where('name', 'Cataloger')->first();
-            $data['rejected_role'] = $ctlRole->id;
+            $ctlRoleId = 4; //Cataloger;
+            $data['rejected_role'] = $ctlRoleId;
         } elseif ($data['stage_id'] == 6) {
-            $catalogCompleted   = Stage::where('stage_name', '(Central) Cataloging Completed')->first();
+            $catalogCompletedId   =  6;//(Central) Cataloging Completed ;
             $data['status_id']  = 3; // Resolved
         } elseif ($data['stage_id'] == 8) {
             $data['status_id']  = 4; // Closed
             $status = 0; // Ticket Visible Status false
-            $catalogCompleted   = Stage::where('stage_name', '(Central) ASIN Created')->first();
+            $catalogCompletedId   = 8;  //(Central) ASIN Created ;
         }
         // Assign submitted data with old ticket data
-        $ticketData  = self::TicketData($catalogCompleted->id, $data , $status);
+        $ticketData  = self::TicketData($catalogCompletedId, $data , $status);
 
         $ticketData['cataloguer_id'] =  Auth::user()->id;
         // Assgining to Local Team Lead
-        $ticketData['assigned_to']          = $ticketData['localteamlead_id'];
-        $leadTransaction                    = TicketTransaction::updateTicket($ticketData);
+        $ticketData['assigned_to'] = $ticketData['localteamlead_id'];
+        $leadTransaction           = TicketTransaction::updateTicket($ticketData);
 
         // Assgining Editing Manager
         $ticketData['assigned_to'] = $ticketData['editingmanager_id'];
@@ -739,8 +730,12 @@ class Ticket extends Eloquent
         $ticketData['rejected_role'] = (isset($data['rejected_role'])) ? $data['rejected_role'] :$ticketTransaction['rejected_role'];
         if (isset($data['pending_reason_id'])) {
             $ticketData['pending_reason_id'] = ($data['pending_reason_id']) ? $data['pending_reason_id'] : NULL;
-            $userRole = Auth::user()->roles;
-            $ticketData['rejected_role'] = $userRole[0]->id;
+            if($data['pending_reason_id']) {
+                $userRole = Auth::user()->roles;
+                $ticketData['rejected_role'] = $userRole[0]->id;
+            } else {
+                $ticketData['rejected_role'] = NULL;
+            }
         }
         // var_dump($ticketTransaction);
         // var_dump($ticketData);exit;
