@@ -48,8 +48,8 @@
         body {
             padding: 60px 0;
         }
-		/*@section('styles')
-		@show*/
+		@section('styles')
+		@show
 		</style>
     <script type="text/javascript">
       (function () {
