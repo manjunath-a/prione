@@ -138,6 +138,11 @@ class TicketValidator  extends IlluminateValidator
             throw new \Exception($this->_custom_messages['service_associate_required']);
         }
 
+        // While pending reason ticket should not move the any queue
+        if ($data['pending_reason_id']) {
+            throw new \Exception($this->_custom_messages['pending_reason_cant_move']);
+        }
+
         $this->checkValidator($data, $this->commonRules);
 
         if ($data['stage_id'] != '4') {
@@ -162,6 +167,11 @@ class TicketValidator  extends IlluminateValidator
 
         if (!$ticketTransaction['editingteamlead_id']) {
             throw new \Exception($this->_custom_messages['etl_required']);
+        }
+
+        // While pending reason ticket should not move the any queue
+        if ($data['pending_reason_id']) {
+            throw new \Exception($this->_custom_messages['pending_reason_cant_move']);
         }
 
         if (!$ticketTransaction['catalogingmanager_id']) {
