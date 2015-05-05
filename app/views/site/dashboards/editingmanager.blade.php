@@ -46,6 +46,8 @@
                         {"name":"transaction_id", "index":"transaction_id", "align":"center", 'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
+                        {"label":"Seller Name","align":"center","index":"merchant_name","name":"merchant_name"},
+                        {"label":"Requester Name","align":"center","index":"requester_name","name":"requester_name"},
                         {"index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku", "hidden":true},
                         {"index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation", "hidden":true},
                         {"label":"Group","index":"group_id","align":"center","width":110,"editable":true,
@@ -57,7 +59,6 @@
                         "editable":true, "editoptions":{'value':'{{rtrim($status, ";")}}',"disabled": 'disabled'},"edittype":"select", "formatter":"select", "editrules":{"required":true},"name":"status_id"},
 
                         {"label":"S3 Path","align":"center","index":"s3_folder","name":"s3_folder","width":90},
-                        {"label":"Seller Name","align":"center","index":"merchant_name","name":"merchant_name"},
                         {"label":"Category","align":"center","index":"category_name","name":"category_name"},
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","width":90,
                         "editable":true, "editrules":{'edithidden': true },"editoptions":{"disabled": 'disabled' }},
@@ -86,11 +87,11 @@
                     "subGridUrl":"editing",
                     "subGridModel" :[
                         {
-                           name  : ['Requester Name', 'Requester Email',  'Requester Number',
+                           name  : ['Requested Date', 'Requester Email',  'Requester Number',
                                     'Category','City','Local Team Lead', 'Photographer','Service Associate',
                                     'Editing Manager','Editing Team Lead', 'Editor','Cataloging Manager',
                                     'Cataloging Team Lead','Cataloger','Rejected By'],
-                            width : [200,200,200,200,200,200,200,200,200,200,200,200,200,200,200]
+                            width : [220,200,100,200,200,200,200,200,200,200,200,200,200,200,200]
                         }
                     ],
                     "pager":"editingmanagerPager"

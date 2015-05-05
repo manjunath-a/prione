@@ -58,6 +58,7 @@
     {{ HTML::script('assets/jquery-ui-v1.10.3/js/jquery-ui.js'); }}
     {{ HTML::script('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect-shake.min.js'); }}
     {{ HTML::script('assets/jquery-scrollto-v1.4.11/jquery.scrollTo.min.js'); }}
+
     {{ HTML::script('assets/jquery-jqMgVal-v0.1/jquery.jqMgVal.src.js'); }}
     {{ HTML::script('assets/prione/serviceClient.js'); }}
     {{ HTML::script('assets/prione/util.js'); }}

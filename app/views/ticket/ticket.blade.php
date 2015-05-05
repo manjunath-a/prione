@@ -21,33 +21,31 @@
          City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
     </div>
     <div id="myMessage" role="alert"> </div>
-    {{ Form::open(array('url' => 'dashboard/locallead', 'method' => 'post',
+    {{ Form::open(array('url' => 'dashboard/closed', 'method' => 'post',
         'id'=> "sellerrequestExportForm")) }}
     {{ Form::close() }}
-    <table id="locallead">
+    <table id="closed">
     </table>
-    <div id="localleadPager">
+    <div id="closedPager">
     </div>
     <script type="text/javascript">
 
-        jQuery("#locallead").jqGrid({
+        jQuery("#closed").jqGrid({
                     "datatype":"json",
                     "mtype":"POST",
-                    "url":"locallead",
-                    "editurl":'/request/update',
+                    "url":"/ticket/status/{{$statusname}}/",
                     "rowNum":25,
                     "height": 340,
                     "viewrecords":false,
                     "refersh":true,
                     "colModel":[
-                        {"label":"Action",'name':'act','index':'act', 'width':75,'sortable':false},
                         {"name":"id", "index":"id", "align":"center", "hidden":true},
                         {"name":"transaction_id", "index":"transaction_id", "align":"center", 'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id", 'hidden' : true},
                         {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
-                        {"label":"Requester Name","align":"center","index":"requester_name","name":"requester_name"},
+                         {"label":"Requester Name","align":"center","index":"requester_name","name":"requester_name"},
                         {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
@@ -91,33 +89,20 @@
                     ],
                     jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
-                    gridComplete: function(){
-                        var ids = jQuery("#locallead").jqGrid('getDataIDs');
-                        for(var i=0;i < ids.length;i++)
-                        {
-                            var cl = ids[i];
-                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#locallead').editRow('"+cl+"');\" />";
-                            se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
-                            ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
-                            jQuery("#locallead").jqGrid('setRowData',ids[i],{act:be+se+ce});
-                        }
-                    },
                     "subGrid":true,
-                    "subGridUrl":"seller",
+                    "subGridUrl":"/dashboard/seller",
                     "subGridModel" :[
                         {
-                            name  : ['Category', 'POC Name', 'POC Email', 'POC Number', 'Requester Email',  'Requester Number', 'Seller Provided Images',
-                                    'Local Team Lead', 'Photographer', 'Service Associate' ,
-                                    'Editing Manager', 'Editing Team Lead', 'Editor',
-                                    'Cataloging Manager', 'Cataloging Team Lead', 'Cataloger','Rejected By'],
-                            width : [200,200,200,150,120,120,160,120,120,120,120,120,120,120,120,120],
+                            name  : ['Category', 'POC Name', 'POC Email', 'POC Number', 'Requester Email',  'Requester Number',
+                                     'Seller Provided Images','Local Team Lead', 'Photographer', 'Service Associate' ,
+                                    'Editing Manager', 'Editing Team Lead', 'Editor', 'Cataloging Manager',
+                                    'Cataloging Team Lead', 'Cataloger','Rejected By'],
+                            width : [200,200,200,200,150,120,120,120,160,120,120,120,120,120,120,120],
                             colModel: [
-
                                 {"label":"Category","align":"center","index":"category","name":"category"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email","align":"center","index":"poc_email","name":"poc_email"},
                                 {"label":"POC Contact Number","index":"poc_number","name":"poc_number"},
-
                                 {"label":"Requester Email","align":"center","index":"email","name":"email"},
                                 {"label":"Requester Number","index":"contact_number","name":"contact_number"},
                                 {"label":"Seller Provided Images","align":"center","index":"image_available","name":"image_available"},
@@ -134,11 +119,11 @@
                             ]
                         }
                     ],
-                    "pager":"localleadPager"
+                    "pager":"closedPager"
                     //'cellEdit': true
                 }
         );
-       jQuery("#locallead").jqGrid('navGrid', '#localleadPager',
+       jQuery("#closed").jqGrid('navGrid', '#closedPager',
         {add: false,edit:false,view:false,del:false,refresh: true,search:false});
     </script>
     <!-- ./ content -->
