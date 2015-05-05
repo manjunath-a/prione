@@ -91,7 +91,7 @@
                     "subGridUrl":"editing",
                     "subGridModel" :[
                         {
-                            name  : ['Requester Email',  'Requester Number',
+                            name  : ['Requested Date', 'Requester Email',  'Requester Number',
                                     'Category','City','Local Team Lead', 'Photographer','Service Associate',
                                     'Editing Manager','Editing Team Lead', 'Editor','Cataloging Manager',
                                     'Cataloging Team Lead','Cataloger','Rejected By'],
