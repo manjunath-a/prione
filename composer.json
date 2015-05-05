@@ -18,15 +18,15 @@
         "adoy/oauth2": "dev-master",
         "mgallegos/laravel-jqgrid": "1.*",
         "aws/aws-sdk-php-laravel": "1.*",
-        "barryvdh/laravel-debugbar": "~1.8"
+        "doctrine/dbal":"dev-master",
+        "barryvdh/laravel-ide-helper": "~1.11"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "~1.8",
         "way/generators": "~2.6",
         "phpunit/phpunit": "~4.0",
         "mockery/mockery": "~0.9",
-        "summerstreet/woodling": "~0.1.6",
-        "doctrine/dbal":"dev-master",
-        "barryvdh/laravel-ide-helper": "~1.11"
+        "summerstreet/woodling": "~0.1.6"
     },
     "autoload": {
         "classmap": [

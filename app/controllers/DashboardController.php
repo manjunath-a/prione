@@ -457,12 +457,10 @@ class DashboardController extends BaseController
                     'rows' => [
                                 array(
                                     'cell' => array(
-                                                $seller['merchant_name'],
                                                 $category['category_name'],
                                                 $seller['poc_name'],
                                                 $seller['poc_email'],
                                                 $seller['poc_number'],
-                                                $seller['requester_name'],
                                                 $seller['email'],
                                                 $seller['contact_number'],
                                                 $seller['image_available'],
@@ -498,7 +496,7 @@ class DashboardController extends BaseController
                     'rows' => [
                                 array(
                                     'cell' => array(
-                                                $seller['merchant_name'],
+                                                $seller['created_at'],
                                                 $category['category_name'],
                                                 $seller['poc_name'],
                                                 $seller['poc_email'],
@@ -535,7 +533,7 @@ class DashboardController extends BaseController
                 'rows' => [
                     array(
                         'cell' => array(
-                                $seller['requester_name'],
+                                $seller['created_at'],
                                 $seller['email'],
                                 $seller['contact_number'],
                                 $category['category_name'],

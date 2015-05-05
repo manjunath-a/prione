@@ -11,15 +11,15 @@ class RolesTableSeeder extends Seeder {
         $adminRole->save();
 
         $CatalogueRole = new Role;
-        $CatalogueRole->name = 'Catalogue Manager';
+        $CatalogueRole->name = 'Catalog Manager';
         $CatalogueRole->save();
 
         $CatalogueTeamLeadRole = new Role;
-        $CatalogueTeamLeadRole->name = 'Catalogue Team Lead';
+        $CatalogueTeamLeadRole->name = 'Catalog Team Lead';
         $CatalogueTeamLeadRole->save();
 
         $Cataloguer = new Role;
-        $Cataloguer->name = 'Cataloguer';
+        $Cataloguer->name = 'Cataloger';
         $Cataloguer->save();
 
         $Editing = new Role;

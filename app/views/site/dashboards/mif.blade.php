@@ -53,6 +53,8 @@
                         {'name':'image_available', 'index':'image_available','align':'center',
                         'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
+                        {"label":"Seller Name","align":"center","index":"merchant_name","name":"merchant_name"},
+                        {"label":"Requester Name","align":"center","index":"requester_name","name":"requester_name"},
 
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},
                         {'label':'Assigned Date','name':'assigned_date', 'index':'assigned_date','align':'center', },
@@ -93,17 +95,16 @@
                     "subGridUrl":"sellerinfo",
                     "subGridModel" :[
                         {
-                            name  : ['Seller name','Category','POC Name','POC Email ID','POC Contact Number',
+                            name  : ['Requested Date','Category','POC Name','POC Email ID','POC Contact Number',
                                     'Requester Name','Requester Email',  'Requester Number', 'Seller Provided Images',
                                     'Rejected By'],
                             width : [200,200,200,200,150,120,120,120,160],
                             colModel: [
-                                {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
+                                {"label":"Requested Date","index":"created_at","name":"created_at"},
                                 {"label":"Category","align":"center","index":"category","name":"category"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email ID","align":"center","index":"poc_email","name":"poc_email"},
                                 {"label":"POC Contact Number","index":"poc_number","name":"poc_number"},
-                                {"label":"Requester Name","align":"center","index":"requester_name","name":"requester_name"},
                                 {"label":"Requester Email","align":"center","index":"email","name":"email"},
                                 {"label":"Requester Number","index":"contact_number","name":"contact_number"},
                                 {"label":"Seller Provided Images","align":"center","index":"image_available","name":"image_available"},

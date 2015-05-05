@@ -111,8 +111,25 @@ Route::post('request/create', 'RequestController@store');
 Route::get('request/success/{ticket}', 'RequestController@success');
 
 
+
+// Tickets
+Route::group(array('prefix' => 'ticket', 'before' => 'auth'), function () {
+    // Get resolved ticket view
+    Route::get('status/{status_name}', 'TicketController@getTickets');
+    // Get resolved ticket data
+    Route::post('status/resolved', function () {
+        GridEncoder::encodeRequestedData(new TicketRepository([3, new Ticket(), 1]), Input::all());
+    });
+    // Get closed ticket view
+    Route::post('status/closed', function () {
+        GridEncoder::encodeRequestedData(new TicketRepository([4, new Ticket(), 0]), Input::all());
+    });
+});
+
+
+
 Route::group(array('prefix' => 'request', 'before' => 'auth'), function () {
-        // Before CSRF checks : FIXME
+    // Before CSRF checks : FIXME
     Route::post('update/', 'RequestController@updateRequest');
     Route::post('updatePhotographer/', 'RequestController@updatePhotographer');
     Route::post('updateMIF/', 'RequestController@updateMIF');

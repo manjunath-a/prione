@@ -45,6 +45,7 @@
                         {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
                         {"label":"Seller Name","align":"center","index":"merchant_name","name":"merchant_name"},
+                        {"label":"Requester Name","align":"center","index":"requester_name","name":"requester_name"},
                         {"label":"Category","align":"center","index":"category_name","name":"category_name"},
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
                             "editoptions":{'value':'{{rtrim($priority, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
@@ -90,11 +91,11 @@
                     "subGridUrl":"editing",
                     "subGridModel" :[
                         {
-                            name  : ['Requester Name', 'Requester Email',  'Requester Number',
+                            name  : ['Requester Email',  'Requester Number',
                                     'Category','City','Local Team Lead', 'Photographer','Service Associate',
                                     'Editing Manager','Editing Team Lead', 'Editor','Cataloging Manager',
                                     'Cataloging Team Lead','Cataloger','Rejected By'],
-                            width : [200,200,200,200,200,200,200,200,200,200,200,200,200,200,200]
+                            width : [200,200,200,200,200,200,200,200,200,200,200,200,200,200]
                         }
                     ],
                     "pager":"catalogueteamleadPager"
