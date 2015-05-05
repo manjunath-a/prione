@@ -32,7 +32,7 @@ class TicketValidator  extends IlluminateValidator
         'pending_reason_cant_move' => 'Pending reason Ticket move not allowed',
         'editing_cant_move' => 'Only MIF Complete stage can be moved to Editing Group',
         'cataloging_cant_move' => 'Not allowed to move Cataloging Group',
-        'asin_creation_not_allowed' => 'ASIN not allowed unti QC Completed',
+        'asin_creation_not_allowed' => 'ASIN not allowed until QC Completed',
         'invalid_pending_reason' => 'Invalid Pending reason!',
         'not_authorsied_edit' => 'Edit option is not available for other Group Ticket',
     );
