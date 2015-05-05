@@ -314,6 +314,10 @@ class TicketValidator  extends IlluminateValidator
         if ($data['group_id'] != 3) {
             throw new \Exception($this->_custom_messages['not_authorsied_edit']);
         }
+
+        if ($data['stage_id'] != 5 && $data['pending_reason_id']) {
+            throw new \Exception($this->_custom_messages['invalid_pending_reason']);
+        }
         if ($data['pending_reason_id']  && $data['pending_reason_id'] !=8) {
             throw new \Exception($this->_custom_messages['invalid_pending_reason']);
         }
