@@ -45,8 +45,9 @@ class AdminDashboardRepository extends EloquentRepositoryAbstract  {
         'ticket_transaction.sa_variation', 'ticket_transaction.sa_sku',
         'ticket_transaction.total_sku', 'ticket_transaction.total_images',
         'ticket_transaction.id as transaction_id','ticket_transaction.updated_at')
+                         ->where('ticket_transaction.active', $status)
                         ->orderBy('ticket_transaction.updated_at', 'DESC')
                         ->groupBy('ticket_transaction.ticket_id');
-        $this->orderBy = array(array('id', 'asc'));
+        $this->orderBy = array(array('id', 'DESC'));
     }
 }
