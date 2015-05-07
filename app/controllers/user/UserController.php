@@ -177,7 +177,10 @@ class UserController extends BaseController
     {
         $user = Auth::user();
         if (!empty($user->id)) {
-            return Redirect::to('/dashboard');
+            $roles = $this->user->findUserRoleById($user->id);
+            $dashboard = $this->findDashboard($roles);
+            // Show the page
+            return Redirect::to($dashboard);
         }
 
         return View::make('site/user/login');
