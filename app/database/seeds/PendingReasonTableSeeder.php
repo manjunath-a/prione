@@ -44,7 +44,7 @@ class PendingReasonTableSeeder extends Seeder {
                 'sort'              => 7
             ),
             array(
-                'pending_reason'    => 'Flat File QC failed',
+                'pending_reason'    => 'Flat file QC failed',
                 'status'            => 1,
                 'sort'              => 8
             )
