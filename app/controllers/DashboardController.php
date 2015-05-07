@@ -457,6 +457,7 @@ class DashboardController extends BaseController
                     'rows' => [
                                 array(
                                     'cell' => array(
+                                                $seller['created_at'],
                                                 $category['category_name'],
                                                 $seller['poc_name'],
                                                 $seller['poc_email'],

@@ -46,6 +46,7 @@
                         {"name":"transaction_id", "index":"transaction_id", "align":"center", 'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
+                        {'label':'Assigned Date','name':'assigned_date', 'index':'assigned_date','align':'center'},
                         {"label":"Seller Name","align":"center","index":"merchant_name","name":"merchant_name"},
                         {"label":"Requester Name","align":"center","index":"requester_name","name":"requester_name"},
                         {"index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku", "hidden":true},

@@ -52,7 +52,7 @@
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
 
-                        {"label":"Request / Assigned Date","align":"center","index":"request_created","name":"request_created","width":160},
+                        {"label":"Assigned Date","align":"center","index":"created_at","name":"created_at","width":160},
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
                         "editoptions":{'value':'{{rtrim($priority, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
 
@@ -106,13 +106,13 @@
                     "subGridUrl":"seller",
                     "subGridModel" :[
                         {
-                            name  : ['Category', 'POC Name', 'POC Email', 'POC Number', 'Requester Email',  'Requester Number', 'Seller Provided Images',
+                            name  : ['Requested Date','Category', 'POC Name', 'POC Email', 'POC Number', 'Requester Email',  'Requester Number', 'Seller Provided Images',
                                     'Local Team Lead', 'Photographer', 'Service Associate' ,
                                     'Editing Manager', 'Editing Team Lead', 'Editor',
                                     'Cataloging Manager', 'Cataloging Team Lead', 'Cataloger','Rejected By'],
                             width : [200,200,200,150,120,120,160,120,120,120,120,120,120,120,120,120],
                             colModel: [
-
+                                {"label":"Requested Date","index":"request_created","name":"request_created"},
                                 {"label":"Category","align":"center","index":"category","name":"category"},
                                 {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
                                 {"label":"POC Email","align":"center","index":"poc_email","name":"poc_email"},
