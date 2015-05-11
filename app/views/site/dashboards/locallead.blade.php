@@ -46,7 +46,7 @@
                         {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id", 'hidden' : true},
-                        {"label":"Seller Name","align":"center","index":"merchant_name","editable":true,"name":"merchant_name"},
+                        {"label":"Seller Name","align":"center","index":"merchant_name","name":"merchant_name"},
                         {"label":"Requester Name","align":"center","index":"requester_name","name":"requester_name"},
                         {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
