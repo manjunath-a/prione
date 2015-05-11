@@ -13,7 +13,7 @@ class AlterSellerRequestColumnRequesterNumber extends Migration {
 	public function up()
 	{
 
-			DB::statement('ALTER TABLE `dcst_seller_request` MODIFY `contact_number` INTEGER UNSIGNED NULL;');
+			DB::statement('ALTER TABLE `dcst_seller_request` MODIFY `contact_number` varchar(150) NULL;');
 	}
 
 	/**
