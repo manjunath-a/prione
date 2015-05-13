@@ -48,6 +48,7 @@
                         {"label":"Seller Name","align":"center","index":"merchant_name","name":"merchant_name"},
                         {"label":"Requester Name","align":"center","index":"requester_name","name":"requester_name"},
                         {"label":"Category","align":"center","index":"category_name","name":"category_name"},
+                        {"label":"Sales channel","align":"center","index":"saleschannel","name":"saleschannel"},
                         {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
                             "editoptions":{'value':'{{rtrim($priority, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
                         {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
