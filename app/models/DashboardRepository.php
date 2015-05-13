@@ -11,12 +11,37 @@ use Mgallegos\LaravelJqgrid\Repositories\EloquentRepositoryAbstract;
 
 class DashboardRepository extends EloquentRepositoryAbstract  {
 
+    protected $userId;
+
+    protected $status;
+
     public function __construct() {
 
         list($user,$redirect) = User::checkAuthAndRedirect('user');
         if($redirect) return $redirect;
         $status = 1;
+        $this->userId = $user->id;
+        $this->status = 1;
         $this->getDashboardRequestData($user->id, $status);
+        $this->getTotalNumberOfRows();
+    }
+
+    public function getTotalNumberOfRows(array $filters = array())
+    {
+        $count =  DB::table('ticket_transaction')
+            ->join('ticket', 'ticket.id', '=', 'ticket_transaction.ticket_id')
+            ->join('status', 'status.id', '=', 'ticket_transaction.status_id')
+            ->join('stage', 'stage.id', '=', 'ticket_transaction.stage_id')
+            ->join('group', 'group.id', '=', 'ticket_transaction.group_id')
+            ->join('seller_request', 'seller_request.id', '=', 'ticket.request_id')
+            ->join('category', 'category.id', '=', 'seller_request.category_id')
+            ->join('users', 'seller_request.merchant_city_id', '=', 'users.city_id')
+            ->where('ticket_transaction.assigned_to', $this->userId)
+            ->where('ticket_transaction.active', $this->status)
+            ->select('ticket_transaction.ticket_id')
+            ->groupBy('ticket_transaction.ticket_id')->get();
+
+        return count($count);
     }
 
     public function getDashboardRequestData($userId, $status) {

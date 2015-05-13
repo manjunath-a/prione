@@ -37,7 +37,7 @@
                     "editurl":'/request/update',
                     "rowNum":25,
                     "height": 340,
-                    "viewrecords":false,
+                    "viewrecords":true,
                     "refersh":true,
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75,'sortable':false},
