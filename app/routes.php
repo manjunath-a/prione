@@ -124,6 +124,10 @@ Route::group(array('prefix' => 'ticket', 'before' => 'auth'), function () {
     Route::post('status/closed', function () {
         GridEncoder::encodeRequestedData(new TicketRepository([4, new Ticket(), 0]), Input::all());
     });
+    // Get closed ticket view
+    Route::post('status/rejected', function () {
+        GridEncoder::encodeRequestedData(new TicketRepository([5, new Ticket(), 1]), Input::all());
+    });
 });
 
 

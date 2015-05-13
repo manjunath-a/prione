@@ -107,11 +107,16 @@
                                 <a  href="{{{ URL::to('/') }}}">
                                 <span class="glyphicon glyphicon-plus"></span> Open Tickets</a></li>
                                 <li {{ (Request::is('ticket/status/resolved') ? ' class="active"' : '') }}>
-                                <a href="{{{ URL::to('ticket/status/resolved') }}}">
-                                <span class="glyphicon glyphicon-flag"></span> Resolved Tickets</a></li>
+                                  <a href="{{{ URL::to('ticket/status/resolved') }}}">
+                                  <span class="glyphicon glyphicon-flag"></span> Resolved Tickets</a></li>
+                                <li {{ (Request::is('ticket/status/rejected') ? ' class="active"' : '') }}>
+                                  <a  href="{{{ URL::to('ticket/status/rejected') }}}">
+                                  <span class="glyphicon glyphicon-ok-sign"></span> Rejected Tickets</a>
+                                </li>
                                 <li {{ (Request::is('ticket/status/closed') ? ' class="active"' : '') }}>
-                                <a  href="{{{ URL::to('ticket/status/closed') }}}">
-                                <span class="glyphicon glyphicon-ok-sign"></span> Closed Tickets</a></li>
+                                  <a  href="{{{ URL::to('ticket/status/closed') }}}">
+                                  <span class="glyphicon glyphicon-ok-sign"></span> Closed Tickets</a>
+                                </li>
                             </ul>
                           @endif
                           <li class="dropdown">
