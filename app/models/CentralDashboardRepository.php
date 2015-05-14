@@ -28,12 +28,13 @@ class CentralDashboardRepository extends EloquentRepositoryAbstract  {
                         ->join('group', 'group.id', '=', 'ticket_transaction.group_id')
                         ->join('seller_request', 'seller_request.id', '=', 'ticket.request_id')
                         ->join('category', 'category.id', '=', 'seller_request.category_id')
+                        ->join('sales_channel', 'sales_channel.id', '=', 'seller_request.merchant_sales_channel_id')
                         ->where('ticket_transaction.assigned_to', $userId)
                         ->where('ticket_transaction.active', $status)
                         ->select('ticket_transaction.id as id', 'ticket.created_at as created_at',
         'ticket_transaction.priority', 'ticket_transaction.group_id', 'ticket_transaction.stage_id',
         'ticket_transaction.status_id', 'ticket_transaction.pending_reason_id', 'ticket_transaction.notes as comment',
-        'category.category_name as category_name', 'seller_request.requester_name as requester_name',
+        'category.category_name as category_name', 'sales_channel.channel_name as saleschannel ', 'seller_request.requester_name as requester_name',
         'seller_request.email', 'seller_request.contact_number','seller_request.poc_name',
         'ticket_transaction.created_at as assigned_date', 'seller_request.poc_email',
         'seller_request.poc_number','seller_request.total_sku',
