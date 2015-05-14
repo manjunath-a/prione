@@ -14,9 +14,30 @@ class TicketRepository extends EloquentRepositoryAbstract  {
 
         list($user,$redirect) = User::checkAuthAndRedirect('user');
         if($redirect) return $redirect;
+        $this->userId = $user->id;
+        $this->statusId = $request[0];
+        $this->active = $request[2];
         $this->getDashboardRequestData($user->id, $request[0], $request[2]);
     }
 
+    public function getTotalNumberOfRows(array $filters = array())
+    {
+        $count =  DB::table('ticket_transaction')
+                        ->join('ticket', 'ticket.id', '=', 'ticket_transaction.ticket_id')
+                        ->join('status', 'status.id', '=', 'ticket_transaction.status_id')
+                        ->join('stage', 'stage.id', '=', 'ticket_transaction.stage_id')
+                        ->join('group', 'group.id', '=', 'ticket_transaction.group_id')
+                        ->join('seller_request', 'seller_request.id', '=', 'ticket.request_id')
+                        ->join('category', 'category.id', '=', 'seller_request.category_id')
+                        ->join('users', 'seller_request.merchant_city_id', '=', 'users.city_id')
+                        ->where('ticket_transaction.assigned_to', $this->userId)
+                        ->where('ticket_transaction.status_id', $this->statusId)
+                        ->where('ticket_transaction.active', $this->active )
+                        ->select('ticket_transaction.ticket_id')
+                        ->groupBy('ticket_transaction.ticket_id')->get();
+
+        return count($count);
+    }
     public function getDashboardRequestData($userId, $statusId, $active = 1) {
         $this->Database = DB::table('ticket_transaction')
                             ->join('ticket', 'ticket.id', '=', 'ticket_transaction.ticket_id')
@@ -26,9 +47,9 @@ class TicketRepository extends EloquentRepositoryAbstract  {
                             ->join('seller_request', 'seller_request.id', '=', 'ticket.request_id')
                             ->join('category', 'category.id', '=', 'seller_request.category_id')
                             ->join('users', 'seller_request.merchant_city_id', '=', 'users.city_id')
-                            ->where('ticket_transaction.assigned_to', $userId)
-                            ->where('ticket_transaction.status_id', $statusId )
-                            ->where('ticket_transaction.active', $active )
+                            ->where('ticket_transaction.assigned_to', $this->userId)
+                            ->where('ticket_transaction.status_id', $this->statusId )
+                            ->where('ticket_transaction.active', $this->active )
                             ->select('ticket_transaction.id as id',
                             'ticket_transaction.created_at as created_at',
                             'seller_request.created_at as request_created',

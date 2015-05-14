@@ -36,7 +36,9 @@
                     "datatype":"json",
                     "mtype":"POST",
                     "url":"catalogueteamlead",
+                    "rowNum":25,
                     "height": 340,
+                    "viewrecords":true,
                     "editurl":'/request/updateCatalogTeamLead',
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75, 'sortable':false},

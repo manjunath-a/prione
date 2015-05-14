@@ -36,7 +36,7 @@
                     "url":"/ticket/status/{{$statusname}}/",
                     "rowNum":25,
                     "height": 340,
-                    "viewrecords":false,
+                    "viewrecords":true,
                     "refersh":true,
                     "colModel":[
                         {"name":"id", "index":"id", "align":"center", "hidden":true},
@@ -93,7 +93,7 @@
                     "subGridUrl":"/dashboard/seller",
                     "subGridModel" :[
                         {
-                            name  : ['Category', 'POC Name', 'POC Email', 'POC Number', 'Requester Email',  'Requester Number',
+                            name  : ['Requested Date','Category', 'POC Name', 'POC Email', 'POC Number', 'Requester Email',  'Requester Number',
                                      'Seller Provided Images','Local Team Lead', 'Photographer', 'Service Associate' ,
                                     'Editing Manager', 'Editing Team Lead', 'Editor', 'Cataloging Manager',
                                     'Cataloging Team Lead', 'Cataloger','Rejected By'],

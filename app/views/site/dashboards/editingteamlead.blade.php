@@ -32,7 +32,9 @@
                     "datatype":"json",
                     "mtype":"POST",
                     "url":"editingteamlead",
+                    "rowNum":25,
                     "height": 340,
+                    "viewrecords":true,
                     "editurl":'/request/updateEditingTeamLead',
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75, 'sortable':false},
