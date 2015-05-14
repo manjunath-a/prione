@@ -37,7 +37,9 @@
                     "mtype":"POST",
                     "url":"cataloguer",
                     "editurl":'/request/updateCataloger',
+                    "rowNum":25,
                     "height": 340,
+                    "viewrecords":true,
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75, 'sortable':false},
                         {"name":"id", "index":"id", "align":"center", "hidden":true},

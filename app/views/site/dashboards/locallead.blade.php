@@ -38,7 +38,6 @@
                     "rowNum":25,
                     "height": 340,
                     "viewrecords":true,
-                    "refersh":true,
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75,'sortable':false},
                         {"name":"id", "index":"id", "align":"center", "hidden":true},

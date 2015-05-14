@@ -21,9 +21,8 @@ class DashboardRepository extends EloquentRepositoryAbstract  {
         if($redirect) return $redirect;
         $status = 1;
         $this->userId = $user->id;
-        $this->status = 1;
+        $this->status = $status;
         $this->getDashboardRequestData($user->id, $status);
-        $this->getTotalNumberOfRows();
     }
 
     public function getTotalNumberOfRows(array $filters = array())

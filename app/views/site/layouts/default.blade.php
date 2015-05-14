@@ -96,7 +96,7 @@
                           <li><a href="{{{ URL::to('report/admin') }}}">Admin Report</a></li>
                         @endif
                           <li {{ (Request::is('request*') ? ' class="active"' : '') }}><a href="{{{ URL::to('/request') }}}"><span class="glyphicon glyphicon-plus"></span>Seller Request</a></li>
-                          @if (Auth::user()->hasRole('Catalog Manager') || Auth::user()->hasRole('Catalog Team Lead') || Auth::user()->hasRole('Cataloger') ||
+                          @if (Auth::user()->hasRole('Catalog Manager') || Auth::user()->hasRole('Catalog Team Lead') ||
                             Auth::user()->hasRole('Editing Manager') || Auth::user()->hasRole('Editing Team Lead') || Auth::user()->hasRole('Local Team Lead') )
                           <li  class="dropdown{{ (Request::is('ticket*|dashboard/*') ? ' active' : '') }}">
                               <a class="dropdown-toggle" data-toggle="dropdown" href="{{{ URL::to('admin/report') }}}">
@@ -105,13 +105,13 @@
                               <ul class="dropdown-menu" role="menu">
                                 <li {{ (Request::is('dashboard/*') ? ' class="active"' : '') }}>
                                 <a  href="{{{ URL::to('/') }}}">
-                                <span class="glyphicon glyphicon-plus"></span> Open Tickets</a></li>
+                                <span class="glyphicon glyphicon-folder-open"></span> Open Tickets</a></li>
                                 <li {{ (Request::is('ticket/status/resolved') ? ' class="active"' : '') }}>
                                   <a href="{{{ URL::to('ticket/status/resolved') }}}">
                                   <span class="glyphicon glyphicon-flag"></span> Resolved Tickets</a></li>
                                 <li {{ (Request::is('ticket/status/rejected') ? ' class="active"' : '') }}>
                                   <a  href="{{{ URL::to('ticket/status/rejected') }}}">
-                                  <span class="glyphicon glyphicon-ok-sign"></span> Rejected Tickets</a>
+                                  <span class="glyphicon glyphicon-remove"></span> Rejected Tickets</a>
                                 </li>
                                 <li {{ (Request::is('ticket/status/closed') ? ' class="active"' : '') }}>
                                   <a  href="{{{ URL::to('ticket/status/closed') }}}">

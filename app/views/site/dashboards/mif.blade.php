@@ -40,7 +40,7 @@
                     "editurl":'/request/updateMIF',
                     "rowNum":25,
                     "height": 340,
-                    "viewrecords":false,
+                    "viewrecords":true,
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75, 'sortable':false},
                         {"name":"id", "index":"id", "align":"center", "hidden":true},
