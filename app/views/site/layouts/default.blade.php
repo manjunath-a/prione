@@ -43,6 +43,7 @@
             {{ HTML::script('assets/prione/util.js'); }}
             {{ HTML::script('assets/jquery-jqGrid-v4.6.0/js/i18n/grid.locale-en.js'); }}
             {{ HTML::script('assets/jquery-jqGrid-v4.6.0/src/jquery.jqGrid.js'); }}
+            {{ HTML::script('assets/jquery-jqGrid-v4.6.0/src/grid.inlinedit.js'); }}
 
 		<style>
         body {

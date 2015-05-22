@@ -29,7 +29,7 @@
     <div id="localleadPager">
     </div>
     <script type="text/javascript">
-
+        var lastsel2;
         jQuery("#locallead").jqGrid({
                     "datatype":"json",
                     "mtype":"POST",
@@ -40,7 +40,7 @@
                     "viewrecords":true,
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75,'sortable':false},
-                        {"name":"id", "index":"id", "align":"center", "hidden":true},
+                        {"name":"id", "index":"id", "align":"center", "hidden": true},
                         {"name":"transaction_id", "index":"transaction_id", "align":"center", 'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
                         {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
@@ -88,6 +88,15 @@
                         {"label":"No. of variations","index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation"},
                         {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
                     ],
+                    
+                    onSelectRow: function(id){
+                        console.log(id);
+                    if(id && id!==lastsel2){
+                        jQuery('#locallead').restoreRow(lastsel2);
+                        lastsel2=id;
+                        }
+                        jQuery('#locallead').editRow(id,true);
+                    },
                     jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
                     gridComplete: function(){
@@ -95,10 +104,10 @@
                         for(var i=0;i < ids.length;i++)
                         {
                             var cl = ids[i];
-                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#locallead').editRow('"+cl+"');\" />";
+                            //be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#locallead').editRow('"+cl+"');\" />";
                             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
-                            jQuery("#locallead").jqGrid('setRowData',ids[i],{act:be+se+ce});
+                            jQuery("#locallead").jqGrid('setRowData',ids[i],{act:se+ce});
                         }
                     },
                     "subGrid":true,
