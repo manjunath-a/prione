@@ -89,14 +89,19 @@
                         {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
                     ],
                     
-                    onSelectRow: function(id){
-                        console.log(id);
-                    if(id && id!==lastsel2){
+                    ondblClickRow: function(rowid, iRow, iCol, e){
+                    if(rowid && rowid!==lastsel2){
                         jQuery('#locallead').restoreRow(lastsel2);
-                        lastsel2=id;
+                        lastsel2=rowid;
                         }
-                        jQuery('#locallead').editRow(id,true);
+                        jQuery('#locallead').editRow(rowid,true);
                     },
+                    
+                    loadComplete:function() {
+                        $(this).find('tbody tr:odd td').css('background-color','yellow');
+                        $(this).find('tbody tr:even td').css('background-color','green');
+                    },
+                    
                     jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
                     gridComplete: function(){
@@ -147,7 +152,7 @@
                 }
         );
        jQuery("#locallead").jqGrid('navGrid', '#localleadPager',
-        {add: false,edit:false,view:false,del:false,refresh: true,search:false});
+        {add: false,edit:true,view:false,del:false,refresh: true,search:false});
     </script>
     <!-- ./ content -->
     </div>

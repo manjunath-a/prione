@@ -44,6 +44,10 @@
             {{ HTML::script('assets/jquery-jqGrid-v4.6.0/js/i18n/grid.locale-en.js'); }}
             {{ HTML::script('assets/jquery-jqGrid-v4.6.0/src/jquery.jqGrid.js'); }}
             {{ HTML::script('assets/jquery-jqGrid-v4.6.0/src/grid.inlinedit.js'); }}
+            {{ HTML::script('assets/jquery-jqGrid-v4.6.0/src/grid.formedit.js'); }}
+            {{ HTML::script('assets/jquery-jqGrid-v4.6.0/src/grid.common.js'); }}
+            {{ HTML::script('assets/jquery-jqGrid-v4.6.0/src/jqModal.js'); }}
+            {{ HTML::script('assets/jquery-jqGrid-v4.6.0/src/jqDnR.js'); }}
 
 		<style>
         body {
