@@ -92,14 +92,13 @@
                     
                     ondblClickRow: function(rowid, iRow, iCol, e){
                     if(rowid && rowid!==lastsel2){
-                        jQuery('#locallead').restoreRow(lastsel2);
+                        $(this).restoreRow(lastsel2);
                         lastsel2=rowid;
                         }
-                        jQuery('#locallead').editRow(rowid,true,function(){
+                        $(this).editRow(rowid,true,function(){
                             $(".multi_pending_reason").multiselect();
                         });
                     },
-                    
                     loadComplete:function() {
                         $(this).find('tbody tr:odd td').css('background-color','yellow');
                         $(this).find('tbody tr:even td').css('background-color','green');
@@ -108,14 +107,14 @@
                     jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
                     gridComplete: function(){
-                        var ids = jQuery("#locallead").jqGrid('getDataIDs');
+                        var ids = $(this).jqGrid('getDataIDs');
                         for(var i=0;i < ids.length;i++)
                         {
                             var cl = ids[i];
-                            //be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#locallead').editRow('"+cl+"');\" />";
+                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#locallead').editGridRow('"+cl+"');\" />";
                             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
-                            jQuery("#locallead").jqGrid('setRowData',ids[i],{act:se+ce});
+                            $(this).jqGrid('setRowData',ids[i],{act:se+ce+be});
                         }
                     },
                     "subGrid":true,
@@ -150,12 +149,11 @@
                             ]
                         }
                     ],
-                    "toppager":true
-                    //'cellEdit': true
                 }
         );
-       jQuery("#locallead").jqGrid('navGrid', '#localleadPager',
-        {add: false,edit:true,view:false,del:false,refresh: true,search:false,cloneToTop:true});
+//       $(this).jqGrid('navGrid', '#localleadPager',
+//        {add: false,edit:true,view:false,del:false,refresh: true,search:false});
+        
     </script>
     <!-- ./ content -->
     </div>
