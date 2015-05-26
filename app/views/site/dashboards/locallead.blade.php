@@ -24,6 +24,7 @@
     {{ Form::open(array('url' => 'dashboard/locallead', 'method' => 'post',
         'id'=> "sellerrequestExportForm")) }}
     {{ Form::close() }}
+
     <table id="locallead">
     </table>
     <div id="localleadPager">
@@ -65,7 +66,7 @@
                         "editoptions":{'value':'{{rtrim($status, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"status_id"},
 
                         {"label":"Pending Reason","index":"pending_reason_id","align":"center","width":280,"editable":true,
-                            "editoptions":{'value':'{{rtrim($pending, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"pending_reason_id"},
+                            "editoptions":{'value':'{{rtrim($pending, ";")}}','multiple':'',size: '10',class:'multi_pending_reason'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"pending_reason_id"},
 
                         {"label":"Photographer", "name":"photographer_id", "index":"photographer_id","align":"center","width":130,
                         "editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select", "id":"photographer_id"},
@@ -86,7 +87,7 @@
 
                         {"label":"No. of parent SKUs","index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku"},
                         {"label":"No. of variations","index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation"},
-                        {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
+                        {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}},
                     ],
                     
                     ondblClickRow: function(rowid, iRow, iCol, e){
@@ -94,7 +95,9 @@
                         jQuery('#locallead').restoreRow(lastsel2);
                         lastsel2=rowid;
                         }
-                        jQuery('#locallead').editRow(rowid,true);
+                        jQuery('#locallead').editRow(rowid,true,function(){
+                            $(".multi_pending_reason").multiselect();
+                        });
                     },
                     
                     loadComplete:function() {
@@ -147,12 +150,12 @@
                             ]
                         }
                     ],
-                    "pager":"localleadPager"
+                    "toppager":true
                     //'cellEdit': true
                 }
         );
        jQuery("#locallead").jqGrid('navGrid', '#localleadPager',
-        {add: false,edit:true,view:false,del:false,refresh: true,search:false});
+        {add: false,edit:true,view:false,del:false,refresh: true,search:false,cloneToTop:true});
     </script>
     <!-- ./ content -->
     </div>
