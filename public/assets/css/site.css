@@ -1,0 +1,51 @@
+/************* Start of Login Styles *************/
+
+body {
+	background: #D6D6D6;
+}
+body #wrap > .login_container {
+	background: #fff;
+    box-shadow: 0 0 7px #888;
+    padding: 0;
+    margin: auto;
+    width: 36%;
+}
+body #wrap > .login_container .page-header {
+	background: #464646;
+    color: #fff;
+    margin: 0;
+    padding: 13px;
+    text-align: center;
+}
+body #wrap > .login_container .page-header h1 {
+	font-size: 18px;
+    margin: 0;
+}
+body #wrap > .login_container form {
+	padding: 55px;
+}
+body #wrap > .login_container form .form-group {
+	margin: 0 0 10px;
+}
+body #wrap > .login_container form .form-group input[type="text"], body #wrap > .login_container form .form-group input[type="password"] {
+	border: 0 none;
+    box-shadow: 0 0 4px #bbb;
+}
+body #wrap > .login_container form .form-group .checkbox label {
+	padding-left: 5px;
+}
+body #wrap > .login_container form .form-group .checkbox a {
+	float: right;
+}
+body #wrap > .login_container form .form-group .btn-primary {
+	background: #DF8719;
+	border: 0;
+	border-radius: 4px;
+	width: 100%;
+	margin-top: 10px;
+	font-size: 18px;
+    text-shadow: none;
+    outline: none;
+}
+
+/************* End of Login Styles *************/

@@ -31,6 +31,7 @@
             {{ HTML::style('assets/font-awesome-v4.1.0/css/font-awesome.min.css'); }}
             {{ HTML::style('assets/jquery-ui-v1.10.3/css/smoothness/jquery-ui-1.10.3.custom.css'); }}
             {{ HTML::style('assets/jquery-jqGrid-v4.6.0/css/ui.jqgrid.css'); }}
+			{{ HTML::style('assets/css/site.css'); }}
 
             {{ HTML::script('assets/jquery-v2.0.3/jquery.js'); }}
             {{ HTML::script('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect.min.js'); }}
@@ -75,7 +76,7 @@
 		<div id="wrap">
 
 		<!-- Container -->
-		<div class="container">
+		<div class="login_container">
 			<!-- Notifications -->
 			@include('notifications')
 			<!-- ./ notifications -->
