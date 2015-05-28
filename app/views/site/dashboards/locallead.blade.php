@@ -151,11 +151,6 @@
                     ],
                 }
         );
-//       $.jgrid = {
-//                     edit : {height:200,
-//                            widht:400}
-//                    };
-//        
     </script>
     <!-- ./ content -->
     </div>
