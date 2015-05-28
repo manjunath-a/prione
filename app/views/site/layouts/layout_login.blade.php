@@ -24,6 +24,7 @@
 
 		<!-- CSS
 		================================================== -->
+		<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap-theme.min.css')}}">
             {{ HTML::style('assets/bootstrap-v3.2.0/css/bootstrap.min.css'); }}
@@ -47,7 +48,7 @@
 
 		<style>
         body {
-            padding: 60px 0;
+            
         }
 		@section('styles')
 		@show
@@ -74,7 +75,8 @@
 	<body>
 		<!-- To make sticky footer need to wrap in a div -->
 		<div id="wrap">
-
+		<div class="login_logo">
+		</div>
 		<!-- Container -->
 		<div class="login_container">
 			<!-- Notifications -->
