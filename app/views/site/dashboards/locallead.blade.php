@@ -50,7 +50,7 @@
                         {"label":"Requester Name","align":"center","index":"requester_name","name":"requester_name"},
                         {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
-                        {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
+                        {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true },editoptions:{readonly:true}},
 
                         {"label":"Assigned Date","align":"center","index":"created_at","name":"created_at","width":160},
                         {"label":"Priority","index":"priority","align":"center","width":90,formoptions:{rowpos:1, colpos:3},"editable":true,
@@ -66,7 +66,7 @@
                         "editoptions":{'value':'{{rtrim($status, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"status_id"},
 
                         {"label":"Pending Reason","index":"pending_reason_id","align":"center","width":280, formoptions:{rowpos:2, colpos:4}, "editable":true,
-                            "editoptions":{'value':'{{rtrim($pending, ";")}}','multiple':'',size: '10',class:'multi_pending_reason'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"pending_reason_id"},
+                            "editoptions":{'value':'{{rtrim($pending, ";")}}','multiple':'',size: '10',class:'multi_pending_reason'},"edittype":"select","formatter":"select","editrules":{"required":false},"name":"pending_reason_id"},
 
                         {"label":"Photographer", "name":"photographer_id", "index":"photographer_id","align":"center","width":130, formoptions:{rowpos:3, colpos:3},
                         "editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select", "id":"photographer_id"},
@@ -99,9 +99,10 @@
                             $(".multi_pending_reason").multiselect();
                         });
                     },
+                    
                     loadComplete:function() {
-                        $(this).find('tbody tr:odd td').css('background-color','#0066CC');
-                        $(this).find('tbody tr:even td').css('background-color','#00FFCC');
+                        $(this).find('tbody tr:odd td').css('background-color','#fbfbfb');
+                        $(this).find('tbody tr:even td').css('background-color','#f6ede4');
                     },
                     
                     jsonReader: { repeatitems : true, id: 'id' },
@@ -111,7 +112,10 @@
                         for(var i=0;i < ids.length;i++)
                         {
                             var cl = ids[i];
-                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#locallead').editGridRow('"+cl+"',{width:'1200'});\" />";
+                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#locallead').editGridRow('"+cl+"',{width:'1200',height:'auto',closeAfterEdit:true,afterShowForm:function($formid){ $('.multi_pending_reason').multiselect();},\n\
+                                    beforeShowForm: function(form) {\n\
+                                    formCustomization(form);\n\
+                                    }});\" />";
                             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
                             $(this).jqGrid('setRowData',ids[i],{act:se+ce+be});
@@ -136,7 +140,7 @@
                                 {"label":"Requester Email","align":"center","index":"email","name":"email"},
                                 {"label":"Requester Number","index":"contact_number","name":"contact_number"},
                                 {"label":"Seller Provided Images","align":"center","index":"image_available","name":"image_available"},
-                                {"label":"Local Team Lead","align":"center","index":"LocalTeamLead","name":"LocalTeamLead",formoptions:{rowpos:1, colpos:1}},
+                                {"label":"Local Team Lead","align":"center","index":"LocalTeamLead","name":"LocalTeamLead"},
                                 {"label":"Photographer","align":"center","index":"Photographer","name":"Photographer"},
                                 {"label":"Service Associate","align":"center","index":"ServiceAssociate","name":"ServiceAssociate"},
                                 {"label":"Editing Manager","align":"center","index":"EditingManager","name":"EditingManager"},
@@ -151,6 +155,11 @@
                     ],
                 }
         );
+        function formCustomization(form)
+        {
+            var html = "<p style='color:red'>Wroking</p>";
+            console.log(form);
+        }
     </script>
     <!-- ./ content -->
     </div>
