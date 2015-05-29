@@ -108,7 +108,7 @@ body #wrap > .navbar .navbar-nav .logo {
 	height: 54px;
     width: 110px;
 }
-body #wrap > .navbar .navbar-nav li a, body #wrap > .navbar .navbar-nav li a span {
+body #wrap > .navbar .navbar-nav li a, body #wrap > .navbar .navbar-nav li span {
 	color: #5a5a5a;
 	text-shadow: none;
 	font-size: 16px;
@@ -121,6 +121,9 @@ body #wrap > .navbar .navbar-nav li a:hover, body #wrap > .navbar .navbar-nav li
 }
 body #wrap > .navbar .navbar-nav li:last-child a {
 	padding-right: 0;
+	padding-left: 8px;
+	display: inline;
+	font-weight: 600;
 }
 .navbar-inverse .navbar-nav > .open > a, .dropdown-menu > .active > a, .dropdown-menu > .active > a:focus {
 	background: transparent;
@@ -201,6 +204,18 @@ body #wrap .container .ui-widget {
 }
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
 	border: 0;
+}
+.navbar .container li.user > a, .navbar .container li.user > span {
+	position: relative;
+	top: 7px;
+}
+.navbar .container .user-img {
+    background: #fff none repeat scroll 0 0;
+    border: 2px solid #e59b2e;
+    height: 35px;
+    padding: 3px 0 0;
+    width: 35px;
+    margin: 8px 8px 0 0;
 }
 
 /************* End of Dashboard Styles *************/

@@ -121,9 +121,10 @@
                                 </li>
                             </ul>
                           @endif
-                          <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                               Welcome {{{ Auth::user()->username }}} <span class="caret"></span>
+                          <li class="dropdown user">
+                            <img title="User" alt="User" src="/assets/css/images/user-pic.png" class="user-img img-circle">
+                            <span>Welcome</span> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                               {{{ Auth::user()->username }}} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                               <li><a  href="{{{ URL::to('user/settings') }}}"><span class="glyphicon glyphicon-wrench"></span> Settings</a></li>
