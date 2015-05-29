@@ -197,6 +197,7 @@ body #wrap .container .ui-widget {
     letter-spacing: 0.5px;
 	border-color: #e6e6e6 #e6e6e6 #828282;
 	border-bottom-style: dashed;
+	text-transform: capitalize;
 }
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
 	border: 0;
