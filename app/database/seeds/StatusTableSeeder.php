@@ -18,20 +18,20 @@ class StatusTableSeeder extends Seeder {
                 'status'      => 1,
                 'sort'  => 2
             ),
+            // array(
+            //     'status_name'      => 'Resolved',
+            //     'status'      => 1,
+            //     'sort'  => 3
+            // ),
             array(
-                'status_name'      => 'Resolved',
+                'status_name'      => 'Closed',
                 'status'      => 1,
                 'sort'  => 3
             ),
             array(
-                'status_name'      => 'Closed',
-                'status'      => 1,
-                'sort'  => 4
-            ),
-            array(
                 'status_name'      => 'Rejectd',
                 'status'      => 1,
-                'sort'  => 5
+                'sort'  => 4
             ),
         );
 

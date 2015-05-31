@@ -26,6 +26,11 @@ class StageTableSeeder extends Seeder {
             array(
                 'stage_name'  => '(Local) MIF Completed',
                 'status'      => 1,
+                'sort'        => 4
+            ),
+            array(
+                'stage_name'  => '(Local) QC Completed',
+                'status'      => 1,
                 'sort'        => 5
             ),
             array(
@@ -34,12 +39,17 @@ class StageTableSeeder extends Seeder {
                 'sort'        => 6
             ),
             array(
-                'stage_name'  => '(Central) Cataloging Completed',
+                'stage_name'  => '(Central) Edited Images QC Completed',
                 'status'      => 1,
                 'sort'        => 7
             ),
             array(
-                'stage_name'  => '(Central) QC Completed',
+                'stage_name'  => '(Central) Flat File Creataed',
+                'status'      => 1,
+                'sort'        => 7
+            ),
+            array(
+                'stage_name'  => '(Central) Flat File QC Completed',
                 'status'      => 1,
                 'sort'        => 8
             ),
@@ -47,11 +57,6 @@ class StageTableSeeder extends Seeder {
                 'stage_name'  => '(Central) ASIN Created',
                 'status'      => 1,
                 'sort'        => 9
-            ),
-            array(
-                'stage_name'  => '(Local) Seller Provided Images',
-                'status'      => 1,
-                'sort'        => 4
             ),
         );
 
