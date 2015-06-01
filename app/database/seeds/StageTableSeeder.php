@@ -46,17 +46,17 @@ class StageTableSeeder extends Seeder {
             array(
                 'stage_name'  => '(Central) Flat File Creataed',
                 'status'      => 1,
-                'sort'        => 7
+                'sort'        => 8
             ),
             array(
                 'stage_name'  => '(Central) Flat File QC Completed',
                 'status'      => 1,
-                'sort'        => 8
+                'sort'        => 9
             ),
             array(
                 'stage_name'  => '(Central) ASIN Created',
                 'status'      => 1,
-                'sort'        => 9
+                'sort'        => 10
             ),
         );
 

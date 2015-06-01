@@ -1,30 +1,30 @@
 <?php
 
-class PendingReasonTableSeeder extends Seeder {
+class RejectionReasonTableSeeder extends Seeder {
 
     public function run()
     {
-        DB::table('pending_reason')->delete();
+        DB::table('rejection_reason')->delete();
 
 
-        $pendingReason = array(
+        $rejectionReason = array(
             array(
-                'pending_reason'    => 'Seller not reachable',
+                'rejection_reason'  => 'Raw Images QC failed',
                 'status'            => 1,
                 'sort'              => 1
             ),
             array(
-                'pending_reason'    => 'Seller not giving appointment',
+                'rejection_reason'  => 'Editied Images QC failed',
                 'status'            => 1,
                 'sort'              => 2
             ),
             array(
-                'pending_reason'    => 'Seller not providing data for building MIF',
+                'rejection_reason'  => 'MIF images mapping incorrect',
                 'status'            => 1,
                 'sort'              => 3
             ),
             array(
-                'pending_reason'    => 'Raw Images QC failed',
+                'rejection_reason'  => 'Images or MIF not available',
                 'status'            => 1,
                 'sort'              => 4
             ),
@@ -32,9 +32,14 @@ class PendingReasonTableSeeder extends Seeder {
                 'pending_reason'    => 'MIF QC failed',
                 'status'            => 1,
                 'sort'              => 5
+            ),
+            array(
+                'pending_reason'    => 'Flat File QC failed',
+                'status'            => 1,
+                'sort'              => 6
             )
         );
-        DB::table('pending_reason')->insert( $pendingReason );
+        DB::table('rejection_reason')->insert( $rejectionReason );
     }
 
 }
