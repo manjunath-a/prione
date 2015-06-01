@@ -26,11 +26,13 @@
 		================================================== -->
         <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap-theme.min.css')}}">
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300,100' rel='stylesheet' type='text/css'>
             {{ HTML::style('assets/bootstrap-v3.2.0/css/bootstrap.min.css'); }}
             {{ HTML::style('assets/bootstrap-v3.2.0/css/bootstrap-theme.min.css'); }}
             {{ HTML::style('assets/font-awesome-v4.1.0/css/font-awesome.min.css'); }}
             {{ HTML::style('assets/jquery-ui-v1.10.3/css/smoothness/jquery-ui-1.10.3.custom.css'); }}
             {{ HTML::style('assets/jquery-jqGrid-v4.6.0/css/ui.jqgrid.css'); }}
+            {{ HTML::style('assets/css/site.css'); }}
 
             {{ HTML::script('assets/jquery-v2.0.3/jquery.js'); }}
             {{ HTML::script('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect.min.js'); }}
@@ -75,7 +77,7 @@
 		<div id="wrap">
 		<!-- Navbar -->
 		<div class="navbar navbar-default navbar-inverse navbar-fixed-top">
-			 <div class="container">
+			 <div class="container col-md-12">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                         <span class="sr-only">Toggle navigation</span>
@@ -86,7 +88,7 @@
                 </div>
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav">
-          						<li {{ (Request::is('/') ? ' class="active"' : '') }}><a href="{{{ URL::to('') }}}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+          						<li class="logo" {{ (Request::is('/') ? ' class="active"' : '') }}><a href="{{{ URL::to('') }}}"></a></li>
           					</ul>
 
                     <ul class="nav navbar-nav pull-right">
@@ -95,12 +97,12 @@
                           <li><a href="{{{ URL::to('admin/users') }}}">Admin Panel</a></li>
                           <li><a href="{{{ URL::to('report/admin') }}}">Admin Report</a></li>
                         @endif
-                          <li {{ (Request::is('request*') ? ' class="active"' : '') }}><a href="{{{ URL::to('/request') }}}"><span class="glyphicon glyphicon-plus"></span>Seller Request</a></li>
+                          <li {{ (Request::is('request*') ? ' class="active"' : '') }}><a href="{{{ URL::to('/request') }}}">Seller Request</a></li>
                           @if (Auth::user()->hasRole('Catalog Manager') || Auth::user()->hasRole('Catalog Team Lead') ||
                             Auth::user()->hasRole('Editing Manager') || Auth::user()->hasRole('Editing Team Lead') || Auth::user()->hasRole('Local Team Lead') )
                           <li  class="dropdown{{ (Request::is('ticket*|dashboard/*') ? ' active' : '') }}">
                               <a class="dropdown-toggle" data-toggle="dropdown" href="{{{ URL::to('admin/report') }}}">
-                                <span class="glyphicon glyphicon-list"></span> Tickets <span class="caret"></span>
+                                 Tickets <span class="caret"></span>
                               </a>
                               <ul class="dropdown-menu" role="menu">
                                 <li {{ (Request::is('dashboard/*') ? ' class="active"' : '') }}>
@@ -119,9 +121,10 @@
                                 </li>
                             </ul>
                           @endif
-                          <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                              <span class="glyphicon glyphicon-user"></span> {{{ Auth::user()->username }}} <span class="caret"></span>
+                          <li class="dropdown user">
+                            <img title="User" alt="User" src="/assets/css/images/user-pic.png" class="user-img img-circle">
+                            <span>Welcome</span> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                               {{{ Auth::user()->username }}} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                               <li><a  href="{{{ URL::to('user/settings') }}}"><span class="glyphicon glyphicon-wrench"></span> Settings</a></li>
@@ -141,7 +144,7 @@
 		<!-- ./ navbar -->
 
 		<!-- Container -->
-		<div class="container">
+		<div class="container col-md-12">
 			<!-- Notifications -->
 			@include('notifications')
 			<!-- ./ notifications -->

@@ -4,6 +4,8 @@ body {
 	background: url('images/prione-bg.jpg') center top #D6D6D6;
 	margin-top: 9%;
 	font-family: 'Lato', sans-serif;
+	margin: 0;
+  padding: 0;
 }
 body #wrap .login_logo {
 	background: url("images/login-logo.png") no-repeat center top transparent;
@@ -47,15 +49,15 @@ body #wrap > .login_container form .form-group ::-webkit-input-placeholder {
 }
 
 body #wrap > .login_container form .form-group :-moz-placeholder { /* Firefox 18- */
-   color: #b0b0b0;  
+   color: #b0b0b0;
 }
 
 body #wrap > .login_container form .form-group ::-moz-placeholder {  /* Firefox 19+ */
-   color: #b0b0b0;  
+   color: #b0b0b0;
 }
 
-body #wrap > .login_container form .form-group :-ms-input-placeholder {  
-   color: #b0b0b0;  
+body #wrap > .login_container form .form-group :-ms-input-placeholder {
+   color: #b0b0b0;
 }
 body #wrap > .login_container form .form-group .checkbox label {
 	padding-left: 5px;
@@ -84,3 +86,136 @@ body #wrap > .login_container form .form-group .btn-primary {
 }
 
 /************* End of Login Styles *************/
+
+/************* Start of Dashboard Styles *************/
+
+body #wrap > .navbar {
+	background: #efefef;
+    height: 55px;
+    border-bottom: 0;
+    padding: 0 30px;
+    box-shadow: none;
+    margin: 0;
+}
+body #wrap .container {
+	padding: 0;
+}
+body #wrap > .container {
+	background: #FFF;
+}
+body #wrap > .navbar .navbar-nav .logo {
+	background: url('images/logo.png') no-repeat center 16px;
+	height: 54px;
+    width: 110px;
+}
+body #wrap > .navbar .navbar-nav li a, body #wrap > .navbar .navbar-nav li span {
+	color: #5a5a5a;
+	text-shadow: none;
+	font-size: 16px;
+	outline: none;
+}
+body #wrap > .navbar .navbar-nav li a:hover, body #wrap > .navbar .navbar-nav li a:hover span, body #wrap > .navbar .navbar-nav li.active a, body #wrap > .navbar .navbar-nav li.active span {
+	color: #de8719;
+	background: transparent;
+    box-shadow: none;
+}
+body #wrap > .navbar .navbar-nav li:last-child a {
+	padding-right: 0;
+	padding-left: 8px;
+	display: inline;
+	font-weight: 600;
+}
+.navbar-inverse .navbar-nav > .open > a, .dropdown-menu > .active > a, .dropdown-menu > .active > a:focus {
+	background: transparent;
+	color: #5a5a5a;
+}
+.navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus, .dropdown-menu > .active > a:hover {
+	background: transparent;
+	color: #de8719;
+}
+body #wrap .container .page-header {
+	box-shadow: 0 0 3px #999;
+	background: #e0e0e0;
+	margin: 0;
+	border: 0;
+	padding: 5px 30px 10px;
+	display: inline-block;
+	width: 100%;
+}
+body #wrap .container .page-header > div:first-child {
+	padding-left: 0;
+}
+body #wrap .container .page-header > div:last-child {
+	padding-right: 0;
+	text-align: right;
+}
+body #wrap .container .page-header .status-title {
+	font-size: 16px;
+	color: #211f20;
+	font-weight: 600;
+    letter-spacing: 0.2px;
+}
+body #wrap .container .page-header .status-count {
+	font-size: 26px;
+	color: #de8719;
+	font-weight: 600;
+}
+body #wrap .container .ui-widget {
+	font-family: 'Lato', sans-serif;
+}
+.container .ui-state-default, .container .ui-widget-content .ui-state-default, .container .ui-widget-header .ui-state-default {
+    background: #464646 none repeat scroll 0 0;
+    border: 1px solid #6b6b6b;
+    color: #fff;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 500;
+}
+.container .ui-jqgrid.ui-widget.ui-widget-content{
+	border-radius: 0;
+	box-shadow: 0 0 3px #ccc;
+    margin: 15px 30px;
+    width: 96% !important;
+    overflow: auto;
+}
+.container .ui-jqgrid .ui-jqgrid-htable th {
+    height: 38px;
+}
+.container .ui-widget-content:nth-child(even) {
+	background: #FBFBFB;
+}
+.container .ui-widget-content:nth-child(odd) {
+	background: #f6ede4;
+}
+.container .ui-widget-content {
+	border: 0;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+	border: 0;
+}
+.container .ui-jqgrid tr.jqgrow td {
+	color: #37474f;
+    font-size: 12px;
+    height: 52px;
+    letter-spacing: 0.5px;
+	border-color: #e6e6e6 #e6e6e6 #828282;
+	border-bottom-style: dashed;
+	text-transform: capitalize;
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+	border: 0;
+}
+.navbar .container li.user > a, .navbar .container li.user > span {
+	position: relative;
+	top: 7px;
+}
+.navbar .container .user-img {
+    background: #fff none repeat scroll 0 0;
+    border: 2px solid #e59b2e;
+    height: 35px;
+    padding: 3px 0 0;
+    width: 35px;
+    margin: 8px 8px 0 0;
+}
+
+/************* End of Dashboard Styles *************/

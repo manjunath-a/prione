@@ -17,8 +17,30 @@
 {{-- Content --}}
 @section('content')
     <div class="page-header">
-        <h3>Dashboard : {{$user->username}}
-         City : {{City::Where('id',$user->city_id)->first()->city_name}}</h3>
+        <div class="col-md-2">
+            <span class="status-title">Pending :</span>
+            <span class="status-count">10</span>
+        </div>
+        <div class="col-md-2">
+            <span class="status-title">Not Assigned :</span>
+            <span class="status-count">07</span>
+        </div>
+        <div class="col-md-2">
+            <span class="status-title">Local WIP :</span>
+            <span class="status-count">30</span>
+        </div>
+        <div class="col-md-2">
+            <span class="status-title">Central WIP :</span>
+            <span class="status-count">09</span>
+        </div>
+        <div class="col-md-2">
+            <span class="status-title">Returned :</span>
+            <span class="status-count">12</span>
+        </div>
+        <div class="col-md-2">
+            <span class="status-title">Photoshoot Pending :</span>
+            <span class="status-count">02</span>
+        </div>
     </div>
     <div id="myMessage" role="alert"> </div>
     {{ Form::open(array('url' => 'dashboard/locallead', 'method' => 'post',
