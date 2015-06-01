@@ -88,6 +88,7 @@
                         {"label":"No. of parent SKUs","index":"sa_sku","align":"center","width":130, formoptions:{rowpos:5, colpos:4},"editable":true,"name":"sa_sku"},
                         {"label":"No. of variations","index":"sa_variation","align":"center","width":100, formoptions:{rowpos:5, colpos:5},"editable":true,"name":"sa_variation"},
                         {"label":"Comments","align":"right","index":"comment","name":"comment", formoptions:{rowpos:6, colpos:3},"editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}},
+                        {"label":"Comment Link","align":"center","index":"commentLink","formatter":function() {return  "<a href='#' class='comment-popover' data-toggle='popover' data-placement='bottom' data-container='body'>comments</a>"},"formatoptions":{"target":"#"},"name":"commentLink"}
                     ],
                     
                     ondblClickRow: function(rowid, iRow, iCol, e){
@@ -121,6 +122,21 @@
                             $(this).jqGrid('setRowData',ids[i],{act:se+ce+be});
                         }
                     },
+                        
+                    onCellSelect: function(rowid,iCol,cellcontent,e) {
+                         console.log(rowid);
+                         var data = jQuery("#locallead").jqGrid('getRowData',rowid);
+                         console.log(data);
+                         var html1 = "<div>"+data.comment+"</div>";
+                         console.log(html1);
+                         var pop = 
+                         $('.comment-popover').popover({'html':true,'placement':'left','content': function()
+                            {
+                                console.log(html1);
+                                return html1;
+                            }}); 
+                        //$('.comment-popover').popover('show');
+                     },
                     "subGrid":true,
                     "subGridUrl":"seller",
                     "subGridModel" :[
