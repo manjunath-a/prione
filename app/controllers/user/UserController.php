@@ -14,6 +14,8 @@ class UserController extends BaseController
      */
     protected $userRepo;
 
+
+
     /**
      * Inject the models.
      *
@@ -182,8 +184,8 @@ class UserController extends BaseController
             // Show the page
             return Redirect::to($dashboard);
         }
-
-        return View::make('site/user/login');
+        $this->layout = View::make('site.layouts.layout_login');
+        $this->layout->content = View::make("site/user/login");
     }
 
     /**

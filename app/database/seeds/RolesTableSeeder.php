@@ -10,10 +10,6 @@ class RolesTableSeeder extends Seeder {
         $adminRole->name = 'admin';
         $adminRole->save();
 
-        $CatalogueRole = new Role;
-        $CatalogueRole->name = 'Catalog Manager';
-        $CatalogueRole->save();
-
         $CatalogueTeamLeadRole = new Role;
         $CatalogueTeamLeadRole->name = 'Catalog Team Lead';
         $CatalogueTeamLeadRole->save();
@@ -21,10 +17,6 @@ class RolesTableSeeder extends Seeder {
         $Cataloguer = new Role;
         $Cataloguer->name = 'Cataloger';
         $Cataloguer->save();
-
-        $Editing = new Role;
-        $Editing->name = 'Editing Manager';
-        $Editing->save();
 
         $EditingTeamLeadRole = new Role;
         $EditingTeamLeadRole->name = 'Editing Team Lead';
@@ -49,17 +41,11 @@ class RolesTableSeeder extends Seeder {
         $user = User::where('username','=','admin')->first();
         $user->attachRole( $adminRole );
 
-        $user = User::where('username','=','CatalogueManager')->first();
-        $user->attachRole( $CatalogueRole );
-
         $user = User::where('username','=','CatalogueTeamLead')->first();
         $user->attachRole( $CatalogueTeamLeadRole );
 
         $user = User::where('username','=','Cataloguer')->first();
         $user->attachRole( $Cataloguer );
-
-        $user = User::where('username','=','EditingManager')->first();
-        $user->attachRole( $Editing );
 
         $user = User::where('username','=','EditingTeamLead')->first();
         $user->attachRole( $EditingTeamLeadRole );

@@ -20,7 +20,7 @@ class TicketValidator  extends IlluminateValidator
         'photoshoot_required' => 'Photoshoot need to be completed before Service Associates Complete',
         'photoshoot_not_required' => 'Photoshoot not required for Stage - (Local) Seller Images Provided',
         'photographer_already_assigned' => 'Photographer already assgined ',
-        'emg_required' => 'Editing Manager required',
+        // 'emg_required' => 'Editing Manager required',
         'etl_required' => 'Editing Team Lead is required',
         'editor_required' => 'Editior is required',
         'editing_complete_required' => 'Only Editing completed ticket can be moved !',
@@ -112,93 +112,6 @@ class TicketValidator  extends IlluminateValidator
     }
 
     /**
-     *  Editing Manager Work flow Validation.
-     */
-    public function localLeadToEditingManagerFlow($data)
-    {
-        $ticketTransaction = \TicketTransaction::find($data['transaction_id'])->toArray();
-
-        // While pending reason ticket should not move the any queue
-        if ($data['stage_id'] != 1 && $data['pending_reason_id']) {
-            throw new \Exception($this->_custom_messages['pending_reason_cant_move']);
-        }
-
-        if (isset($ticketTransaction['photographer_id']) &&
-          ($ticketTransaction['photographer_id'] != $data['photographer_id'] &&
-          !$ticketTransaction['pending_reason_id'])) {
-            throw new \Exception($this->_custom_messages['photographer_already_assigned']);
-        }
-
-        if (isset($ticketTransaction['mif_id']) && ($ticketTransaction['mif_id'] != $data['mif_id'] &&
-            !$ticketTransaction['pending_reason_id'])) {
-            throw new \Exception($this->_custom_messages['service_associate_already_assigned']);
-        }
-
-        if (!$data['mif_id']) {
-            throw new \Exception($this->_custom_messages['service_associate_required']);
-        }
-
-        // While pending reason ticket should not move the any queue
-        if ($data['pending_reason_id']) {
-            throw new \Exception($this->_custom_messages['pending_reason_cant_move']);
-        }
-
-        $this->checkValidator($data, $this->commonRules);
-
-        if ($data['stage_id'] != '4') {
-            throw new \Exception($this->_custom_messages['editing_cant_move']);
-        }
-
-        if (!$data['stage_id']) {
-            throw new \Exception($this->_custom_messages['stage_required']);
-        }
-    }
-
-    /**
-     *  Editing Manager Work flow Validation.
-     */
-    public function localLeadToCatalogingManagerFlow($data)
-    {
-        $ticketTransaction = \TicketTransaction::find($data['transaction_id'])->toArray();
-
-        if (!$ticketTransaction['editingmanager_id']) {
-            throw new \Exception($this->_custom_messages['emg_required']);
-        }
-
-        if (!$ticketTransaction['editingteamlead_id']) {
-            throw new \Exception($this->_custom_messages['etl_required']);
-        }
-
-        // While pending reason ticket should not move the any queue
-        if ($data['pending_reason_id']) {
-            throw new \Exception($this->_custom_messages['pending_reason_cant_move']);
-        }
-
-        if (!$ticketTransaction['catalogingmanager_id']) {
-            throw new \Exception($this->_custom_messages['cataloging_cant_move']);
-        }
-        if (!$data['stage_id']) {
-            throw new \Exception($this->_custom_messages['stage_required']);
-        }
-    }
-
-    /**
-     * editingManagerFlow.
-     */
-    public function editingManagerFlow($data)
-    {
-
-        //Check for Image Not available
-        if (!$data['editingteamlead_id']) {
-            throw new \Exception($this->_custom_messages['etl_required']);
-        }
-        // Not authorize to move cataloguing group
-        if ($data['group_id'] != 2) {
-            throw new \Exception($this->_custom_messages['not_authorsied_edit']);
-        }
-    }
-
-    /**
      * editingTeamLeadFlow.
      */
     public function editingTeamLeadFlow($data)
@@ -218,17 +131,6 @@ class TicketValidator  extends IlluminateValidator
     }
 
     /**
-     * editingTeamLeadToCatalogManager
-     * @param array $data
-     */
-    public function editingTeamLeadToCatalogManager($data)
-    {
-        if ($data['stage_id']!= 5) {
-            throw new \Exception($this->_custom_messages['editing_complete_required']);
-        }
-    }
-
-    /**
      * Editor Flow.
      */
     public function editorFlow($data)
@@ -242,22 +144,6 @@ class TicketValidator  extends IlluminateValidator
         }
         // Not authorize to move cataloguing group
         if ($data['group_id'] != 2) {
-            throw new \Exception($this->_custom_messages['not_authorsied_edit']);
-        }
-    }
-
-    /**
-     * Cataloging Manager Flow.
-     */
-    public function catalogingManagerFlow($data)
-    {
-
-        //Check for Image Not available
-        if (!$data['catalogingteamlead_id']) {
-            throw new \Exception($this->_custom_messages['ctl_required']);
-        }
-        // Not authorize to move cataloguing group
-        if ($data['group_id'] != 3 && !$data['pending_reason_id'] ) {
             throw new \Exception($this->_custom_messages['not_authorsied_edit']);
         }
     }

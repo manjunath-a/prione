@@ -5,9 +5,7 @@ class DatabaseSeeder extends Seeder {
     public function run()
     {
         Eloquent::unguard();
-
         // Add calls to Seeders here
-
         $this->call('CityTableSeeder');
         $this->call('CategoryTableSeeder');
         $this->call('SalesChannelTableSeeder');
@@ -19,7 +17,6 @@ class DatabaseSeeder extends Seeder {
         $this->call('RolesTableSeeder');
         $this->call('PermissionsTableSeeder');
         $this->call('PendingReasonTableSeeder');
-
-        }
-
+        $this->call('RejectionReasonTableSeeder');
+    }
 }
