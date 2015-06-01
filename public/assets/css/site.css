@@ -5,7 +5,7 @@ body {
 	margin-top: 9%;
 	font-family: 'Lato', sans-serif;
 	margin: 0;
-    padding: 0;
+  padding: 0;
 }
 body #wrap .login_logo {
 	background: url("images/login-logo.png") no-repeat center top transparent;
@@ -49,15 +49,15 @@ body #wrap > .login_container form .form-group ::-webkit-input-placeholder {
 }
 
 body #wrap > .login_container form .form-group :-moz-placeholder { /* Firefox 18- */
-   color: #b0b0b0;  
+   color: #b0b0b0;
 }
 
 body #wrap > .login_container form .form-group ::-moz-placeholder {  /* Firefox 19+ */
-   color: #b0b0b0;  
+   color: #b0b0b0;
 }
 
-body #wrap > .login_container form .form-group :-ms-input-placeholder {  
-   color: #b0b0b0;  
+body #wrap > .login_container form .form-group :-ms-input-placeholder {
+   color: #b0b0b0;
 }
 body #wrap > .login_container form .form-group .checkbox label {
 	padding-left: 5px;
