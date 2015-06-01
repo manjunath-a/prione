@@ -24,3 +24,4 @@ Vagrantfile
 php_errors.log
 # Packages
 _ide_helper.php
+/nbproject/

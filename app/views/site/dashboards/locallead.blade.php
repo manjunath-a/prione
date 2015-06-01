@@ -46,12 +46,13 @@
     {{ Form::open(array('url' => 'dashboard/locallead', 'method' => 'post',
         'id'=> "sellerrequestExportForm")) }}
     {{ Form::close() }}
+
     <table id="locallead">
     </table>
     <div id="localleadPager">
     </div>
     <script type="text/javascript">
-
+        var lastsel2;
         jQuery("#locallead").jqGrid({
                     "datatype":"json",
                     "mtype":"POST",
@@ -62,67 +63,102 @@
                     "viewrecords":true,
                     "colModel":[
                         {"label":"Action",'name':'act','index':'act', 'width':75,'sortable':false},
-                        {"name":"id", "index":"id", "align":"center", "hidden":true},
-                        {"name":"transaction_id", "index":"transaction_id", "align":"center", 'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
-                        {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true,  'editable': true,"hidden":true},
+                        {"name":"id", "index":"id", "align":"center", "hidden": true},
+                        {"name":"transaction_id", "index":"transaction_id", "align":"center", formoptions:{rowpos:2, colpos:5},'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
+                        {'name':'ticket_id', 'index':'ticket_id','align':'center', 'key':true, 'editable': true,"hidden":true},
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id", 'hidden' : true},
                         {"label":"Seller Name","align":"center","index":"merchant_name","name":"merchant_name"},
                         {"label":"Requester Name","align":"center","index":"requester_name","name":"requester_name"},
                         {"label":"localteamlead",'width':75,"align":"center","index":"localteamlead_id","name":"localteamlead_id",
                             'editable': true, 'hidden': true, 'editrules': { 'edithidden': true }},
-                        {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true }},
+                        {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true },editoptions:{readonly:true}},
 
                         {"label":"Assigned Date","align":"center","index":"created_at","name":"created_at","width":160},
-                        {"label":"Priority","index":"priority","align":"center","width":90,"editable":true,
+                        {"label":"Priority","index":"priority","align":"center","width":90,formoptions:{rowpos:1, colpos:3},"editable":true,
                         "editoptions":{'value':'{{rtrim($priority, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
 
-                        {"label":"Group","index":"group_id","align":"center","width":110,"editable":true,
+                        {"label":"Group","index":"group_id","align":"center","width":110, formoptions:{rowpos:1, colpos:4},"editable":true,
                         "editoptions":{'value':'{{rtrim($group, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"group_id"},
 
-                        {"label":"Stage","index":"stage_id","align":"center","width":350,"editable":true,
+                        {"label":"Stage","index":"stage_id","align":"center","width":350, formoptions:{rowpos:2, colpos:3}, "editable":true,
                         "editoptions":{'value':'{{rtrim($stage, ";")}}'}, "edittype":"select","formatter":"select","editrules":{"required":true},"name":"stage_id"},
 
-                        {"label":"Status","index":"status_id","align":"center","width":110,"editable":true,
+                        {"label":"Status","index":"status_id","align":"center","width":110, formoptions:{rowpos:1, colpos:5},"editable":true,
                         "editoptions":{'value':'{{rtrim($status, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"status_id"},
 
-                        {"label":"Pending Reason","index":"pending_reason_id","align":"center","width":280,"editable":true,
-                            "editoptions":{'value':'{{rtrim($pending, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"pending_reason_id"},
+                        {"label":"Pending Reason","index":"pending_reason_id","align":"center","width":280, formoptions:{rowpos:2, colpos:4}, "editable":true,
+                            "editoptions":{'value':'{{rtrim($pending, ";")}}','multiple':'',size: '10',class:'multi_pending_reason'},"edittype":"select","formatter":"select","editrules":{"required":false},"name":"pending_reason_id"},
 
-                        {"label":"Photographer", "name":"photographer_id", "index":"photographer_id","align":"center","width":130,
+                        {"label":"Photographer", "name":"photographer_id", "index":"photographer_id","align":"center","width":130, formoptions:{rowpos:3, colpos:3},
                         "editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select", "id":"photographer_id"},
 
-                        {"label":"Photoshoot Date","index":"photoshoot_date","align":"center","width":150,"editable":true,"name":"photoshoot_date",'formatter': "date",
+                        {"label":"Photoshoot Date","index":"photoshoot_date","align":"center","width":150, formoptions:{rowpos:3, colpos:5},"editable":true,"name":"photoshoot_date",'formatter': "date",
                         "formatoptions": { "newformat": "Y-m-d"}, "editrules":{"date":true, "required":false}, 'editoptions': { 'dataInit' :
                         function (elem) {
                             jQuery(elem).datepicker({dateFormat:"yy-mm-dd"});}} },
 
-                        {"label":"Photoshoot Location","index":"photoshoot_location","align":"center","width":150,"editable":true,
+                        {"label":"Photoshoot Location","index":"photoshoot_location","align":"center","width":150, formoptions:{rowpos:3, colpos:4},"editable":true,
                         "editoptions":{'value':'{{rtrim($photoshootLocation, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"photoshoot_location"},
                         {"label":"S3 Path","align":"center","index":"s3_folder","name":"s3_folder","width":90},
-                        {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku","editable":true,"width":90},
-                        {"label":"No. of Images","align":"center", "editrules":{"required":false}, "index":"total_images", "name":"total_images","editable":true,"width":100},
+                        {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku", formoptions:{rowpos:4, colpos:3},"editable":true,"width":90},
+                        {"label":"No. of Images","align":"center", "editrules":{"required":false}, "index":"total_images", "name":"total_images", formoptions:{rowpos:4, colpos:4},"editable":true,"width":100},
 
-                        {"label":"Service Associate","index":"mif_id","align":"center","width":150,"editable":true,
+                        {"label":"Service Associate","index":"mif_id","align":"center","width":150,  formoptions:{rowpos:5, colpos:3},"editable":true,
                         "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"mif_id"},
 
-                        {"label":"No. of parent SKUs","index":"sa_sku","align":"center","width":130,"editable":true,"name":"sa_sku"},
-                        {"label":"No. of variations","index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation"},
-                        {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
+                        {"label":"No. of parent SKUs","index":"sa_sku","align":"center","width":130, formoptions:{rowpos:5, colpos:4},"editable":true,"name":"sa_sku"},
+                        {"label":"No. of variations","index":"sa_variation","align":"center","width":100, formoptions:{rowpos:5, colpos:5},"editable":true,"name":"sa_variation"},
+                        {"label":"Comments","align":"right","index":"comment","name":"comment", formoptions:{rowpos:6, colpos:3},"editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}},
+                        {"label":"Comment Link","align":"center","index":"commentLink","formatter":function() {return  "<a href='#' class='comment-popover' data-toggle='popover' data-placement='bottom' data-container='body'>comments</a>"},"formatoptions":{"target":"#"},"name":"commentLink"}
                     ],
+                    
+                    ondblClickRow: function(rowid, iRow, iCol, e){
+                    if(rowid && rowid!==lastsel2){
+                        $(this).restoreRow(lastsel2);
+                        lastsel2=rowid;
+                        }
+                        $(this).editRow(rowid,true,function(){
+                            $(".multi_pending_reason").multiselect();
+                        });
+                    },
+                    
+                    loadComplete:function() {
+                        $(this).find('tbody tr:odd td').css('background-color','#fbfbfb');
+                        $(this).find('tbody tr:even td').css('background-color','#f6ede4');
+                    },
+                    
                     jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
                     gridComplete: function(){
-                        var ids = jQuery("#locallead").jqGrid('getDataIDs');
+                        var ids = $(this).jqGrid('getDataIDs');
                         for(var i=0;i < ids.length;i++)
                         {
                             var cl = ids[i];
-                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#locallead').editRow('"+cl+"');\" />";
+                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#locallead').editGridRow('"+cl+"',{width:'1200',height:'auto',closeAfterEdit:true,afterShowForm:function($formid){ $('.multi_pending_reason').multiselect();},\n\
+                                    beforeShowForm: function(form) {\n\
+                                    formCustomization(form);\n\
+                                    }});\" />";
                             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
-                            jQuery("#locallead").jqGrid('setRowData',ids[i],{act:be+se+ce});
+                            $(this).jqGrid('setRowData',ids[i],{act:se+ce+be});
                         }
                     },
+                        
+                    onCellSelect: function(rowid,iCol,cellcontent,e) {
+                         console.log(rowid);
+                         var data = jQuery("#locallead").jqGrid('getRowData',rowid);
+                         console.log(data);
+                         var html1 = "<div>"+data.comment+"</div>";
+                         console.log(html1);
+                         var pop = 
+                         $('.comment-popover').popover({'html':true,'placement':'left','content': function()
+                            {
+                                console.log(html1);
+                                return html1;
+                            }}); 
+                        //$('.comment-popover').popover('show');
+                     },
                     "subGrid":true,
                     "subGridUrl":"seller",
                     "subGridModel" :[
@@ -155,12 +191,13 @@
                             ]
                         }
                     ],
-                    "pager":"localleadPager"
-                    //'cellEdit': true
                 }
         );
-       jQuery("#locallead").jqGrid('navGrid', '#localleadPager',
-        {add: false,edit:false,view:false,del:false,refresh: true,search:false});
+        function formCustomization(form)
+        {
+            var html = "<p style='color:red'>Wroking</p>";
+            console.log(form);
+        }
     </script>
     <!-- ./ content -->
     </div>
