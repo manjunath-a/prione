@@ -14,14 +14,9 @@ class GroupTableSeeder extends Seeder {
                 'sort'  => 1
             ),
             array(
-                'group_name'      => 'Editing',
+                'group_name'      => 'Central',
                 'status'      => 1,
                 'sort'  => 2
-            ),
-            array(
-                'group_name'      => 'Cataloging',
-                'status'      => 1,
-                'sort'  => 3
             ),
         );
 

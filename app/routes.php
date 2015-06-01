@@ -137,7 +137,7 @@ Route::group(array('prefix' => 'request', 'before' => 'auth'), function () {
     Route::post('update/', 'RequestController@updateRequest');
     Route::post('updatePhotographer/', 'RequestController@updatePhotographer');
     Route::post('updateMIF/', 'RequestController@updateMIF');
-    Route::post('updateEditingManager/', 'RequestController@updateEditingManager');
+    // Route::post('updateEditingManager/', 'RequestController@updateEditingManager');
     Route::post('updateEditingTeamLead/', 'RequestController@updateEditingTeamLead');
     // Route::post('request/updateEditor/', 'RequestController@updateEditor');
     Route::post('updateEditingComplete/', 'RequestController@updateEditingComplete');
@@ -154,10 +154,10 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function () {
     Route::get('locallead/', 'DashboardController@getLocalLead');
     Route::get('photographer/', 'DashboardController@getPhotographer');
     Route::get('mif/', 'DashboardController@getMIF');
-    Route::get('editingmanager/', 'DashboardController@getEditingManager');
+    // Route::get('editingmanager/', 'DashboardController@getEditingManager');
     Route::get('editingteamlead/', 'DashboardController@getEditingTeamLead');
     Route::get('editor/', 'DashboardController@getEditor');
-    Route::get('catalogmanager/', 'DashboardController@getCatalogManager');
+    // Route::get('catalogmanager/', 'DashboardController@getCatalogManager');
     Route::get('catalogteamlead/', 'DashboardController@getCatalogTeamLead');
     Route::get('cataloger/', 'DashboardController@getCataloger');
 
@@ -172,9 +172,9 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function () {
         GridEncoder::encodeRequestedData(new DashboardRepository(new Ticket()), Input::all());
     });
 
-    Route::post('editingmanager/', function () {
-        GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
-    });
+    // Route::post('editingmanager/', function () {
+    //     GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
+    // });
 
     Route::post('editingteamlead/', function () {
         GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
@@ -184,9 +184,9 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function () {
         GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
     });
 
-    Route::post('cataloguemanager/', function () {
-        GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
-    });
+    // Route::post('cataloguemanager/', function () {
+    //     GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
+    // });
 
     Route::post('catalogueteamlead/', function () {
         GridEncoder::encodeRequestedData(new CentralDashboardRepository(new Ticket()), Input::all());
