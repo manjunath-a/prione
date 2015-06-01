@@ -112,6 +112,14 @@ class TicketValidator  extends IlluminateValidator
     }
 
     /**
+     * Local To Central group Flow
+     */
+    public function  localToCentralFlow($data)
+    {
+
+    }
+
+    /**
      * editingTeamLeadFlow.
      */
     public function editingTeamLeadFlow($data)

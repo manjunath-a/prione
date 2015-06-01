@@ -114,17 +114,14 @@ class RequestController extends BaseController
             $ticketTransactionId = $ticketData['transaction_id'];
             $ticketId = $ticketData['ticket_id'];
             if ($ticketTransactionId) {
-                if ($ticketData['group_id'] == 2) {
-                    $this->validateTicket->localLeadToEditingManagerFlow($ticketData);
-                    $ticketTransaction = Ticket::assignEditingManager($ticketTransactionId,
-                        $ticketId, $ticketData);
-                } elseif ($ticketData['group_id'] == 1) {
+                if ($ticketData['group_id'] == 1) {
                     // Check for Local Lead update Process
-                      $this->validateTicket->localLeadFlow($ticketData);
+                    $this->validateTicket->localLeadFlow($ticketData);
                     $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
-                } elseif ($ticketData['group_id'] == 3) {
-                    $this->validateTicket->localLeadToCatalogingManagerFlow($ticketData);
-                    $ticketTransaction = Ticket::assignCatalogingManager($ticketTransactionId,
+                } elseif ($ticketData['group_id'] == 2) {
+
+                    $this->validateTicket->localToCentralFlow($ticketData);
+                    $ticketTransaction = Ticket::assignCentral($ticketTransactionId,
                         $ticketId, $ticketData);
                 }
             }

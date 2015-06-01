@@ -80,10 +80,6 @@ class DashboardController extends BaseController
             'serviceassociates', 'priority', 'photoshootLocation', 'group', 'stage', 'status', 'pending'));
     }
 
-//	public function locallead()
-//	{
-//      GridEncoder::encodeRequestedData(new LocalLeadRepository(new Ticket()), Input::all());
-//	}
 
     public function getPhotographer()
     {
@@ -109,8 +105,6 @@ class DashboardController extends BaseController
         $groupArray = Group::all();
         $group = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
-//        $rules  = arraY('only' =>array('(Local) Associates Assigned',
-//                     '(Local) Photoshoot Completed / Seller Images Provided'));
         $stageArray = Stage::all();
         $stageArray = $stageArray->sortBy('sort');
         $stage = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
@@ -167,43 +161,43 @@ class DashboardController extends BaseController
             'serviceassociates', 'priority', 'photoshootLocation', 'group', 'stage', 'status', 'pending'));
     }
 
-    public function getEditingManager()
-    {
-        list($user, $redirect) = User::checkAuthAndRedirect('user');
-        if ($redirect) {
-            return $redirect;
-        }
+    // public function getEditingManager()
+    // {
+    //     list($user, $redirect) = User::checkAuthAndRedirect('user');
+    //     if ($redirect) {
+    //         return $redirect;
+    //     }
 
-        $user              = new User();
-        $photoGrapherArray = $user->findUserByRoleName('Photographer');
-        $photographer      = $this->util->arrayToJQString($photoGrapherArray, 'username', 'id');
+    //     $user              = new User();
+    //     $photoGrapherArray = $user->findUserByRoleName('Photographer');
+    //     $photographer      = $this->util->arrayToJQString($photoGrapherArray, 'username', 'id');
 
-        $serviceAssociateArray = $user->findUserByRoleName('Services Associate');
-        $serviceassociates     = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
+    //     $serviceAssociateArray = $user->findUserByRoleName('Services Associate');
+    //     $serviceassociates     = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
-        $editingTeamLeadArray = $user->findUserByRoleName('Editing Team Lead');
-        $editingteamlead      = $this->util->arrayToJQString($editingTeamLeadArray, 'username', 'id');
+    //     $editingTeamLeadArray = $user->findUserByRoleName('Editing Team Lead');
+    //     $editingteamlead      = $this->util->arrayToJQString($editingTeamLeadArray, 'username', 'id');
 
-        $priorityArray = Priority::all();
-        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+    //     $priorityArray = Priority::all();
+    //     $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
 
-        $photoshootLocation = Config::get('ticket.photoshoot_location');
+    //     $photoshootLocation = Config::get('ticket.photoshoot_location');
 
-        $statusArray = Status::all();
-        $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
+    //     $statusArray = Status::all();
+    //     $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
 
-        $groupArray = Group::all();
-        $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
+    //     $groupArray = Group::all();
+    //     $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
-        $stageArray = Stage::all();
-        $stageArray = $stageArray->sortBy('sort');
-        $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
+    //     $stageArray = Stage::all();
+    //     $stageArray = $stageArray->sortBy('sort');
+    //     $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
-        // Show the page
-        return View::make('site/dashboards/editingmanager', compact('user', 'photographer',
-            'serviceassociates', 'editingteamlead', 'priority', 'photoshootLocation', 'group',
-            'stage', 'status'));
-    }
+    //     // Show the page
+    //     return View::make('site/dashboards/editingmanager', compact('user', 'photographer',
+    //         'serviceassociates', 'editingteamlead', 'priority', 'photoshootLocation', 'group',
+    //         'stage', 'status'));
+    // }
 
     public function getEditingTeamLead()
     {
@@ -295,49 +289,49 @@ class DashboardController extends BaseController
             'group', 'stage', 'status', 'pending'));
     }
 
-    public function getCatalogManager()
-    {
-        list($user, $redirect) = User::checkAuthAndRedirect('user');
-        if ($redirect) {
-            return $redirect;
-        }
+    // public function getCatalogManager()
+    // {
+    //     list($user, $redirect) = User::checkAuthAndRedirect('user');
+    //     if ($redirect) {
+    //         return $redirect;
+    //     }
 
-        $user              = new User();
-        $photoGrapherArray = $user->findUserByRoleName('Photographer');
-        $photographer      = $this->util->arrayToJQString($photoGrapherArray, 'username', 'id');
+    //     $user              = new User();
+    //     $photoGrapherArray = $user->findUserByRoleName('Photographer');
+    //     $photographer      = $this->util->arrayToJQString($photoGrapherArray, 'username', 'id');
 
-        $serviceAssociateArray = $user->findUserByRoleName('Services Associate');
-        $serviceassociates     = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
+    //     $serviceAssociateArray = $user->findUserByRoleName('Services Associate');
+    //     $serviceassociates     = $this->util->arrayToJQString($serviceAssociateArray, 'username', 'id');
 
-        $editingTeamLeadArray = $user->findUserByRoleName('Editing Team Lead');
-        $editingteamlead      = $this->util->arrayToJQString($editingTeamLeadArray, 'username', 'id');
+    //     $editingTeamLeadArray = $user->findUserByRoleName('Editing Team Lead');
+    //     $editingteamlead      = $this->util->arrayToJQString($editingTeamLeadArray, 'username', 'id');
 
-        $editorArray          = $user->findUserByRoleName('Editor');
-        $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
+    //     $editorArray          = $user->findUserByRoleName('Editor');
+    //     $editor               = $this->util->arrayToJQString($editorArray, 'username', 'id');
 
-        $catalogueTeamLeadArray = $user->findUserByRoleName('Catalog Team Lead');
-        $catalogueTeamLead     = $this->util->arrayToJQString($catalogueTeamLeadArray, 'username', 'id');
+    //     $catalogueTeamLeadArray = $user->findUserByRoleName('Catalog Team Lead');
+    //     $catalogueTeamLead     = $this->util->arrayToJQString($catalogueTeamLeadArray, 'username', 'id');
 
-        $priorityArray = Priority::all();
-        $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
+    //     $priorityArray = Priority::all();
+    //     $priority = $this->util->arrayToJQString($priorityArray, 'priority_name', 'id');
 
-        $photoshootLocation = Config::get('ticket.photoshoot_location');
+    //     $photoshootLocation = Config::get('ticket.photoshoot_location');
 
-        $statusArray = Status::all();
-        $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
+    //     $statusArray = Status::all();
+    //     $status      = $this->util->arrayToJQString($statusArray, 'status_name', 'id');
 
-        $groupArray = Group::all();
-        $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
+    //     $groupArray = Group::all();
+    //     $group      = $this->util->arrayToJQString($groupArray, 'group_name', 'id');
 
-        $stageArray = Stage::all();
-        $stageArray = $stageArray->sortBy('sort');
-        $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
+    //     $stageArray = Stage::all();
+    //     $stageArray = $stageArray->sortBy('sort');
+    //     $stage      = $this->util->arrayToJQString($stageArray, 'stage_name', 'id');
 
-        // Show the page
-        return View::make('site/dashboards/catalogmanager', compact('user', 'photographer',
-            'serviceassociates', 'editingteamlead', 'editor', 'catalogueTeamLead', 'priority', 'photoshootLocation',
-             'group', 'stage', 'status'));
-    }
+    //     // Show the page
+    //     return View::make('site/dashboards/catalogmanager', compact('user', 'photographer',
+    //         'serviceassociates', 'editingteamlead', 'editor', 'catalogueTeamLead', 'priority', 'photoshootLocation',
+    //          'group', 'stage', 'status'));
+    // }
 
     public function getCatalogTeamLead()
     {
