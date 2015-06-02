@@ -79,7 +79,7 @@ class Ticket extends Eloquent
         $photoStageId = 3; // (Local) Photoshoot Completed
 
         if ($data['pending_reason_id'] != 0) {
-            $photoStageId = 2; // (Local) Associates Assigned
+            $photoStageId = 1; // (Local) Associates Not Assigned
             $photoRoleId =  9 ; //Auth::user()->roles; // Photogrpaher Role
             $ticketData['rejected_role'] = $photoRoleId;
         }
