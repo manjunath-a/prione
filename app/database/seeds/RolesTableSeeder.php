@@ -10,6 +10,10 @@ class RolesTableSeeder extends Seeder {
         $adminRole->name = 'admin';
         $adminRole->save();
 
+        $CatalogueManagerRole = new Role;
+        $CatalogueManagerRole->name = 'Catalog Manager';
+        $CatalogueManagerRole->save();
+
         $CatalogueTeamLeadRole = new Role;
         $CatalogueTeamLeadRole->name = 'Catalog Team Lead';
         $CatalogueTeamLeadRole->save();
@@ -17,6 +21,10 @@ class RolesTableSeeder extends Seeder {
         $Cataloguer = new Role;
         $Cataloguer->name = 'Cataloger';
         $Cataloguer->save();
+
+        $CatalogueManagerRole = new Role;
+        $CatalogueManagerRole->name = 'Editing Manager';
+        $CatalogueManagerRole->save();
 
         $EditingTeamLeadRole = new Role;
         $EditingTeamLeadRole->name = 'Editing Team Lead';
