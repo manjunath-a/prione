@@ -90,20 +90,20 @@
                         {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': true },editoptions:{readonly:true},formoptions:{rowpos:3, colpos:1}},
 
                         {"label":"Photographer", "name":"photographer_id", "index":"photographer_id", "align":"center","width":130, formoptions:{rowpos:1, colpos:3},
-                        "editable":true,hidden:true, "editoptions":{'value':'{{rtrim($photographer, ";")}}'},"edittype":"select","formatter":"select", "id":"photographer_id","editrules":{"edithidden":true}},
+                        "editable":true,hidden:true, "editoptions":{'value':'{{rtrim($photographer, ";")}}',class:'dropdown-content'},"edittype":"select","formatter":"select", "id":"photographer_id","editrules":{"edithidden":true}},
                         {"label":"Photoshoot Date","index":"photoshoot_date", 'hidden' : true, "align":"center","width":150, formoptions:{rowpos:1, colpos:5},"editable":true,"name":"photoshoot_date",'formatter': "date",
                         "formatoptions": { "newformat": "Y-m-d"}, "editrules":{"date":true, "required":false, "edithidden":false}, 'editoptions': { 'dataInit' :
                         function (elem) {
                             jQuery(elem).datepicker({dateFormat:"yy-mm-dd"});}} },
 
                         {"label":"Photoshoot Location","index":"photoshoot_location", 'hidden' : true, "align":"center","width":150, 'formoptions':{'rowpos':1, 'colpos':4},"editable":true,
-                        "editoptions":{'value':'{{rtrim($photoshootLocation, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"photoshoot_location"},
+                        "editoptions":{'value':'{{rtrim($photoshootLocation, ";")}}',class:'dropdown-content'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"photoshoot_location"},
                         {"label":"S3 Path","align":"center","index":"s3_folder","name":"s3_folder",  'hidden' : true, "width":90},
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku",  'formoptions':{rowpos:3, colpos:3},"editable":true, 'hidden' : true, "editrules":{"edithidden":true}, "width":90},
                         {"label":"No. of Images","align":"center",  'hidden' : true,  "editrules":{"required":false}, "index":"total_images", "name":"total_images", formoptions:{rowpos:3, colpos:4},"editable":true,"width":100},
 
                         {"label":"Service Associate","index":"mif_id", 'hidden' : true, "align":"center","width":150,  formoptions:{rowpos:6, colpos:3},"editable":true,
-                        "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true, "edithidden":true},"name":"mif_id"},
+                        "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}',class:'dropdown-content'},"edittype":"select","formatter":"select","editrules":{"required":true, "edithidden":true},"name":"mif_id"},
 
                         {"label":"No. of parent SKUs","index":"sa_sku", "align":"center","width":130, formoptions:{rowpos:6, colpos:4},"editable":true, 'hidden' : true, "name":"sa_sku"},
                         {"label":"No. of variations","index":"sa_variation", 'hidden' : true, "align":"center","width":100, formoptions:{rowpos:6, colpos:5},"editable":true, "editrules":{"edithidden":true},"name":"sa_variation"},
@@ -131,13 +131,21 @@
                         for(var i=0;i < ids.length;i++)
                         {
                             var cl = ids[i];
-                            be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#locallead').editGridRow('"+cl+"',{width:'1200',closeAfterEdit:true,\n\
-                                   beforeShowForm : function(formid) {$('#editmodlocallead').css('height','186')},\n\
+                            be = "<input style='height:22px;width:20px;' class='edit-button' type='button' value='E' onclick=\"jQuery('#locallead').editGridRow('"+cl+"',{width:'1287',closeAfterEdit:true,\n\
+                                   beforeShowForm : function(formid) {$('#editmodlocallead').css('height','370');$('.dropdown-content').parent().addClass('dropdown-parent')},\n\
                                     });\" />";
                             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
                             $(this).jqGrid('setRowData',ids[i],{act:se+ce+be});
                         }
+                        /*$('.edit-button').on('click', function() {
+                         var rowdata = jQuery("#locallead").jqGrid('getGridParam','selrow');
+                         var rowObj =  jQuery("#locallead").jqGrid('getRowData',rowdata);
+                         $("#localleadPager").dialog('open');
+                         var data = $("#locallead").jqGrid('getRowData',rowdata);
+                        alert(data);
+                        console.log(rowObj);
+                        });*/
                     },
 
                     onCellSelect: function(rowid,iCol,cellcontent,e) {
@@ -182,7 +190,6 @@
                     // ],
                 }
         );
-        
         
     </script>
     <!-- ./ content -->
