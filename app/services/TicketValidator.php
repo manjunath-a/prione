@@ -10,9 +10,11 @@ class TicketValidator  extends IlluminateValidator
                           'total_sku' => 'Integer',
                           'sa_sku' => 'Integer',
                           'sa_variation' => 'Integer',
+                          'comment' => 'required',
                         ];
 
     public $_custom_messages = array(
+        'status_required' => 'Status is Required!',
         'service_associate_required' => 'Service Associates is required .',
         'service_associate_already_assigned' => 'Service Associates already assgined.',
         'photographer_required' => 'Photographer is required.',
@@ -49,40 +51,43 @@ class TicketValidator  extends IlluminateValidator
     {
         $ticketTransaction = \TicketTransaction::find($data['transaction_id'])->toArray();
 
+        if(!$data['status_id']) {
+                throw new \Exception($this->_custom_messages['status_required']);
+        }
+        if (!$data['stage_id']) {
+            throw new \Exception($this->_custom_messages['stage_required']);
+        }
+
         if (!$data['pending_reason_id']) {
             if ($data['mif_id'] == 0) {
                 throw new \Exception($this->_custom_messages['service_associate_required']);
             }
-
-            if ($data['stage_id'] == 9 && ($data['photographer_id'] or $data['photoshoot_location']  or  $data['photoshoot_date'])) {
-                throw new \Exception($this->_custom_messages['photoshoot_not_required']);
-            }
+            // if ($data['stage_id'] == 9 && ($data['photographer_id'] or $data['photoshoot_location']  or  $data['photoshoot_date'])) {
+            //     throw new \Exception($this->_custom_messages['photoshoot_not_required']);
+            // }
 
             // Check the stage not seller provided image  and either
             //  all three data shoud be empty or not empty (photogrpaher , location and date)
-            if($data['stage_id'] != 9 &&
-                !(($data['photographer_id'] && $data['photoshoot_location']  &&  $data['photoshoot_date'])
+            if(!(($data['photographer_id'] && $data['photoshoot_location']  &&  $data['photoshoot_date'])
                                                             or
                  (!$data['photographer_id'] && !$data['photoshoot_location']  &&  !$data['photoshoot_date']))) {
                 throw new \Exception($this->_custom_messages['photoshoot_data_required']);
             }
-            if ($ticketTransaction['mif_id'] != $data['mif_id'] && $data['stage_id'] == '4') {
+            if ($ticketTransaction['mif_id'] != $data['mif_id'] && $data['stage_id'] == \Config::get('ticket.stage_mif_completed')) {
                 throw new \Exception($this->_custom_messages['service_associate_already_assigned']);
             }
             $this->checkValidator($data, $this->commonRules);
 
         }
         // While pending reason ticket should not move the any queue
-        if ($data['stage_id'] != 1 && $data['pending_reason_id']) {
+        if ($data['stage_id'] != \Config::get('ticket.stage_associateNotAsigned') && $data['pending_reason_id']) {
             throw new \Exception($this->_custom_messages['pending_reason_cant_move']);
         }
-        // Not authorize to move cataloguing group
-        if ($data['group_id'] != 2 and $data['group_id'] != 1) {
+        // Not authorize to move cebtral group
+        if ($data['group_id'] != \Config::get('ticket.stage_associateAsigned') and $data['group_id'] != 1) {
             throw new \Exception($this->_custom_messages['not_authorsied_catalog_move']);
         }
-        if (!$data['stage_id']) {
-            throw new \Exception($this->_custom_messages['stage_required']);
-        }
+
     }
 
     /**
@@ -93,7 +98,8 @@ class TicketValidator  extends IlluminateValidator
         $rules = [
                 'total_images' => 'required|Integer',
                 'total_sku' => 'required|Integer',
-                  ];
+                'comment' => 'required'
+                ];
         if (!$data['pending_reason_id']) {
             $this->checkValidator($data, $rules);
         }
@@ -104,8 +110,9 @@ class TicketValidator  extends IlluminateValidator
      */
     public function servicesAssociateFlow($data)
     {
+        $ticketTransaction = \TicketTransaction::find($data['transaction_id'])->toArray();
 
-        if (($data['stage_id'] != 3 and $data['stage_id'] != 9)) {
+        if (($ticketTransaction['photographer_id'] and $data['stage_id'] != \Config::get('ticket.stage_photoshoot_completed'))) {
             throw new \Exception($this->_custom_messages['photoshoot_required']);
         }
         $this->checkValidator($data, $this->commonRules);
