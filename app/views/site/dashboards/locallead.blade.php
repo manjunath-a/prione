@@ -122,6 +122,7 @@
                     loadComplete:function() {
                         $(this).find('tbody tr:odd td').css('background-color','#fbfbfb');
                         $(this).find('tbody tr:even td').css('background-color','#f6ede4');
+
                     },
 
                     jsonReader: { repeatitems : true, id: 'id' },
@@ -132,7 +133,7 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' class='edit-button' type='button' value='E' onclick=\"jQuery('#locallead').editGridRow('"+cl+"',{width:'1287',closeAfterEdit:true,\n\
-                                   beforeShowForm : function(formid) {$('#editmodlocallead').css('height','370');$('.dropdown-content').parent().addClass('dropdown-parent')},\n\
+                                   beforeShowForm : function(formid) {$('#editmodlocallead').css('height','370');$('.dropdown-content').parent().addClass('dropdown-parent');customEditForm(formid);},\n\
                                     });\" />";
                             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
@@ -191,6 +192,10 @@
                 }
         );
         
+        function customEditForm(formId) {
+            formId.html("<div>Hi</div>");
+            console.log(formId);
+        }
     </script>
     <!-- ./ content -->
     </div>
