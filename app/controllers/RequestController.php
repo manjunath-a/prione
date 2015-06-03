@@ -116,6 +116,7 @@ class RequestController extends BaseController
             if ($ticketTransactionId) {
                 if ($ticketData['group_id'] == 1) {
                     // Check for Local Lead update Process
+
                     $this->validateTicket->localLeadFlow($ticketData);
                     $ticketTransaction = Ticket::assignTicket($ticketTransactionId, $ticketId, $ticketData);
                 } elseif ($ticketData['group_id'] == 2) {

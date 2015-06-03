@@ -46,12 +46,12 @@ class Ticket extends Eloquent
             if (isset($ticketData['photographer_id']) && $data['photographer_id']) {
                 $ticketData['assigned_to']        = $ticketData['photographer_id'];
                 // Checks associate assigned stage else dont make entry in db
-                if ($ticketData['stage_id'] == 2) {
+                if ($ticketData['stage_id'] == \Config::get('ticket.stage_associateAsigned')) {
                     $photographerTransaction = TicketTransaction::updateTicket($ticketData);
                 }
             }
             // Assgining to Service Assiocate
-            if ($ticketData['stage_id'] != 4 && $ticketData['mif_id']) {
+            if ($ticketData['stage_id'] != \Config::get('ticket.stage_mif_completed') && $ticketData['mif_id']) {
                 $ticketData['assigned_to']      = $ticketData['mif_id'];
                 $serviceAssociateTransaction    = TicketTransaction::updateTicket($ticketData);
             }
@@ -62,6 +62,7 @@ class Ticket extends Eloquent
 
         return $leadTransaction->id;
     }
+
     /**
      * @param int   $ticketTransactionId
      * @param int   $ticketId
@@ -76,12 +77,11 @@ class Ticket extends Eloquent
         $ticketTransaction = TicketTransaction::where('ticket_id', '=', $ticketId)
                                         ->where('active', '=', 1)
                                         ->update(array('active' => 0));
-        $photoStageId = 3; // (Local) Photoshoot Completed
+        $photoStageId = Config::get('ticket.stage_photoshoot_completed'); // (Local) Photoshoot Completed
 
         if ($data['pending_reason_id'] != 0) {
-            $photoStageId = 1; // (Local) Associates Not Assigned
-            $photoRoleId =  9 ; //Auth::user()->roles; // Photogrpaher Role
-            $ticketData['rejected_role'] = $photoRoleId;
+            $photoStageId = Config::get('ticket.stage_associateNotAsigned'); // (Local) Associates Not Assigned
+            $ticketData['rejected_role'] = Config::get('ticket.role_photogrpaher') ; // Photogrpaher Role
         }
         $ticketData = self::TicketData($photoStageId, $data);
 
@@ -100,7 +100,6 @@ class Ticket extends Eloquent
             $ticketData['active']      = 0;
             $photographerTransaction   = TicketTransaction::updateTicket($ticketData);
         }
-
         return $leadTransaction->id;
     }
 
