@@ -138,15 +138,28 @@
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
                             $(this).jqGrid('setRowData',ids[i],{act:se+ce+be});
                         }
+                        $('.comment-popover').popover({
+                            //trigger: 'click',
+                            html: true,
+                            content: function () {
+                            var rowId, rowData, popOverHtml;
+                            rowId = jQuery("#locallead").jqGrid('getGridParam','selrow');
+                            rowData = jQuery("#locallead").jqGrid('getRowData',rowId);
+                            $.ajax({
+                              type:"POST",
+                              url:"comments",
+                              data: rowData,
+                              dataType: "json",
+                              success: function(data) {
+                                $.each(data.allComment, function(index,value){
+                                    
+                                });
+                              }
+                            });
+                            }
+                        });
                     },
 
-                    onCellSelect: function(rowid,iCol,cellcontent,e) {
-                         
-                         var data = jQuery("#locallead").jqGrid('getRowData',rowid);
-                         var html1 = "<div>"+data.comment+"</div>";
-                         $('.comment-popover').popover('destroy');
-                         $('.comment-popover').popover({'html':true,'content': html1});
-                     },
                          
                     // "subGrid":true,
                     // "subGridUrl":"seller",
