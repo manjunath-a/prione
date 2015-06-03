@@ -89,14 +89,14 @@
                             'editable': true, 'hidden': true},
                         {"index":"image_available","name":"image_available", key:true, 'hidden' : true, 'editable': true, 'editrules': { 'edithidden': false }},
 
-                        {"label":"Photographer", "name":"photographer_id", "index":"photographer_id", "align":"center","width":130, formoptions:{rowpos:1, colpos:3},
+                        {"label":"Photographer", "name":"photographer_id", "index":"photographer_id", "align":"center","width":130, formoptions:{rowpos:4, colpos:3},
                         "editable":true,hidden:true, "editoptions":{'value':'{{rtrim($photographer, ";")}}',class:'dropdown-content'},"edittype":"select","formatter":"select", "id":"photographer_id","editrules":{"edithidden":true}},
-                        {"label":"Photoshoot Date","index":"photoshoot_date", 'hidden' : true, "align":"center","width":150, formoptions:{rowpos:1, colpos:5},"editable":true,"name":"photoshoot_date",'formatter': "date",
+                        {"label":"Photoshoot Date","index":"photoshoot_date", 'hidden' : true, "align":"center","width":150, formoptions:{rowpos:4, colpos:5},"editable":true,"name":"photoshoot_date",'formatter': "date",
                         "formatoptions": { "newformat": "Y-m-d"}, "editrules":{"date":true, "required":false, "edithidden":false}, 'editoptions': { 'dataInit' :
                         function (elem) {
                             jQuery(elem).datepicker({dateFormat:"yy-mm-dd"});}} },
 
-                        {"label":"Photoshoot Location","index":"photoshoot_location", 'hidden' : true, "align":"center","width":150, 'formoptions':{'rowpos':1, 'colpos':4},"editable":true,
+                        {"label":"Photoshoot Location","index":"photoshoot_location", 'hidden' : true, "align":"center","width":150, 'formoptions':{'rowpos':4, 'colpos':4},"editable":true,
                         "editoptions":{'value':'{{rtrim($photoshootLocation, ";")}}',class:'dropdown-content'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"photoshoot_location"},
                         {"label":"S3 Path","align":"center","index":"s3_folder","name":"s3_folder",  'hidden' : true, "width":90},
                         {"label":"No. of SKUs","align":"center","index":"total_sku","name":"total_sku",  'formoptions':{rowpos:5, colpos:3},"editable":true, 'hidden' : true, "editrules":{"edithidden":true}, "width":90},
@@ -139,23 +139,28 @@
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
                             $(this).jqGrid('setRowData',ids[i],{act:se+ce+be});
                         }
-                        /*$('.edit-button').on('click', function() {
-                         var rowdata = jQuery("#locallead").jqGrid('getGridParam','selrow');
-                         var rowObj =  jQuery("#locallead").jqGrid('getRowData',rowdata);
-                         $("#localleadPager").dialog('open');
-                         var data = $("#locallead").jqGrid('getRowData',rowdata);
-                        alert(data);
-                        console.log(rowObj);
-                        });*/
+                        $('.comment-popover').popover({
+                            //trigger: 'click',
+                            html: true,
+                            content: function () {
+                            var rowId, rowData, popOverHtml;
+                            rowId = jQuery("#locallead").jqGrid('getGridParam','selrow');
+                            rowData = jQuery("#locallead").jqGrid('getRowData',rowId);
+                            $.ajax({
+                              type:"POST",
+                              url:"comments",
+                              data: rowData,
+                              dataType: "json",
+                              success: function(data) {
+                                $.each(data.allComment, function(index,value){
+                                    
+                                });
+                              }
+                            });
+                            }
+                        });
                     },
 
-                    onCellSelect: function(rowid,iCol,cellcontent,e) {
-                         
-                         var data = jQuery("#locallead").jqGrid('getRowData',rowid);
-                         var html1 = "<div>"+data.comment+"</div>";
-                         $('.comment-popover').popover('destroy');
-                         $('.comment-popover').popover({'html':true,'content': html1});
-                     },
                          
                     // "subGrid":true,
                     // "subGridUrl":"seller",

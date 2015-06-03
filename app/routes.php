@@ -202,6 +202,7 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function () {
 
 });
 
+Route::post('dashboard/comments',['as' => 'all.comment','uses' => 'DashboardController@getAllComments']);
 
 App::missing(function ($e) {
     $url = Request::fullUrl();
