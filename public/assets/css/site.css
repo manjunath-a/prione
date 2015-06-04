@@ -177,14 +177,17 @@ body #wrap .container .ui-widget {
 }
 .container .ui-jqgrid.ui-widget.ui-widget-content{
 	border-radius: 0;
-	box-shadow: 0 0 3px #ccc;
+	/* box-shadow: 0 0 3px #ccc; */
     margin: 15px 30px;
-    width: 96% !important;
-    overflow: auto;
+    width: 95.8% !important;
+    overflow: hidden;
 }
 .container .ui-jqgrid .ui-jqgrid-htable th {
     height: 38px;
 }
+/* .container .ui-jqgrid .ui-jqgrid-bdiv {
+	height: auto !important;
+} */
 .container .ui-widget-content:nth-child(even) {
 	background: #FBFBFB;
 }
@@ -226,6 +229,12 @@ body #wrap .container .ui-widget {
 
 /************* End of Popup Styles *************/
 
+.ui-jqdialog-content, .ui-jqdialog .ui-jqdialog-content {
+    padding: 25px;
+}
+.ui-jqdialog-content form.FormGrid {
+	overflow: hidden !important;
+}
 body .ui-widget-content.ui-jqdialog {
 	border: 0 none;
     border-radius: 0;
@@ -248,20 +257,42 @@ body .ui-widget-content.ui-jqdialog {
 }
 .ui-jqdialog .DataTD {
 	position: relative;
-	display: table-cell;
+	width: 200px;
 }
-.ui-jqdialog .CaptionTD {
-	font-size: 12px;
-	line-height: 18px;
+.ui-jqdialog table tbody tr > div {
+	height: 0;
+    position: relative;
+    width: 0;
+}
+.ui-jqdialog table tbody tr > div > div {
+	font-size: 11px;
+	line-height: 12px;
 	color: #6d6d6d;
 	text-transform: capitalize;
-	display: table-cell;
+	font-weight: normal;
+	margin-bottom: 0;
+	left: 10px;
+    position: absolute;
+    top: 0;
+    width: 300px;
 }
 .ui-jqdialog .DataTD input[type="text"], .ui-jqdialog .DataTD select, .ui-jqdialog .DataTD textarea {
 	border: 2px solid #e8e8e8;
     padding: 7px;
     color: #6d6d6d;
-    width: 200px;
+    width: 100%;
+    margin-bottom: 12px;
+    resize: none;
+}
+.ui-jqdialog-content.ui-widget-content .EditTable {
+	float: right;
+    width: 50%;
+}
+.ui-jqdialog-content.ui-widget-content .EditTable tr {
+	margin-bottom: 5px;
+}
+.ui-jqdialog-content.ui-widget-content .EditTable tr td hr {
+	display: none;
 }
 .ui-jqdialog-content.ui-widget-content .EditTable .fm-button {
     background: #e09137;
@@ -286,7 +317,17 @@ body .ui-widget-content.ui-jqdialog {
     pointer-events: none;
     position: absolute;
     right: 4px;
-    bottom: 4px;
+    bottom: 16px;
+}
+.ui-jqdialog-content #Act_Buttons {
+	margin-top: 5px;
+}
+.ui-jqdialog-content #Act_Buttons td.navButton {
+	display: none;
+}
+.ui-jqdialog-content #Act_Buttons td.EditButton {
+	text-align: left;
+	padding-left: 10px;
 }
 
 /************* End of Dashboard Styles *************/
