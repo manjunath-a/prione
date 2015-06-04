@@ -108,16 +108,11 @@
 
                         {"label":"No. of parent SKUs","index":"sa_sku", "align":"center","width":130, formoptions:{rowpos:6, colpos:4},"editable":true, 'hidden' : true, "name":"sa_sku"},
                         {"label":"No. of variations","index":"sa_variation", 'hidden' : true, "align":"center","width":100, formoptions:{rowpos:6, colpos:5},"editable":true, "editrules":{"edithidden":true},"name":"sa_variation"},
-<<<<<<< HEAD
                         {"label":"Comments","align":"right","index":"comment","name":"comment", 'hidden' : true, 'formoptions':{rowpos:7, colpos:3},"editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30",class:'comments-content'},"editrules":{"edithidden":true}},
-                        {"label":"Comments","align":"center","index":"commentLink","formatter":function() {return  "<a href='#' class='comment-popover' data-toggle='popover' data-placement='bottom' data-container='body' >comments</a>"},"formatoptions":{"target":"#","rowpos":8, "colpos":3},"name":"commentLink"}
-=======
-                        {"label":"Comments","align":"right","index":"comment","name":"comment", 'hidden' : true, 'formoptions':{rowpos:7, colpos:3},"editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"},"editrules":{"edithidden":true}},
                         {"label":"Comments","align":"center","index":"commentLink",
                             "formatter":function() {
                             return  "<a href='javascript:;' class='comment-popover' data-toggle='popover' data-placement='left' data-container='body' >comments</a>"},
                             "formatoptions":{"target":"#","rowpos":8, "colpos":3}, "name":"commentLink"}
->>>>>>> development
                     ],
 
                     ondblClickRow: function(rowid, iRow, iCol, e){
@@ -156,40 +151,14 @@
                             var rowId, rowData, popOverHtml;
                             rowId = jQuery("#locallead").jqGrid('getGridParam','selrow');
                             rowData = jQuery("#locallead").jqGrid('getRowData',rowId);
-<<<<<<< HEAD
-                            $.ajax({
-                              type:"POST",
-                              url:"comments",
-                              data: rowData,
-                              dataType: "json",
-                              success: function(data) {
-                                $.each(data.allComment, function(index,value){
-                                    console.log(data);
-                                });
-                              }
-                            });
-                            }
-=======
                             var divId =  "tmp-id-" + $.now();
                             return getAllComment(rowData, divId);
                         }
->>>>>>> development
                         });
                     },
 
                 }
         );
-<<<<<<< HEAD
-        
-        function customEditForm(formId) {
-            /*console.log(formId);
-            var complete_html="",splitted_html;
-            $.each( formId[0], function( key, value ) {
-                splitted_html = "<div class='col-md-4'><label class='col-md-12 CaptionTD'>"+ value.id +"</label><div class='col-md-12 DataTD'>" + value.outerHTML+"</div></div>";
-                complete_html=complete_html+splitted_html;
-            });
-            formId.html(complete_html);*/
-=======
         function getAllComment(rowData, divId) {
             $.ajax({
                         type:"POST",
@@ -208,7 +177,6 @@
                         }
                       });
             return '<div id="'+ divId +'">Loading...</div>';
->>>>>>> development
         }
     </script>
     <!-- ./ content -->
