@@ -51,7 +51,7 @@
     <div id="localleadPager">
     </div>
     <script type="text/javascript">
-        var lastsel2;
+        var lastsel2, commentHtml;
         jQuery("#locallead").jqGrid({
                     "datatype":"json",
                     "mtype":"POST",
@@ -108,7 +108,7 @@
                         {"label":"No. of parent SKUs","index":"sa_sku", "align":"center","width":130, formoptions:{rowpos:6, colpos:4},"editable":true, 'hidden' : true, "name":"sa_sku"},
                         {"label":"No. of variations","index":"sa_variation", 'hidden' : true, "align":"center","width":100, formoptions:{rowpos:6, colpos:5},"editable":true, "editrules":{"edithidden":true},"name":"sa_variation"},
                         {"label":"Comments","align":"right","index":"comment","name":"comment", 'hidden' : true, 'formoptions':{rowpos:7, colpos:3},"editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"},"editrules":{"edithidden":true}},
-                        {"label":"Comments","align":"center","index":"commentLink","formatter":function() {return  "<a href='#' class='comment-popover' data-toggle='popover' data-placement='bottom' data-container='body' >comments</a>"},"formatoptions":{"target":"#","rowpos":8, "colpos":3},"name":"commentLink"}
+                        {"label":"Comments","align":"center","index":"commentLink","formatter":function() {return  "<a href='#' class='comment-popover' data-toggle='popover' data-placement='left' data-container='body' >comments</a>"},"formatoptions":{"target":"#","rowpos":8, "colpos":3},"name":"commentLink"}
                     ],
 
                     ondblClickRow: function(rowid, iRow, iCol, e){
@@ -145,18 +145,9 @@
                             var rowId, rowData, popOverHtml;
                             rowId = jQuery("#locallead").jqGrid('getGridParam','selrow');
                             rowData = jQuery("#locallead").jqGrid('getRowData',rowId);
-                            $.ajax({
-                              type:"POST",
-                              url:"comments",
-                              data: rowData,
-                              dataType: "json",
-                              success: function(data) {
-                                $.each(data.allComment, function(index,value){
-                                    
-                                });
-                              }
-                            });
-                            }
+                            var divId =  "tmp-id-" + $.now();
+                            return getAllComment(rowData, divId);
+                        }
                         });
                     },
 
@@ -195,7 +186,24 @@
                     // ],
                 }
         );
-        
+        function getAllComment(rowData, divId) {
+            $.ajax({
+                        type:"POST",
+                        url:"comments",
+                        data: rowData,
+                        dataType: "json",
+                        success: function(data) {
+                          var commentHtml = '<div>';
+                          $.each(data.allComment, function(index, row){
+                              commentHtml += '<div><div>' + row.name + '</div>';
+                              commentHtml += '<div>' + row.created_at + '</div>';
+                              commentHtml += '<div>' + row.comment + '</div></div></hr>';
+                          });
+                          $('#'+divId).html(commentHtml);
+                        }
+                      });
+            return '<div id="'+ divId +'">Loading...</div>';
+        }
     </script>
     <!-- ./ content -->
     </div>
