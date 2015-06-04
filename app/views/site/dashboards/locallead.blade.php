@@ -71,12 +71,6 @@
 
                         {"label":"Seller Name", "index":"merchant_name","name":"merchant_name","width":130, "align":"center",formoptions:{rowpos:8, colpos:1},
                         edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
-                        {"label":"POC Email", "index":"poc_email","name":"poc_email","width":130, "align":"center",formoptions:{rowpos:8, colpos:2},
-                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
-                        {"label":"POC Name", "index":"poc_name","name":"poc_name","width":130, "align":"center",formoptions:{rowpos:8, colpos:3},
-                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
-
-
 
                         {"label":"Seller Ph#", "index":"merchant_phone","name":"merchant_phone","width":90, "align":"center"},
                         {"label":"Status","index":"status_id","align":"center","width":80, formoptions:{rowpos:1, colpos:5},"editable":true,
@@ -120,7 +114,47 @@
                         {"label":"Comments","align":"center","index":"commentLink",
                             "formatter":function() {
                             return  "<a href='javascript:;' class='comment-popover' data-toggle='popover' data-placement='left' data-container='body' >comments</a>"},
-                            "formatoptions":{"target":"#","rowpos":8, "colpos":3}, "name":"commentLink"}
+                            "formatoptions":{"target":"#","rowpos":8, "colpos":3}, "name":"commentLink"},
+                        {"label":"Merchant Name :", "index":"merchant_name","name":"merchant_name","width":130, "align":"center",formoptions:{rowpos:1, colpos:1},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"POC Name :", "index":"poc_name","name":"poc_name","width":130, "align":"center",formoptions:{rowpos:1, colpos:2},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Merchant Email :", "index":"merchant_email","name":"merchant_email","width":130, "align":"center",formoptions:{rowpos:3, colpos:1},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"POC Email :", "index":"poc_email","name":"poc_email","width":130, "align":"center",formoptions:{rowpos:3, colpos:2},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"City :", "index":"city","name":"city","width":130, "align":"center",formoptions:{rowpos:4, colpos:1},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"POC Contact# :", "index":"merchant_phone","name":"merchant_phone","width":130, "align":"center",formoptions:{rowpos:4, colpos:2},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Requester Name :", "index":"requester_name","name":"requester_name","width":130, "align":"center",formoptions:{rowpos:6, colpos:1},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Category :", "index":"category_name","name":"category_name","width":130, "align":"center",formoptions:{rowpos:6, colpos:2},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Requester email :", "index":"email","name":"email","width":130, "align":"center",formoptions:{rowpos:7, colpos:1},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Requester Contact# :", "index":"requester_no","name":"requester_no","width":130, "align":"center",formoptions:{rowpos:8, colpos:1},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Images avialable :", "index":"image_avail","name":"image_avail","width":130, "align":"center",formoptions:{rowpos:8, colpos:2},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"ETL Name :", "index":"etl_name","name":"etl_name","width":130, "align":"center",formoptions:{rowpos:11, colpos:1},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"CTL Name :", "index":"ctl_name","name":"ctl_name","width":130, "align":"center",formoptions:{rowpos:11, colpos:2},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Editor Name :", "index":"editor_name","name":"editor_name","width":130, "align":"center",formoptions:{rowpos:12, colpos:1},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Cataloger Name :", "index":"cataloger_name","name":"cataloger_name","width":130, "align":"center",formoptions:{rowpos:12, colpos:2},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Assigned on:", "index":"etl_assigned_on","name":"etl_assigned_on","width":130, "align":"center",formoptions:{rowpos:13, colpos:1},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Assigned on:", "index":"ctl_assigned_on","name":"ctl_assigned_on","width":130, "align":"center",formoptions:{rowpos:13, colpos:2},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Reason for rejection:", "index":"etl_rejection_reason","name":"etl_rejection_reason","width":130, "align":"center",formoptions:{rowpos:14, colpos:1},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Reason for rejection:", "index":"ctl_rejection_reason","name":"ctl_rejection_reason","width":130, "align":"center",formoptions:{rowpos:14, colpos:2},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"Sales channel:", "index":"sale_channel","name":"sale_channel","width":130, "align":"center",formoptions:{rowpos:5, colpos:1},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
                     ],
 
                     ondblClickRow: function(rowid, iRow, iCol, e){
@@ -144,7 +178,7 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' class='edit-button' type='button' value='E' onclick=\"jQuery('#locallead').editGridRow('"+cl+"',{width:'1287',closeAfterEdit:true,\n\
-                                   beforeShowForm : function(formid) {$('#editmodlocallead').css('height','370');$('.dropdown-content').parent().addClass('dropdown-parent')},\n\
+                                   beforeShowForm : function(formid) {$('#editmodlocallead').css('height','auto');$('.dropdown-content').parent().addClass('dropdown-parent')},\n\
                                     });\" />";
                             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
@@ -167,6 +201,7 @@
         );
             function customLabel(value, options) {
               var el = document.createElement("label");
+              console.log(el);
               el.innerText = value;
               return el;
             }
