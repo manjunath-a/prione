@@ -330,4 +330,10 @@ body .ui-widget-content.ui-jqdialog {
 	padding-left: 10px;
 }
 
+.popover{
+	color:#ff0000;
+	width:500px;
+	height:300px;
+}
+
 /************* End of Dashboard Styles *************/
