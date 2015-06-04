@@ -18,27 +18,27 @@
     <div class="page-header">
         <div class="col-md-2">
             <span class="status-title">Pending :</span>
-            <span class="status-count">10</span>
+            <span class="status-count">0</span>
         </div>
         <div class="col-md-2">
             <span class="status-title">Not Assigned :</span>
-            <span class="status-count">07</span>
+            <span class="status-count">0</span>
         </div>
         <div class="col-md-2">
             <span class="status-title">Local WIP :</span>
-            <span class="status-count">30</span>
+            <span class="status-count">0</span>
         </div>
         <div class="col-md-2">
             <span class="status-title">Central WIP :</span>
-            <span class="status-count">09</span>
+            <span class="status-count">0</span>
         </div>
         <div class="col-md-2">
             <span class="status-title">Returned :</span>
-            <span class="status-count">12</span>
+            <span class="status-count">0</span>
         </div>
         <div class="col-md-2">
             <span class="status-title">Photoshoot Pending :</span>
-            <span class="status-count">02</span>
+            <span class="status-count">0</span>
         </div>
     </div>
     <div id="myMessage" role="alert"> </div>
@@ -108,6 +108,46 @@
 
                         {"label":"No. of parent SKUs","index":"sa_sku", "align":"center","width":130, formoptions:{rowpos:6, colpos:4},"editable":true, 'hidden' : true, "name":"sa_sku"},
                         {"label":"No. of variations","index":"sa_variation", 'hidden' : true, "align":"center","width":100, formoptions:{rowpos:6, colpos:5},"editable":true, "editrules":{"edithidden":true},"name":"sa_variation"},
+//                        {"label":"Merchant Name :", "index":"merchant_name","name":"merchant_name","width":130, "align":"center",formoptions:{rowpos:1, colpos:1},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"POC Name :", "index":"poc_name","name":"poc_name","width":130, "align":"center",formoptions:{rowpos:1, colpos:2},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Merchant Email :", "index":"merchant_email","name":"merchant_email","width":130, "align":"center",formoptions:{rowpos:3, colpos:1},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"POC Email :", "index":"poc_email","name":"poc_email","width":130, "align":"center",formoptions:{rowpos:3, colpos:2},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"City :", "index":"city","name":"city","width":130, "align":"center",formoptions:{rowpos:4, colpos:1},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"POC Contact# :", "index":"merchant_phone","name":"merchant_phone","width":130, "align":"center",formoptions:{rowpos:4, colpos:2},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Requester Name :", "index":"requester_name","name":"requester_name","width":130, "align":"center",formoptions:{rowpos:6, colpos:1},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Category :", "index":"category_name","name":"category_name","width":130, "align":"center",formoptions:{rowpos:6, colpos:2},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Requester email :", "index":"email","name":"email","width":130, "align":"center",formoptions:{rowpos:7, colpos:1},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Requester Contact# :", "index":"requester_no","name":"requester_no","width":130, "align":"center",formoptions:{rowpos:8, colpos:1},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Images avialable :", "index":"image_avail","name":"image_avail","width":130, "align":"center",formoptions:{rowpos:8, colpos:2},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"ETL Name :", "index":"etl_name","name":"etl_name","width":130, "align":"center",formoptions:{rowpos:11, colpos:1},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"CTL Name :", "index":"ctl_name","name":"ctl_name","width":130, "align":"center",formoptions:{rowpos:11, colpos:2},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Editor Name :", "index":"editor_name","name":"editor_name","width":130, "align":"center",formoptions:{rowpos:12, colpos:1},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Cataloger Name :", "index":"cataloger_name","name":"cataloger_name","width":130, "align":"center",formoptions:{rowpos:12, colpos:2},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Assigned on:", "index":"etl_assigned_on","name":"etl_assigned_on","width":130, "align":"center",formoptions:{rowpos:13, colpos:1},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Assigned on:", "index":"ctl_assigned_on","name":"ctl_assigned_on","width":130, "align":"center",formoptions:{rowpos:13, colpos:2},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Reason for rejection:", "index":"etl_rejection_reason","name":"etl_rejection_reason","width":130, "align":"center",formoptions:{rowpos:14, colpos:1},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Reason for rejection:", "index":"ctl_rejection_reason","name":"ctl_rejection_reason","width":130, "align":"center",formoptions:{rowpos:14, colpos:2},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+//                        {"label":"Sales channel:", "index":"sale_channel","name":"sale_channel","width":130, "align":"center",formoptions:{rowpos:5, colpos:1},
+//                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
                         {"label":"Comments","align":"right","index":"comment","name":"comment", 'hidden' : true, 'formoptions':{rowpos:7, colpos:3},"editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30",class:'comments-content'},"editrules":{"edithidden":true}},
                         {"label":"Comments","align":"center","index":"commentLink",
                             "formatter":function() {
@@ -138,7 +178,12 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' class='edit-button' type='button' value='E' onclick=\"jQuery('#locallead').editGridRow('"+cl+"',{width:'1294',top:'35',left:'29',closeAfterEdit:true,\n\
-                                   beforeShowForm : function(formid) {$('#editmodlocallead').css('height','542');$('.dropdown-content').parent().addClass('dropdown-parent');$('.comments-content').parent().attr('colspan','3');$('.EditTable tr td.CaptionTD').each(function(){if($(this).text().length <= 1){$(this).remove();}});$('.EditTable tr td.DataTD').each(function(){if(($(this).text().length <= 1)&&((!($(this).children().is('textarea')))&&(!($(this).children().is('input'))))){$(this).remove();}});$('.EditTable tr td.CaptionTD').each(function(){$(this).replaceWith('<div><div>'+$(this).html()+'</div>');});},\n\
+                                   beforeShowForm : function(formid) {$('#editmodlocallead').css('height','542');\n\
+                                                                      $('.dropdown-content').parent().addClass('dropdown-parent');\n\
+                                                                      $('.comments-content').parent().attr('colspan','3');\n\
+                                                                      $('.EditTable tr td.CaptionTD').each(function(){if($(this).text().length <= 1){$(this).remove();}});\n\
+                                                                      $('.EditTable tr td.DataTD').each(function(){if(($(this).text().length <= 1)&&((!($(this).children().is('textarea')))&&(!($(this).children().is('input'))))){$(this).remove();}});$('.EditTable tr td.CaptionTD').each(function(){$(this).replaceWith('<div><div>'+$(this).html()+'</div>');});\n\
+                                                                      $('.comment-popover').popover('hide');},\n\
                                     });\" />";
                             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
@@ -159,6 +204,16 @@
 
                 }
         );
+            function customLabel(value, options) {
+              var el = document.createElement("label");
+              console.log(el);
+              el.innerText = value;
+              return el;
+            }
+            function customLabelValue(elem) {
+              return $(elem).val();
+            }
+
         function getAllComment(rowData, divId) {
             $.ajax({
                         type:"POST",
@@ -166,11 +221,11 @@
                         data: rowData,
                         dataType: "json",
                         success: function(data) {
-                          var commentHtml = '<table width="300px">';
+                          var commentHtml = '<table width="240px">';
                           $.each(data.allComment, function(index, row){
-                              commentHtml += '<tr><td>' + row.name + '</td>';
-                              commentHtml += '<td>' + row.created_at + '</td>';
-                              commentHtml += '<td>' + row.comment + '</td></tr>';
+                              commentHtml += '<tr><td>' + row.name + '</td></tr>';
+                              commentHtml += '<tr><td>' + row.created_at + '</td></tr>';
+                              commentHtml += '<tr><td>' + row.comment + '</td></tr>';
                           });
                           commentHtml += '</table>';
                           $('#'+divId).html(commentHtml);
