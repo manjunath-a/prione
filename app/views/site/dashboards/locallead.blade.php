@@ -68,7 +68,16 @@
 
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
                         {"label":"Assigned Date","index":"created_at","name":"created_at","width":100,"align":"center",},
-                        {"label":"Seller Name", "index":"merchant_name","name":"merchant_name","width":130, "align":"center"},
+
+                        {"label":"Seller Name", "index":"merchant_name","name":"merchant_name","width":130, "align":"center",formoptions:{rowpos:8, colpos:1},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"POC Email", "index":"poc_email","name":"poc_email","width":130, "align":"center",formoptions:{rowpos:8, colpos:2},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+                        {"label":"POC Name", "index":"poc_name","name":"poc_name","width":130, "align":"center",formoptions:{rowpos:8, colpos:3},
+                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
+
+
+
                         {"label":"Seller Ph#", "index":"merchant_phone","name":"merchant_phone","width":90, "align":"center"},
                         {"label":"Status","index":"status_id","align":"center","width":80, formoptions:{rowpos:1, colpos:5},"editable":true,
                         "editoptions":{'value':'{{rtrim($status, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"status_id"},
@@ -156,6 +165,15 @@
 
                 }
         );
+            function customLabel(value, options) {
+              var el = document.createElement("label");
+              el.innerText = value;
+              return el;
+            }
+            function customLabelValue(elem) {
+              return $(elem).val();
+            }
+
         function getAllComment(rowData, divId) {
             $.ajax({
                         type:"POST",
