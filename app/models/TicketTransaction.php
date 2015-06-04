@@ -93,4 +93,14 @@ class TicketTransaction extends Eloquent  {
                                 );
       return $ticketUsers;
   }
+
+
+  public static function fetchCommentsByTicektId($ticketId)
+  {
+    return TicketTransaction::where('ticket_transaction.ticket_id','=', $ticketId)
+        ->join('users', 'ticket_transaction.created_by', '=', 'users.id')
+        ->select('users.username as name','ticket_transaction.created_at','notes as comment')
+        ->orderBy('ticket_transaction.created_at', 'desc')
+        ->groupBy('ticket_transaction.notes')->get();
+  }
 }

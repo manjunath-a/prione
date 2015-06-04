@@ -59,30 +59,30 @@
                         {"label":"Category","align":"center","index":"category_name","name":"category_name"},
                         {"label":"Photographer", "index":"photographer_id","align":"center","width":120,"editable":true, "editoptions":{'value':'{{rtrim($photographer, ";")}}',"disabled": 'disabled'},"edittype":"select","formatter":"select","name":"photographer_id"},
                         {"label":"Photoshoot Date","index":"photoshoot_date","align":"center", "editable":true, "editoptions": { "disabled": 'disabled' },
-                        "width":120,"name":"photoshoot_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"}}, 
+                        "width":120,"name":"photoshoot_date",'formatter': "date", "formatoptions": { "newformat": "Y-m-d"}},
                         {"label":"Requester Name","align":"center", 'hidden': true, "index":"requester_name","name":"requester_name"},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id",key:true, "hidden":true},
                         {"label":"Status","index":"status_id","align":"center","width":110,"editable":true,
                         'hidden': true,  "editoptions":{'value':'{{rtrim($status, ";")}}', "disabled": 'disabled'},"edittype":"select", "formatter":"select","editrules":{"required":true},"name":"status_id"},
                         {"label":"Pending Reason","index":"pending_reason_id","align":"center","width":240,"editable":true,
                             "editoptions":{'value':'{{rtrim($pending, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"pending_reason_id"},
-                        
+
                         {"label":"Photoshoot Location", 'hidden': true,  "index":"photoshoot_location","align":"center","width":150,"editable":true,
                         "editoptions":{'value':'{{rtrim($photoshootLocation, ";")}}', "disabled": 'disabled' },"edittype":"select","formatter":"select","editrules":{"required":true},"name":"photoshoot_location"},
                         {"label":"S3 Path","align":"center", 'hidden': true, "index":"s3_folder","name":"s3_folder","width":90},
                         {"label":"Service Associate", 'hidden': true, "index":"mif_id","align":"center","width":150,"editable":true, "editoptions":{'value':'{{rtrim($serviceassociates, ";")}}'},"edittype":"select","formatter":"select","name":"mif_id", 'hidden': true},
-                        {"label":"No. of SKUs", 'hidden': true, "align":"center","index":"total_sku","name":"total_sku","editable":true,"width":90},
-                        {"label":"No. of Images", 'hidden': true, "align":"center","index":"total_images","name":"total_images","editable":true,"width":100},
-                        {"label":"No. of Parent SKU","index":"sa_sku","align":"center","width":120,"editable":true,"name":"sa_sku"},
-                        {"label":"No. of Variation","index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation"},
+                        {"label":"#SKUs", 'hidden': true, "align":"center","index":"total_sku","name":"total_sku","editable":true,"width":90},
+                        {"label":"#Images", 'hidden': true, "align":"center","index":"total_images","name":"total_images","editable":true,"width":100},
+                        {"label":"#Parent SKU","index":"sa_sku","align":"center","width":120,"editable":true,"name":"sa_sku"},
+                        {"label":"#Variation","index":"sa_variation","align":"center","width":100,"editable":true,"name":"sa_variation"},
                         {"label":"Stage","index":"stage_id", 'hidden': true, "align":"center","width":350, "editable":true, 'hidden' : true,
                             "editoptions":{'value':'{{rtrim($stage, ";")}}'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"stage_id"},
                         {"label":"Comments","align":"right","index":"comment","name":"comment","editable":true,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"}}
                     ],
-                    
+
                     jsonReader: { repeatitems : true, id: 'id' },
                     sortname: 'id',
-                    
+
                     ondblClickRow: function(rowid, iRow, iCol, e){
                     if(rowid && rowid!==lastsel3){
                         $(this).restoreRow(lastsel3);
@@ -95,7 +95,7 @@
                         $(this).find('tbody tr:odd td').css('background-color','#fbfbfb');
                         $(this).find('tbody tr:even td').css('background-color','#f6ede4');
                     },
-                    
+
                     gridComplete: function(){
                         var ids = jQuery("#mif").jqGrid('getDataIDs');
                         for(var i=0;i < ids.length;i++)

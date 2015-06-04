@@ -200,9 +200,11 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function () {
     Route::post('sellerinfo/', 'DashboardController@postSellerInfo');
     Route::post('editing/', 'DashboardController@postEditing');
 
+
+Route::post('comments/',['as' => 'all.comment', 'uses' => 'DashboardController@getTicketComments']);
+
 });
 
-Route::post('dashboard/comments',['as' => 'all.comment','uses' => 'DashboardController@getAllComments']);
 
 App::missing(function ($e) {
     $url = Request::fullUrl();
