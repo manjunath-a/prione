@@ -51,7 +51,7 @@
     <div id="localleadPager">
     </div>
     <script type="text/javascript">
-        var lastsel2;
+        var lastsel2, commentHtml;
         jQuery("#locallead").jqGrid({
                     "datatype":"json",
                     "mtype":"POST",
@@ -108,8 +108,16 @@
 
                         {"label":"No. of parent SKUs","index":"sa_sku", "align":"center","width":130, formoptions:{rowpos:6, colpos:4},"editable":true, 'hidden' : true, "name":"sa_sku"},
                         {"label":"No. of variations","index":"sa_variation", 'hidden' : true, "align":"center","width":100, formoptions:{rowpos:6, colpos:5},"editable":true, "editrules":{"edithidden":true},"name":"sa_variation"},
+<<<<<<< HEAD
                         {"label":"Comments","align":"right","index":"comment","name":"comment", 'hidden' : true, 'formoptions':{rowpos:7, colpos:3},"editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30",class:'comments-content'},"editrules":{"edithidden":true}},
                         {"label":"Comments","align":"center","index":"commentLink","formatter":function() {return  "<a href='#' class='comment-popover' data-toggle='popover' data-placement='bottom' data-container='body' >comments</a>"},"formatoptions":{"target":"#","rowpos":8, "colpos":3},"name":"commentLink"}
+=======
+                        {"label":"Comments","align":"right","index":"comment","name":"comment", 'hidden' : true, 'formoptions':{rowpos:7, colpos:3},"editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30"},"editrules":{"edithidden":true}},
+                        {"label":"Comments","align":"center","index":"commentLink",
+                            "formatter":function() {
+                            return  "<a href='javascript:;' class='comment-popover' data-toggle='popover' data-placement='left' data-container='body' >comments</a>"},
+                            "formatoptions":{"target":"#","rowpos":8, "colpos":3}, "name":"commentLink"}
+>>>>>>> development
                     ],
 
                     ondblClickRow: function(rowid, iRow, iCol, e){
@@ -148,6 +156,7 @@
                             var rowId, rowData, popOverHtml;
                             rowId = jQuery("#locallead").jqGrid('getGridParam','selrow');
                             rowData = jQuery("#locallead").jqGrid('getRowData',rowId);
+<<<<<<< HEAD
                             $.ajax({
                               type:"POST",
                               url:"comments",
@@ -160,44 +169,17 @@
                               }
                             });
                             }
+=======
+                            var divId =  "tmp-id-" + $.now();
+                            return getAllComment(rowData, divId);
+                        }
+>>>>>>> development
                         });
                     },
 
-                         
-                    // "subGrid":true,
-                    // "subGridUrl":"seller",
-                    // "subGridModel" :[
-                    //     {
-                    //         name  : ['Requested Date','Category', 'POC Name', 'POC Email', 'POC Number', 'Requester Email',  'Requester Number', 'Seller Provided Images',
-                    //                 'Local Team Lead', 'Photographer', 'Service Associate' ,
-                    //                 'Editing Manager', 'Editing Team Lead', 'Editor',
-                    //                 'Cataloging Manager', 'Cataloging Team Lead', 'Cataloger','Rejected By'],
-                    //         width : [200,200,200,150,120,120,160,120,120,120,120,120,120,120,120,120],
-                    //         colModel: [
-                    //             {"label":"Requested Date","index":"request_created","name":"request_created"},
-                    //             {"label":"Category","align":"center","index":"category","name":"category"},
-                    //             {"label":"POC Name","align":"center","index":"poc_name","name":"poc_name"},
-                    //             {"label":"POC Email","align":"center","index":"poc_email","name":"poc_email"},
-                    //             {"label":"POC Contact Number","index":"poc_number","name":"poc_number"},
-
-                    //             {"label":"Requester Email","align":"center","index":"email","name":"email"},
-                    //             {"label":"Requester Number","index":"contact_number","name":"contact_number"},
-                    //             {"label":"Seller Provided Images","align":"center","index":"image_available","name":"image_available"},
-                    //             {"label":"Local Team Lead","align":"center","index":"LocalTeamLead","name":"LocalTeamLead"},
-                    //             {"label":"Photographer","align":"center","index":"Photographer","name":"Photographer"},
-                    //             {"label":"Service Associate","align":"center","index":"ServiceAssociate","name":"ServiceAssociate"},
-                    //             {"label":"Editing Manager","align":"center","index":"EditingManager","name":"EditingManager"},
-                    //             {"label":"Editing Team Lead","align":"center","index":"EditingTeamLead","name":"EditingTeamLead"},
-                    //             {"label":"Editor","align":"center","index":"Editor","name":"Editor"},
-                    //             {"label":"Cataloging Manager","align":"center","index":"CatalogingManager","name":"CatalogingManager"},
-                    //             {"label":"Cataloging Team Lead","align":"center","index":"CatalogingTeamLead","name":"CatalogingTeamLead"},
-                    //             {"label":"Cataloger","align":"center","index":"Cataloger","name":"Cataloger"},
-                    //             {"label":"Reject By","align":"center","index":"RejectedBy","name":"RejectedBy"}
-                    //         ]
-                    //     }
-                    // ],
                 }
         );
+<<<<<<< HEAD
         
         function customEditForm(formId) {
             /*console.log(formId);
@@ -207,6 +189,26 @@
                 complete_html=complete_html+splitted_html;
             });
             formId.html(complete_html);*/
+=======
+        function getAllComment(rowData, divId) {
+            $.ajax({
+                        type:"POST",
+                        url:"comments",
+                        data: rowData,
+                        dataType: "json",
+                        success: function(data) {
+                          var commentHtml = '<table width="300px">';
+                          $.each(data.allComment, function(index, row){
+                              commentHtml += '<tr><td>' + row.name + '</td>';
+                              commentHtml += '<td>' + row.created_at + '</td>';
+                              commentHtml += '<td>' + row.comment + '</td></tr>';
+                          });
+                          commentHtml += '</table>';
+                          $('#'+divId).html(commentHtml);
+                        }
+                      });
+            return '<div id="'+ divId +'">Loading...</div>';
+>>>>>>> development
         }
     </script>
     <!-- ./ content -->

@@ -550,18 +550,11 @@ class DashboardController extends BaseController
             )
         );
     }
-    
-    public function getAllComments() 
+
+    public function getTicketComments()
     {
-        $comment['allComment']=[['name' => 'John',
-                                 'created_at'=>'2015-06-10, 08:14:30',
-                                 'comment' => 'hi how are you'],
-                                ['name' => 'Smith',
-                                 'created_at'=>'2015-07-25, 07:14:30',
-                                 'comment' => 'how is the project going on'],
-                                ['name' => 'John',
-                                 'created_at'=>'2015-05-21, 06:00:30',
-                                 'comment' => 'works fine']];
+        $ticketId = Input::get('ticket_id');
+        $comment['allComment']= TicketTransaction::fetchCommentsByTicektId($ticketId);
         return $comment;
     }
 }
