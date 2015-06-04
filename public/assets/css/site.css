@@ -331,9 +331,11 @@ body .ui-widget-content.ui-jqdialog {
 }
 
 .popover{
-	color:#ff0000;
+	color:#000;
 	width:500px;
 	height:300px;
 }
-
+.popover td {
+  word-break: break-all;
+}
 /************* End of Dashboard Styles *************/

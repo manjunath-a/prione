@@ -18,27 +18,27 @@
     <div class="page-header">
         <div class="col-md-2">
             <span class="status-title">Pending :</span>
-            <span class="status-count">10</span>
+            <span class="status-count">0</span>
         </div>
         <div class="col-md-2">
             <span class="status-title">Not Assigned :</span>
-            <span class="status-count">07</span>
+            <span class="status-count">0</span>
         </div>
         <div class="col-md-2">
             <span class="status-title">Local WIP :</span>
-            <span class="status-count">30</span>
+            <span class="status-count">0</span>
         </div>
         <div class="col-md-2">
             <span class="status-title">Central WIP :</span>
-            <span class="status-count">09</span>
+            <span class="status-count">0</span>
         </div>
         <div class="col-md-2">
             <span class="status-title">Returned :</span>
-            <span class="status-count">12</span>
+            <span class="status-count">0</span>
         </div>
         <div class="col-md-2">
             <span class="status-title">Photoshoot Pending :</span>
-            <span class="status-count">02</span>
+            <span class="status-count">0</span>
         </div>
     </div>
     <div id="myMessage" role="alert"> </div>
@@ -178,7 +178,12 @@
                         {
                             var cl = ids[i];
                             be = "<input style='height:22px;width:20px;' class='edit-button' type='button' value='E' onclick=\"jQuery('#locallead').editGridRow('"+cl+"',{width:'1294',top:'35',left:'29',closeAfterEdit:true,\n\
-                                   beforeShowForm : function(formid) {$('#editmodlocallead').css('height','542');$('.dropdown-content').parent().addClass('dropdown-parent');$('.comments-content').parent().attr('colspan','3');$('.EditTable tr td.CaptionTD').each(function(){if($(this).text().length <= 1){$(this).remove();}});$('.EditTable tr td.DataTD').each(function(){if(($(this).text().length <= 1)&&((!($(this).children().is('textarea')))&&(!($(this).children().is('input'))))){$(this).remove();}});$('.EditTable tr td.CaptionTD').each(function(){$(this).replaceWith('<div><div>'+$(this).html()+'</div>');});},\n\
+                                   beforeShowForm : function(formid) {$('#editmodlocallead').css('height','542');\n\
+                                                                      $('.dropdown-content').parent().addClass('dropdown-parent');\n\
+                                                                      $('.comments-content').parent().attr('colspan','3');\n\
+                                                                      $('.EditTable tr td.CaptionTD').each(function(){if($(this).text().length <= 1){$(this).remove();}});\n\
+                                                                      $('.EditTable tr td.DataTD').each(function(){if(($(this).text().length <= 1)&&((!($(this).children().is('textarea')))&&(!($(this).children().is('input'))))){$(this).remove();}});$('.EditTable tr td.CaptionTD').each(function(){$(this).replaceWith('<div><div>'+$(this).html()+'</div>');});\n\
+                                                                      $('.comment-popover').popover('hide');},\n\
                                     });\" />";
                             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
@@ -216,11 +221,11 @@
                         data: rowData,
                         dataType: "json",
                         success: function(data) {
-                          var commentHtml = '<table width="300px">';
+                          var commentHtml = '<table width="240px">';
                           $.each(data.allComment, function(index, row){
-                              commentHtml += '<tr><td>' + row.name + '</td>';
-                              commentHtml += '<td>' + row.created_at + '</td>';
-                              commentHtml += '<td>' + row.comment + '</td></tr>';
+                              commentHtml += '<tr><td>' + row.name + '</td></tr>';
+                              commentHtml += '<tr><td>' + row.created_at + '</td></tr>';
+                              commentHtml += '<tr><td>' + row.comment + '</td></tr>';
                           });
                           commentHtml += '</table>';
                           $('#'+divId).html(commentHtml);
