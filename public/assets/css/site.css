@@ -319,6 +319,11 @@ body .ui-widget-content.ui-jqdialog {
     right: 4px;
     bottom: 16px;
 }
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.ui-jqdialog .DataTD.dropdown-parent::after {
+		padding: 8px 6px 11px;
+	}
+}
 .ui-jqdialog-content #Act_Buttons {
 	margin-top: 5px;
 }
