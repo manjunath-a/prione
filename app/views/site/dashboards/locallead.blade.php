@@ -161,6 +161,7 @@
                         lastsel2=rowid;
                         }
                         $(this).editRow(rowid,true);
+                        $('.dropdown-content').parent().addClass('dropdown-parent');
                     },
 
                     loadComplete:function() {
@@ -186,7 +187,7 @@
                                                                       $('.comment-popover').popover('hide');},\n\
                                     });\" />";
                             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
-                            ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
+                            ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"',{'afterrestorefunc':function(response){console.log('inside  ');$('td').removeClass('dropdown-parent');}});\" />";
                             $(this).jqGrid('setRowData',ids[i],{act:se+ce+be});
                         }
                         $('.comment-popover').popover({

@@ -344,3 +344,29 @@ body .ui-widget-content.ui-jqdialog {
   word-break: break-all;
 }
 /************* End of Dashboard Styles *************/
+
+.ui-jqgrid-btable tr select {
+	border: 2px solid #e8e8e8;
+    padding: 4px;
+    color: #6d6d6d;
+    width: 100%;
+    resize: none;
+}
+.ui-jqgrid-btable tr .dropdown-parent {
+	position: relative;
+	padding: 0 8px !important;
+}
+.ui-jqgrid-btable tr .dropdown-parent::after {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: #8f8f8f;
+    content: "▼";
+    font-size: 10px;
+    line-height: 10px;
+    padding: 8px 4px 7px;
+    pointer-events: none;
+    position: absolute;
+    right: 10px;
+    bottom: 13px;
+}
