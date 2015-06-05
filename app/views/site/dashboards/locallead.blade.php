@@ -184,7 +184,7 @@
                                                                       $('.dropdown-content').parent().addClass('dropdown-parent');\n\
                                                                       $('.comments-content').parent().attr('colspan','3');\n\
                                                                       $('.EditTable tr td.CaptionTD').each(function(){if($(this).text().length <= 1){$(this).remove();}});\n\
-                                                                      $('.EditTable tr td.DataTD').each(function(){if(($(this).text().length <= 1)&&((!($(this).children().is('textarea')))&&(!($(this).children().is('input'))))){$(this).remove();}});$('.EditTable tr td.CaptionTD').each(function(){$(this).replaceWith('<div><div>'+$(this).html()+'</div>');});\n\
+                                                                      $('.EditTable tr td.DataTD').each(function(){if(($(this).text().length <= 1)&&((!($(this).children().is('textarea')))&&(!($(this).children().is('input'))))){$(this).remove();}});$('.EditTable tr td.CaptionTD').each(function(){$(this).replaceWith('<div class=dfd><div>'+$(this).html()+'</div>');});\n\
                                                                       $('.comment-popover').popover('hide');},\n\
                                     afterShowForm: function () { SplitFormatForm('SiteAccountsGrid', false)},\n\
                                     });\" />";
