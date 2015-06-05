@@ -51,6 +51,7 @@
     <div id="localleadPager">
     </div>
     <script type="text/javascript">
+        
         var lastsel2, commentHtml;
         jQuery("#locallead").jqGrid({
                     "datatype":"json",
@@ -227,13 +228,12 @@
                         success: function(data) {
                           var commentHtml = '';
                           commentHtml += '<button id="popovercloseid" type="button" data-dismiss="modal" class="close">&times;</button>';
-                          commentHtml += '<table width="240px">';
+                          commentHtml += '<div class="cmt-block">';
                           $.each(data.allComment, function(index, row){
-                              commentHtml += '<tr><td>' + row.name + '</td></tr>';
-                              commentHtml += '<tr><td>' + row.created_at + '</td></tr>';
-                              commentHtml += '<tr><td>' + row.comment + '</td></tr>';
+                              commentHtml += '<div><span class="cmt-name">' + row.name + '</span><span class="cmt-timestamp">' + row.created_at + '</span></div>';
+                              commentHtml += '<div class="comment">' + row.comment + '</div>';
                           });
-                          commentHtml += '</table>';
+                          commentHtml += '</div>';
                           $('#'+divId).html(commentHtml);
                           $('.close').on('click', function (e) {
                             $('.comment-popover').popover('hide');
