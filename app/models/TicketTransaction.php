@@ -97,6 +97,8 @@ class TicketTransaction extends Eloquent  {
 
   public static function fetchCommentsByTicektId($ticketId)
   {
+
+    //select `dcst_users`.`username` as `name`, `dcst_ticket_transaction`.`created_at`, `notes` as `comment` from `dcst_ticket_transaction` inner join `dcst_users` on `dcst_ticket_transaction`.`created_by` = `dcst_users`.`id` where `dcst_ticket_transaction`.`ticket_id` = '1' group by `dcst_ticket_transaction`.`notes` order by `dcst_ticket_transaction`.`created_at` desc
     return TicketTransaction::where('ticket_transaction.ticket_id','=', $ticketId)
         ->join('users', 'ticket_transaction.created_by', '=', 'users.id')
         ->select('users.username as name','ticket_transaction.created_at','notes as comment')

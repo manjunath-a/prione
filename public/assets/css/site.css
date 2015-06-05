@@ -259,12 +259,23 @@ body .ui-widget-content.ui-jqdialog {
 	position: relative;
 	width: 200px;
 }
-.ui-jqdialog table tbody tr > div {
+.FormElement {
+  float:left;
+}
+.customelement{
+  margin-top:10px;
+  float:left;
+}
+.ui-jqdialog table tbody tr > div:nth-child(1), .ui-jqdialog table tbody tr > div:nth-child(3) {
+  width: 100px;
+  padding-top: 12px;
+}
+.ui-jqdialog table tbody tr > div:nth-child(5), .ui-jqdialog table tbody tr > div:nth-child(7), .ui-jqdialog table tbody tr > div:nth-child(9) {
 	height: 0;
     position: relative;
     width: 0;
 }
-.ui-jqdialog table tbody tr > div > div {
+.ui-jqdialog table tbody tr > div:nth-child(5) > div, .ui-jqdialog table tbody tr > div:nth-child(7) > div, .ui-jqdialog table tbody tr > div:nth-child(9) > div {
 	font-size: 11px;
 	line-height: 12px;
 	color: #6d6d6d;
@@ -285,7 +296,7 @@ body .ui-widget-content.ui-jqdialog {
     resize: none;
 }
 .ui-jqdialog-content.ui-widget-content .EditTable {
-	float: right;
+	/*float: right;*/
     width: 50%;
 }
 .ui-jqdialog-content.ui-widget-content .EditTable tr {
@@ -324,6 +335,13 @@ body .ui-widget-content.ui-jqdialog {
 		padding: 8px 6px 11px;
 	}
 }
+.FormElement {
+  float:left;
+}
+.customelement{
+  margin-top:10px;
+  float:left;
+}
 .ui-jqdialog-content #Act_Buttons {
 	margin-top: 5px;
 }
@@ -333,8 +351,9 @@ body .ui-widget-content.ui-jqdialog {
 .ui-jqdialog-content #Act_Buttons td.EditButton {
 	text-align: left;
 	padding-left: 10px;
-}
+}*/
 
+/************* End of Popup Styles *************/
 .popover{
 	color:#000;
 	width:500px;
