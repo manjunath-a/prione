@@ -225,9 +225,9 @@ body #wrap .container .ui-widget {
     margin: 8px 8px 0 0;
 }
 
-/************* Start of Popup Styles *************/
+/************* End of Dashboard Styles *************/
 
-/************* End of Popup Styles *************/
+/************* Start of Popup Styles *************/
 
 .ui-jqdialog-content, .ui-jqdialog .ui-jqdialog-content {
     padding: 25px;
@@ -343,7 +343,41 @@ body .ui-widget-content.ui-jqdialog {
 .popover td {
   word-break: break-all;
 }
-/************* End of Dashboard Styles *************/
+.popover-content {
+	position: relative;
+}
+.popover-content .popovercloseid {
+	position: absolute;
+	right: 4px;
+	top: 0;
+}
+.popover-content .popovercloseid:hover {
+	color: red;
+}
+.popover-content .cmt-block .cmt-name {
+	color: #dd8f2c;
+	padding-left: 8px;
+	line-height: 12px;
+	font-size: 12px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+}
+.popover-content .cmt-block .cmt-timestamp {
+	color: #dd8f2c;
+	padding-right: 8px;
+	border-right: 1px solid #dd8f2c;
+	line-height: 12px;
+	font-size: 12px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+}
+.popover-content .cmt-block .comment {
+	font-size: 13px;
+	line-height: 13px;
+	color: #464646;
+}
+
+/************* End of Popup Styles *************/
 
 .ui-jqgrid-btable tr select {
 	border: 2px solid #e8e8e8;
