@@ -200,6 +200,10 @@
                             return getAllComment(rowData, divId);
                         }
                         });
+                        
+                        $('.comment-popover').on('click', function (e) {
+                            $('.comment-popover').not(this).popover('hide');
+                        });
                     },
 
                 }
@@ -221,7 +225,9 @@
                         data: rowData,
                         dataType: "json",
                         success: function(data) {
-                          var commentHtml = '<table width="240px">';
+                          var commentHtml = '';
+                          commentHtml += '<button id="popovercloseid" type="button" data-dismiss="modal" class="close">&times;</button>';
+                          commentHtml += '<table width="240px">';
                           $.each(data.allComment, function(index, row){
                               commentHtml += '<tr><td>' + row.name + '</td></tr>';
                               commentHtml += '<tr><td>' + row.created_at + '</td></tr>';
@@ -229,6 +235,9 @@
                           });
                           commentHtml += '</table>';
                           $('#'+divId).html(commentHtml);
+                          $('.close').on('click', function (e) {
+                            $('.comment-popover').popover('hide');
+                          });
                         }
                       });
             return '<div id="'+ divId +'">Loading...</div>';
