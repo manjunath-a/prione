@@ -225,8 +225,9 @@ body #wrap .container .ui-widget {
     margin: 8px 8px 0 0;
 }
 
-/************* Start of Popup Styles *************/
+/************* End of Dashboard Styles *************/
 
+/************* Start of Popup Styles *************/
 
 .ui-jqdialog-content, .ui-jqdialog .ui-jqdialog-content {
     padding: 25px;
@@ -258,12 +259,23 @@ body .ui-widget-content.ui-jqdialog {
 	position: relative;
 	width: 200px;
 }
-.ui-jqdialog table tbody tr > div {
+.FormElement {
+  float:left;
+}
+.customelement{
+  margin-top:10px;
+  float:left;
+}
+.ui-jqdialog table tbody tr > div:nth-child(1), .ui-jqdialog table tbody tr > div:nth-child(3) {
+  width: 100px;
+  padding-top: 12px;
+}
+.ui-jqdialog table tbody tr > div:nth-child(5), .ui-jqdialog table tbody tr > div:nth-child(7), .ui-jqdialog table tbody tr > div:nth-child(9) {
 	height: 0;
     position: relative;
     width: 0;
 }
-.ui-jqdialog table tbody tr > div > div {
+.ui-jqdialog table tbody tr > div:nth-child(5) > div, .ui-jqdialog table tbody tr > div:nth-child(7) > div, .ui-jqdialog table tbody tr > div:nth-child(9) > div {
 	font-size: 11px;
 	line-height: 12px;
 	color: #6d6d6d;
@@ -285,7 +297,7 @@ body .ui-widget-content.ui-jqdialog {
 }
 .ui-jqdialog-content.ui-widget-content .EditTable {
 	/*float: right;*/
-    width: 50%;
+    /* width: 50%; */
 }
 .ui-jqdialog-content.ui-widget-content .EditTable tr {
 	margin-bottom: 5px;
@@ -350,4 +362,66 @@ body .ui-widget-content.ui-jqdialog {
 .popover td {
   word-break: break-all;
 }
-/************* End of Dashboard Styles *************/
+.popover-content {
+	position: relative;
+}
+.popover-content .popovercloseid {
+	position: absolute;
+	right: 4px;
+	top: 0;
+}
+.popover-content .popovercloseid:hover {
+	color: red;
+}
+.popover-content .cmt-block .cmt-timestamp {
+	color: #dd8f2c;
+	padding-left: 8px;
+	line-height: 12px;
+	font-size: 12px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+}
+.popover-content .cmt-block .cmt-name {
+	color: #dd8f2c;
+	padding: 0 8px 0 15px;
+	border-right: 1px solid #dd8f2c;
+	line-height: 12px;
+	font-size: 12px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	background: url("images/comments.png") no-repeat left top;
+}
+.popover-content .cmt-block .comment {
+	font-size: 13px;
+	line-height: 13px;
+	color: #464646;
+	padding-left: 15px;
+}
+
+/************* End of Popup Styles *************/
+
+.ui-jqgrid-btable tr select {
+	border: 2px solid #e8e8e8;
+    padding: 4px;
+    color: #6d6d6d;
+    width: 100%;
+    resize: none;
+}
+.ui-jqgrid-btable tr .dropdown-parent {
+	position: relative;
+	padding: 0 8px !important;
+}
+.ui-jqgrid-btable tr .dropdown-parent::after {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: #8f8f8f;
+    content: "▼";
+    font-size: 10px;
+    line-height: 10px;
+    padding: 8px 4px 7px;
+    pointer-events: none;
+    position: absolute;
+    right: 10px;
+    bottom: 13px;
+}

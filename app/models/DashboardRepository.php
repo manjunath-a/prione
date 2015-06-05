@@ -52,6 +52,7 @@ class DashboardRepository extends EloquentRepositoryAbstract  {
                             ->join('stage', 'stage.id', '=', 'ticket_transaction.stage_id')
                             ->join('group', 'group.id', '=', 'ticket_transaction.group_id')
                             ->join('seller_request', 'seller_request.id', '=', 'ticket.request_id')
+                            ->join('sales_channel', 'sales_channel.id', '=', 'seller_request.merchant_sales_channel_id')
                             ->join('category', 'category.id', '=', 'seller_request.category_id')
                             ->join('users', 'seller_request.merchant_city_id', '=', 'users.city_id')
                             ->where('ticket_transaction.assigned_to', $userId)
@@ -66,7 +67,7 @@ class DashboardRepository extends EloquentRepositoryAbstract  {
             'seller_request.merchant_name as merchant_name', 'seller_request.poc_name as poc_name',
             'seller_request.poc_email as poc_email', 'seller_request.poc_number as merchant_phone','seller_request.total_sku',
             'seller_request.image_available as image_available', 'seller_request.comment as seller_comment', 'ticket.s3_folder as s3_folder',
-            'seller_request.id as seller_request_id', 'ticket.id as ticket_id',
+            'seller_request.id as seller_request_id', 'ticket.id as ticket_id','sales_channel.channel_name as sales_channel ',
             'ticket_transaction.photoshoot_date','ticket_transaction.photoshoot_location',
             'ticket_transaction.localteamlead_id','ticket_transaction.photographer_id','ticket_transaction.mif_id',
             'ticket_transaction.editingmanager_id', 'ticket_transaction.editingteamlead_id as editingteamlead_id',
