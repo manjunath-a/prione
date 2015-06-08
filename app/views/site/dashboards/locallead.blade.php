@@ -69,6 +69,8 @@
 
                         {'label':'Ticket ID', 'name':'ticket_id', 'index':'ticket_id', 'width':65, 'align':'center'},
                         {"label":"Assigned Date","index":"created_at","name":"created_at","width":140,"align":"center",},
+                        {"label":"Priority","index":"priority","align":"center","width":65,formoptions:{rowpos:1, colpos:3},"editable":true,
+                        "editoptions":{'value':'{{rtrim($priority, ";")}}',class:'dropdown-content'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
                         {"label":"Seller Name", "index":"merchant_name","name":"merchant_name","width":130, "align":"center",
                         edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
                         {"label":"Seller Ph#", "index":"merchant_phone","name":"merchant_phone","width":108, "align":"center",
@@ -77,14 +79,15 @@
                         "editoptions":{'value':'{{rtrim($status, ";")}}',class:'dropdown-content'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"status_id"},
                         {"label":"Stage","index":"stage_id","align":"center","width":240, formoptions:{rowpos:3, colpos:3}, "editable":true,
                         "editoptions":{'value':'{{rtrim($stage, ";")}}',class:'dropdown-content'}, "edittype":"select","formatter":"select","editrules":{"required":true},"name":"stage_id"},
-                        {"label":"Priority","index":"priority","align":"center","width":65,formoptions:{rowpos:1, colpos:3},"editable":true,
-                        "editoptions":{'value':'{{rtrim($priority, ";")}}',class:'dropdown-content'},"edittype":"select","formatter":"select","editrules":{"required":true},"name":"priority"},
                         {"label":"Pending Reason","index":"pending_reason_id","align":"center","width":210, formoptions:{rowpos:3, colpos:4}, "editable":true,
                         "editoptions":{'value':'{{rtrim($pending, ";")}}','size': '1',class:'dropdown-content'},
                         "edittype":"select","formatter":"select","editrules":{"required":false},"name":"pending_reason_id"},
                         {"label":"Group","index":"group_id","align":"center","width":80, formoptions:{rowpos:1, colpos:4},"editable":true,
                         "editoptions":{'value':'{{rtrim($group, ";")}}',class:'dropdown-content'},"edittype":"select","formatter":"select","editrules":{"required":true,"edithidden": false},"name":"group_id"},
-
+                        {"label":"Comments","align":"center","index":"commentLink",
+                            "formatter":function() {
+                            return  "<a href='javascript:;' class='comment-popover' data-toggle='popover' data-placement='left' data-container='body' >comments</a>"},
+                            "formatoptions":{"target":"#","rowpos":8, "colpos":3}, "name":"commentLink"},
 
                         {"label":"Requester Name", 'hidden' : true, "align":"center","index":"requester_name","name":"requester_name"},
                         {"label":"Request Id",'width':75,"align":"center","index":"seller_request_id","name":"seller_request_id", 'hidden' : true},
@@ -152,11 +155,8 @@
                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
                        {"label":"dummy :", "index":"dummy","name":"dummy","width":130, "align":"center",formoptions:{rowpos:5, colpos:3},
                        edittype: 'custom', editoptions: { custom_element: customLabel, custom_value: customLabelValue}, "editable":true},
-                        {"label":"Comments","align":"right","index":"comment","name":"comment", 'hidden' : true, 'formoptions':{rowpos:7, colpos:3},"editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30",class:'comments-content'},"editrules":{"edithidden":true}},
-                        {"label":"Comments","align":"center","index":"commentLink",
-                            "formatter":function() {
-                            return  "<a href='javascript:;' class='comment-popover' data-toggle='popover' data-placement='left' data-container='body' >comments</a>"},
-                            "formatoptions":{"target":"#","rowpos":8, "colpos":3}, "name":"commentLink"}
+                        {"label":"Comments","align":"right","index":"comment","name":"comment", 'hidden' : true, 'formoptions':{rowpos:7, colpos:3},"editable":true ,'edittype':"textarea", 'editoptions':{'rows':"1",'cols':"30",class:'comments-content'},"editrules":{"edithidden":true}}
+
                     ],
 
                     ondblClickRow: function(rowid, iRow, iCol, e){
@@ -188,7 +188,7 @@
                                                                       $('.EditTable tr td.CaptionTD').each(function(){if($(this).text().length <= 1){$(this).remove();}});\n\
                                                                       $('.EditTable tr td.DataTD').each(function(){if(($(this).text().length <= 1)&&((!($(this).children().is('textarea')))&&(!($(this).children().is('input'))))){$(this).remove();}});$('.EditTable tr td.CaptionTD').each(function(){$(this).replaceWith('<div class=dfd><div>'+$(this).html()+'</div>');});\n\
                                                                       $('.comment-popover').popover('hide');},\n\
-                                    afterShowForm: function () { SplitFormatForm('SiteAccountsGrid', false)},\n\
+                                    afterShowForm: function () { SplitFormatForm('locallead', false)},\n\
                                     });\" />";
                             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#locallead').saveRow('"+cl+"', '' , '' ,'' ,aftersavefunc, '' );jQuery('#locallead').trigger('reloadGrid');\" />";
                             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#locallead').restoreRow('"+cl+"');\" />";
@@ -242,32 +242,50 @@
         var splitFormatted = false;
     function SplitFormatForm(tableName, add) {
       if (!splitFormatted) {
-        // splitFormatted = true;
-        // $("#FrmGrid_" + tableName).append('<table><tr><td><table id="TblGrid_' + tableName + '_A" class="EditTable" border="0" cellSpacing="0" cellPadding="0" /></td><td><table id="TblGrid_' + tableName + '_B" class="EditTable" border="0" cellSpacing="0" cellPadding="0" /></td></tr></table>');
+        splitFormatted = true;
+        $("#FrmGrid_" + tableName).append('<table><tr><td><table id="TblGrid_' + tableName + '_A" class="EditTable" border="0" cellSpacing="0" cellPadding="0" /></td><td><table id="TblGrid_' + tableName + '_B" class="EditTable" border="0" cellSpacing="0" cellPadding="0" /></td></tr></table>');
 
-        // var cc = $("#TblGrid_" + tableName + "> tbody").children("tr").length;
-        // var s = (cc / 2) - 1;
+        var cc = $("#TblGrid_" + tableName + "> tbody").children("tr").length;
+        var s = (cc / 2) - 1;
 
-        // var x = $("#TblGrid_" + tableName + "> tbody").children("tr");
-        // var i = 0;
-        // x.each(function (index) {
-        //     var e = $(this).clone();
-        //     var oldID = e.attr("id") + "";
-        //     var newID = oldID;
-        //     if (oldID.substring(0, 3) === "tr_") {
-        //         newID = "clone_" + oldID;
-        //         $(this).css("display", "none");
-        //         e.change(function () { $("#" + oldID + " > .DataTD > .FormElement").val($("#" + newID + " > .DataTD > .FormElement").val()); });
-        //         e.attr("id", newID);
-        //         console.log(newID);
-        //         if (i++ < s) {
-        //             $("#TblGrid_" + tableName + "_A").append(e);
-        //         }
-        //         else {
-        //             $("#TblGrid_" + tableName + "_B").append(e);
-        //         }
-        //     }
-        // });
+        var x = $("#TblGrid_" + tableName + "> tbody").children("tr");
+        var i = 0;
+        x.each(function (index) {
+            /*var e = $(this).clone();
+            var oldID = e.attr("id") + "";
+            var newID = oldID;
+            if (oldID.substring(0, 3) === "tr_") {
+                newID = "clone_" + oldID;
+                $(this).css("display", "none");
+                e.change(function () { $("#" + oldID + " > .DataTD > .FormElement").val($("#" + newID + " > .DataTD > .FormElement").val()); });
+                e.attr("id", newID);
+                console.log(newID);
+                if (i++ < s) {
+                    $("#TblGrid_" + tableName + "_A").append(e);
+                }
+                else {
+                    $("#TblGrid_" + tableName + "_B").append(e);
+                }
+            }*/
+            var inc =1;;
+                $(this).children().each(function() {
+                    var embed = '';
+                    var Label_Name = $(this).text(); // label etc : Merchant
+                    var Label_Value = $(this).length; // vaule etc : ABC
+                    if((inc/2) != 0)
+                        embed += '<label class="col-md-6">'+$(this).text()+'</label>';
+                    else
+                        embed += '<span class="col-md-6">'+$(this).html()+'</span>';
+                    console.log($(this));
+                    inc++;
+                    $("#TblGrid_" + tableName + "_A").append('<div class="col-md-12">'+ embed +'</div>');
+                    // $("#TblGrid_" + tableName + "_A").append(embed);
+                });
+
+
+        });
+        console.log($("#TblGrid_" + tableName + "_A tr").length);
+        console.log($("#TblGrid_" + tableName + "_B tr").length);
 
         // //This hack makes the popup work the first time too
         // $(".ui-icon-closethick").trigger('click');

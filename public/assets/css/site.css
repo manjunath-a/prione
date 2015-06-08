@@ -295,9 +295,9 @@ body .ui-widget-content.ui-jqdialog {
     margin-bottom: 12px;
     resize: none;
 }
-.ui-jqdialog-content.ui-widget-content .EditTable {
-	/*float: right;*/
-    /* width: 50%; */
+.ui-jqdialog-content.ui-widget-content table {
+	float: left;
+     width: 50%;
 }
 .ui-jqdialog-content.ui-widget-content .EditTable tr {
 	margin-bottom: 5px;
